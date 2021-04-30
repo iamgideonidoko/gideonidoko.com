@@ -18,25 +18,27 @@ const SectionThree = () => {
 	const [aboutText, setAboutText] = useState(null);
 
 	useEffect(() => {
-		let scrambler;
-		if (typeof window !== "undefined") {
-			try {
-				scrambler = new window.Scrambler();
-			} catch(err) {
-				console.log("Scrambler Error: ", err);
-			}
-			
-			if (scrambler) {
-				let i = 0;
-				const printText = () => {
-					scrambler.scramble(aboutInfo[i % aboutInfo.length], setAboutText)
-					setTimeout(printText, 7000);
-					i++;
+		setTimeout(() => {
+			let scrambler;
+			if (typeof window !== "undefined") {
+				try {
+					scrambler = new window.Scrambler();
+				} catch(err) {
+					console.log("Scrambler Error: ", err);
 				}
-				printText();
+				
+				if (scrambler) {
+					let i = 0;
+					const printText = () => {
+						scrambler.scramble(aboutInfo[i % aboutInfo.length], setAboutText)
+						setTimeout(printText, 7000);
+						i++;
+					}
+					printText();
+				}
 			}
-		}
-	}, [])
+		}, 3000);
+		}, [])
 
 	return (
 		<div className={styles.sectionThree}>
