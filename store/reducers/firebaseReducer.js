@@ -27,13 +27,13 @@ const firebaseReducer = (state = initialState, action) => {
 				};
 
 				// Initialize Firebase
-				firebase && firebase.initializeApp(firebaseConfig);
+				window.firebase && window.firebase.initializeApp(firebaseConfig);
 			}
 
 			return {
 				...state,
-				firebaseApp: firebase ? firebase : null,
-					firebaseStorage: firebase ? firebase.storage() : null
+				firebaseApp: (typeof window !== "undefined") ? window.firebase ? window.firebase : null : null,
+				firebaseStorage: (typeof window !== "undefined") ? window.firebase ? firebase.storage() : null: null
 			}
 			default:
 				return state;

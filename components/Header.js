@@ -22,7 +22,7 @@ const Header = (props) => {
 		props.getPosts(); //dispatch an action to update the state with all posts from server when the any page first loads
 		
 		//load firebase
-		!props.fire.firebaseApp && props.loadFirebase();
+		setTimeout(() => !props.fire.firebaseApp && props.loadFirebase(), 3000);
 		//load assets
 		props.getAssets();
 		//load contacts
