@@ -8,11 +8,11 @@ const SectionOne = () => {
 		if (typeof window !== "undefined") {
 		setTimeout(() => {
 			const h1Element = window.document.querySelector('.mainWelcomeLine');
-			const h1ElementContent = h1Element.textContent;
-			const h1ElemArray = h1ElementContent.split('');
+			const h1ElementContent = h1Element && h1Element.textContent;
+			const h1ElemArray = h1ElementContent && h1ElementContent.split('');
 			// const h1ElemArrayClone = JSON.parse(JSON.stringify(h1ElemArray));
 
-			const mappedH1ElemArray = h1ElemArray.map((x, index) => {
+			const mappedH1ElemArray = h1ElemArray && h1ElemArray.map((x, index) => {
 				if (x !== " ") {
 					if (index === 15) {
 						return `<span class="h1Span">${x}</span> <br />`;
@@ -25,7 +25,7 @@ const SectionOne = () => {
 				}
 			});
 
-			h1Element.innerHTML = mappedH1ElemArray.join('');
+			h1Element.innerHTML = mappedH1ElemArray && mappedH1ElemArray.join('');
 
 		}, 4000)
 	}
