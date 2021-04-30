@@ -31,7 +31,6 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "rodal": "^1.8.1",
-    "scrambling-text": "^1.0.4",
     "simple-react-validator": "^1.6.0",
     "string-strip-html": "^8.2.4",
     "sweetalert": "^2.1.2",

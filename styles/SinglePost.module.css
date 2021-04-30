@@ -20,6 +20,7 @@
 	font-size: 3.6rem;
 	font-weight: 800;
 	line-height: 4rem;
+	overflow-wrap: break-word;
 }
 
 .blogMeta {
@@ -46,6 +47,7 @@
 	line-height: 2.8rem;
 	word-spacing: 0.1rem;
 	opacity: 0.85;
+	overflow-wrap: break-word;
 }
 
 .postBody pre {
@@ -56,18 +58,26 @@
 	font-size: 3rem;
 	line-height: 3.6rem;
 	margin: 0 0 2.4rem;
+	overflow-wrap: break-word;
 }
 
 .postBody h2 {
 	margin: 3.2rem 0 1.6rem;
+	overflow-wrap: break-word;
 }
 
 .postBody h3 {
 	margin:  2.8rem 0 0.8rem;
+	overflow-wrap: break-word;
 }
 
 .postBody h4 {
 	margin:  0 0 0.8rem 0;
+	overflow-wrap: break-word;
+}
+
+.postBody h5, .postBody h6 {
+	overflow-wrap: break-word;
 }
 
 .postBody ul {
@@ -80,6 +90,7 @@
 	line-height: 2.8rem;
 	list-style-position: inside;
 	margin: 0.4rem 0;
+	overflow-wrap: break-word;
 }
 
 .postBody li ul li {
@@ -114,6 +125,8 @@
 	font-size: 1.4rem;
 	border-collapse: collapse;
 	opacity: 0.85;
+	min-width: -webkit-max-content;
+	min-width: -moz-max-content;
 	min-width: max-content;
 	overflow-x: scroll;
 	margin: 3.2rem 0;
@@ -148,10 +161,15 @@
 
 .postTags {
 	margin: 4rem 0 0;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .postTags span {
 	margin-right: 1rem;
+	display: inline-block;
+	margin-bottom: 1rem;
+	overflow-wrap: break-word;
 }
 
 .postTags span a {
@@ -161,6 +179,10 @@
 	opacity: 0.5;
 	padding: 0.8rem;
 	font-size: 1.5rem;
+	display: inline-block;
+	overflow-wrap: break-word;
+	word-break: break-all;
+	max-width: 100%;
 }
 
 .postTags span a:hover {
