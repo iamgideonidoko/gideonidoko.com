@@ -218,8 +218,8 @@ const SinglePost = (props) => {
 					tags: !props.post.isLoaded ? [] : exactPost ? `${exactPost.tags}` : !shouldLoad404 ? [] : [],
 					images: [
 						{
-							url: exactPost.cover_img,
-							alt: `${exactPost.title}'s cover image`
+							url: !props.post.isLoaded ? '' : exactPost ? `${exactPost.cover_img}` : !shouldLoad404 ? '' : '',
+							alt: `${!props.post.isLoaded ? 'No pic' : exactPost ? `${exactPost.title}` : !shouldLoad404 ? 'No pic' : 'No pic'}'s cover image`
 						}
 					],
 					site_name: "Blog - Gideon Idoko"
