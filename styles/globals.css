@@ -85,6 +85,9 @@
 html {
 	font-size: 62.5%;
 	scroll-behavior: smooth;
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: visible;
 }
 
 body {
@@ -93,6 +96,9 @@ body {
 	font-size: 1.6rem;
 	font-family: PT-Serif, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	overflow-x: hidden;
+	overflow-y: visible;
+	width: 100%;
+	position: relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -167,12 +173,14 @@ a {
 
 /*>>>>>HEADER<<<<<<<*/
 .header {
-	padding: 2rem 0;
+	padding: 2rem 1.5rem;
 	display: flex;
 	justify-content: space-between;
 	position: absolute;
 	width: 100%;
 	z-index: 10;
+	left: 0;
+	top: 0;
 }
 
 
@@ -188,6 +196,7 @@ a {
 	color: var(--font-color);
 	display: none;
 	cursor: pointer;
+	margin-right: -0.5rem;
 }
 
 .main-nav {
@@ -202,7 +211,7 @@ a {
 
 .main-nav ul li {
 	list-style: none;
-	margin: 0 1rem;
+	margin: 0 0 0 1rem;
 }
 
 .main-nav ul li a {
@@ -265,7 +274,7 @@ a {
 .nav-adminmenu-wrap {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto;
-	margin-right: 4rem;
+	margin-right: 0rem;
 }
 
 .admin-menu-initiator {
@@ -793,6 +802,14 @@ a {
 }
 
 @media screen and (max-width: 650px) {
+	.header {
+		padding: 2rem 1rem;
+	}
+
+	.main-wrapper {
+		padding: 0 1.5rem;
+	}
+
 	.navOpen {
 		display: none !important;
 	}
@@ -804,6 +821,7 @@ a {
 		overflow-y: scroll;
 		overflow-x: hidden;
 		width: 100vw;
+		margin-bottom: 4rem;
 		transform: translateX(-50vw);
 		border-radius: 1.5rem;
 		/* border: 1px solid black; */
@@ -879,12 +897,12 @@ a {
 		box-shadow: 2px 3px 19px 0px rgba(0, 0, 0, 0.12);
 	  }
 
-	  .social-links ul {
+	  .mobile-social-links ul {
 		  text-align: center;
 		  justify-content: flex-end;
 	  }
 
-	  .social-links ul li {
+	  .mobile-social-links ul li {
 		list-style: none;
 		margin-right: 0;
 		margin-left: 2.5rem;

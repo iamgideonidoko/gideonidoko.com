@@ -14,8 +14,13 @@ import { getContacts } from '../store/actions/contactActions';
 
 const Header = (props) => {
 	useEffect(() => {
+/* 		console.log = function () { };
+		console.warn = function () { };
+		console.error = function () { };
+		setTimeout(() => console.clear(), 3000); */
+
 		props.getPosts(); //dispatch an action to update the state with all posts from server when the any page first loads
-		props.loadAdminUser(props.auth.token);
+		
 		//load firebase
 		!props.fire.firebaseApp && props.loadFirebase();
 		//load assets
@@ -24,11 +29,16 @@ const Header = (props) => {
 		props.getContacts();
 	}, []);
 
+
+	useEffect(() => {
+		!props.auth.token && props.loadAdminUser(props.auth.token);
+	}, [props.auth.token]);
+
 	useEffect(() => {
 		if (props.auth.isAuthenticated) {
 			props.getGithubUser(props.auth.adminuser.githubusername);
 		}
-	}, [props.auth.isAuthenticated])
+	}, [props.auth.isAuthenticated]);
 
 	if (typeof window !== 'undefined') {
 		window.onload = function() {

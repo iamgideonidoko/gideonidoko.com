@@ -27,7 +27,7 @@
 .text1 {
 	bottom: 5rem;
 	left: -3.5rem;
-	transform: rotate(270deg);
+	transform: rotate(270deg) scale(0.9);
 	font-weight: 600;
 	opacity: var(--scrolldown-opacity);
 
@@ -511,6 +511,13 @@
 	}
 }
 
+@media screen and (max-width: 650px) {
+	.text1 {
+		transform: rotate(270deg) scale(0.75);
+		bottom: 4rem
+	}
+}
+
 @media screen and (max-width: 638px) {
 	.projectExtLinks a {
 		font-size: 1.4rem;
@@ -581,6 +588,11 @@
 	.servicesWrapper ul li div:nth-child(2) p {
 		opacity: 0.8;
 		font-size: 1.5rem;
+	}
+
+	.text1 {
+		transform: rotate(270deg) scale(0.65);
+		bottom: 3rem
 	}
 }
 

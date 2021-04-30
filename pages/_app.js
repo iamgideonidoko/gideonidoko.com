@@ -9,6 +9,7 @@ import ThemeSwitch from '../components/ThemeSwitch';
 import FullscreenSwitch from './../components/FullscreenSwitch';
 import AdminMenu from './../components/AdminMenu';
 import AnimatedCursor from 'react-animated-cursor';
+import Head from 'next/head';
 
 
 function MyApp({ Component, pageProps }) {
@@ -25,11 +26,14 @@ function MyApp({ Component, pageProps }) {
 /* 217 | 149 | 67 */
 	return (
 		<Fragment>
+			<Head>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			</Head>
 			{ loadCursor && <AnimatedCursor color="217, 149, 67" innerSize={10} outerSize={10} outerScale={4.2} /> }
 			<div className={!isNavOpen ? "mobileNavSection" : "mobileNavSection addNegativeIndex"}>
-			<div className="mobileNavAdminMenu">
+			{store.getState().auth.isAuthenticated && <div className="mobileNavAdminMenu">
 				<div><AdminMenu allowForMobile={true} adminUsername={store.getState().auth.isAuthenticated && store.getState().auth.adminuser.username} /></div>
-			</div>
+			</div>}
 
 			<div className="mobileNavActionBtn"><button onClick={() => setIsNavOpen(true)} className="closeMenuBtn"><i className="neu-close-lg"></i>Close Menu</button> <FullscreenSwitch allowForMobile={true} /> <ThemeSwitch allowForMobile={true} /></div>
 
@@ -42,7 +46,7 @@ function MyApp({ Component, pageProps }) {
 						<li><Link  href="/contact" ><a onClick={closeNav}>Get in touch</a></Link></li>	
 					</ul>
 				</nav>
-				<div className="social-links">
+				<div className="social-links mobile-social-links">
 		                  <ul>
 		                    <li><a href="https://github.com/IamGideonIdoko" target="_blank" rel="noopener noreferrer"><i className="fab fa-github"></i></a></li>
 		                    <li><a href="https://codepen.io/IamGideonIdoko" target="_blank" rel="noopener noreferrer"><i className="fab fa-codepen"></i></a></li>
