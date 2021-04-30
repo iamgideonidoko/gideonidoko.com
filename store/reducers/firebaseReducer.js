@@ -25,7 +25,7 @@ const firebaseReducer = (state = initialState, action) => {
 			    };
 
 			      // Initialize Firebase
-			    firebase.initializeApp(firebaseConfig);
+			    window.firebase.initializeApp(firebaseConfig);
 
 			}
 
