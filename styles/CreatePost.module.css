@@ -1,0 +1,117 @@
+.pageTitle {
+	margin: 0 0 2rem;
+}
+
+.copyAssetHead {
+	margin: 3rem 0 0;
+}
+
+.assetFormSelectWrap {
+	display: -ms-grid;
+	display: grid;
+	-ms-grid-columns: auto 5rem;
+	grid-template-columns: auto 5rem;
+	margin: 1rem 0 4rem;
+}
+
+.assetCopyBtn {
+	font-size: 1.8rem;
+	border: none;
+	width: 3.9rem;
+	height: 3.9rem;
+	border-radius: 0.6rem;
+	margin-left: 1.2rem;
+	background: var(--font-color);
+	color: var(--bg-color);
+	opacity: 0.9;
+}
+
+.assetCopyBtn:hover {
+	opacity: 0.7;
+}
+
+.postMetaInfo {
+	display: -ms-grid;
+	display: grid;
+	grid-gap: 0 1rem;
+	-ms-grid-columns: auto auto;
+	grid-template-columns: auto auto;
+	margin: 0 0 2rem;
+}
+
+.createPostForm {
+	margin: 6rem 0 0;
+}
+
+.createFormDivChild {
+	margin: 3rem 0;
+}
+
+.createFormDivChild label {
+	display: block;
+}
+
+.createFormDivChild input {
+	display: block;
+	width: 100%;
+	padding: 0.8rem 1rem;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	border-radius: 0.5rem;
+}
+
+.createFormDivChild input:focus {
+	border: 1px solid rgba(0, 0, 0, 0.9);
+}
+
+.createFormDivChild label span {
+	display: inline-block;
+	opacity: 0.8;
+	font-size: 1.35rem;
+	margin: -0.2rem 0 0.5rem;
+}
+
+.postSlugWrap input {
+	font-style: italic;
+}
+
+.checkboxText {
+	display: inline-block !important;
+}
+
+.shouldPublishPostWrap input {
+	display: inline-block !important;
+	width: auto !important;
+}
+
+
+.postCreatePostBtnWrap button {
+	border: none;
+	padding: 0.8rem 1.2rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	background: var(--pri-blue-normal);
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.postCreatePostBtnWrap button:hover {
+	opacity: 0.7;
+}
+
+.blogPostStats {
+	margin: 3rem 0 0;
+}
+
+.blogPostStats ul li {
+	list-style: none;
+	margin: 0.5rem 0;
+	font-size: 1.35rem;
+}
+
+
+/* >>>>>>>>MEDIA QUERIES<<<<<<<< */
+@media screen and (max-width: 626px) {
+	.postMetaInfo {
+		grid-template-columns: auto;
+		-ms-grid-columns: auto auto;
+	}
+}

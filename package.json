@@ -1,0 +1,39 @@
+{
+  "name": "nextjsapp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@szhsin/react-menu": "^1.6.0",
+    "axios": "^0.21.1",
+    "copy-to-clipboard": "^3.3.1",
+    "framer-motion": "^4.0.0",
+    "highlight.js": "^10.5.0",
+    "html-entities": "^2.1.1",
+    "markdown-it": "^12.0.4",
+    "markdown-to-jsx": "^7.1.1",
+    "moment": "^2.29.1",
+    "next": "10.0.5",
+    "next-pwa": "^5.0.5",
+    "next-redux-wrapper": "^6.0.2",
+    "next-seo": "^4.19.0",
+    "react": "17.0.1",
+    "react-animated-cursor": "^2.1.8",
+    "react-dom": "17.0.1",
+    "react-markdown-editor-lite": "^1.2.4",
+    "react-redux": "^7.2.2",
+    "react-select": "^4.1.0",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "rodal": "^1.8.1",
+    "simple-react-validator": "^1.6.0",
+    "string-strip-html": "^8.2.4",
+    "sweetalert": "^2.1.2",
+    "uuid": "^8.3.2"
+  }
+}

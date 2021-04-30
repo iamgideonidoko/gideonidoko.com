@@ -1,0 +1,60 @@
+.aboutMain {
+}
+
+.aboutMain h1 {
+	/*font-size: 3rem;*/
+	line-height: 3.6rem;
+	margin: 0 0 2.4rem;
+}
+
+.aboutMain h2 {
+	margin: 3.2rem 0 1.6rem;
+}
+
+.aboutMain h3 {
+	margin:  2.8rem 0 0.8rem;
+}
+
+.aboutMain h4 {
+	margin:  0 0 0.8rem 0;
+}
+
+.aboutMain p {
+	font-size: 1.6rem;
+	margin: 0 0 1rem;
+	line-height: 2.8rem;
+	word-spacing: 0.1rem;
+	opacity: 0.85;
+}
+
+.aboutMain a {
+	opacity: 1;
+	text-decoration: underline;
+	font-weight: 500;
+	color: var(--pri-blue-normal);
+}
+
+.aboutMain a:hover {
+	text-decoration: none;
+}
+
+.aboutMain ul {
+	margin: 2rem 0;
+	line-height: 2.8rem;
+	opacity: 0.85;
+}
+/* code backgroud-color: #f0efed; */
+.aboutMain li {
+	line-height: 2.8rem;
+	list-style-type: square;
+	list-style-position: inside;
+	margin: 0.4rem 0;
+}
+
+.aboutMain li::marker {
+	color: var(--pri-blue-normal);
+}
+
+.aboutMain li ul li {
+	padding: 0 0 0 2.2rem;
+}

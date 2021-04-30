@@ -1,0 +1,47 @@
+.uploadAssetWrap {
+}
+
+.uploadInitiator {
+	display: inline-block;
+	font-size: 5rem;
+	border: 0.5rem solid var(--font-color);
+	cursor: pointer;
+	border-radius: 50rem;
+	height: 10rem;
+	width: 10rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+}
+
+.fileUploadForm {
+	text-align: center;
+	width: 60rem;
+	padding: 2rem 0 0;
+	max-width: 100%;
+	margin: 3rem auto 0;
+}
+
+.fileUploadInput {
+	width: 0.1px;
+	height: 0.1px;
+	visibility: hidden;
+}
+
+.fileUploadProgressBar {
+	border: 1px solid var(--pri-yellow-dark);
+	height: 3.5rem;
+	width: 100%;
+	margin-top: 2rem;
+}
+
+.fileUploadProgressBar div {
+	background: var(--pri-yellow-dark);
+	height: 100%;
+	border: 1px solid var(--pri-yellow-dark);
+}
+
+.selectedFileName {
+	margin: 0 0 0.5rem;
+}

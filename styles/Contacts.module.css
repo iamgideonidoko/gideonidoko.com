@@ -1,0 +1,73 @@
+.contactList {
+	margin: 3rem 0 0;
+}
+
+.contactList li {
+	list-style: none;
+	border: 1px solid var(--font-color);
+	margin: 1.5rem 0;
+	padding: 1rem;
+	border-radius: 0.8rem; 
+	transition: all 0.2s ease-in-out;
+}
+
+.contactHead {
+	display: flex;
+	justify-content: space-between;
+}
+
+.contactHead span {
+	display: inline-block;
+}
+
+.contactHead span:nth-child(2) {
+	white-space: nowrap;
+}
+
+.toggleMessageBtn, .contactDeleteBtn {
+	background: transparent;
+	outline: none;
+	border: none;
+	font-size: 1.6rem;
+	display: inline-block;
+}
+
+.toggleMessageBtn {
+	margin-right: 1.5rem;
+	color: var(--font-color);
+}
+
+.contactDeleteBtn {
+	color: var(--pri-delete-color);
+}
+
+.toggleMessageBtn i {
+	display: inline-block;
+	transform: scale(1.2);
+}
+
+.contactDeleteBtn i {
+	display: inline-block;
+	transform: scale(1.2);
+}
+
+.contactBody {
+	border: 1px solid var(--neutral-color-4);
+	font-size: 1.5rem;
+	border-radius: 0.8rem;
+	padding: 1rem;
+	margin: 1.5rem 0 0;
+}
+
+/* >>>>>>>>>>MEDIA QUERIES<<<<<<<<<< */
+@media screen and (max-width: 400px) {
+	.contactHead {
+		flex-direction: column;
+	}
+	.contactHead span {
+		display: block;
+		margin: 0.5rem 0;
+		overflow-wrap: break-word;
+	}
+	
+}

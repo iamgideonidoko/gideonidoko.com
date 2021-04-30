@@ -1,0 +1,175 @@
+.managePostForm {
+	margin: 2rem  0 0;
+	padding:  2rem 0 0 ;
+}
+
+.actionBtnsWrapper {
+	padding: 2rem 0 4rem 0;
+	margin: 0.5rem 0 0;
+}
+
+.editPostBtn, .deletePostBtn {
+	padding: 1rem 1.5rem;
+}
+
+.editPostBtn:hover {
+	opacity: 0.7;
+}
+
+.deletePostBtn:hover {
+	opacity: 0.6;
+}
+
+.editPostBtn {
+	margin-right: 2rem;
+	background: var(--pri-blue-normal);
+	border: 2px solid var(--pri-blue-normal);
+	border-radius: 0.6rem;
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.deletePostBtn {
+	border: 2px solid #a94442;
+	border-radius: 0.6rem;
+	background: transparent;
+	color: #a94442;
+	opacity: 0.8;
+}
+
+.pageTitle {
+	margin: 0 0 2rem;
+}
+
+.copyAssetHead {
+	margin: 3rem 0 0;
+}
+
+.assetFormSelectWrap {
+	display: -ms-grid;
+	display: grid;
+	-ms-grid-columns: auto 5rem;
+	grid-template-columns: auto 5rem;
+	margin: 1rem 0 4rem;
+}
+
+.assetCopyBtn {
+	font-size: 1.8rem;
+	border: none;
+	width: 3.9rem;
+	height: 3.9rem;
+	border-radius: 0.6rem;
+	margin-left: 1.2rem;
+	background: var(--font-color);
+	color: var(--bg-color);
+	opacity: 0.9;
+}
+
+.assetCopyBtn:hover {
+	opacity: 0.7;
+}
+
+.postMetaInfo {
+	display: -ms-grid;
+	display: grid;
+	grid-gap: 0 1rem;
+	-ms-grid-columns: auto auto;
+	grid-template-columns: auto auto;
+	margin: 0 0 2rem;
+}
+
+.editPostForm {
+	margin: 6rem 0 0;
+}
+
+.editFormDivChild {
+	margin: 3rem 0;
+}
+
+.editFormDivChild label {
+	display: block;
+}
+
+.editFormDivChild input {
+	display: block;
+	width: 100%;
+	padding: 0.8rem 1rem;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	border-radius: 0.5rem;
+}
+
+.editFormDivChild input:focus {
+	border: 1px solid rgba(0, 0, 0, 0.9);
+}
+
+.editFormDivChild label span {
+	display: inline-block;
+	opacity: 0.8;
+	font-size: 1.35rem;
+	margin: -0.2rem 0 0.5rem;
+}
+
+.postSlugWrap input {
+	font-style: italic;
+}
+
+.checkboxText {
+	display: inline-block !important;
+}
+
+.shouldPublishPostWrap input {
+	display: inline-block !important;
+	width: auto !important;
+}
+
+
+.postEditPostBtnWrap button[type="submit"] {
+	border: 1px solid var(--pri-blue-normal);
+	padding: 0.8rem 1.2rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	background: var(--pri-blue-normal);
+	color: rgba(255, 255, 255, 0.9);
+	margin-right: 1rem;
+}
+
+.postEditPostBtnWrap button:hover {
+	opacity: 0.7;
+}
+
+.postEditPostBtnWrap button[type="button"] {
+	border: 2px solid var(--pri-blue-normal);
+	padding: 0.8rem 1.2rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	background: transparent;
+	color: var(--font-color);
+}
+
+.editPostWrapper {
+	margin: 12rem 0 0;
+	padding: 6rem 0 0;
+	border-top: 5px dashed var(--font-color);
+}
+
+.editPostWrapperHeadTxt {
+	margin: 0 0 2rem;
+
+}
+
+.blogPostStats {
+	margin: 3rem 0 0;
+}
+
+.blogPostStats ul li {
+	list-style: none;
+	margin: 0.5rem 0;
+	font-size: 1.35rem;
+}
+
+/* >>>>>>>>>>MEDIA QUERIES<<<<<<<<<<<< */
+@media screen and (max-width: 626px) {
+	.postMetaInfo {
+		grid-template-columns: auto;
+		-ms-grid-columns: auto auto;
+	}
+}

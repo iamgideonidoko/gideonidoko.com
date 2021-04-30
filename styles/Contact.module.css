@@ -1,0 +1,169 @@
+.contactMain h1 {
+	/*font-size: 3rem;*/
+	line-height: 3.6rem;
+	margin: 0 0 2.4rem;
+}
+
+.contactMain h2 {
+	margin: 3.2rem 0 1.6rem;
+}
+
+.contactMain h3 {
+	margin:  2.8rem 0 0.8rem;
+}
+
+.contactMain h4 {
+	margin:  0 0 0.8rem 0;
+}
+
+.contactMain p {
+	font-size: 1.6rem;
+	margin: 0 0 1rem;
+	line-height: 2.8rem;
+	word-spacing: 0.1rem;
+	opacity: 0.85;
+}
+
+.contactMain a {
+	opacity: 1;
+	text-decoration: underline;
+	font-weight: 500;
+	color: var(--pri-blue-normal);
+}
+
+.contactMain a:hover {
+	text-decoration: none;
+}
+
+.contactBody {
+	display: grid;
+	grid-template-columns: 40% 60%;
+}
+
+
+.contactLeft img {
+	max-width: 100%;
+}
+
+.contactNameAndEmail {
+	display: grid;
+	grid-template-columns: 48% 48%;
+	grid-column-gap: 2.5rem;
+	margin: 0 0 3rem;
+}
+
+.contactForm {
+	margin: 4rem 0 2rem;
+	/*border: 1px solid green;*/
+}
+
+.contactForm label {
+	display: block;
+	opacity: 0.85;
+}
+
+.contactForm input {
+	background: transparent;
+	border: none;
+	outline: none;
+	font-family: Poppins, var(--default-font);
+	border-bottom: 1px solid var(--font-color);
+	display: inline-block;
+	width: 100%;
+	color: var(--font-color);
+	padding: 0.8rem 0;
+	opacity: 0.75;
+}
+
+.contactForm textarea {
+	display: block;
+	width: 100%;
+	background: transparent;
+	outline: none;
+	color: var(--font-color);
+	font-family: Poppins, var(--default-font);
+	margin: 1.5rem 0 0;
+	padding: 0.8rem;
+	border: 1px solid var(--font-color);
+	opacity: 0.75;
+	resize: none;
+	height: 15rem;
+	transition: border-color 0.2s ease-in-out;
+}
+
+.contactForm input:focus, .contactForm textarea:focus {
+	opacity: 1;
+
+}
+
+.contactForm textarea:focus {
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+}
+
+.submitBtnWrap {
+	margin: 3rem 0 0;
+}
+
+.submitBtnWrap button {
+	background: transparent;
+	padding: 0.8rem 1rem;
+	outline: none;
+	border: 1px solid var(--pri-blue-normal);
+	color: var(--pri-blue-normal);
+	font-size: 1.6rem;
+	transition: letter-spacing 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+.submitBtnWrap button i {
+	font-size: 1.8rem;
+}
+
+.submitBtnWrap button:hover {
+	letter-spacing: 0.2rem;
+	font-weight: 600;
+}
+
+.contactSectionTwo {
+	margin: 5rem 0 0;
+}
+
+.socialLinks ul li {
+	margin-right: 3.2rem !important;
+}
+
+.socialLinks a {
+	color: var(--font-color) !important;
+	opacity: 0.85;
+	display: inline-block;
+	transition: all 0.3s ease-in-out;
+	font-size: 2.8rem !important;
+}
+
+.socialLinks a:hover {
+	transform: translateY(-1rem);
+	color: var(--pri-blue-normal) !important;
+}
+
+
+/* >>>>>>>>>>>MEDIA QUERIES<<<<<<<<<< */
+
+@media screen and (max-width: 615px) {
+	.contactBody {
+		grid-template-columns: 100%;
+	}
+
+	.contactLeft {
+		text-align: center;
+		max-width: 30rem;
+		margin: 0 auto;
+	}
+
+	.contactLeft img {
+		max-width: 100%;
+	}
+
+	
+}
