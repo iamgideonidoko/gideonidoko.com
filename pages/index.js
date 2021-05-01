@@ -21,13 +21,13 @@ function Home(props) {
           description: "Gideon Idoko is a Software Developer and Technical Writer that develops unique digital experiences. Get in touch.",
           images: [
             {
-              url: 'https://gideonidoko.com/GideonIdokoCardImage.png',
+              url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
               width: 1004,
               height: 591,
               alt: 'Gideon Idoko\'s card image'
               },
             {
-              url: 'https://gideonidoko.com/welcomeview.jpg',
+              url: 'https://gideonidoko.com/assets/img/welcomeview.jpg',
               width: 800,
               height: 600,
               alt: 'Gideon Idoko\'s portfolio home view'

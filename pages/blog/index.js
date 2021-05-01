@@ -69,7 +69,7 @@ const BlogHome = (props) => {
 
 
 						{
-							props.post.posts.filter(post => post.is_pinned) ? <div className={styles.pinnedPostWrapper}>
+							props.post.posts.filter(post => post.is_pinned).length !== 0 ? <div className={styles.pinnedPostWrapper}>
 							<h3><i className="neu-pin"></i> Pinned Posts.</h3>
 						<AllPostsRender posts={props.post.posts.filter(post => post.is_pinned)} />
 							</div> : null

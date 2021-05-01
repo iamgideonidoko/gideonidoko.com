@@ -390,6 +390,7 @@
 
 .s5PostFlex {
 	margin: 2rem;
+	max-width: 30rem;
 }
 
 .s5PostImg {
@@ -411,6 +412,7 @@
 	position: relative;
 	padding: 1rem;
 	border-radius: 0.8rem;
+	overflow-wrap: break-word;
 }
 
 .s5PostHref:hover .s5PostImg img {

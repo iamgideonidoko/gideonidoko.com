@@ -23,7 +23,18 @@ function MyApp({ Component, pageProps }) {
 	useEffect(() => {
 		setLoadCursor(true);
 	}, [])
-/* 217 | 149 | 67 */
+
+	useEffect(() => {
+		if (typeof window !== "undefined") {
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){window.dataLayer.push(arguments);}
+			gtag('js', new Date());
+			
+			gtag('config', 'G-QJ2RYXMK6E');
+		}
+			
+	}, [])
+
 	return (
 		<Fragment>
 			<Head>

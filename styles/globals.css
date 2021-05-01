@@ -281,6 +281,7 @@ a {
 	width: 5rem;
 	height: 4rem;
 	margin: auto;
+	margin-left: 1rem;
 	cursor: pointer;
 	display: flex;
 	align-items: center;

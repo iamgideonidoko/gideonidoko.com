@@ -99,7 +99,7 @@ const Contact = (props) => {
 					description: "Have you got a question, proposal or project in mind? Does your project need a fix? Do you want to collaborate with me on something? Feel free to reach out.",
 					images: [
 						{
-						url: 'https://gideonidoko.com/GideonIdokoCardImage.png',
+						url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
 						width: 1004,
 						height: 591,
 						alt: 'Gideon Idoko\'s card image'

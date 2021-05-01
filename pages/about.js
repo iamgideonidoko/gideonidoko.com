@@ -17,7 +17,7 @@ const About = () => {
 				description: "Gideon Idoko is a Software Developer and Technical Writer based in Nigeria interested in learning, building positive solutions with awesome experiences, sharing design and technical ideas and tips, writing, making innovative research, blogging and community building.",
 				images: [
 					{
-					url: 'https://gideonidoko.com/GideonIdokoCardImage.png',
+					url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
 					width: 1004,
 					height: 591,
 					alt: 'Gideon Idoko\'s card image'

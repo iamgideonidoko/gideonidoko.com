@@ -40,6 +40,9 @@ class MyDocument extends Document {
           
         */}
 
+        {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ2RYXMK6E"></script>
+
         </body>
       </Html>
     )

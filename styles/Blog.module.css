@@ -72,6 +72,8 @@
 
 .blogBoxRight {
 	padding: 1.5rem 1.5rem 0;
+	position: relative;
+	max-width: 100%;
 }
 
 
@@ -90,6 +92,9 @@
 
 .blogBoxRight p {
 	opacity: 0.7;
+	overflow-wrap: break-word !important;
+	max-width: 100%;
+	word-break: break-word;
 }
 
 .bbrSmallMetaOne {
