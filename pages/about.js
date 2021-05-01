@@ -40,7 +40,7 @@ const About = () => {
 					<h3>Hi there! <i className="neu-robot"></i></h3>
 					<h1>I'm Gideon Idoko.</h1>
 
-					<p>I'm a Software Developer and Technical Writer based in Nigeria interested in learning, building positive solutions with awesome experiences, sharing design and technical ideas and tips, writing, making innovative research, blogging and community building. I develop beautiful, secured and accessible applications that meet the business requirements and focus on providing the best experience for their end users. I go a long way to give the best shot, this has made me keen to discovering life changing tech solutions. I devote a good amount of my time to programming, solving real world problems and self-development. I aim at building the next positive big thing.</p>
+					<p>I'm a Software Developer and Technical Writer based in Nigeria interested in learning, building positive solutions with awesome experiences, sharing design and technical ideas and tips, writing, making innovative research, blogging and community building. I develop beautiful, secured and accessible applications that meet the business requirements and focus on providing the best experience for their end users. I go a long way to give my best shot, this has made me keen to discovering life changing tech solutions. I devote a good amount of my time to programming, solving real world problems and self-development. I aim at building the next positive big thing.</p>
 
 					<p>I mostly write about Software Development & web engineering topics and tools on my <Link href="/blog"><a>blog</a></Link> and other platforms.</p>
 

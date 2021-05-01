@@ -5,14 +5,14 @@ import styles from '../../styles/Home.module.css'
 const SectionThree = () => {
 
 	const aboutInfo = [
-		"I'm a Creative Software Developer",
-		"I'm a Web Designer/Developer",
-		"I'm a freelancer",
-		"I also write",
-		"I've a liking to sharing knowledge",
+		"I'm a Software Developer",
+		"I'm a Technical Writer",
+		"I focus more on web engineering",
 		"I love building positive solutions",
-		"I reside in Nigeria",
-		"I'm interested in community building"
+		"I write and create contents",
+		"I've a liking to sharing knowledge",
+		"I'm interested in community building",
+		"I reside in Nigeria"
 	];
 
 	const [aboutText, setAboutText] = useState(null);

@@ -48,7 +48,7 @@ function MyApp({ Component, pageProps }) {
 
 			<div className="mobileNavActionBtn"><button onClick={() => setIsNavOpen(true)} className="closeMenuBtn"><i className="neu-close-lg"></i>Close Menu</button> <FullscreenSwitch allowForMobile={true} /> <ThemeSwitch allowForMobile={true} /></div>
 
-			<div className="mobileAdminName"><Link href="/"><a><img src="/assets/img/GideonIdokoDevLogo.png" className="site-logo" alt="Gideon Idoko"/></a></Link> <span>Gideon Idoko</span></div>
+			<div className="mobileAdminName"><Link href="/"><a onClick={closeNav}><img src="/assets/img/GideonIdokoDevLogo.png" className="site-logo" alt="Gideon Idoko"/></a></Link> <span>Gideon Idoko</span></div>
 				<nav>
 					<ul>
 						<li><Link href="/"><a onClick={closeNav}>Home</a></Link></li>

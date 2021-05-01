@@ -31,7 +31,7 @@ const Header = (props) => {
 
 
 	useEffect(() => {
-		!props.auth.token && props.loadAdminUser(props.auth.token);
+		!props.auth.adminuser && props.loadAdminUser(props.auth.token);
 	}, [props.auth.token]);
 
 	useEffect(() => {
