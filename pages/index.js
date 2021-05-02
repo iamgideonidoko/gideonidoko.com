@@ -18,19 +18,13 @@ function Home(props) {
         openGraph={{
           url: "https://gideonidoko.com",
           title: "Gideon Idoko - Software Developer and Technical Writer",
-          description: "Gideon Idoko is a Software Developer and Technical Writer that develops unique digital experiences. Get in touch.",
+          description: "Gideon Idoko is a Software Developer and Technical Writer that develops unique digital experiences and builds positive solutions. Get in touch.",
           images: [
             {
               url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
               width: 1004,
               height: 591,
               alt: 'Gideon Idoko\'s card image'
-              },
-            {
-              url: 'https://gideonidoko.com/assets/img/welcomeview.jpg',
-              width: 800,
-              height: 600,
-              alt: 'Gideon Idoko\'s portfolio home view'
               }
             ],
             site_name: "Gideon Idoko - Software Developer and Technical Writer"

@@ -10,9 +10,10 @@ import FullscreenSwitch from './../components/FullscreenSwitch';
 import AdminMenu from './../components/AdminMenu';
 import AnimatedCursor from 'react-animated-cursor';
 import Head from 'next/head';
+import { motion } from 'framer-motion';
 
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, router }) {
 
 	
 	const [isNavOpen, setIsNavOpen] = useState(true);
@@ -68,9 +69,16 @@ function MyApp({ Component, pageProps }) {
 			</div>
   			<div className={!isNavOpen ? "main-wrapper mobile-nav-view" : "main-wrapper"}>
 	  			<Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
-	  			<div className="container">
+	  			<motion.div key={router.route} initial="pageInitial" animate="pageAnimate" className="container" variants={{
+					  pageInitial: {
+						  opacity: 0
+					  },
+					  pageAnimate: {
+						  opacity: 1
+					  }
+				  }}>
 			  		<Component {...pageProps} />  		
-	  			</div>
+	  			</motion.div>
 	  			<Footer />
   			</div>
 	  	</Fragment>
