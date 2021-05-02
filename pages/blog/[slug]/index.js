@@ -202,24 +202,24 @@ const SinglePost = (props) => {
 
 	return (
 		<Fragment>
-			<NextSeo
-				title={ !props.post.isLoaded ? null : exactPost ? `${exactPost.title} :: Blog - Gideon Idoko` : !shouldLoad404 ? null : "Page Not Found : ( " }
-				description={ !props.post.isLoaded ? null : exactPost ? `${exactPost.description}` : !shouldLoad404 ? null : null }
+			{ !props.post.isLoaded ? null : exactPost ? <NextSeo
+				title={`${exactPost.title} :: Blog - Gideon Idoko`}
+				description={exactPost.description}
 				canonical="https://gideonidoko.com/blog"
 				openGraph={{
-					url: "https://gideonidoko.com/blog",
-					title: !props.post.isLoaded ? null : exactPost ? `${exactPost.title} :: Blog - Gideon Idoko` : !shouldLoad404 ? null : "Page Not Found : ( ",
-					description: !props.post.isLoaded ? null : exactPost ? `${exactPost.description}` : !shouldLoad404 ? null : null,
+					url: `https://gideonidoko.com/blog/${exactPost.slug}`,
+					title: `${exactPost.title} :: Blog - Gideon Idoko`,
+					description: exactPost.description,
 					type: 'article',
 					article: {
-						publishedTime: !props.post.isLoaded ? null : exactPost ? `${exactPost.created_at}` : !shouldLoad404 ? null : null,
-						authors: [!props.post.isLoaded ? 'Gideon Idoko' : exactPost ? `${exactPost.author_name}` : !shouldLoad404 ? 'Gideon Idoko' : 'Gideon Idoko']
+						publishedTime: exactPost.created_at,
+						authors: [exactPost.author_name]
 					},
-					tags: !props.post.isLoaded ? null : exactPost ? `${exactPost.tags}` : !shouldLoad404 ? null : null,
+					tags: exactPost.tags,
 					images: [
 						{
-							url: !props.post.isLoaded ? null : exactPost ? `${exactPost.cover_img}` : !shouldLoad404 ? null : null,
-							alt: `${!props.post.isLoaded ? null : exactPost ? exactPost.title + "'s cover image" : !shouldLoad404 ? null : null}`
+							url: exactPost.cover_img,
+							alt: exactPost.title + "'s cover image"
 						}
 					],
 					site_name: "Blog - Gideon Idoko"
@@ -229,9 +229,10 @@ const SinglePost = (props) => {
 				site: "@IamGideonIdoko",
 				cardType: "summary_large_image"
 				}}
-			/>
+			/> : !shouldLoad404 ? null : null }
+			
 			<Head>
-				<title>{ !props.post.isLoaded ? null : exactPost ? `${exactPost.title} :: Blog - Gideon Idoko` : !shouldLoad404 ? null : "Page Not Found : ( " }</title>
+			{ !props.post.isLoaded ? null : exactPost ? <title>{`${exactPost.title} :: Blog - Gideon Idoko`}</title> : !shouldLoad404 ? null : <title>{"Page Not Found : ( "}</title> }
 			</Head>
 			<main className={`padding-top-10rem ${styles.singlePostMain}`}>
 				<div className="container-max-1248px">
