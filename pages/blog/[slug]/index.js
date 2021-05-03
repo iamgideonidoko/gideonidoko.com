@@ -16,6 +16,7 @@ import { config } from '../../../config/keys';
 import styles from '../../../styles/SinglePost.module.css';
 import 'highlight.js/styles/monokai.css';
 import { NextSeo } from 'next-seo';
+import axios from 'axios';
 
 const SinglePost = (props) => {
 	const router = useRouter();
@@ -202,24 +203,24 @@ const SinglePost = (props) => {
 
 	return (
 		<Fragment>
-			{ !props.post.isLoaded ? null : exactPost ? <NextSeo
-				title={`${exactPost.title} :: Blog - Gideon Idoko`}
-				description={exactPost.description}
+			<NextSeo
+				title={ !props.post.isLoaded ? (props.singlePost && `${props.singlePost.title} :: Blog - Gideon Idoko`) : exactPost ? `${exactPost.title} :: Blog - Gideon Idoko` : !shouldLoad404 ? '' : "Page Not Found : ( " }
+				description={ !props.post.isLoaded ? (props.singlePost && props.singlePost.description) : exactPost ? exactPost.description : !shouldLoad404 ? '' : '' }
 				canonical="https://gideonidoko.com/blog"
 				openGraph={{
-					url: `https://gideonidoko.com/blog/${exactPost.slug}`,
-					title: `${exactPost.title} :: Blog - Gideon Idoko`,
-					description: exactPost.description,
+					url: !props.post.isLoaded ? (props.singlePost && `https://gideonidoko.com/blog/${props.singlePost.slug}`) : exactPost ? `https://gideonidoko.com/blog/${exactPost.slug}` : !shouldLoad404 ? '' : '',
+					title: !props.post.isLoaded ? (props.singlePost && `${props.singlePost.title} :: Blog - Gideon Idoko`) : exactPost ? `${exactPost.title} :: Blog - Gideon Idoko` : !shouldLoad404 ? '' : "Page Not Found : ( ",
+					description: !props.post.isLoaded ? (props.singlePost && props.singlePost.description) : exactPost ? exactPost.description : !shouldLoad404 ? '' : '',
 					type: 'article',
 					article: {
-						publishedTime: exactPost.created_at,
-						authors: [exactPost.author_name]
+						publishedTime: !props.post.isLoaded ? (props.singlePost && props.singlePost.created_at) : exactPost ? exactPost.created_at : !shouldLoad404 ? '' : '',
+						authors: [!props.post.isLoaded ? (props.singlePost && props.singlePost.author_name) : exactPost ? exactPost.author_name : !shouldLoad404 ? '' : '']
 					},
-					tags: exactPost.tags,
+					tags: !props.post.isLoaded ? (props.singlePost && props.singlePost.tags) : exactPost ? exactPost.tags : !shouldLoad404 ? [] : [],
 					images: [
 						{
-							url: exactPost.cover_img,
-							alt: exactPost.title + "'s cover image"
+							url: !props.post.isLoaded ? (props.singlePost && props.singlePost.cover_img) : exactPost ? exactPost.cover_img : !shouldLoad404 ? '' : '',
+							alt: !props.post.isLoaded ? (props.singlePost && `${props.singlePost.title}'s cover image`) : exactPost ? `${props.singlePost.title}'s cover image` : !shouldLoad404 ? '' : ''
 						}
 					],
 					site_name: "Blog - Gideon Idoko"
@@ -229,10 +230,10 @@ const SinglePost = (props) => {
 				site: "@IamGideonIdoko",
 				cardType: "summary_large_image"
 				}}
-			/> : !shouldLoad404 ? null : null }
+			/>
 			
 			<Head>
-			{ !props.post.isLoaded ? null : exactPost ? <title>{`${exactPost.title} :: Blog - Gideon Idoko`}</title> : !shouldLoad404 ? null : <title>{"Page Not Found : ( "}</title> }
+			<title>{ !props.post.isLoaded ? (props.singlePost && `${props.singlePost.title} :: Blog - Gideon Idoko`) : exactPost ? `${exactPost.title} :: Blog - Gideon Idoko` : !shouldLoad404 ? null : "Page Not Found : ( " }</title>
 			</Head>
 			<main className={`padding-top-10rem ${styles.singlePostMain}`}>
 				<div className="container-max-1248px">
@@ -415,3 +416,20 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, { resetPostUpdated, updatePostComments })(SinglePost);
+
+export async function getStaticPaths(context) {
+	return ({ paths: [], fallback: 'blocking' });
+  }
+
+//call at build time and not on client side
+export async function getStaticProps(context) {
+	// Call an external API endpoint to get single post.
+	const getSinglePost = await axios.get(`${config.BEHOST}/api/blogposts/${context.params.slug}`);
+	const singlePost = getSinglePost.data;
+
+	// the SinglePost component will receive `singlePost` as a prop at build time
+	return {
+	  props: { singlePost }
+	}
+  }
+  
