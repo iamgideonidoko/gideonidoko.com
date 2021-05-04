@@ -24,7 +24,7 @@ const Tags = (props) => {
 			<NextSeo
 				title={!props.post.isLoaded ? 'Loading...' : (allPostsWithTag.length === 0) ? "404 Error" : `Blog (Tag: #${tag}) - Gideon Idoko`}
 				description={(allPostsWithTag.length !== 0) ? `Checkout posts with the tag: #${tag}. I write about Software Development & web engineering topics and tools on my blog here.` : ''}
-				canonical="https://gideonidoko.com/blog"
+				canonical={`https://gideonidoko.com/blog/tags/${tag}`}
 				openGraph={{
 					url: `https://gideonidoko.com/blog/tags/${tag}`,
 					title: !props.post.isLoaded ? 'Loading...' : (allPostsWithTag.length === 0) ? "404 Error" : `Blog (Tag: #${tag}) - Gideon Idoko`,

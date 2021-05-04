@@ -30,7 +30,7 @@ const Page = (props) => {
 			<NextSeo
 				title={!props.post.isLoaded ? 'Loading...' : (!currentPageNumber || currentPageNumber > numberOfPages) ? "404 Error" : `Blog (Page ${currentPageNumber}) - Gideon Idoko`}
 				description={`Checkout posts on page ${currentPageNumber}. I write about Software Development & web engineering topics and tools on my blog here.`}
-				canonical="https://gideonidoko.com/blog"
+				canonical={`https://gideonidoko.com/blog/page/${currentPageNumber}`}
 				openGraph={{
 					url: `https://gideonidoko.com/blog/page/${currentPageNumber}`,
 					title: !props.post.isLoaded ? 'Loading...' : (!currentPageNumber || currentPageNumber > numberOfPages) ? "404 Error" : `Blog (Page ${currentPageNumber}) - Gideon Idoko`,

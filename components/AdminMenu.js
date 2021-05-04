@@ -45,6 +45,7 @@ const AdminMenu = (props) => {
             <MenuItem className="admin-menu-item"><Link href="/admin/manage-post"><a>Manage Post</a></Link></MenuItem>
             <MenuItem className="admin-menu-item"><Link href="/admin/upload-asset"><a>Upload Asset</a></Link></MenuItem>
             <MenuItem className="admin-menu-item"><Link href="/admin/delete-asset"><a>Delete Asset</a></Link></MenuItem>
+            <MenuItem className="admin-menu-item"><Link href="/admin/all-comments"><a>All Comments</a></Link></MenuItem>
             <MenuDivider />
             <MenuItem className="admin-menu-item" onClick={logoutAdmin}><span>Logout</span></MenuItem>
         </Menu>

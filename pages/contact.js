@@ -92,7 +92,7 @@ const Contact = (props) => {
 			<NextSeo
 					title="Contact me - Gideon Idoko"
 					description="Have you got a question, proposal or project in mind? Does your project need a fix? Do you want to collaborate with me on something? Feel free to reach out."
-					canonical="https://gideonidoko.com"
+					canonical="https://gideonidoko.com/contact"
 					openGraph={{
 					url: "https://gideonidoko.com/contact",
 					title: "Gideon Idoko - Software Developer and Technical Writer",
@@ -115,7 +115,7 @@ const Contact = (props) => {
 				/>
 			<Head>
 				<title>Contact me - Gideon Idoko</title>
-				<meta name="keywords" content="gideon idoko,contact gideon idoko,gideon, contact gideon,,idoko,software developer,technical writer,software engineer,developer,engineer,writer, get in touch"></meta>
+				<meta name="keywords" content="gideon idoko,contact gideon idoko,gideon, contact gideon,,idoko,software developer,technical writer,software engineer,developer,engineer,writer,get in touch"></meta>
 			</Head>
 			<main className={`padding-top-10rem ${styles.contactMain}`}>
 				<div className="container-max-1248px">

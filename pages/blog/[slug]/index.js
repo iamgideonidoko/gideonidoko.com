@@ -206,7 +206,7 @@ const SinglePost = (props) => {
 			<NextSeo
 				title={ !props.post.isLoaded ? (props.singlePost && `${props.singlePost.title} :: Blog - Gideon Idoko`) : exactPost ? `${exactPost.title} :: Blog - Gideon Idoko` : !shouldLoad404 ? '' : "Page Not Found : ( " }
 				description={ !props.post.isLoaded ? (props.singlePost && props.singlePost.description) : exactPost ? exactPost.description : !shouldLoad404 ? '' : '' }
-				canonical="https://gideonidoko.com/blog"
+				canonical={!props.post.isLoaded ? (props.singlePost && `https://gideonidoko.com/blog/${props.singlePost.slug}`) : exactPost ? `https://gideonidoko.com/blog/${exactPost.slug}` : !shouldLoad404 ? '' : ''}
 				openGraph={{
 					url: !props.post.isLoaded ? (props.singlePost && `https://gideonidoko.com/blog/${props.singlePost.slug}`) : exactPost ? `https://gideonidoko.com/blog/${exactPost.slug}` : !shouldLoad404 ? '' : '',
 					title: !props.post.isLoaded ? (props.singlePost && `${props.singlePost.title} :: Blog - Gideon Idoko`) : exactPost ? `${exactPost.title} :: Blog - Gideon Idoko` : !shouldLoad404 ? '' : "Page Not Found : ( ",
@@ -234,6 +234,7 @@ const SinglePost = (props) => {
 			
 			<Head>
 			<title>{ !props.post.isLoaded ? (props.singlePost && `${props.singlePost.title} :: Blog - Gideon Idoko`) : exactPost ? `${exactPost.title} :: Blog - Gideon Idoko` : !shouldLoad404 ? null : "Page Not Found : ( " }</title>
+			<meta name="keywords" content={ !props.post.isLoaded ? (props.singlePost && props.singlePost.keywords.join(',')) : exactPost ? exactPost.keywords.join(',') : !shouldLoad404 ? '' : '' }></meta>
 			</Head>
 			<main className={`padding-top-10rem ${styles.singlePostMain}`}>
 				<div className="container-max-1248px">

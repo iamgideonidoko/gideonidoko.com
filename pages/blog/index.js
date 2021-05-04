@@ -51,6 +51,7 @@ const BlogHome = (props) => {
 			/>
 			<Head>
 				<title>Blog - Gideon Idoko</title>
+				<meta name="keywords" content="blog,writing,posts,gideon idoko,software developer,technical writer,software engineer,developer,engineer,writer"></meta>
 			</Head>
 			<main className={`padding-top-10rem ${styles.blogMain}`}>
 				<div className="container-max-1248px">

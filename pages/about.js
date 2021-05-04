@@ -10,7 +10,7 @@ const About = () => {
 			<NextSeo
 				title="About me - Gideon Idoko"
 				description="Gideon Idoko is a Software Developer and Technical Writer based in Nigeria interested in learning, building positive solutions with awesome experiences, sharing design and technical ideas and tips, writing, making innovative research, blogging and community building."
-				canonical="https://gideonidoko.com"
+				canonical="https://gideonidoko.com/about"
 				openGraph={{
 				url: "https://gideonidoko.com/about",
 				title: "Gideon Idoko - Software Developer and Technical Writer",
