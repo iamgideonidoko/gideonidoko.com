@@ -7,6 +7,7 @@ import SimpleReactValidator from 'simple-react-validator';
 import styles from '../styles/Contact.module.css';
 import { NextSeo } from 'next-seo';
 import { PropTypes } from 'prop-types';
+import { encode } from 'html-entities';
 
 const Contact = (props) => {
 
@@ -58,7 +59,7 @@ const Contact = (props) => {
 					const newContact = {
 						name,
 						email,
-						message,
+						message: encode(message),
 						contactPostAccessKey: config.contactPostAccessKey
 					}
 					props.addContact(newContact);
@@ -95,7 +96,7 @@ const Contact = (props) => {
 					canonical="https://gideonidoko.com/contact"
 					openGraph={{
 					url: "https://gideonidoko.com/contact",
-					title: "Gideon Idoko - Software Developer and Technical Writer",
+					title: "Contact me - Gideon Idoko",
 					description: "Have you got a question, proposal or project in mind? Does your project need a fix? Do you want to collaborate with me on something? Feel free to reach out.",
 					images: [
 						{
@@ -148,7 +149,7 @@ const Contact = (props) => {
 									<label htmlFor="message">Your Message</label>
 									<textarea name="message" value={message} id="message" cols="30" rows="10" onChange={handleInputChange} placeholder="Hello, I want to ..."></textarea>
 									{ /* simple validation */
-										simpleValidator.current.message('message', message, 'required|alpha_num_dash_space|between:2,500')
+										simpleValidator.current.message('message', message, 'required|between:2,500')
 									}
 								</div>
 								<div className={styles.submitBtnWrap}>

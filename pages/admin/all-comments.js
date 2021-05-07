@@ -40,6 +40,15 @@ const AllComments = (props) => {
 				}
 			})
 	}
+
+	
+		/*
+	function to return dangerous markup
+	*/
+	const createMarkup = (markup) => {
+		return { __html: markup };
+	}
+
 	
 	return (
 		<Fragment>
@@ -90,14 +99,14 @@ const AllComments = (props) => {
                                 (shownId.includes(post._id) && post.comments.length !== 0) ? <div className={styles.postBody}>
                                     {post.comments.map(comment => <div className={styles.singleComment}>
                                         <div className={styles.commentHead}>
-                                            <span><b>{comment.comment_author}</b> [<small><i>replies({comment.replies.length})</i></small>]:  <span className={styles.singleCommentBody}>{comment.comment_body}</span></span>
+                                            <span><b>{comment.comment_author}</b> [<small><i>replies({comment.replies.length})</i></small>]:  <span className={styles.singleCommentBody} dangerouslySetInnerHTML={createMarkup(comment.comment_body)} /></span>
                                             <span>
                                                 <button className={styles.togglePostBtn} onClick={togglePost.bind(comment._id)}><i className={shownId.includes(comment._id) ? "neu-minus-circle" : "neu-add-circle"}></i></button>
                                             </span>
                                         </div>
                                         {(shownId.includes(comment._id) && comment.replies.length !== 0) ? <div className={styles.commentBody}>
                                             {
-                                                comment.replies.map(reply => <div className={styles.singleReply}><b>{reply.reply_author}</b>: {reply.reply_body}</div>)
+                                                comment.replies.map(reply => <div className={styles.singleReply}><b>{reply.reply_author}</b>: <span dangerouslySetInnerHTML={createMarkup(reply.reply_body)} /></div>)
                                             }
                                         </div> : (shownId.includes(comment._id) && comment.replies.length === 0) ? <div className={`${styles.commentBody} ${styles.p05}`}>No Comments</div> : null}
 

@@ -13,7 +13,7 @@ const About = () => {
 				canonical="https://gideonidoko.com/about"
 				openGraph={{
 				url: "https://gideonidoko.com/about",
-				title: "Gideon Idoko - Software Developer and Technical Writer",
+				title: "About me - Gideon Idoko",
 				description: "Gideon Idoko is a Software Developer and Technical Writer based in Nigeria interested in learning, building positive solutions with awesome experiences, sharing design and technical ideas and tips, writing, making innovative research, blogging and community building.",
 				images: [
 					{
@@ -46,7 +46,7 @@ const About = () => {
 
 					<p>I play cool sports like tennis, badminton majorly. When I am not programming I'll probably be reading some articles, watching movies, engaging in my other hobbies or having a good time with my family.</p>
 
-					<p><a href="https://drive.google.com/file/d/1tVVkkSMSw7uhJDQXGmW0_dqaDM0d0Ow0/view?usp=sharing" target="_blank" rel="noopener noreferrer">Download Resume.</a></p>
+					<p><a href="https://drive.google.com/file/d/1BACncycO0qHDWsom4pKY1hza1C254-zQ/view?usp=sharing" target="_blank" rel="noopener noreferrer">Download Resume.</a></p>
 
 					<h2>Stack.</h2>
 					<h4>Tools (Languages/Frameworks/Libraries):</h4>

@@ -82,6 +82,7 @@ const AdminProfile = (props) => {
 									<li><Link href="/admin/upload-asset"><a>Upload Asset</a></Link></li>
 									<li><Link href="/admin/delete-asset"><a>Delete Asset</a></Link></li>
 									<li><Link href="/admin/contacts"><a>Your Contacts</a></Link></li>
+									<li><Link href="/admin/all-comments"><a>All Comments</a></Link></li>
 								</ul>
 							</div>
 						</div>

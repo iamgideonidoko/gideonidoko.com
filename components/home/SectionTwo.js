@@ -96,9 +96,9 @@ const SectionTwo = () => {
 							</div>
 							<div className={styles.projectExtLinks}>
 								{
-									project.projectLink && (<a href={project.projectLink}>View Project <i className="neu-right-lg"></i></a>)}
+									project.projectLink && (<a href={project.projectLink} target="_blank" rel="noopener noreferrer">View Project <i className="neu-right-lg" ></i></a>)}
 									{
-									project.codeLink && (<a href={project.codeLink}>View Code <i className="neu-right-lg"></i></a>)
+									project.codeLink && (<a href={project.codeLink} target="_blank" rel="noopener noreferrer">View Code <i className="neu-right-lg"></i></a>)
 								
 								}
 							</div>

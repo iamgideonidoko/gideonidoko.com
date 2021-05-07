@@ -40,6 +40,14 @@ const Contacts = (props) => {
 				}
 			})
 	}
+
+		/*
+	function to return dangerous markup
+	*/
+	const createMarkup = (markup) => {
+		return { __html: markup };
+	}
+
 	
 	return (
 		<Fragment>
@@ -86,7 +94,7 @@ const Contacts = (props) => {
 							</div>
 							{
 								shownId.includes(contact._id) && <div className={styles.contactBody}>
-									<span>{contact.message}</span>
+									<div style={{display: 'inline-block'}} dangerouslySetInnerHTML={createMarkup(contact.message)} />
 								</div>
 							}
 						</li>)
