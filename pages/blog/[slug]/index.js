@@ -10,7 +10,7 @@ import CommentModal from '../../../components/blog/CommentModal';
 import Custom404 from '../../404';
 import swal from 'sweetalert';
 import { resetPostUpdated, updatePostComments } from '../../../store/actions/postActions';
-import { getReadTime, shareToSocialMedia } from '../../../helper';
+import { getReadTime, shareToSocialMedia, strToSlug } from '../../../helper';
 import copy from 'copy-to-clipboard';
 import { config } from '../../../config/keys';
 import styles from '../../../styles/SinglePost.module.css';
@@ -51,6 +51,51 @@ const SinglePost = (props) => {
 		if (exactPost) {
 			const allPostBodyAnchors = window.document.querySelectorAll(".truePostBody a");
 			const allPostBodyPreCode = window.document.querySelectorAll(".postBodyPreCode");
+
+			const allPostBodyH1 = window.document.querySelectorAll(".truePostBody h1");
+			const allPostBodyH2 = window.document.querySelectorAll(".truePostBody h2");
+			const allPostBodyH3 = window.document.querySelectorAll(".truePostBody h3");
+			const allPostBodyH4 = window.document.querySelectorAll(".truePostBody h4");
+			const allPostBodyH5 = window.document.querySelectorAll(".truePostBody h5");
+			const allPostBodyH6 = window.document.querySelectorAll(".truePostBody h6");
+
+			const allPostBodyTable = window.document.querySelectorAll(".truePostBody table");
+
+			const truePostBody = window.document.querySelector(".truePostBody");
+
+			allPostBodyTable.forEach(table => {
+				const tableDiv = window.document.createElement("div");
+				!tableDiv.classList.contains("postBodyTable") && tableDiv.classList.add("postBodyTable");
+				let clonedTable = table.cloneNode(true);
+				tableDiv.appendChild(clonedTable);
+
+				truePostBody.insertBefore(tableDiv, table);
+				truePostBody.removeChild(table);
+			})
+
+			allPostBodyH1.forEach(h1 => {
+				h1.id = strToSlug(h1.textContent);
+			});
+
+			allPostBodyH2.forEach(h2 => {
+				h2.id = strToSlug(h2.textContent);
+			});
+
+			allPostBodyH3.forEach(h3 => {
+				h3.id = strToSlug(h3.textContent);
+			});
+
+			allPostBodyH4.forEach(h4 => {
+				h4.id = strToSlug(h4.textContent);
+			});
+
+			allPostBodyH5.forEach(h5 => {
+				h5.id = strToSlug(h5.textContent);
+			});
+
+			allPostBodyH6.forEach(h6 => {
+				h6.id = strToSlug(h6.textContent);
+			});
 
 			allPostBodyAnchors.forEach(a => {
 				//get hostname of website address and link address
@@ -197,7 +242,6 @@ const SinglePost = (props) => {
 		})
 
 	}
-
 
 
 	!props.post.isLoaded ? null : exactPost ? null : setTimeout(() => setShouldLoad404(true), 3000);

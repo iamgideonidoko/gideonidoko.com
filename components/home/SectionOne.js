@@ -25,7 +25,10 @@ const SectionOne = () => {
 				}
 			});
 
-			h1Element.innerHTML = mappedH1ElemArray && mappedH1ElemArray.join('');
+			if (h1Element) {
+				h1Element.innerHTML = mappedH1ElemArray && mappedH1ElemArray.join('');
+			}
+
 
 		}, 4000)
 	}
