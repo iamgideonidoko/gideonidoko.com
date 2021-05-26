@@ -12,7 +12,7 @@ const SectionFour = () => {
 								<li>
 									<div><span></span></div>
 									<div>
-										<h5>Web Design/Development</h5>
+										<h5>Web Design / Development</h5>
 										<p>I design, integrate and maintain software solutions like websites, web apps, portals, PWAs, APIs etc.</p>
 									</div>
 								</li>
