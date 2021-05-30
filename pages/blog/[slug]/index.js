@@ -63,15 +63,17 @@ const SinglePost = (props) => {
 
 			const truePostBody = window.document.querySelector(".truePostBody");
 
-			allPostBodyTable.forEach(table => {
-				const tableDiv = window.document.createElement("div");
-				!tableDiv.classList.contains("postBodyTable") && tableDiv.classList.add("postBodyTable");
-				let clonedTable = table.cloneNode(true);
-				tableDiv.appendChild(clonedTable);
-
-				truePostBody.insertBefore(tableDiv, table);
-				truePostBody.removeChild(table);
-			})
+			if (!window.document.querySelector('.postBodyTable')) {	
+				allPostBodyTable.forEach(table => {
+					const tableDiv = window.document.createElement("div");
+					!tableDiv.classList.contains("postBodyTable") && tableDiv.classList.add("postBodyTable");
+					let clonedTable = table.cloneNode(true);
+					tableDiv.appendChild(clonedTable);
+					
+					truePostBody.insertBefore(tableDiv, table);
+					truePostBody.removeChild(table);
+				})
+			}
 
 			allPostBodyH1.forEach(h1 => {
 				h1.id = strToSlug(h1.textContent);
