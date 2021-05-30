@@ -101,14 +101,13 @@ const SectionOne = () => {
 	return (
 		<div className={`${styles.sectionOne} container-max-1248px`}>
 		<div className={`${styles.sectionOneShape} ${styles.text1}`}><i className="neu-left-lg"></i>scroll down</div>
-		<div className={`${styles.sectionOneShape} ${styles.shape1}`}></div>
-		<div className={`${styles.sectionOneShape} ${styles.shape2}`}>
-			<div className={styles.shape2Sub}></div>
-		</div>
+		<div className={`${styles.sectionOneShape} ${styles.shape1}`}><div></div></div>
+		<div className={`${styles.sectionOneShape} ${styles.shape2}`}><div></div></div>
+		
 			<div>
 				<h4 className={styles.welcomeLine2}>
-					<motion.span initial="hidden" animate="visible" variants={h4Curate}>Curate.</motion.span>&nbsp;&nbsp;  
-					<motion.span initial="hidden" animate="visible" variants={h4Develop}>Develop.</motion.span>&nbsp;&nbsp;  
+					<motion.span initial="hidden" animate="visible" variants={h4Curate}>Curate.</motion.span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+					<motion.span initial="hidden" animate="visible" variants={h4Develop}>Develop.</motion.span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 					<motion.span initial="hidden" animate="visible" variants={h4Improve}> Improve.</motion.span></h4>
 			</div>
 			<motion.h1 initial="hidden" animate="visible" variants={h1Variant} className={`${styles.welcomeLine} mainWelcomeLine`}>I develop unique <br />digital experiences.</motion.h1>

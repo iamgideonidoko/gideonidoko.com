@@ -9,7 +9,6 @@ const ThemeSwitch = (props) => {
 	}, [])
 
 	const handleSwitch = () => {
-		console.log('switch clicked');
 		if (typeof window !== "undefined") {
 			if(theme === 'dark') {
 				setTheme('light');

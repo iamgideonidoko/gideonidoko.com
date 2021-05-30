@@ -7,10 +7,7 @@ const Nav = (props) => {
 			<ul>
 				<li><Link href="/blog">Blog</Link></li>
 				<li><Link href="/about">About</Link></li>
-				{/*
-				<li><Link href="/#services">Services</Link></li>
-				*/}
-				<li className="get-in-touch"><Link  href="/contact" >Get in touch</Link></li>
+				<li className="get-in-touch-wrapper"><div className="get-in-touch"><Link  href="/contact" >Get in touch</Link></div></li>
 			</ul>
 		</nav>
 		)

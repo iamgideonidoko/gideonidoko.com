@@ -136,7 +136,7 @@ const DeleteAsset = (props) => {
 						<h1>Delete Asset</h1>
 						<p>Select asset to view or delete below. You can only delete assets uploaded by you.</p>
 
-						<div class={styles.deleteAssetForm}>
+						<div className={styles.deleteAssetForm}>
 
 						<Select
 							className="deleteAssetFormSelect"

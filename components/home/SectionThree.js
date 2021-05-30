@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Bounce from 'react-reveal/Bounce';
+import Wobble from 'react-reveal/Wobble';
 import Link from 'next/link';
 import styles from '../../styles/Home.module.css'
 
@@ -46,10 +48,14 @@ const SectionThree = () => {
 			<div className={styles.sectionThreeBgTextWrap}>
 				<div className={styles.sectionThreeBgText}>G.I</div>
 			</div>
+			<Bounce left duration={1500}>
 				<h3>I'm Gideon Idoko.</h3>
+			</Bounce>
 				<h4 className={styles.aboutText}>- {aboutText}.</h4>
 				<div className={styles.s3AboutLink}>
+				<Wobble duration={2000}>
 				<p className={styles.aboutSeeMore}><span><Link href="/about"><a>See more about me.</a></Link></span> <span></span></p>
+				</Wobble>
 				</div>
 			</div>			
 			

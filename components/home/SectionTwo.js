@@ -1,3 +1,6 @@
+import Fade from 'react-reveal/Fade';
+import Bounce from 'react-reveal/Bounce';
+import Wobble from 'react-reveal/Wobble';
 import styles from '../../styles/Home.module.css'
 
 const SectionTwo = () => {
@@ -84,11 +87,15 @@ const SectionTwo = () => {
 	return (
 		<div className={styles.sectionTwo}>
 			<div className="container-max-1248px">
+			<Bounce left duration={1800}>
 				<h2 className={styles.projectsHead}>Projects - </h2>
+			</Bounce>
 
 				<div className={styles.projectsWrapper}>
 				{projects.map(project => (
 					<div key={project.id} className={`${parseInt(project.id) % 2 === 0 ? styles.projectStyleOne : styles.projectStyleTwo}`}>
+					<Fade bottom duration={2000}>
+
 						<div data-first-letter={firstLetter(project.about)} className={styles.projectSectionOne}>
 							<div className={styles.nameAboutWrapper}>
 								<h3>{project.name}</h3>
@@ -104,6 +111,8 @@ const SectionTwo = () => {
 							</div>
 
 						</div>
+					</Fade>
+					<Fade duration={2000} right={!(parseInt(project.id) % 2 === 0)} left={(parseInt(project.id) % 2 === 0)}>
 						<div className={styles.projectSectionTwo}>
 							<div>
 								<div className={styles.projectTech}>{
@@ -112,13 +121,16 @@ const SectionTwo = () => {
 								<img src={project.cover} alt={project.coverAlt} />
 							</div>
 						</div>
+					</Fade>
 						
 					</div>
 					))}
 					
 				</div>
 				<div className={styles.moreProjects}>
+				<Wobble duration={2000}>
 					<p className={styles.aboutSeeMore}><span><a href="https://github.com/IamGideonIdoko" target="_blank" rel="noopener noreferrer">View more projects.</a></span> <span></span></p>
+				</Wobble>
 				</div>
 			</div>
 		</div>
