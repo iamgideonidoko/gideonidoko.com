@@ -50,7 +50,7 @@ const AdminMenu = (props) => {
             <MenuItem className="admin-menu-item" onClick={logoutAdmin}><span>Logout</span></MenuItem>
         </Menu>
 );
-}
+} 
 
 const mapStateToProps = (state) => ({
 	githubUser: state.user.githubUser
