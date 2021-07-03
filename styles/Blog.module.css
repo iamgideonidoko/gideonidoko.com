@@ -122,7 +122,7 @@
 
 .pagination span {
 	display: inline-block;
-	font-family: Poppins, var(--default-font);
+	font-family: Lato, var(--default-font);
 }
 
 .pagination span a {

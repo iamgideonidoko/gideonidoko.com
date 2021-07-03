@@ -161,7 +161,6 @@ const CreatePost = (props) => {
 							<div className="complex-loader-wrap">
 						        <div className="complex-loader"></div>
 						    </div>
-							<p style={{textAlign: 'center'}}>Loading...</p>
 						</div>) : (<Fragment>
 							{!props.isAuthenticated && (<div className={`loginRedirectMsg`}>
 							<h1>You are not logged in.</h1>

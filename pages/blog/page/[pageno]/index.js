@@ -62,7 +62,6 @@ const Page = (props) => {
 							<div className="complex-loader-wrap">
 						        <div className="complex-loader"></div>
 						    </div>
-							<p style={{textAlign: 'center'}}>Loading...</p>
 						</div>) : (!currentPageNumber || currentPageNumber > numberOfPages) ? (<Fragment>
 							PAGE DOES NOT EXIST							
 						</Fragment>) : (<Fragment>

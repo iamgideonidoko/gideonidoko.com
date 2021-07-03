@@ -1,22 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
 @import url('/assets/icon/fontawesome/css/all.min.css');
+
 
 
 /*>>>>FONT DECLARATION<<<<<*/
 @font-face {
-	font-family: Poppins;
-	src: url("/assets/font/Poppins-Regular.ttf");
+	font-family: Lato;
+	src: url("/assets/font/Lato-Regular.ttf");
 }
 
 @font-face {
 	font-family: PT-Serif;
 	src: url("/assets/font/PT_Serif-Web-Regular.ttf");
 }
-
-@font-face {
-	font-family: Gilroy;
-	src: url("/assets/font/Gilroy-Light.otf");
-}
-
 
 @font-face {
 	font-family: Monaco;
@@ -111,7 +108,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: Poppins, var(--default-font);
+	font-family: Lato, var(--default-font);
 }
 
 a {
@@ -365,7 +362,7 @@ a {
 
 .admin-menu-wrap {
 	font-size: 1.4rem !important;
-	/*font-family: Poppins;*/
+	/*font-family: Lato;*/
 	background-color: #2B3036 !important;
 }
 
@@ -890,7 +887,7 @@ a {
 	}
 
 	.mobileAdminName span {
-		font-family: Poppins, var(--default-font);
+		font-family: Lato, var(--default-font);
 	}
 
 	.mobileNavSection nav ul li {

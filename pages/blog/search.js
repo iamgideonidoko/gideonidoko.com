@@ -65,7 +65,6 @@ const Search = (props) => {
 							<div className="complex-loader-wrap">
 						        <div className="complex-loader"></div>
 						    </div>
-							<p style={{textAlign: 'center'}}>Loading...</p>
 						</div>) :  (<Fragment>
 							<h2 style={{marginBottom: "2rem"}}><i className="neu-browse"></i> Search all posts.</h2>
 							<div className={styles.searchInputWrapper}>

@@ -32,7 +32,6 @@ const AdminProfile = (props) => {
 							<div className="complex-loader-wrap">
 						        <div className="complex-loader"></div>
 						    </div>
-							<p style={{textAlign: 'center'}}>Loading...</p>
 						</div>) : (<Fragment>
 							{!props.isAuthenticated && (<div className={`loginRedirectMsg`}>
 							<h1>You are not logged in.</h1>
@@ -52,17 +51,15 @@ const AdminProfile = (props) => {
 							</div>
 							<h1 className={styles.adminName}>{props.adminuser.name}</h1>
 							<p className={styles.adminBio}>{props.githubUser.bio}</p>
-							<div className={styles.socialInfo}>
-								<div>Joined on {moment(props.adminuser.created_at).format('MMM DD, YYYY')}</div>
-								<div><i className="neu-email"></i> {props.adminuser.email}</div>
-								<div>
+							<ul className={styles.socialInfo}>
+								<li><span>Joined:</span> <span>{moment(props.adminuser.created_at).format('MMM DD, YYYY')}</span></li>
+								<li><span>Email:</span> <span><i className="neu-email"></i> {props.adminuser.email}</span></li>
+								<li><span>Social Media:</span> <span>
 								<a href={`https://twitter.com/${props.githubUser.twitter_username}`} rel="noopener noreferrer"><i className="fab fa-twitter"></i></a> &nbsp;&nbsp;&nbsp;
-								 <a href={props.githubUser.html_url} rel="noopener noreferrer"><i className="fab fa-github"></i></a>
-								</div>
-							</div>
-							<div className={styles.locationInfo}>
-								<p>Location: {props.githubUser.location}</p>
-							</div>
+								 <a href={props.githubUser.html_url} rel="noopener noreferrer"><i className="fab fa-github"></i></a></span>
+								</li>
+								<li><span>Location:</span> <span>{props.githubUser.location}</span></li>
+							</ul>
 							<div className={styles.statInfo}>
 								<table>
 								<tbody>

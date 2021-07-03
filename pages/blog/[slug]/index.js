@@ -295,7 +295,6 @@ const SinglePost = (props) => {
 							<div className="complex-loader-wrap">
 						        <div className="complex-loader"></div>
 						    </div>
-							<p style={{textAlign: 'center'}}>Loading...</p>
 						</div>) : exactPost ? (<Fragment>
 						<div className={styles.singlePostPageWrapper}>
 

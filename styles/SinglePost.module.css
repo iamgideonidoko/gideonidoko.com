@@ -360,7 +360,7 @@
 .replyAuthor div:nth-child(1) span:nth-child(1) {
 	font-weight: 600;
 	font-size: 1.5rem;
-	font-family: Poppins, var(--default-font);
+	font-family: Lato, var(--default-font);
 }
 
 .commentAuthor div:nth-child(1) i,

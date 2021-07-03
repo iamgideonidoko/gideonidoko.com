@@ -56,7 +56,6 @@ const Tags = (props) => {
 							<div className="complex-loader-wrap">
 						        <div className="complex-loader"></div>
 						    </div>
-							<p style={{textAlign: 'center'}}>Loading...</p>
 						</div>) : (allPostsWithTag.length === 0) ? (<Fragment>
 							PAGE DOES NOT EXIST							
 						</Fragment>) : (<Fragment>

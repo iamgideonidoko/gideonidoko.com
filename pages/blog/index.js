@@ -61,7 +61,6 @@ const BlogHome = (props) => {
 							<div className="complex-loader-wrap">
 						        <div className="complex-loader"></div>
 						    </div>
-							<p style={{textAlign: 'center'}}>Loading...</p>
 						</div>) : (<Fragment>
 
 						<div className={styles.searchLinkWrapper}>

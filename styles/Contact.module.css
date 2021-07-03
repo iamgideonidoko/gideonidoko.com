@@ -66,7 +66,7 @@
 	background: transparent;
 	border: none;
 	outline: none;
-	font-family: Poppins, var(--default-font);
+	font-family: Lato, var(--default-font);
 	border-bottom: 1px solid var(--font-color);
 	display: inline-block;
 	width: 100%;
@@ -81,14 +81,15 @@
 	background: transparent;
 	outline: none;
 	color: var(--font-color);
-	font-family: Poppins, var(--default-font);
+	font-family: Lato, var(--default-font);
 	margin: 1.5rem 0 0;
 	padding: 0.8rem;
 	border: 1px solid var(--font-color);
 	opacity: 0.75;
 	resize: none;
 	height: 15rem;
-	transition: border-color 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	border-radius: 0.5rem;
 }
 
 .contactForm input:focus, .contactForm textarea:focus {
@@ -100,6 +101,7 @@
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
+	border-radius: 0;
 }
 
 .submitBtnWrap {
@@ -115,6 +117,7 @@
 	font-size: 1.6rem;
 	transition: letter-spacing 0.2s ease-in-out;
 	cursor: pointer;
+	border-radius: 0.5rem;
 }
 
 .submitBtnWrap button i {
