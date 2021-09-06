@@ -75,11 +75,11 @@
 
 .statInfo {
 	margin-top: 2rem;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	max-width: -webkit-fit-content;
 	max-width: -moz-fit-content;
 	max-width: fit-content;
-	border-radius: 1rem;
+	/* border-radius: 1rem; */
 	overflow: hidden;
 }
 
@@ -123,7 +123,7 @@
 }
 
 .actionLinks ul li a:hover {
-	background: rgba(0, 0, 0, 0.2);
+	background: var(--searchbox-bg);
 }
 
 /* >>>>>>>>>>MEDIA QUERIES<<<<<<<< */

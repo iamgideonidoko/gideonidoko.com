@@ -11,12 +11,11 @@
 }
 
 .custom404Container h1 {
-	color: var(--pri-blue-normal);
+	color: var(--pri-neutral);
 	text-align: center;
 }
 
 .custom404Container p {
-	color: var(--pri-blue-normal);
 	opacity: 0.75;
 	font-weight: 600;
 	word-wrap: break-word;
@@ -32,8 +31,12 @@
 	max-width: 100%;
 	margin: -5rem;
 	transform: rotateY(0deg);
-	/*animation: flip 5s linear 15s infinite alternate-reverse;*/
-	display: inline-block;
+	/*animation: flip 5s linear 15s infinite alternate-reverse;
+	*/display: inline-block;
+	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+	-ms-transform: rotateY(0deg);
+	-o-transform: rotateY(0deg);
 }
 
 .custom404ExitLinks span {
@@ -42,13 +45,22 @@
 }
 
 .custom404ExitLinks a {
-	border: 2px solid var(--pri-blue-normal);
-	padding: 0.8rem 1rem;
+	/*border: 2px solid var(--pri-blue-normal);
+	*/
+	width: 13rem;
+	padding: 1rem 1.5rem;
 	margin: 0 0 1rem;
 	display: inline-block;
 	border-radius: 0.8rem;
 	transition: all 0.2s ease-in;
-
+	-webkit-border-radius: 0.8rem;
+	-moz-border-radius: 0.8rem;
+	-ms-border-radius: 0.8rem;
+	-o-border-radius: 0.8rem;
+	-webkit-transition: all 0.2s ease-in;
+	-moz-transition: all 0.2s ease-in;
+	-ms-transition: all 0.2s ease-in;
+	-o-transition: all 0.2s ease-in;
 }
 
 .custom404ExitLinks span:nth-child(1) a {
@@ -61,7 +73,7 @@
 }
 
 .custom404ExitLinks span:nth-child(2) a {
-	color: var(--pri-blue-normal);
+	/* color: var(--pri-blue-normal); */
 }
 
 .custom404ExitLinks span:nth-child(2) a:hover {

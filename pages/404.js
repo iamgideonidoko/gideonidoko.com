@@ -21,8 +21,8 @@ const Custom404 = () => {
 						<h1>404 - Page Not Found &nbsp;&nbsp;: (</h1>
 						<p><small>Well, this is awkward, the page you were trying to view does not exist.</small></p>
 						<div className={styles.custom404ExitLinks}>
-							<span><Link href="/"><a>Go To Homepage</a></Link></span>
-							<span><Link href="/blog"><a>Go To Blog Home</a></Link></span>
+							<span><Link href="/"><a>Go Home</a></Link></span>
+							<span><Link href="/blog"><a>Go To Blog</a></Link></span>
 						</div>
 					</div>
 				</div>

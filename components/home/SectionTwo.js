@@ -99,7 +99,7 @@ const SectionTwo = () => {
 						<div data-first-letter={firstLetter(project.about)} className={styles.projectSectionOne}>
 							<div className={styles.nameAboutWrapper}>
 								<h3>{project.name}</h3>
-								<p>{project.about}</p>
+								<p className="project-abt">{project.about}</p>
 							</div>
 							<div className={styles.projectExtLinks}>
 								{

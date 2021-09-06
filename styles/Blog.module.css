@@ -81,7 +81,8 @@
 	margin: 0 0 1rem -20%;
 	padding: 1.5rem;
 	background: var(--bg-color);
-	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	/* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2); */
+	box-shadow: 1px 1px 1px 1px var(--blogrighth3-shadow);
 	z-index: 4;
 	position: relative;
 }
@@ -164,7 +165,8 @@
 	padding: 1.2rem;
 	width: 100%;
 	border-radius: 0.6rem;
-	background: rgba(0, 0, 0, 0.2);
+	/* background: rgba(0, 0, 0, 0.2); */
+	background: var(--searchbox-bg);
 	color: var(--font-color);
 }
 

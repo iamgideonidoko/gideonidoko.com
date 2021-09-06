@@ -166,7 +166,7 @@
 	position: absolute;
 	top: 0;
 	font-size: 20rem;
-	color: rgba(0, 0, 0, 0.2);
+	color: var(--ps1first-color);
 	z-index: 0;
 }
 
@@ -205,9 +205,13 @@
 	height: auto;
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
-	transition: -webkit-filter 1s ease;
-	transition: filter 1s ease;
-	transition: filter 1s ease, -webkit-filter 1s ease;
+	transition: -webkit-filter 0.3s ease;
+	transition: filter 0.3s ease;
+	transition: filter 0.3s ease, -webkit-filter 0.3s ease;
+	-webkit-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
+	-moz-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
+	-ms-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
+	-o-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
 }
 
 .projectStyleOne:hover img,
@@ -225,6 +229,7 @@
 	display: flex;
 	flex-direction: column;
 	top: 0;
+	z-index: 2;
 }
 
 .projectTech span {
@@ -426,6 +431,7 @@
 
 .servicesWrapper ul li div:nth-child(2) p {
 	opacity: 0.8;
+	margin-top: 1rem;
 }
 
 .coderImgWrapper {
@@ -557,6 +563,8 @@
 		width: 40%;
 	}
 
+	
+
 	.projectTech span {
 		padding: 0.2rem;
 		font-size: 1.1rem;
@@ -621,6 +629,11 @@
 	.projectTech {
 		flex-direction: column;
 	}
+
+	.projectSectionOne p {
+		margin: 1.5rem 0 0 0;
+		padding-bottom: 2rem;
+	}
 }
 
 @media screen and (max-width: 533px) {
@@ -676,6 +689,7 @@
 @media screen and (max-width: 369px) {
 	.projectSectionOne {
 		padding: 0;
+		padding-top: 1.5rem;
 	}
 
 }

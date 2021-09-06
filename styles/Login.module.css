@@ -39,12 +39,14 @@
 .usernameFC input, .passwordFC input {
 	width: 100%;
 	padding: 1rem;
-	background: rgba(0, 0, 0, 0.1);
+	/* background: rgba(0, 0, 0, 0.1); */
 	outline: none;
-	border: 1px solid rgba(14, 14, 14, 0.1);
+	/* border: 1px solid rgba(14, 14, 14, 0.1); */
 	border-radius: 0.6rem;
 	font-family: Lato;
 	color: var(--font-color);
+	border: 1px solid var(--neutral-color-4);
+	background: var(--searchbox-bg);
 }
 
 .submitFC {
