@@ -4,7 +4,6 @@ import Link from 'next/link';
 import {createWrapper} from 'next-redux-wrapper';
 import makeStore from '../store/store';
 import {useStore} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ThemeSwitch from '../components/ThemeSwitch';
@@ -12,7 +11,6 @@ import FullscreenSwitch from './../components/FullscreenSwitch';
 import AdminMenu from './../components/AdminMenu';
 import AnimatedCursor from 'react-animated-cursor';
 import Head from 'next/head';
-import {motion} from 'framer-motion';
 
 function MyApp({Component, pageProps, router}) {
 
@@ -45,7 +43,6 @@ function MyApp({Component, pageProps, router}) {
 	const store = useStore(state => state);
 
     return (
-        <PersistGate persistor={store.__persistor} loading={<div>Loading</div>}>
             <Fragment>
                 <Head>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -156,25 +153,10 @@ function MyApp({Component, pageProps, router}) {
                     ? "main-wrapper mobile-nav-view"
                     : "main-wrapper"}>
                     <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen}/>
-                    <motion.div
-                        key={router.route}
-                        initial="pageInitial"
-                        animate="pageAnimate"
-                        className="container"
-                        variants={{
-                        pageInitial: {
-                            opacity: 0
-                        },
-                        pageAnimate: {
-                            opacity: 1
-                        }
-                    }}>
                         <Component {...pageProps}/>
-                    </motion.div>
                     <Footer/>
                 </div>
             </Fragment>
-        </PersistGate>
     )
 }
 
