@@ -12,3 +12,8 @@ export interface SocialShareOptions {
     text?: string;
     hashtags?: string;
 }
+
+export interface AxiosHeaders {
+    Authorization?: string;
+    'Content-Type': string;
+}

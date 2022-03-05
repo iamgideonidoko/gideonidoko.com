@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { CountOptions, SocialShareOptions } from './interfaces/helper.interface';
+import { CountOptions, SocialShareOptions, AxiosHeaders } from './interfaces/helper.interface';
 
 export const renameFileWithPrefix = (fileName: string) => {
     //site domain name
@@ -100,7 +100,7 @@ export const count = (target: string, options?: CountOptions) => {
     if (options.stripTags) original = original.replace(/<\/?[a-z][^>]*>/gi, '');
 
     if (options.ignore) {
-        original = original.replace(i, '');
+        original = original.replace(/ /i, '');
     }
 
     const trimmed = original.trim();
@@ -181,7 +181,7 @@ export function shareToSocialMedia(opt: SocialShareOptions) {
     if (opt.type === 'facebook') {
         url = 'https://www.facebook.com/sharer.php?u=' + pageUrl;
         socialWindow(url);
-    } else if (opt.type === 'twitter') {
+    } else if (opt.type === 'twitter' && opt.text) {
         const preText = opt.text;
         const text = encodeURIComponent(preText.length > 140 ? preText.slice(0, 130) + '...' : preText);
         url = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${text}&hashtags=${opt.hashtags}&via=IamGideonIdoko`;
@@ -195,7 +195,7 @@ export function shareToSocialMedia(opt: SocialShareOptions) {
     }
 }
 
-export function isConstructor(f) {
+export function isConstructor(f: new () => boolean) {
     try {
         new f();
     } catch (err) {
@@ -210,7 +210,7 @@ export const axiosHeaders = (accessToken?: string) => {
     //get tenant tenantToken from local storage
 
     // Headers
-    const axiosConfig = {
+    const axiosConfig: { headers: AxiosHeaders } = {
         headers: {
             'Content-Type': 'application/json',
         },
