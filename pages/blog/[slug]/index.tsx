@@ -23,8 +23,6 @@ import { SinglePost } from '../../../interfaces/post.interface';
 
 const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
     console.log('Post Info => ', postInfo);
-    const router = useRouter();
-    const { slug } = router.query;
 
     const exactPost = postInfo.post;
     const nextPost = postInfo.nextPost;
@@ -150,7 +148,7 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
         }
     }, [exactPost]);
 
-    const mdParser = new MarkdownIt({
+    const mdParser: MarkdownIt = new MarkdownIt({
         highlight: function (str, lang) {
             if (lang && hljs.getLanguage(lang)) {
                 try {
@@ -164,16 +162,19 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
 
             return (
                 '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
-                md.utils.escapeHtml(str) +
+                mdParser.utils.escapeHtml(str) +
                 '</code></pre>'
             );
         },
+        html: true,
+        linkify: true,
+        breaks: true,
     });
 
     /*
 	function to return dangerous markup
 	*/
-    const createMarkup = (markup) => {
+    const createMarkup = (markup: string) => {
         return { __html: markup };
     };
 
@@ -256,144 +257,45 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
 
     return (
         <Fragment>
-            {/* <NextSeo
-                title={
-                    !props.post.isLoaded
-                        ? props.singlePost && `${props.singlePost.title} :: Blog - Gideon Idoko`
-                        : exactPost
-                        ? `${exactPost.title} :: Blog - Gideon Idoko`
-                        : !shouldLoad404
-                        ? ''
-                        : 'Page Not Found : ( '
-                }
-                description={
-                    !props.post.isLoaded
-                        ? props.singlePost && props.singlePost.description
-                        : exactPost
-                        ? exactPost.description
-                        : !shouldLoad404
-                        ? ''
-                        : ''
-                }
-                canonical={
-                    !props.post.isLoaded
-                        ? props.singlePost && `https://gideonidoko.com/blog/${props.singlePost.slug}`
-                        : exactPost
-                        ? `https://gideonidoko.com/blog/${exactPost.slug}`
-                        : !shouldLoad404
-                        ? ''
-                        : ''
-                }
-                openGraph={{
-                    url: !props.post.isLoaded
-                        ? props.singlePost && `https://gideonidoko.com/blog/${props.singlePost.slug}`
-                        : exactPost
-                        ? `https://gideonidoko.com/blog/${exactPost.slug}`
-                        : !shouldLoad404
-                        ? ''
-                        : '',
-                    title: !props.post.isLoaded
-                        ? props.singlePost && `${props.singlePost.title} :: Blog - Gideon Idoko`
-                        : exactPost
-                        ? `${exactPost.title} :: Blog - Gideon Idoko`
-                        : !shouldLoad404
-                        ? ''
-                        : 'Page Not Found : ( ',
-                    description: !props.post.isLoaded
-                        ? props.singlePost && props.singlePost.description
-                        : exactPost
-                        ? exactPost.description
-                        : !shouldLoad404
-                        ? ''
-                        : '',
-                    type: 'article',
-                    article: {
-                        publishedTime: !props.post.isLoaded
-                            ? props.singlePost && props.singlePost.created_at
-                            : exactPost
-                            ? exactPost.created_at
-                            : !shouldLoad404
-                            ? ''
-                            : '',
-                        authors: [
-                            !props.post.isLoaded
-                                ? props.singlePost && props.singlePost.author_name
-                                : exactPost
-                                ? exactPost.author_name
-                                : !shouldLoad404
-                                ? ''
-                                : '',
-                        ],
-                    },
-                    tags: !props.post.isLoaded
-                        ? props.singlePost && props.singlePost.tags
-                        : exactPost
-                        ? exactPost.tags
-                        : !shouldLoad404
-                        ? []
-                        : [],
-                    images: [
-                        {
-                            url: !props.post.isLoaded
-                                ? props.singlePost && props.singlePost.cover_img
-                                : exactPost
-                                ? exactPost.cover_img
-                                : !shouldLoad404
-                                ? ''
-                                : '',
-                            alt: !props.post.isLoaded
-                                ? props.singlePost && `${props.singlePost.title}'s cover image`
-                                : exactPost
-                                ? `${props.singlePost.title}'s cover image`
-                                : !shouldLoad404
-                                ? ''
-                                : '',
-                        },
-                    ],
-                    site_name: 'Blog - Gideon Idoko',
-                }}
-                twitter={{
-                    handle: '@IamGideonIdoko',
-                    site: '@IamGideonIdoko',
-                    cardType: 'summary_large_image',
-                }}
-            />
+            {!postInfo.post ? (
+                <Custom404 />
+            ) : (
+                <Fragment>
+                    <NextSeo
+                        title={`${exactPost.title} :: Blog - Gideon Idoko`}
+                        description={exactPost.description}
+                        canonical={`https://gideonidoko.com/blog/${exactPost.slug}`}
+                        openGraph={{
+                            url: `https://gideonidoko.com/blog/${exactPost.slug}`,
+                            title: `${exactPost.title} :: Blog - Gideon Idoko`,
+                            description: exactPost.description,
+                            type: 'article',
+                            article: {
+                                // publishedTime: exactPost.created_at as string,
+                                authors: [exactPost.author_name as string],
+                                tags: exactPost.tags,
+                            },
+                            images: [
+                                {
+                                    url: exactPost.cover_img,
+                                    alt: `${exactPost.title}'s cover image`,
+                                },
+                            ],
+                            site_name: 'Blog - Gideon Idoko',
+                        }}
+                        twitter={{
+                            handle: '@IamGideonIdoko',
+                            site: '@IamGideonIdoko',
+                            cardType: 'summary_large_image',
+                        }}
+                    />
 
-            <Head>
-                <title>
-                    {!props.post.isLoaded
-                        ? props.singlePost && `${props.singlePost.title} :: Blog - Gideon Idoko`
-                        : exactPost
-                        ? `${exactPost.title} :: Blog - Gideon Idoko`
-                        : !shouldLoad404
-                        ? null
-                        : 'Page Not Found : ( '}
-                </title>
-                <meta
-                    name="keywords"
-                    content={
-                        !props.post.isLoaded
-                            ? props.singlePost && props.singlePost.keywords.join(',')
-                            : exactPost
-                            ? exactPost.keywords.join(',')
-                            : !shouldLoad404
-                            ? ''
-                            : ''
-                    }
-                ></meta>
-            </Head>
-            <main className={`padding-top-10rem ${styles.singlePostMain}`}>
-                <div className="container-max-1248px">
-                    {
-                        //check if posts has been fetched and display
-                        !props.post.isLoaded ? (
-                            <div>
-                                {}
-                                <div className="complex-loader-wrap">
-                                    <div className="complex-loader"></div>
-                                </div>
-                            </div>
-                        ) : exactPost ? (
+                    <Head>
+                        <title>{`${exactPost.title} :: Blog - Gideon Idoko`}</title>
+                        <meta name="keywords" content={exactPost?.keywords?.join(',')}></meta>
+                    </Head>
+                    <main className={`padding-top-10rem ${styles.singlePostMain}`}>
+                        <div className="container-max-1248px">
                             <Fragment>
                                 <div className={styles.singlePostPageWrapper}>
                                     <div className={styles.blogHeader}>
@@ -436,7 +338,7 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
                                         />
 
                                         <div className={styles.postTags}>
-                                            {exactPost.tags.map((tag, idx) => (
+                                            {exactPost.tags?.map((tag, idx) => (
                                                 <span key={idx}>
                                                     <Link href={`/blog/tags/${tag}`}>
                                                         <a>#{tag}</a>
@@ -450,11 +352,13 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
                                                 <span>Share: </span>
                                                 <button
                                                     className={styles.shareToTwitterBtn}
-                                                    onClick={shareToSocialMedia.bind({
-                                                        type: 'twitter',
-                                                        text: exactPost.description,
-                                                        hashtags: exactPost.tags,
-                                                    })}
+                                                    onClick={() =>
+                                                        shareToSocialMedia({
+                                                            type: 'twitter',
+                                                            text: exactPost.description,
+                                                            hashtags: exactPost.tags,
+                                                        })
+                                                    }
                                                 >
                                                     <i className="fab fa-twitter"></i>
                                                 </button>
@@ -479,108 +383,174 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
                                         </div>
                                     </div>
 
-                                    <div className={styles.blogFooter}>
-                                        <div className={styles.commentSection}>
-                                            <div className={styles.commentSectionHeader}>
-                                                <div>
-                                                    <span>Comments ({exactPost.comments.length})</span>
-                                                </div>
-                                                <div>
-                                                    {!exactPost.is_comment_disabled ? (
-                                                        <button
-                                                            className={styles.commentModalOpenBtn}
-                                                            onClick={handleAddCommentBtnClick}
-                                                        >
-                                                            <i className="neu-pencil-ui"></i> Add a comment
-                                                        </button>
-                                                    ) : (
-                                                        <p style={{ opacity: '0.7' }}>Comment disabled.</p>
-                                                    )}
-                                                </div>
+                                    {/* <div className={styles.blogFooter}>
+                                    <div className={styles.commentSection}>
+                                        <div className={styles.commentSectionHeader}>
+                                            <div>
+                                                <span>Comments ({exactPost.comments.length})</span>
                                             </div>
-                                            <CommentModal
-                                                showCommentModal={showCommentModal}
-                                                setShowCommentModal={setShowCommentModal}
-                                                currentPostTitle={exactPost.title}
-                                                currentPostAuthor={exactPost.author_name}
-                                                isCommenting={isCommenting}
-                                                currentPostComments={exactPost.comments}
-                                                currentPostId={exactPost._id}
-                                                updatePostComments={props.updatePostComments}
-                                                resetPostUpdated={props.resetPostUpdated}
-                                                isAdmin={props.isAuthenticated}
-                                                isPostAuthor={
-                                                    props.isAuthenticated
-                                                        ? exactPost.author_username === props.adminuser.username
-                                                        : false
-                                                }
-                                                isPostUpdated={props.post.isPostUpdated}
-                                                currentCommentId={currentCommentId}
-                                                currentAdminName={props.isAuthenticated ? props.adminuser.name : null}
-                                            />
-                                            <div className={styles.commentSectionBody}>
-                                                {exactPost.comments.map((comment) => (
-                                                    <div key={comment._id} className={styles.singleComment}>
-                                                        <div className={styles.singleCommentMainContent}>
-                                                            <div className={styles.scLeft}>
-                                                                {comment.isAdmin ? (
-                                                                    <span className={styles.scLeftAdminGravatar}>
+                                            <div>
+                                                {!exactPost.is_comment_disabled ? (
+                                                    <button
+                                                        className={styles.commentModalOpenBtn}
+                                                        onClick={handleAddCommentBtnClick}
+                                                    >
+                                                        <i className="neu-pencil-ui"></i> Add a comment
+                                                    </button>
+                                                ) : (
+                                                    <p style={{ opacity: '0.7' }}>Comment disabled.</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <CommentModal
+                                            showCommentModal={showCommentModal}
+                                            setShowCommentModal={setShowCommentModal}
+                                            currentPostTitle={exactPost.title}
+                                            currentPostAuthor={exactPost.author_name}
+                                            isCommenting={isCommenting}
+                                            currentPostComments={exactPost.comments}
+                                            currentPostId={exactPost._id}
+                                            updatePostComments={props.updatePostComments}
+                                            resetPostUpdated={props.resetPostUpdated}
+                                            isAdmin={props.isAuthenticated}
+                                            isPostAuthor={
+                                                props.isAuthenticated
+                                                    ? exactPost.author_username === props.adminuser.username
+                                                    : false
+                                            }
+                                            isPostUpdated={props.post.isPostUpdated}
+                                            currentCommentId={currentCommentId}
+                                            currentAdminName={props.isAuthenticated ? props.adminuser.name : null}
+                                        />
+                                        <div className={styles.commentSectionBody}>
+                                            {exactPost.comments.map((comment) => (
+                                                <div key={comment._id} className={styles.singleComment}>
+                                                    <div className={styles.singleCommentMainContent}>
+                                                        <div className={styles.scLeft}>
+                                                            {comment.isAdmin ? (
+                                                                <span className={styles.scLeftAdminGravatar}>
+                                                                    <img
+                                                                        src="/assets/img/GideonIdokoDevGravater.png"
+                                                                        alt=""
+                                                                    />
+                                                                </span>
+                                                            ) : (
+                                                                <span className={styles.scLeftUserGravatar}>
+                                                                    <i className="neu-user-circle"></i>
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <div className={styles.scRight}>
+                                                            <div className={styles.commentAuthor}>
+                                                                <div>
+                                                                    <span>{comment.comment_author}</span>{' '}
+                                                                    {comment.isAdmin && comment.isPostAuthor && (
+                                                                        <i className="neu-tick-circle"></i>
+                                                                    )}
+                                                                </div>
+                                                                <div>
+                                                                    <span>
+                                                                        {moment(comment.date).format('MMM DD')}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div
+                                                                className={styles.commentBody}
+                                                                dangerouslySetInnerHTML={createMarkup(
+                                                                    comment.comment_body,
+                                                                )}
+                                                            />
+                                                            <div className={styles.commentFooter}>
+                                                                <div>
+                                                                    {!exactPost.is_comment_disabled && (
+                                                                        <button
+                                                                            onClick={handleAddReplyBtnClick.bind({
+                                                                                currentCommentId: comment._id,
+                                                                            })}
+                                                                            className={styles.commentReplyBtn}
+                                                                        >
+                                                                            <i className="neu-turn-right"></i>{' '}
+                                                                            <span>Reply</span>
+                                                                        </button>
+                                                                    )}
+
+                                                                    {props.isAuthenticated &&
+                                                                    exactPost.author_username ===
+                                                                        props.adminuser.username ? (
+                                                                        <button
+                                                                            className={styles.commentDeleteBtn}
+                                                                            onClick={handleDeleteComment.bind({
+                                                                                currentPostComments:
+                                                                                    exactPost.comments,
+                                                                                currentComment: comment,
+                                                                                currentPostId: exactPost._id,
+                                                                            })}
+                                                                        >
+                                                                            <i className="neu-trash"></i>{' '}
+                                                                            <span>Delete</span>
+                                                                        </button>
+                                                                    ) : null}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {comment.replies.map((reply, index) => (
+                                                        <div
+                                                            key={reply._id}
+                                                            className={`${styles.singleReply} ${
+                                                                index == 0 ? styles.firstSingleReply : null
+                                                            }`}
+                                                        >
+                                                            <div className={styles.srLeft}>
+                                                                {reply.isAdmin ? (
+                                                                    <span className={styles.srLeftAdminGravatar}>
                                                                         <img
                                                                             src="/assets/img/GideonIdokoDevGravater.png"
                                                                             alt=""
                                                                         />
                                                                     </span>
                                                                 ) : (
-                                                                    <span className={styles.scLeftUserGravatar}>
+                                                                    <span className={styles.srLeftUserGravatar}>
                                                                         <i className="neu-user-circle"></i>
                                                                     </span>
                                                                 )}
                                                             </div>
-                                                            <div className={styles.scRight}>
-                                                                <div className={styles.commentAuthor}>
+                                                            <div className={styles.srRight}>
+                                                                <div className={styles.replyAuthor}>
                                                                     <div>
-                                                                        <span>{comment.comment_author}</span>{' '}
-                                                                        {comment.isAdmin && comment.isPostAuthor && (
+                                                                        <span>{reply.reply_author}</span>{' '}
+                                                                        {reply.isAdmin && reply.isPostAuthor && (
                                                                             <i className="neu-tick-circle"></i>
                                                                         )}
                                                                     </div>
                                                                     <div>
                                                                         <span>
-                                                                            {moment(comment.date).format('MMM DD')}
+                                                                            {moment(reply.date).format('MMM DD')}
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                
                                                                 <div
-                                                                    className={styles.commentBody}
+                                                                    className={styles.replyBody}
                                                                     dangerouslySetInnerHTML={createMarkup(
-                                                                        comment.comment_body,
+                                                                        reply.reply_body,
                                                                     )}
                                                                 />
-                                                                <div className={styles.commentFooter}>
-                                                                    <div>
-                                                                        {!exactPost.is_comment_disabled && (
-                                                                            <button
-                                                                                onClick={handleAddReplyBtnClick.bind({
-                                                                                    currentCommentId: comment._id,
-                                                                                })}
-                                                                                className={styles.commentReplyBtn}
-                                                                            >
-                                                                                <i className="neu-turn-right"></i>{' '}
-                                                                                <span>Reply</span>
-                                                                            </button>
-                                                                        )}
 
+                                                                <div className={styles.replyFooter}>
+                                                                    <div>
                                                                         {props.isAuthenticated &&
                                                                         exactPost.author_username ===
                                                                             props.adminuser.username ? (
                                                                             <button
-                                                                                className={styles.commentDeleteBtn}
-                                                                                onClick={handleDeleteComment.bind({
+                                                                                className={styles.replyDeleteBtn}
+                                                                                onClick={handleDeleteReply.bind({
                                                                                     currentPostComments:
                                                                                         exactPost.comments,
-                                                                                    currentComment: comment,
+                                                                                    currentReply: reply,
                                                                                     currentPostId: exactPost._id,
+                                                                                    currentComment: comment,
                                                                                 })}
                                                                             >
                                                                                 <i className="neu-trash"></i>{' '}
@@ -591,86 +561,18 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        {comment.replies.map((reply, index) => (
-                                                            <div
-                                                                key={reply._id}
-                                                                className={`${styles.singleReply} ${
-                                                                    index == 0 ? styles.firstSingleReply : null
-                                                                }`}
-                                                            >
-                                                                <div className={styles.srLeft}>
-                                                                    {reply.isAdmin ? (
-                                                                        <span className={styles.srLeftAdminGravatar}>
-                                                                            <img
-                                                                                src="/assets/img/GideonIdokoDevGravater.png"
-                                                                                alt=""
-                                                                            />
-                                                                        </span>
-                                                                    ) : (
-                                                                        <span className={styles.srLeftUserGravatar}>
-                                                                            <i className="neu-user-circle"></i>
-                                                                        </span>
-                                                                    )}
-                                                                </div>
-                                                                <div className={styles.srRight}>
-                                                                    <div className={styles.replyAuthor}>
-                                                                        <div>
-                                                                            <span>{reply.reply_author}</span>{' '}
-                                                                            {reply.isAdmin && reply.isPostAuthor && (
-                                                                                <i className="neu-tick-circle"></i>
-                                                                            )}
-                                                                        </div>
-                                                                        <div>
-                                                                            <span>
-                                                                                {moment(reply.date).format('MMM DD')}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div
-                                                                        className={styles.replyBody}
-                                                                        dangerouslySetInnerHTML={createMarkup(
-                                                                            reply.reply_body,
-                                                                        )}
-                                                                    />
-
-                                                                    <div className={styles.replyFooter}>
-                                                                        <div>
-                                                                            {props.isAuthenticated &&
-                                                                            exactPost.author_username ===
-                                                                                props.adminuser.username ? (
-                                                                                <button
-                                                                                    className={styles.replyDeleteBtn}
-                                                                                    onClick={handleDeleteReply.bind({
-                                                                                        currentPostComments:
-                                                                                            exactPost.comments,
-                                                                                        currentReply: reply,
-                                                                                        currentPostId: exactPost._id,
-                                                                                        currentComment: comment,
-                                                                                    })}
-                                                                                >
-                                                                                    <i className="neu-trash"></i>{' '}
-                                                                                    <span>Delete</span>
-                                                                                </button>
-                                                                            ) : null}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                ))}
-                                            </div>
+                                                    ))}
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
+                                </div> */}
                                 </div>
                             </Fragment>
-                        ) : (
-                            <Fragment>{shouldLoad404 && <Custom404 />}</Fragment>
-                        )
-                    }
-                </div>
-            </main> */}
+                        </div>
+                    </main>
+                </Fragment>
+            )}
         </Fragment>
     );
 };

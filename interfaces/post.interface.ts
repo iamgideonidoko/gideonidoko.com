@@ -13,7 +13,7 @@ export interface Post {
     keywords?: string[];
     description: string;
     created_at: Date;
-};
+}
 
 export interface PaginatedPosts {
     docs: Post[];
@@ -26,7 +26,7 @@ export interface PaginatedPosts {
     hasNextPage: boolean;
     prevPage: undefined;
     nextPage: undefined;
-};
+}
 
 export interface SinglePost {
     post: Post;
@@ -40,4 +40,4 @@ export interface SinglePost {
         title: string;
         slug: string;
     };
-};
+}
