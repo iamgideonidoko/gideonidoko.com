@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 export interface CountOptions {
     stripTags?: boolean;
     hardReturns?: boolean;
@@ -6,11 +7,11 @@ export interface CountOptions {
 
 export interface SocialShareOptions {
     type: string;
-    title: string;
+    title?: string;
     summary?: string;
     source?: string;
     text?: string;
-    hashtags?: string;
+    hashtags?: string[];
 }
 
 export interface AxiosHeaders {

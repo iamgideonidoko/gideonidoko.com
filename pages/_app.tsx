@@ -2,8 +2,7 @@ import '../styles/globals.css';
 import React, { Fragment, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { createWrapper } from 'next-redux-wrapper';
-import makeStore from '../store/store';
-import { useStore } from 'react-redux';
+import makeStore, { store } from '../store/store';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ThemeSwitch from '../components/ThemeSwitch';
@@ -11,6 +10,16 @@ import FullscreenSwitch from '../components/FullscreenSwitch';
 import AdminMenu from '../components/AdminMenu';
 import AnimatedCursor from 'react-animated-cursor';
 import Head from 'next/head';
+import { debounce } from 'debounce';
+import { saveState } from '../helper';
+
+store.subscribe(
+    // we use debounce to save the state once each 800ms
+    // for better performances in case multiple changes occur in a short time
+    debounce(() => {
+        saveState(store.getState());
+    }, 800),
+);
 
 function MyApp({ Component, pageProps, router }) {
     const [isNavOpen, setIsNavOpen] = useState(true);
@@ -33,8 +42,6 @@ function MyApp({ Component, pageProps, router }) {
             gtag('config', 'G-QJ2RYXMK6E');
         }
     }, []);
-
-    const store = useStore((state) => state);
 
     return (
         <Fragment>

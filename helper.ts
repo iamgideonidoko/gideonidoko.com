@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { CountOptions, SocialShareOptions, AxiosHeaders } from './interfaces/helper.interface';
+import { AxiosRequestConfig } from 'axios';
+import { config } from './config/keys';
 
 export const renameFileWithPrefix = (fileName: string) => {
     //site domain name
@@ -186,7 +188,7 @@ export function shareToSocialMedia(opt: SocialShareOptions) {
         const text = encodeURIComponent(preText.length > 140 ? preText.slice(0, 130) + '...' : preText);
         url = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${text}&hashtags=${opt.hashtags}&via=IamGideonIdoko`;
         socialWindow(url);
-    } else if (opt.type === 'linkedin' && opt.summary && opt.source) {
+    } else if (opt.type === 'linkedin' && opt.summary && opt.source && opt.title) {
         const title = encodeURIComponent(opt.title);
         const summary = encodeURIComponent(opt.summary);
         const source = encodeURIComponent(opt.source);
@@ -210,18 +212,32 @@ export const axiosHeaders = (accessToken?: string) => {
     //get tenant tenantToken from local storage
 
     // Headers
-    const axiosConfig: { headers: AxiosHeaders } = {
+    const axiosConfig: AxiosRequestConfig<{ headers: AxiosHeaders }> = {
         headers: {
             'Content-Type': 'application/json',
+            Authorization: accessToken ? `Bearer ${accessToken}` : '',
         },
     };
 
-    // console.log('Axios Config => ', axiosConfig);
-
-    // If tenantToken, add to headers
-    if (accessToken) {
-        axiosConfig.headers['Authorization'] = `Bearer ${accessToken}`;
-    }
-
     return axiosConfig;
+};
+
+export const loadState = () => {
+    try {
+        const serializedState = localStorage.getItem(config.reduxStorePersistenceKey);
+        if (!serializedState) return undefined;
+        return JSON.parse(serializedState);
+    } catch (e) {
+        return undefined;
+    }
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const saveState = (state: any) => {
+    try {
+        const serializedState = JSON.stringify(state);
+        localStorage.setItem(config.reduxStorePersistenceKey, serializedState);
+    } catch (e) {
+        // Ignore
+    }
 };

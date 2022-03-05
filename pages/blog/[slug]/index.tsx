@@ -1,9 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Fragment, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
 import Link from 'next/link';
-import { connect } from 'react-redux';
 import moment from 'moment';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
@@ -81,27 +78,27 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
             }
 
             allPostBodyH1.forEach((h1) => {
-                h1.id = strToSlug(h1.textContent);
+                h1.id = strToSlug(h1.textContent as string);
             });
 
             allPostBodyH2.forEach((h2) => {
-                h2.id = strToSlug(h2.textContent);
+                h2.id = strToSlug(h2.textContent as string);
             });
 
             allPostBodyH3.forEach((h3) => {
-                h3.id = strToSlug(h3.textContent);
+                h3.id = strToSlug(h3.textContent as string);
             });
 
             allPostBodyH4.forEach((h4) => {
-                h4.id = strToSlug(h4.textContent);
+                h4.id = strToSlug(h4.textContent as string);
             });
 
             allPostBodyH5.forEach((h5) => {
-                h5.id = strToSlug(h5.textContent);
+                h5.id = strToSlug(h5.textContent as string);
             });
 
             allPostBodyH6.forEach((h6) => {
-                h6.id = strToSlug(h6.textContent);
+                h6.id = strToSlug(h6.textContent as string);
             });
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -356,7 +353,7 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
                                                         shareToSocialMedia({
                                                             type: 'twitter',
                                                             text: exactPost.description,
-                                                            hashtags: exactPost.tags,
+                                                            hashtags: exactPost.tags as string[],
                                                         })
                                                     }
                                                 >

@@ -13,5 +13,5 @@ export const config: Config = {
     contactPostAccessKey: process.env.NEXT_PUBLIC_CONTACT_POST_ACCESS_KEY as string,
     localStorageCommentAuthorId: 'gideonidokowebsitecommentauthor',
     numberOfPostsPerPage: 5,
-    reduxStorePersistenceKey: 'gideonidokowebsitereduxstorepersist',
+    reduxStorePersistenceKey: '58fe61c9-e031-43f7-aee6-dfae90d18335',
 };
