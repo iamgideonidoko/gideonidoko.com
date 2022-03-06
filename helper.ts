@@ -2,6 +2,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { CountOptions, SocialShareOptions, AxiosHeaders } from './interfaces/helper.interface';
 import { AxiosRequestConfig } from 'axios';
 import { config } from './config/keys';
+import SimpleCrypto from 'simple-crypto-js';
+
+const simpleCrypto = new SimpleCrypto(config.reduxStoreSecretKey);
 
 export const renameFileWithPrefix = (fileName: string) => {
     //site domain name
@@ -224,9 +227,11 @@ export const axiosHeaders = (accessToken?: string) => {
 
 export const loadState = () => {
     try {
-        const serializedState = localStorage.getItem(config.reduxStorePersistenceKey);
-        if (!serializedState) return undefined;
-        return JSON.parse(serializedState);
+        const encryptedState = localStorage.getItem(config.reduxStorePersistenceKey);
+        if (!encryptedState) return undefined;
+        const state = simpleCrypto.decrypt(encryptedState);
+        // return JSON.parse(serializedState as string);
+        return state;
     } catch (e) {
         return undefined;
     }
@@ -235,8 +240,9 @@ export const loadState = () => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const saveState = (state: any) => {
     try {
-        const serializedState = JSON.stringify(state);
-        localStorage.setItem(config.reduxStorePersistenceKey, serializedState);
+        // const serializedState = JSON.stringify(state);
+        const encryptedState = simpleCrypto.encrypt(state);
+        localStorage.setItem(config.reduxStorePersistenceKey, encryptedState);
     } catch (e) {
         // Ignore
     }

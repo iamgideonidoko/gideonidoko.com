@@ -1,35 +1,39 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState, FormEvent, ChangeEvent, ChangeEventHandler } from 'react';
 import Head from 'next/head';
 import styles from '../styles/Login.module.css';
 import SimpleReactValidator from 'simple-react-validator';
-import { connect } from 'react-redux';
-import { login } from '../store/actions/authActions';
-//get alert library
 import swal from 'sweetalert';
-//get router
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser, getUserGithubInfo } from '../store/slice/auth.slice';
+import { RootState } from '../store/store';
 
-const Login = (props) => {
+const Login = ({}) => {
     const router = useRouter();
+    const dispatch = useDispatch();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [, forceUpdate] = useState();
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [isAttemptingLogin, setIsAttemptingLogin] = useState<boolean>(false);
+    const [, forceUpdate] = useState<number>();
+
+    const isAuthenticated = useSelector((state: RootState) => state?.auth?.isAuthenticated);
 
     //instantiate the validator as a singleton
     const simpleValidator = useRef(
         new SimpleReactValidator({
-            element: (message, className) => <div className={'formErrorMsg'}>{message}</div>,
+            element: (message: string) => <div className={'formErrorMsg'}>{message}</div>,
         }),
     );
 
     //when the login form is submitted
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (simpleValidator.current.allValid()) {
             //all input is valid
+            setIsAttemptingLogin(true);
 
             //create admin user object
             const adminUser = {
@@ -38,7 +42,20 @@ const Login = (props) => {
             };
 
             //Attempt to login admin
-            props.login(adminUser);
+            dispatch(
+                loginUser({
+                    body: adminUser,
+                    success(payload) {
+                        console.log('data => ', payload);
+                        dispatch(getUserGithubInfo({ githubusername: payload?.data?.user?.user?.githubusername }));
+                    },
+                    failed(err) {
+                        console.log('Shit failed => ', err.response);
+                        setIsAttemptingLogin(false);
+                        swal('Login failed!', 'Incorrect credentials', 'error');
+                    },
+                }),
+            );
         } else {
             //input not valid, so show error
             simpleValidator.current.showMessages(); //show all errors if exist
@@ -47,7 +64,7 @@ const Login = (props) => {
     };
 
     //when the input fields change
-    const handleInputChange = (e) => {
+    const handleInputChange: ChangeEventHandler = (e: ChangeEvent<HTMLFormElement>) => {
         switch (e.target.name) {
             case 'username':
                 setUsername(e.target.value);
@@ -58,10 +75,6 @@ const Login = (props) => {
         }
     };
 
-    if (props.isLoginFailed) {
-        swal('Login failed!', 'Attempting to login failed! Make sure your input is correct and try again.', 'error');
-    }
-
     return (
         <Fragment>
             <NextSeo noindex={true} nofollow={true} />
@@ -70,7 +83,7 @@ const Login = (props) => {
             </Head>
             <main className={`padding-top-10rem`}>
                 <div className="container-max-1248px">
-                    {props.isAuthenticated ? (
+                    {isAuthenticated ? (
                         <div className={`loginRedirectMsg`}>
                             <h1>You are logged in.</h1>
                             <p>Redirecting to profile page...</p>
@@ -127,9 +140,7 @@ const Login = (props) => {
                                                     <input
                                                         type="submit"
                                                         name="submit"
-                                                        value={
-                                                            props.isAttemptingLogin ? 'Attempting Login...' : 'Log in'
-                                                        }
+                                                        value={isAttemptingLogin ? 'Attempting Login...' : 'Log in'}
                                                     />
                                                 </div>
                                             </div>
@@ -155,10 +166,4 @@ const Login = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    isAttemptingLogin: state.auth.isAttemptingLogin,
-    isLoginFailed: state.auth.isLoginFailed,
-    isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps, { login })(Login);
+export default Login;

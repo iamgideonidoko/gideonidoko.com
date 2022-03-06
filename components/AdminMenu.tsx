@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { connect } from 'react-redux';
 import Link from 'next/link';
@@ -21,7 +22,7 @@ const AdminMenu = (props) => {
             },
         }).then((willLogout) => {
             if (willLogout) {
-                props.logout();
+                // props.logout();
             }
         });
     };
@@ -29,6 +30,7 @@ const AdminMenu = (props) => {
     return (
         <Menu
             className="admin-menu-wrap"
+            id="admin-menu-wrap"
             arrow={true}
             menuButton={
                 <button
@@ -39,7 +41,7 @@ const AdminMenu = (props) => {
                     }
                 >
                     <span>
-                        <img src={props.githubUser.avatar_url} alt="" />
+                        <img src={'null'} alt="" />
                     </span>{' '}
                     <span>
                         <i className="neu-so-triangle"></i>
@@ -48,7 +50,7 @@ const AdminMenu = (props) => {
             }
         >
             <MenuItem className="admin-menu-item" id="admin-menu-username">
-                <span>@{props.adminUsername}</span>
+                <span>@{'props.adminUsername'}</span>
             </MenuItem>
             <MenuDivider />
             <MenuItem className="admin-menu-item">
@@ -101,8 +103,4 @@ const AdminMenu = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    githubUser: state.user.githubUser,
-});
-
-export default connect(mapStateToProps, { logout })(AdminMenu);
+export default AdminMenu;

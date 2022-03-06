@@ -395,6 +395,16 @@ a {
 	background-color: #2B3036 !important;
 }
 
+#admin-menu-wrap {
+	background-color: #2B3036 !important;
+	left: 24rem !important;
+	border-radius: 0.6rem !important;
+}
+
+#admin-menu-wrap > div:nth-of-type(1) {
+	background-color: #2B3036 !important;
+}
+
 .admin-menu-item {
 	background-color: #2B3036 !important;
 	color: rgba(255, 255, 255, 0.7) !important;

@@ -12,4 +12,5 @@ export interface Config {
     localStorageCommentAuthorId: string;
     numberOfPostsPerPage: number;
     reduxStorePersistenceKey: string;
+    reduxStoreSecretKey: string;
 }

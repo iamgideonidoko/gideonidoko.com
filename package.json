@@ -38,6 +38,7 @@
     "react-select": "^5.2.2",
     "redux": "^4.1.2",
     "rodal": "^1.8.3",
+    "simple-crypto-js": "^3.0.1",
     "simple-react-validator": "^1.6.1",
     "string-strip-html": "^9.1.6",
     "sweetalert": "^2.1.2",

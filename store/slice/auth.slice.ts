@@ -2,48 +2,78 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { config } from '../../config/keys';
 import { axiosHeaders } from '../../helper';
+import { AuthState } from '../../interfaces/redux.interface';
 
 // export api redux actions
-export const login = createAsyncThunk('/auth/login', async (arg: { body: object }) => {
-    try {
-        const res = await axios.post(`${config.BEHOST}/auth/login`, arg.body, axiosHeaders());
-        return res.data;
+export const loginUser = createAsyncThunk(
+    '/auth/loginUser',
+    async (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-        return err?.message || false;
-    }
-});
+        { body, success, failed }: { body: object; success?: (_: any) => void; failed?: (_: any) => void },
+        { rejectWithValue },
+    ) => {
+        try {
+            const res = await axios.post(`${config.baseUrl}/auth/login`, body, axiosHeaders());
+            success && success(res.data);
+            return res.data;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            if (!err.response) {
+                throw err;
+            }
+            failed && failed(err);
+            return rejectWithValue(err.response.data);
+        }
+    },
+);
+
+interface GithubUserPayload {
+    githubusername: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    success?: (_: any) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    failed?: (_: any) => void;
+}
+
+// export api redux actions
+export const getUserGithubInfo = createAsyncThunk(
+    '/auth/getUserGithubInfo',
+    async ({ githubusername, success, failed }: GithubUserPayload, { rejectWithValue }) => {
+        try {
+            const res = await axios.get(`https://api.github.com/users/${githubusername}`, axiosHeaders());
+            success && success(res.data);
+            return res.data;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            if (!err.response) {
+                throw err;
+            }
+            failed && failed(err);
+            return rejectWithValue(err.response.data);
+        }
+    },
+);
 
 export const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        payload: null,
+        userInfo: null,
         userGithubInfo: null,
-        payloadLoading: 'notloading',
-        userGithubInfoLoading: 'notloading',
-        isAttemptingLogin: false,
         isAuthenticated: false,
-    },
+    } as AuthState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(login.pending, (state) => {
+            .addCase(loginUser.fulfilled, (state, { payload }) => {
                 // Add user to the state array
-                state.payloadLoading = 'loading';
-                state.isAuthenticated = false;
-            })
-            .addCase(login.fulfilled, (state, action) => {
-                // Add user to the state array
-                if (action.payload?.status === 'success') {
-                    state.payloadLoading = 'loaded';
-                } else {
-                    state.payloadLoading = 'error';
+                if (payload?.status === 'success') {
+                    state.userInfo = payload.data?.user;
+                    state.isAuthenticated = true;
                 }
             })
-            .addCase(login.rejected, (state) => {
+            .addCase(getUserGithubInfo.fulfilled, (state, { payload }) => {
                 // Add user to the state array
-                state.payloadLoading = 'error';
-                state.isAuthenticated = false;
+                state.userGithubInfo = payload;
             });
     },
 });

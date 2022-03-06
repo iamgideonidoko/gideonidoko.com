@@ -1,47 +1,16 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import ThemeSwitch from './ThemeSwitch';
 import FullscreenSwitch from './FullscreenSwitch';
 import Nav from './Nav';
 import AdminMenu from './AdminMenu';
-import { useEffect, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { getPosts } from '../store/actions/postActions';
-import { getGithubUser } from '../store/actions/userActions';
-import { loadAdminUser } from '../store/actions/authActions';
-import { loadFirebase } from '../store/actions/firebaseActions';
-import { getAssets } from '../store/actions/assetActions';
-import { getContacts } from '../store/actions/contactActions';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 const Header = (props) => {
-    useEffect(() => {
-        /* 		console.log = function () { };
-		console.warn = function () { };
-		console.error = function () { };
-		setTimeout(() => console.clear(), 3000); */
-        // props.getPosts(); //dispatch an action to update the state with all posts from server when the any page first loads
-        //load firebase
-        // setTimeout(() => !props.fire.firebaseApp && props.loadFirebase(), 3000);
-        //load assets
-        // props.getAssets();
-        //load contacts
-        // props.getContacts();
-    }, []);
-
-    useEffect(() => {
-        !props.auth.adminuser && props.loadAdminUser(props.auth.token);
-    }, [props.auth.token]);
-
-    useEffect(() => {
-        if (props.auth.isAuthenticated) {
-            props.getGithubUser(props.auth.adminuser.githubusername);
-        }
-    }, [props.auth.isAuthenticated]);
-
-    if (typeof window !== 'undefined') {
-        window.onload = function () {
-            console.log('WEBSITE LOADED');
-        };
-    }
+    const auth = useSelector(({ auth }: RootState) => auth);
+    const store = useSelector((state: RootState) => state);
+    console.log('Store => ', store);
 
     const handleNavMenuBtnClick = () => {
         props.setIsNavOpen(!props.isNavOpen);
@@ -67,8 +36,8 @@ const Header = (props) => {
                 <Nav isNavOpen={props.isNavOpen} />
                 {
                     //if user is authenticated, show the admin menu
-                    props.auth.isAuthenticated && (
-                        <AdminMenu adminUsername={props.auth.adminuser.username} isNavOpen={props.isNavOpen} />
+                    auth.isAuthenticated && (
+                        <AdminMenu adminUsername={'props.auth.adminuser.username'} isNavOpen={props.isNavOpen} />
                     )
                 }
             </div>
@@ -76,18 +45,4 @@ const Header = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    post: state.post,
-    auth: state.auth,
-    user: state.user,
-    fire: state.fire,
-});
-
-export default connect(mapStateToProps, {
-    getPosts,
-    loadAdminUser,
-    getGithubUser,
-    loadFirebase,
-    getAssets,
-    getContacts,
-})(Header);
+export default Header;

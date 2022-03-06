@@ -14,4 +14,5 @@ export const config: Config = {
     localStorageCommentAuthorId: 'gideonidokowebsitecommentauthor',
     numberOfPostsPerPage: 5,
     reduxStorePersistenceKey: '58fe61c9-e031-43f7-aee6-dfae90d18335',
+    reduxStoreSecretKey: 'a99bdcdc-b00a-4416-9e18-14dabd9e4556',
 };

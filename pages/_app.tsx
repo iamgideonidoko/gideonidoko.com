@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import '../styles/globals.css';
 import React, { Fragment, useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -12,6 +13,9 @@ import AnimatedCursor from 'react-animated-cursor';
 import Head from 'next/head';
 import { debounce } from 'debounce';
 import { saveState } from '../helper';
+import { AppProps } from 'next/app';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -21,9 +25,10 @@ store.subscribe(
     }, 800),
 );
 
-function MyApp({ Component, pageProps, router }) {
+function MyApp({ Component, pageProps }: AppProps) {
     const [isNavOpen, setIsNavOpen] = useState(true);
     const [loadCursor, setLoadCursor] = useState(false);
+    const auth = useSelector(({ auth }: RootState) => auth);
 
     const closeNav = () => setIsNavOpen(true);
 
@@ -33,9 +38,11 @@ function MyApp({ Component, pageProps, router }) {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                window.dataLayer.push(arguments);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (window as any).dataLayer = (window as any).dataLayer || [];
+            function gtag(...arg: (string | Date)[]) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (window as any).dataLayer.push(Object.assign({}, arg));
             }
             gtag('js', new Date());
 
@@ -55,9 +62,7 @@ function MyApp({ Component, pageProps, router }) {
                         <div>
                             <AdminMenu
                                 allowForMobile={true}
-                                adminUsername={
-                                    store.getState().auth.isAuthenticated && store.getState().auth.adminuser.username
-                                }
+                                adminUsername={auth.isAuthenticated && auth.userInfo?.user?.username}
                             />
                         </div>
                     </div>
