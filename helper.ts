@@ -1,8 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import { CountOptions, SocialShareOptions, AxiosHeaders } from './interfaces/helper.interface';
-import { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { config } from './config/keys';
 import SimpleCrypto from 'simple-crypto-js';
+import jwt_decode from 'jwt-decode';
+import dayjs from 'dayjs';
+import { store, RootReducer } from './store/store';
+import { PreloadedState } from 'redux';
 
 const simpleCrypto = new SimpleCrypto(config.reduxStoreSecretKey);
 
@@ -231,7 +235,7 @@ export const loadState = () => {
         if (!encryptedState) return undefined;
         const state = simpleCrypto.decrypt(encryptedState);
         // return JSON.parse(serializedState as string);
-        return state;
+        return state as PreloadedState<RootReducer>;
     } catch (e) {
         return undefined;
     }
@@ -247,3 +251,23 @@ export const saveState = (state: any) => {
         // Ignore
     }
 };
+
+const customAxios = axios.create();
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const requestHandler = async (request: AxiosRequestConfig<any>) => {
+    console.log('Intercepted request');
+    return request;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const errorHandler = (error: any) => {
+    return Promise.reject(error);
+};
+
+customAxios.interceptors.request.use(
+    (request) => requestHandler(request),
+    (error) => errorHandler(error),
+);
+
+export const authAxios = customAxios;
