@@ -18,3 +18,12 @@ export interface AxiosHeaders {
     Authorization?: string;
     'Content-Type': string;
 }
+
+export interface Asset {
+    name: string;
+    url: string;
+    size: number;
+    file_type: string;
+    author_username: string;
+    author_name: string;
+}

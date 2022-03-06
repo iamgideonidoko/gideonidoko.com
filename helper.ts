@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { CountOptions, SocialShareOptions, AxiosHeaders } from './interfaces/helper.interface';
+import { CountOptions, SocialShareOptions, AxiosHeaders, Asset } from './interfaces/helper.interface';
 import axios, { AxiosRequestConfig } from 'axios';
 import { config } from './config/keys';
 import SimpleCrypto from 'simple-crypto-js';
@@ -215,14 +215,29 @@ export function isConstructor(f: new () => boolean) {
 }
 
 // to get axios header config with access token
-export const axiosHeaders = (accessToken?: string) => {
+export const axiosHeaders = () => {
     //get tenant tenantToken from local storage
 
     // Headers
     const axiosConfig: AxiosRequestConfig<{ headers: AxiosHeaders }> = {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: accessToken ? `Bearer ${accessToken}` : '',
+        },
+    };
+
+    return axiosConfig;
+};
+
+// to get axios header config with access token
+export const axiosAuthHeaders = () => {
+    //get tenant tenantToken from local storage
+    const auth = store.getState()?.auth;
+
+    // Headers
+    const axiosConfig: AxiosRequestConfig<string> = {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: auth.userInfo?.accessToken ? `Bearer ${auth.userInfo?.accessToken}` : '',
         },
     };
 
@@ -270,4 +285,38 @@ customAxios.interceptors.request.use(
     (error) => errorHandler(error),
 );
 
-export const authAxios = customAxios;
+export const axiosAuth = customAxios;
+
+// auth helper functions
+export const authPost = (path: string, body: unknown): Promise<unknown> => {
+    return new Promise<unknown>(async (resolve, reject) => {
+        try {
+            const res = await axiosAuth.post(`${config.baseUrl}/${path}`, body, axiosAuthHeaders());
+            resolve(res.data);
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
+export const authDelete = (path: string): Promise<unknown> => {
+    return new Promise<unknown>(async (resolve, reject) => {
+        try {
+            const res = await axiosAuth.delete(`${config.baseUrl}/${path}`, axiosAuthHeaders());
+            resolve(res.data);
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
+export const authPut = (path: string, body: unknown): Promise<unknown> => {
+    return new Promise<unknown>(async (resolve, reject) => {
+        try {
+            const res = await axiosAuth.put(`${config.baseUrl}/${path}`, body, axiosAuthHeaders());
+            resolve(res.data);
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
