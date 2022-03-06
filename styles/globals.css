@@ -672,6 +672,9 @@ a {
 	border: 1px solid rgba(255, 255, 255, 0.7);
 }
 
+.swal-overlay {
+	z-index: 888 !important;
+}
 
 
 /*>>>>>>>>END WITHIN BODY<<<<<<<<<<*/
