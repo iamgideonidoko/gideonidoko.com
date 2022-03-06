@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+/* eslint-disable @next/next/no-img-element */
 import moment from 'moment';
 import Link from 'next/link';
 import { getReadTime } from '../../helper';
@@ -6,11 +6,22 @@ import Bounce from 'react-reveal/Bounce';
 import Fade from 'react-reveal/Fade';
 import Wobble from 'react-reveal/Wobble';
 import styles from '../../styles/Home.module.css';
+import { Post } from '../../interfaces/post.interface';
+import { useState } from 'react';
+import axios from 'axios';
+import { config } from '../../config/keys';
 
-const SectionFive = (props) => {
-    const firstTwoPosts = props.post.posts
-        ? props.post.posts.filter((post) => post.is_published === true).slice(0, 2)
-        : [];
+const SectionFive = ({}) => {
+    const [posts, setPosts] = useState<Array<Post>>([]);
+
+    (async () => {
+        try {
+            const res = await axios.get(`${config.baseUrl}/posts?per_page=3`);
+            setPosts(res.data?.data?.posts?.docs || []);
+        } catch (err) {
+            console.log('Err => ', err);
+        }
+    })();
 
     return (
         <div className={styles.sectionFive}>
@@ -26,7 +37,7 @@ const SectionFive = (props) => {
                     </Bounce>
 
                     <div className={styles.s5PostWrapper}>
-                        {firstTwoPosts.map((post) => (
+                        {posts.map((post) => (
                             <article key={post._id}>
                                 <Fade bottom duration={1800}>
                                     <div>
@@ -44,17 +55,17 @@ const SectionFive = (props) => {
                                                                     {moment(post.created_at).format('MMM DD, YYYY')}
                                                                 </small>
                                                             </span>
-                                                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                                                            {/* &nbsp;&nbsp;|&nbsp;&nbsp;
                                                             <span>
                                                                 <small>{getReadTime(post.body)}</small>
-                                                            </span>
+                                                            </span> */}
                                                             &nbsp;&nbsp;|&nbsp;&nbsp;{' '}
                                                             <span>
                                                                 <small>{post.author_name}</small>
                                                             </span>
                                                         </div>
                                                         <p className={styles.postShortExcerpt}>
-                                                            {post.body.replace(/[*#`]/g, '').substr(0, 196)}
+                                                            {post?.description?.substr(0, 196)}
                                                             ...
                                                         </p>
                                                     </div>
@@ -85,8 +96,4 @@ const SectionFive = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    post: state.post,
-});
-
-export default connect(mapStateToProps, null)(SectionFive);
+export default SectionFive;
