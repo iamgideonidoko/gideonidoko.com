@@ -1,13 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import { connect } from 'react-redux';
 import Link from 'next/link';
 import swal from 'sweetalert';
-import { Menu, MenuItem, MenuButton, MenuDivider } from '@szhsin/react-menu';
-import { logout } from '../store/actions/authActions';
+import { Menu, MenuItem, MenuDivider } from '@szhsin/react-menu';
+// import { logout } from '../store/actions/authActions';
 import '@szhsin/react-menu/dist/index.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
-const AdminMenu = (props) => {
+const AdminMenu = ({
+    isNavOpen,
+    adminUsername,
+    allowForMobile,
+}: {
+    isNavOpen: boolean;
+    adminUsername: string;
+    allowForMobile: boolean;
+}) => {
+    const auth = useSelector(({ auth }: RootState) => auth);
     const logoutAdmin = () => {
         swal({
             title: 'Log out?',
@@ -22,7 +32,7 @@ const AdminMenu = (props) => {
             },
         }).then((willLogout) => {
             if (willLogout) {
-                // props.logout();
+                // logout();
             }
         });
     };
@@ -34,14 +44,10 @@ const AdminMenu = (props) => {
             arrow={true}
             menuButton={
                 <button
-                    className={
-                        !props.isNavOpen && props.allowForMobile
-                            ? 'admin-menu-initiator'
-                            : 'admin-menu-initiator navOpen'
-                    }
+                    className={!isNavOpen && allowForMobile ? 'admin-menu-initiator' : 'admin-menu-initiator navOpen'}
                 >
                     <span>
-                        <img src={'null'} alt="" />
+                        <img src={auth.userGithubInfo?.avatar_url} alt="" />
                     </span>{' '}
                     <span>
                         <i className="neu-so-triangle"></i>
@@ -50,7 +56,7 @@ const AdminMenu = (props) => {
             }
         >
             <MenuItem className="admin-menu-item" id="admin-menu-username">
-                <span>@{'props.adminUsername'}</span>
+                <span>@{adminUsername}</span>
             </MenuItem>
             <MenuDivider />
             <MenuItem className="admin-menu-item">

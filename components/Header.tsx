@@ -7,13 +7,19 @@ import AdminMenu from './AdminMenu';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 
-const Header = (props) => {
+const Header = ({
+    isNavOpen,
+    setIsNavOpen,
+}: {
+    isNavOpen: boolean;
+    setIsNavOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
     const auth = useSelector(({ auth }: RootState) => auth);
     const store = useSelector((state: RootState) => state);
     console.log('Store => ', store);
 
     const handleNavMenuBtnClick = () => {
-        props.setIsNavOpen(!props.isNavOpen);
+        setIsNavOpen(!isNavOpen);
     };
 
     return (
@@ -28,16 +34,20 @@ const Header = (props) => {
             <div className="nav-adminmenu-wrap">
                 <div>
                     <button onClick={handleNavMenuBtnClick} className="nav-menu-btn">
-                        <i className={!props.isNavOpen ? 'neu-close-lg' : 'neu-hamburger-menu'}></i>
+                        <i className={!isNavOpen ? 'neu-close-lg' : 'neu-hamburger-menu'}></i>
                     </button>
                 </div>
-                <FullscreenSwitch isNavOpen={props.isNavOpen} />
-                <ThemeSwitch isNavOpen={props.isNavOpen} />
-                <Nav isNavOpen={props.isNavOpen} />
+                <FullscreenSwitch isNavOpen={isNavOpen} />
+                <ThemeSwitch isNavOpen={isNavOpen} />
+                <Nav isNavOpen={isNavOpen} />
                 {
                     //if user is authenticated, show the admin menu
                     auth.isAuthenticated && (
-                        <AdminMenu adminUsername={'props.auth.adminuser.username'} isNavOpen={props.isNavOpen} />
+                        <AdminMenu
+                            adminUsername={auth.userInfo?.user?.username as string}
+                            isNavOpen={isNavOpen}
+                            allowForMobile={false}
+                        />
                     )
                 }
             </div>

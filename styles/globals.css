@@ -397,7 +397,8 @@ a {
 
 #admin-menu-wrap {
 	background-color: #2B3036 !important;
-	left: 24rem !important;
+	/* right: 24rem !important; */
+	transform: translateX(-1rem) !important;
 	border-radius: 0.6rem !important;
 }
 

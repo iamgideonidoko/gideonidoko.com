@@ -26,8 +26,8 @@ store.subscribe(
 );
 
 function MyApp({ Component, pageProps }: AppProps) {
-    const [isNavOpen, setIsNavOpen] = useState(true);
-    const [loadCursor, setLoadCursor] = useState(false);
+    const [isNavOpen, setIsNavOpen] = useState<boolean>(true);
+    const [loadCursor, setLoadCursor] = useState<boolean>(false);
     const auth = useSelector(({ auth }: RootState) => auth);
 
     const closeNav = () => setIsNavOpen(true);
