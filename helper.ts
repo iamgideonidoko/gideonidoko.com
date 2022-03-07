@@ -291,7 +291,7 @@ export const axiosAuth = customAxios;
 export const authPost = (path: string, body: unknown): Promise<unknown> => {
     return new Promise<unknown>(async (resolve, reject) => {
         try {
-            const res = await axiosAuth.post(`${config.baseUrl}/${path}`, body, axiosAuthHeaders());
+            const res = await axiosAuth.post(`${config.baseUrl}${path}`, body, axiosAuthHeaders());
             resolve(res.data);
         } catch (err) {
             reject(err);
@@ -302,7 +302,7 @@ export const authPost = (path: string, body: unknown): Promise<unknown> => {
 export const authDelete = (path: string): Promise<unknown> => {
     return new Promise<unknown>(async (resolve, reject) => {
         try {
-            const res = await axiosAuth.delete(`${config.baseUrl}/${path}`, axiosAuthHeaders());
+            const res = await axiosAuth.delete(`${config.baseUrl}${path}`, axiosAuthHeaders());
             resolve(res.data);
         } catch (err) {
             reject(err);
@@ -313,7 +313,7 @@ export const authDelete = (path: string): Promise<unknown> => {
 export const authPut = (path: string, body: unknown): Promise<unknown> => {
     return new Promise<unknown>(async (resolve, reject) => {
         try {
-            const res = await axiosAuth.put(`${config.baseUrl}/${path}`, body, axiosAuthHeaders());
+            const res = await axiosAuth.put(`${config.baseUrl}${path}`, body, axiosAuthHeaders());
             resolve(res.data);
         } catch (err) {
             reject(err);

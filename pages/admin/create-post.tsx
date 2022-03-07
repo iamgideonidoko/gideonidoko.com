@@ -14,6 +14,7 @@ import { Asset } from '../../interfaces/helper.interface';
 import { config } from '../../config/keys';
 import axios from 'axios';
 import { SingleValue } from 'react-select';
+import { authPost } from '../../helper';
 
 const CreatePost = ({}) => {
     const router = useRouter();
@@ -106,7 +107,7 @@ const CreatePost = ({}) => {
         setMarkdownText(text);
     };
 
-    const handleCreatePostFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleCreatePostFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!postTitle || !postCover || !postSlug || !markdownText) {
             swal({
@@ -116,21 +117,20 @@ const CreatePost = ({}) => {
                 buttons: [false, false],
             });
         } else {
-            swal({
-                title: 'Are you sure about this creation?',
-                text: `Do you really want to create this post "${postTitle}"?`,
-                icon: 'warning',
-                buttons: {
-                    cancel: {
-                        text: 'cancel',
+            try {
+                const create = await swal({
+                    title: 'Are you sure about this creation?',
+                    text: `Do you really want to create this post "${postTitle}"?`,
+                    icon: 'warning',
+                    buttons: {
+                        cancel: true,
+                        confirm: {
+                            text: 'Yes, Create',
+                            className: 'uploadConfirmBtn',
+                        },
                     },
-                    confirm: {
-                        text: 'Yes, Create',
-                        className: 'uploadConfirmBtn',
-                    },
-                },
-            }).then((willCreate) => {
-                if (willCreate) {
+                });
+                if (create) {
                     const newPost = {
                         title: postTitle,
                         slug: postSlug,
@@ -145,9 +145,15 @@ const CreatePost = ({}) => {
                         keywords: separatedStrToArr(postKeywords),
                         description: postDescription,
                     };
-                    // props.addPost(newPost);
+
+                    try {
+                        const res = await authPost(`/post`, newPost);
+                        console.log('Response => ', res);
+                    } catch (err) {
+                        console.log('Create post error => ', err);
+                    }
                 }
-            });
+            } catch (err) {}
         }
     };
 

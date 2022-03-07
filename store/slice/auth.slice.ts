@@ -61,7 +61,14 @@ export const authSlice = createSlice({
         userGithubInfo: null,
         isAuthenticated: false,
     } as AuthState,
-    reducers: {},
+    reducers: {
+        updateAccessToken: (state, { payload }) {
+            if (state.userInfo?.accessToken) {
+                // update the existing token with the new token
+                state.userInfo.accessToken = payload;
+            }
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(loginUser.fulfilled, (state, { payload }) => {
@@ -79,8 +86,8 @@ export const authSlice = createSlice({
 });
 
 // export actions (without data fetch in them);
-/* export const {
-    updateCustToken
-} = authSlice.actions; */
+export const {
+    updateAccessToken
+} = authSlice.actions;
 
 export default authSlice.reducer;
