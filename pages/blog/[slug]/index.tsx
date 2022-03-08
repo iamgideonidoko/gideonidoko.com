@@ -16,6 +16,7 @@ import { NextSeo } from 'next-seo';
 import { GetServerSideProps } from 'next';
 import { SinglePost } from '../../../interfaces/post.interface';
 import Head from 'next/head';
+import { decode } from 'html-entities';
 
 const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
     console.log('Post Info => ', postInfo);
@@ -162,16 +163,17 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
                 '</code></pre>'
             );
         },
-        html: true,
-        linkify: true,
-        breaks: true,
+        // html: true,
+        // linkify: true,
+        // breaks: true,
     });
 
     /*
 	function to return dangerous markup
 	*/
     const createMarkup = (markup: string) => {
-        return { __html: markup };
+        console.log('MARKUP => ', markup);
+        return { __html: decode(markup) };
     };
 
     // const handleAddCommentBtnClick = () => {

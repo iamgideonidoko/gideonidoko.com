@@ -25,6 +25,9 @@ const mdParser = new MarkdownIt({
 
         return ''; //use external default escaping
     },
+    html: true,
+    // linkify: true,
+    // breaks: true,
 });
 
 //dynamically fetch the `react-markdown-editor-lite` libary to avoid running on the server
@@ -39,13 +42,19 @@ const handleEditorChange = ({html, text}) => {
 }
 */
 
-const MarkdownEditor = (props) => {
+const MarkdownEditor = ({
+    textValue,
+    handleMarkdownEditorChange,
+}: {
+    textValue: string;
+    handleMarkdownEditorChange: ({ text }: { text: string }) => void;
+}) => {
     return (
         <MdEditor
             style={{ height: '800px' }}
             renderHTML={(text) => mdParser.render(text)}
-            onChange={props.handleMarkdownEditorChange}
-            value={props.textValue}
+            onChange={handleMarkdownEditorChange}
+            value={textValue}
         />
     );
 };

@@ -44,37 +44,6 @@ const CreatePost = ({}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // if (props.post.isPostCreated) {
-    //     swal({
-    //         title: '',
-    //         text: `Post successfully created.`,
-    //         icon: 'success',
-    //         buttons: false,
-    //     }).then((res) => {
-    //         setPostTitle('');
-    //         setPostCover('');
-    //         setPostSlug('');
-    //         setPostTags('');
-    //         setPostKeywords('');
-    //         setPostDescription('');
-    //         setShouldPublish(false);
-    //         setShouldPin(false);
-    //         setMarkdownText('');
-    //         setMarkdownHtml('');
-    //     });
-    //     props.resetPostCreated();
-    // }
-
-    // if (props.errorMsg.errorType && props.errorMsg.errorType === 'TITLE_ALREADY_EXISTS') {
-    //     swal({
-    //         title: 'Post already exists.',
-    //         text: `A post with the same title "${postTitle}" already exists."`,
-    //         icon: 'error',
-    //         buttons: false,
-    //     });
-    //     props.clearErrors();
-    // }
-
     const handleSelectInputChange = (option: SingleValue<{ label: string; value: string }>) => {
         setSelectedAssetFile(option ? option : null);
     };
@@ -144,8 +113,32 @@ const CreatePost = ({}) => {
                     try {
                         const res = await authPost(`/post`, newPost);
                         console.log('Response => ', res);
-                    } catch (err) {
-                        console.log('Create post error => ', err);
+                        await swal({
+                            title: '',
+                            text: `Post successfully created.`,
+                            icon: 'success',
+                            buttons: [false, false],
+                        });
+                        setPostTitle('');
+                        setPostCover('');
+                        setPostSlug('');
+                        setPostTags('');
+                        setPostKeywords('');
+                        setPostDescription('');
+                        setShouldPublish(false);
+                        setShouldPin(false);
+                        setMarkdownText('');
+                        // setMarkdownHtml('');
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    } catch (err: any) {
+                        if (err?.response?.data?.errorType === 'TITLE_ALREADY_EXISTS') {
+                            swal({
+                                title: 'Post already exists.',
+                                text: `A post with the same title "${postTitle}" already exists."`,
+                                icon: 'error',
+                                buttons: [false, false],
+                            });
+                        }
                     }
                 }
             } catch (err) {}
@@ -163,9 +156,9 @@ const CreatePost = ({}) => {
                 console.log('inputValue => ', inputValue);
                 try {
                     const res = await authGet(`/assets/search?q=${inputValue}`);
-                    setAssetOptions(res.data?.data?.assets || []);
+                    setAssetOptions(res?.data?.assets || []);
                     const options =
-                        res.data?.data?.assets?.map(({ name, url, size }: Asset) => ({
+                        res?.data?.assets?.map(({ name, url, size }: Asset) => ({
                             value: url,
                             label: `${name} (${convertByteInString(size)})`,
                         })) || [];
