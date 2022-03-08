@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { v4 as uuidv4 } from 'uuid';
 import { CountOptions, SocialShareOptions, AxiosHeaders, Asset } from './interfaces/helper.interface';
 import axios, { AxiosRequestConfig } from 'axios';
@@ -7,6 +8,7 @@ import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
 import { store, RootReducer } from './store/store';
 import { PreloadedState } from 'redux';
+import { logoutUser, updateTokens } from './store/slice/auth.slice';
 
 const simpleCrypto = new SimpleCrypto(config.reduxStoreSecretKey);
 
@@ -219,11 +221,14 @@ export const axiosHeaders = () => {
     //get tenant tenantToken from local storage
 
     // Headers
-    const axiosConfig: AxiosRequestConfig<{ headers: AxiosHeaders }> = {
+    const axiosConfig: AxiosRequestConfig<object> = {
         headers: {
             'Content-Type': 'application/json',
+            'x-auth-api-key': `${config.noAuthKey}${Date.now()}`,
         },
     };
+
+    console.log('AXIOS CONFIG => ', axiosConfig);
 
     return axiosConfig;
 };
@@ -234,7 +239,7 @@ export const axiosAuthHeaders = () => {
     const auth = store.getState()?.auth;
 
     // Headers
-    const axiosConfig: AxiosRequestConfig<string> = {
+    const axiosConfig: AxiosRequestConfig<object> = {
         headers: {
             'Content-Type': 'application/json',
             Authorization: auth.userInfo?.accessToken ? `Bearer ${auth.userInfo?.accessToken}` : '',
@@ -269,9 +274,58 @@ export const saveState = (state: any) => {
 
 const customAxios = axios.create();
 
+export const refreshUserTokens = (): Promise<void | string> => {
+    return new Promise<void | string>(async (resolve) => {
+        const accessToken = store.getState().auth.userInfo?.accessToken;
+        const refreshToken = store.getState().auth.userInfo?.refreshToken;
+
+        if (refreshToken && accessToken) {
+            const decodedRefreshToken: { exp: number } = jwt_decode(refreshToken);
+            const isRefreshTokenExpired = dayjs.unix(decodedRefreshToken.exp).diff(dayjs()) < 1;
+
+            if (isRefreshTokenExpired) {
+                // logout user (acess token can't be refreshed)
+                store.dispatch(logoutUser());
+            } else {
+                // token can be refreshed
+                // check for access token
+                const decodedAccessToken: { exp: number } = jwt_decode(accessToken);
+                const isAccessTokenExpired = dayjs.unix(decodedAccessToken.exp).diff(dayjs()) < 1;
+                if (isAccessTokenExpired) {
+                    // refresh token
+                    try {
+                        const res = await axios.post(
+                            `${config.baseUrl}/auth/refresh`,
+                            { refreshToken },
+                            axiosHeaders(),
+                        );
+                        // update new tokens
+                        store.dispatch(updateTokens(res.data?.data?.tokens));
+                        // sleep for 2s
+                        resolve(res.data?.data?.tokens?.accessToken);
+                    } catch (err) {
+                        // refreshing tokens failed
+                        store.dispatch(logoutUser());
+                        resolve();
+                    }
+                } else {
+                    // slide
+                    resolve();
+                }
+            }
+        } else {
+            resolve();
+        }
+    });
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const requestHandler = async (request: AxiosRequestConfig<any>) => {
-    console.log('Intercepted request');
+    const newAccessToken = await refreshUserTokens();
+    if (newAccessToken && request.headers) {
+        request.headers.Authorization = `Bearer ${newAccessToken}`;
+    }
+
     return request;
 };
 
@@ -288,8 +342,8 @@ customAxios.interceptors.request.use(
 export const axiosAuth = customAxios;
 
 // auth helper functions
-export const authPost = (path: string, body: unknown): Promise<unknown> => {
-    return new Promise<unknown>(async (resolve, reject) => {
+export const authPost = (path: string, body: object): Promise<any> => {
+    return new Promise<any>(async (resolve, reject) => {
         try {
             const res = await axiosAuth.post(`${config.baseUrl}${path}`, body, axiosAuthHeaders());
             resolve(res.data);
@@ -299,8 +353,8 @@ export const authPost = (path: string, body: unknown): Promise<unknown> => {
     });
 };
 
-export const authDelete = (path: string): Promise<unknown> => {
-    return new Promise<unknown>(async (resolve, reject) => {
+export const authDelete = (path: string): Promise<any> => {
+    return new Promise<any>(async (resolve, reject) => {
         try {
             const res = await axiosAuth.delete(`${config.baseUrl}${path}`, axiosAuthHeaders());
             resolve(res.data);
@@ -310,10 +364,32 @@ export const authDelete = (path: string): Promise<unknown> => {
     });
 };
 
-export const authPut = (path: string, body: unknown): Promise<unknown> => {
-    return new Promise<unknown>(async (resolve, reject) => {
+export const authPut = (path: string, body: object): Promise<any> => {
+    return new Promise<any>(async (resolve, reject) => {
         try {
             const res = await axiosAuth.put(`${config.baseUrl}${path}`, body, axiosAuthHeaders());
+            resolve(res.data);
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
+export const authGet = (path: string): Promise<any> => {
+    return new Promise<any>(async (resolve, reject) => {
+        try {
+            const res = await axiosAuth.get(`${config.baseUrl}${path}`, axiosHeaders());
+            resolve(res.data);
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
+export const noAuthPut = (path: string, body: object): Promise<any> => {
+    return new Promise<any>(async (resolve, reject) => {
+        try {
+            const res = await axiosAuth.put(`${config.baseUrl}${path}`, body, axiosHeaders());
             resolve(res.data);
         } catch (err) {
             reject(err);

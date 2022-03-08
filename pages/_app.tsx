@@ -12,7 +12,7 @@ import AdminMenu from '../components/AdminMenu';
 import AnimatedCursor from 'react-animated-cursor';
 import Head from 'next/head';
 import { debounce } from 'debounce';
-import { saveState } from '../helper';
+import { saveState, refreshUserTokens } from '../helper';
 import { AppProps } from 'next/app';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
@@ -59,6 +59,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     useEffect(() => {
         setLoadCursor(true);
+        // check for token and refresh on page load
+        (async () => await refreshUserTokens())();
     }, []);
 
     useEffect(() => {

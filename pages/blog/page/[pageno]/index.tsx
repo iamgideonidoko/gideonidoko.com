@@ -10,6 +10,7 @@ import axios from 'axios';
 import Custom404 from '../../../404';
 import { PaginatedPosts } from '../../../../interfaces/post.interface';
 import { GetServerSideProps } from 'next';
+import { authGet } from '../../../../helper';
 
 const Page = ({ posts }: { posts: PaginatedPosts }) => {
     const router = useRouter();
@@ -106,8 +107,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     // Fetch data from external API
     try {
-        const res = await axios.get(`${config.baseUrl}/posts?page=${pageno}`);
-        return { props: { posts: res.data?.data?.posts } };
+        const res = await authGet(`/posts?page=${pageno}`);
+        return { props: { posts: res?.data?.posts } };
     } catch (err) {
         console.log('Fetch Error => ', err);
         return { props: { posts: { docs: [] } } };

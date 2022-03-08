@@ -5,8 +5,9 @@ import swal from 'sweetalert';
 import { Menu, MenuItem, MenuDivider } from '@szhsin/react-menu';
 // import { logout } from '../store/actions/authActions';
 import '@szhsin/react-menu/dist/index.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
+import { logoutUser } from '../store/slice/auth.slice';
 
 const AdminMenu = ({
     isNavOpen,
@@ -18,13 +19,14 @@ const AdminMenu = ({
     allowForMobile: boolean;
 }) => {
     const auth = useSelector(({ auth }: RootState) => auth);
+    const dispatch = useDispatch();
     const logoutAdmin = () => {
         swal({
             title: 'Log out?',
             text: `Do you really want to log out?`,
             icon: 'warning',
             buttons: {
-                cancel: 'No',
+                cancel: 'No' as unknown as boolean,
                 confirm: {
                     text: 'Yes, Log out',
                     className: 'uploadConfirmBtn',
@@ -32,7 +34,7 @@ const AdminMenu = ({
             },
         }).then((willLogout) => {
             if (willLogout) {
-                // logout();
+                dispatch(logoutUser());
             }
         });
     };

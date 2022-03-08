@@ -13,4 +13,5 @@ export interface Config {
     numberOfPostsPerPage: number;
     reduxStorePersistenceKey: string;
     reduxStoreSecretKey: string;
+    noAuthKey: string;
 }

@@ -40,7 +40,7 @@ export const getUserGithubInfo = createAsyncThunk(
     '/auth/getUserGithubInfo',
     async ({ githubusername, success, failed }: GithubUserPayload, { rejectWithValue }) => {
         try {
-            const res = await axios.get(`https://api.github.com/users/${githubusername}`, axiosHeaders());
+            const res = await axios.get(`https://api.github.com/users/${githubusername}`);
             success && success(res.data);
             return res.data;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -62,12 +62,19 @@ export const authSlice = createSlice({
         isAuthenticated: false,
     } as AuthState,
     reducers: {
-        updateAccessToken: (state, { payload }) {
-            if (state.userInfo?.accessToken) {
+        updateTokens: (state, { payload }) => {
+            if (state.userInfo?.accessToken && state.userInfo?.refreshToken) {
+                console.log('token refreshed');
                 // update the existing token with the new token
-                state.userInfo.accessToken = payload;
+                state.userInfo.accessToken = payload?.accessToken;
+                state.userInfo.refreshToken = payload?.refreshToken;
             }
-        }
+        },
+        logoutUser: (state) => {
+            state.isAuthenticated = false;
+            state.userGithubInfo = null;
+            state.userInfo = null;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -86,8 +93,6 @@ export const authSlice = createSlice({
 });
 
 // export actions (without data fetch in them);
-export const {
-    updateAccessToken
-} = authSlice.actions;
+export const { updateTokens, logoutUser } = authSlice.actions;
 
 export default authSlice.reducer;

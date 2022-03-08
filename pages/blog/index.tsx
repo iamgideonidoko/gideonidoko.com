@@ -9,6 +9,7 @@ import { NextSeo } from 'next-seo';
 import axios from 'axios';
 import { PaginatedPosts } from '../../interfaces/post.interface';
 import { GetServerSideProps } from 'next';
+import { authGet } from '../../helper';
 
 const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
     console.log('Posts => ', posts);
@@ -93,8 +94,8 @@ const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
 export const getServerSideProps: GetServerSideProps = async () => {
     // Fetch data from external API
     try {
-        const res = await axios.get(`${config.baseUrl}/posts`);
-        return { props: { posts: res.data?.data?.posts } };
+        const res = await authGet(`/posts`);
+        return { props: { posts: res?.data?.posts } };
     } catch (err) {
         console.log('Fetch Error => ', err);
         return { props: { posts: { docs: [] } } };

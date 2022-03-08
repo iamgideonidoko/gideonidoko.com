@@ -1,27 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
 import moment from 'moment';
 import Link from 'next/link';
-import { getReadTime } from '../../helper';
+// import { getReadTime } from '../../helper';
 import Bounce from 'react-reveal/Bounce';
 import Fade from 'react-reveal/Fade';
 import Wobble from 'react-reveal/Wobble';
 import styles from '../../styles/Home.module.css';
 import { Post } from '../../interfaces/post.interface';
-import { useState } from 'react';
-import axios from 'axios';
-import { config } from '../../config/keys';
+import { useState, useEffect } from 'react';
+import { authGet } from '../../helper';
+
 
 const SectionFive = ({}) => {
     const [posts, setPosts] = useState<Array<Post>>([]);
 
-    (async () => {
-        try {
-            const res = await axios.get(`${config.baseUrl}/posts?per_page=3`);
-            setPosts(res.data?.data?.posts?.docs || []);
-        } catch (err) {
-            console.log('Err => ', err);
-        }
-    })();
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await authGet(`/posts?per_page=3`);
+                setPosts(res?.data?.posts?.docs || []);
+            } catch (err) {
+                console.log('Err => ', err);
+            }
+        })();
+    }, []);
 
     return (
         <div className={styles.sectionFive}>

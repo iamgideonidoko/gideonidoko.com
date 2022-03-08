@@ -5,6 +5,7 @@ export interface Post {
     cover_img: string;
     author_username: string;
     author_name?: string;
+    read_time: string;
     body: string;
     tags?: string[];
     is_published: boolean;

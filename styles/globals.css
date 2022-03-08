@@ -473,12 +473,17 @@ a {
 	text-align: center;
 	padding: 2rem 0;
 	margin: 2rem 0;
+	color: transparent;
 }
 
 .loginRedirectMsg p {
 	margin: 2rem 0;
 	font-size: 1.8rem;
+	color: var(--font-color);
+}
 
+.loginRedirectMsg h1 {
+	color: var(--font-color);
 }
 
 .loading-icon-wrap {

@@ -8,15 +8,14 @@ import CommentModal from '../../../components/blog/CommentModal';
 import Custom404 from '../../404';
 import swal from 'sweetalert';
 import { resetPostUpdated, updatePostComments } from '../../../store/actions/postActions';
-import { getReadTime, shareToSocialMedia, strToSlug } from '../../../helper';
+import { authGet, getReadTime, shareToSocialMedia, strToSlug } from '../../../helper';
 import copy from 'copy-to-clipboard';
-import { config } from '../../../config/keys';
 import styles from '../../../styles/SinglePost.module.css';
 import 'highlight.js/styles/monokai.css';
 import { NextSeo } from 'next-seo';
-import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import { SinglePost } from '../../../interfaces/post.interface';
+import Head from 'next/head';
 
 const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
     console.log('Post Info => ', postInfo);
@@ -582,8 +581,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     // Fetch data from external API
     try {
-        const res = await axios.get(`${config.baseUrl}/post/${slug}`);
-        return { props: { postInfo: res.data?.data?.post } };
+        const res = await authGet(`/post/${slug}`);
+        return { props: { postInfo: res?.data?.post } };
     } catch (err) {
         console.log('Fetch Error => ', err);
         return { props: { postInfo: { post: null, nextPost: [], prevPost: [] } } };
