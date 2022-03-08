@@ -82,7 +82,7 @@ const CreatePost = ({}) => {
             });
         } else {
             try {
-                const create = await swal({
+                const willCreate = await swal({
                     title: 'Are you sure about this creation?',
                     text: `Do you really want to create this post "${postTitle}"?`,
                     icon: 'warning',
@@ -94,7 +94,7 @@ const CreatePost = ({}) => {
                         },
                     },
                 });
-                if (create) {
+                if (willCreate) {
                     const newPost = {
                         title: postTitle,
                         slug: postSlug,
@@ -112,7 +112,6 @@ const CreatePost = ({}) => {
 
                     try {
                         const res = await authPost(`/post`, newPost);
-                        console.log('Response => ', res);
                         await swal({
                             title: '',
                             text: `Post successfully created.`,
@@ -138,6 +137,8 @@ const CreatePost = ({}) => {
                                 icon: 'error',
                                 buttons: [false, false],
                             });
+                        } else{
+                            console.error('Post create error => ', err);
                         }
                     }
                 }
@@ -148,12 +149,10 @@ const CreatePost = ({}) => {
     let assetFetchTimer: ReturnType<typeof setTimeout>;
 
     const getAssets = (inputValue: string): Promise<Asset[]> => {
-        console.log('calling getAssets');
         return new Promise<Asset[]>(async (resolve) => {
             if (inputValue.length < 2) return;
             clearTimeout(assetFetchTimer);
             assetFetchTimer = setTimeout(async () => {
-                console.log('inputValue => ', inputValue);
                 try {
                     const res = await authGet(`/assets/search?q=${inputValue}`);
                     setAssetOptions(res?.data?.assets || []);
@@ -164,7 +163,7 @@ const CreatePost = ({}) => {
                         })) || [];
                     resolve(options);
                 } catch (err) {
-                    console.log('Asset Search Error => ', err);
+                    console.error('Asset Search Error => ', err);
                     resolve([]);
                 }
             }, 1500);
@@ -201,6 +200,7 @@ const CreatePost = ({}) => {
                                     <div className={styles.assetFormSelectWrap}>
                                         <AsyncSelect
                                             className="assetFormSelect"
+                                            value={selectedAssetFile}
                                             cacheOptions
                                             defaultOptions={assetOptions.map(({ name, url, size }) => ({
                                                 value: url,
@@ -215,6 +215,14 @@ const CreatePost = ({}) => {
                                                     backgroundColor: 'var(--bg-color)',
                                                     border: '1px solid var(--neutral-color-2)',
                                                 }),
+                                                option: (styles, { isSelected }) => {
+                                                    return {
+                                                        ...styles,
+                                                        backgroundColor: isSelected
+                                                            ? 'var(--pri-blue-normal) !important'
+                                                            : undefined,
+                                                    };
+                                                },
                                             }}
                                         />
                                         <button onClick={handleCopyBtnClick} className={styles.assetCopyBtn}>

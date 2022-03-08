@@ -2,27 +2,42 @@ import Head from 'next/head';
 import { useEffect, Fragment, useState } from 'react';
 import styles from '../../styles/ManagePost.module.css';
 import swal from 'sweetalert';
-import Select, { SingleValue } from 'react-select';
+import { SingleValue } from 'react-select';
 import moment from 'moment';
 import copy from 'copy-to-clipboard';
 import MarkdownEditor from '../../components/MarkdownEditor';
-import { strToSlug, count, getReadTime, separatedStrToArr, convertByteInString, authGet } from '../../helper';
+import {
+    strToSlug,
+    count,
+    getReadTime,
+    separatedStrToArr,
+    convertByteInString,
+    authGet,
+    authDelete,
+    authPut,
+} from '../../helper';
 import { NextSeo } from 'next-seo';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import AsyncSelect from 'react-select/async';
+import { decode } from 'html-entities';
 
 //get router
 import { useRouter } from 'next/router';
 import { Post } from '../../interfaces/post.interface';
 import { Asset } from '../../interfaces/helper.interface';
 
-const ManagePost = (props) => {
+const ManagePost = ({}) => {
     const router = useRouter();
     const auth = useSelector(({ auth }: RootState) => auth);
     const [loaded, setLoaded] = useState<boolean>(false);
 
-    const [selectedPost, setSelectedPost] = useState<{ value: string; label: string; title: string } | null>(null);
+    const [selectedPost, setSelectedPost] = useState<{
+        value: string;
+        label: string;
+        title: string;
+        slug: string;
+    } | null>(null);
     const [postOptions, setPostOptions] = useState<Post[]>([]);
     const [assetOptions, setAssetOptions] = useState<Asset[]>([]);
     const [shouldEditPost, setShouldEditPost] = useState(false);
@@ -49,50 +64,12 @@ const ManagePost = (props) => {
     const countObj = count(markdownText);
     const readTimeValue = getReadTime(markdownText);
 
-    // if (props.post.isPostUpdated) {
-    //     swal({
-    //         title: '',
-    //         text: `Post successfully updated.`,
-    //         icon: 'success',
-    //         buttons: false,
-    //     }).then((res) => {
-    //         setPostTitle('');
-    //         setPostCover('');
-    //         setPostSlug('');
-    //         setPostTags('');
-    //         setPostKeywords('');
-    //         setPostDescription('');
-    //         setShouldPublish(false);
-    //         setShouldPin(false);
-    //         setShouldDisableComment(false);
-    //         setMarkdownText('');
-    //         setMarkdownHtml('');
-    //         setSelectedPost(null);
-    //         setShouldEditPost(false);
-    //         setSelectedAssetFile(false);
-    //     });
-    //     props.resetPostUpdated();
-    // }
-
-    // if (props.post.isPostDeleted) {
-    //     swal({
-    //         title: '',
-    //         text: `Post successfully deleted.`,
-    //         icon: 'success',
-    //         buttons: false,
-    //     }).then((res) => {
-    //         setSelectedPost(null);
-    //     });
-    //     props.resetPostDeleted();
-    // }
-
     const handleMarkdownEditorChange = ({ text }: { text: string }) => {
         setMarkdownText(text);
     };
 
-    const handleEditPostFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleEditPostFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // props.clearErrors();
         if (!postTitle || !postCover || !postSlug || !markdownText) {
             swal({
                 title: '',
@@ -101,18 +78,19 @@ const ManagePost = (props) => {
                 buttons: [false, false],
             });
         } else {
-            swal({
-                title: 'Are you sure about this edit?',
-                text: `Do you really want to edit this post "${postTitle}"?`,
-                icon: 'warning',
-                buttons: {
-                    cancel: true,
-                    confirm: {
-                        text: 'Yes, Edit',
-                        className: 'uploadConfirmBtn',
+            try {
+                const willEdit = await swal({
+                    title: 'Are you sure about this edit?',
+                    text: `Do you really want to edit this post "${postTitle}"?`,
+                    icon: 'warning',
+                    buttons: {
+                        cancel: true,
+                        confirm: {
+                            text: 'Yes, Edit',
+                            className: 'uploadConfirmBtn',
+                        },
                     },
-                },
-            }).then((willEdit) => {
+                });
                 if (willEdit) {
                     const updatedPost = {
                         title: postTitle,
@@ -128,13 +106,54 @@ const ManagePost = (props) => {
                         keywords: separatedStrToArr(postKeywords),
                         description: postDescription,
                     };
-                    // props.updatePost(selectedPost.value, updatedPost);
+
+                    try {
+                        const res = await authPut(
+                            `/post/${selectedPost?.value}${
+                                postTitle.trim() !== selectedPost?.title?.trim() ? '?new_title=true' : ''
+                            }`,
+                            updatedPost,
+                        );
+                        await swal({
+                            title: '',
+                            text: `Post successfully updated.`,
+                            icon: 'success',
+                            buttons: [false, false],
+                        });
+                        setPostTitle('');
+                        setPostCover('');
+                        setPostSlug('');
+                        setPostTags('');
+                        setPostKeywords('');
+                        setPostDescription('');
+                        setShouldPublish(false);
+                        setShouldPin(false);
+                        setShouldDisableComment(false);
+                        setMarkdownText('');
+                        // setMarkdownHtml('');
+                        setSelectedPost(null);
+                        setPostOptions([]);
+                        setShouldEditPost(false);
+                        setSelectedAssetFile(null);
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    } catch (err: any) {
+                        if (err?.response?.data?.errorType === 'TITLE_ALREADY_EXISTS') {
+                            swal({
+                                title: 'Post already exists.',
+                                text: `A post with the same title "${postTitle}" already exists."`,
+                                icon: 'error',
+                                buttons: [false, false],
+                            });
+                        }
+                    }
                 }
-            });
+            } catch (err) {}
         }
     };
 
-    const handleSelectInputChange = (option: SingleValue<{ label: string; value: string; title: string }>) => {
+    const handleSelectInputChange = (
+        option: SingleValue<{ label: string; value: string; title: string; slug: string }>,
+    ) => {
         setSelectedPost(option ? option : null);
     };
 
@@ -142,41 +161,47 @@ const ManagePost = (props) => {
         setSelectedAssetFile(option ? option : null);
     };
 
-    const handleEditPost = () => {
+    const handleEditPost = async () => {
         if (selectedPost) {
-            const filteredSelectedPost = props.post.posts.filter((x: any) => x._id === selectedPost.value);
-            const fullSelectedPost = filteredSelectedPost[0];
-            swal({
-                title: 'Are you sure about the edit?',
-                text: `Are you sure you want to edit the post "${selectedPost?.label}" ?`,
-                icon: 'warning',
-                buttons: {
-                    cancel: true,
-                    confirm: {
-                        text: 'Yes, Edit',
-                        className: 'uploadConfirmBtn',
+            try {
+                const willEdit = await swal({
+                    title: 'Are you sure about the edit?',
+                    text: `Are you sure you want to edit the post "${selectedPost?.title}" ?`,
+                    icon: 'warning',
+                    buttons: {
+                        cancel: true,
+                        confirm: {
+                            text: 'Yes, Edit',
+                            className: 'uploadConfirmBtn',
+                        },
                     },
-                },
-            }).then((willEdit) => {
+                });
                 if (willEdit) {
                     //change the values in the edit post form
-                    setPostTitle(fullSelectedPost.title ? fullSelectedPost.title : '');
-                    setPostCover(fullSelectedPost.cover_img ? fullSelectedPost.cover_img : '');
-                    setPostSlug(fullSelectedPost.slug ? fullSelectedPost.slug : '');
-                    setPostTags(fullSelectedPost.tags ? fullSelectedPost.tags.join(';') : '');
-                    setPostKeywords(fullSelectedPost.keywords ? fullSelectedPost.keywords.join(';') : '');
-                    setPostDescription(fullSelectedPost.description ? fullSelectedPost.description : '');
-                    setShouldPublish(fullSelectedPost.is_published ? fullSelectedPost.is_published : false);
-                    setShouldPin(fullSelectedPost.is_pinned ? fullSelectedPost.is_pinned : false);
-                    setShouldDisableComment(
-                        fullSelectedPost.is_comment_disabled ? fullSelectedPost.is_comment_disabled : false,
-                    );
-                    setMarkdownText(fullSelectedPost.body ? fullSelectedPost.body : '');
 
-                    setShouldEditPost(true);
-                } else {
+                    try {
+                        const res = await authGet(`/post/${selectedPost.slug}`);
+                        const fullSelectedPost = res?.data?.post.post;
+                        if (fullSelectedPost) {
+                            setPostTitle(fullSelectedPost.title ? fullSelectedPost.title : '');
+                            setPostCover(fullSelectedPost.cover_img ? fullSelectedPost.cover_img : '');
+                            setPostSlug(fullSelectedPost.slug ? fullSelectedPost.slug : '');
+                            setPostTags(fullSelectedPost.tags ? fullSelectedPost.tags.join(';') : '');
+                            setPostKeywords(fullSelectedPost.keywords ? fullSelectedPost.keywords.join(';') : '');
+                            setPostDescription(fullSelectedPost.description ? fullSelectedPost.description : '');
+                            setShouldPublish(fullSelectedPost.is_published ? fullSelectedPost.is_published : false);
+                            setShouldPin(fullSelectedPost.is_pinned ? fullSelectedPost.is_pinned : false);
+                            setShouldDisableComment(
+                                fullSelectedPost.is_comment_disabled ? fullSelectedPost.is_comment_disabled : false,
+                            );
+                            setMarkdownText(fullSelectedPost.body ? fullSelectedPost.body : '');
+                            setShouldEditPost(true);
+                        }
+                    } catch (err) {
+                        console.error('Single Post Fetch Error => ', err);
+                    }
                 }
-            });
+            } catch (err) {}
         } else {
             swal({
                 title: 'No post selected.',
@@ -192,52 +217,66 @@ const ManagePost = (props) => {
         }
     };
 
-    const handleDeletePost = () => {
+    const handleDeletePost = async () => {
         if (selectedPost) {
+            try {
+                const willDelete = await swal({
+                    title: 'Are you sure about the delete?',
+                    text: `Are you sure you want to delete the post "${selectedPost.title}" ?`,
+                    icon: 'warning',
+                    buttons: {
+                        cancel: true,
+                        confirm: {
+                            text: 'Yes, Delete',
+                            className: 'deleteConfirmBtn',
+                        },
+                    },
+                });
+                if (willDelete) {
+                    try {
+                        const res = await authDelete(`/post/${selectedPost.value}`);
+                        await swal({
+                            title: '',
+                            text: `Post successfully deleted.`,
+                            icon: 'success',
+                            buttons: [false, false],
+                        });
+                        setSelectedPost(null);
+                        setPostOptions([]);
+                    } catch (err) {
+                        console.error('Post delete error => ', err);
+                    }
+                }
+            } catch (err) {}
+        } else {
             swal({
-                title: 'Are you sure about the delete?',
-                text: `Are you sure you want to delete the post "${selectedPost.label}" ?`,
+                title: 'No post selected.',
+                text: `Please select a post.`,
+                icon: 'error',
+                buttons: {
+                    confirm: {
+                        text: 'Ok',
+                        className: 'uploadConfirmBtn',
+                    },
+                },
+            });
+        }
+    };
+
+    const handleCancelEditPost = async () => {
+        try {
+            const willCancel = await swal({
+                title: '',
+                text: `Do you really want to cancel editing this post "${selectedPost?.title}" ?`,
                 icon: 'warning',
                 buttons: {
                     cancel: true,
                     confirm: {
-                        text: 'Yes, Delete',
-                        className: 'deleteConfirmBtn',
-                    },
-                },
-            }).then((willDelete) => {
-                if (willDelete) {
-                    // props.deletePost(selectedPost.value);
-                }
-            });
-        } else {
-            swal({
-                title: 'No post selected.',
-                text: `Please select a post.`,
-                icon: 'error',
-                buttons: {
-                    confirm: {
-                        text: 'Ok',
+                        text: 'Yes, Cancel',
                         className: 'uploadConfirmBtn',
                     },
                 },
             });
-        }
-    };
-
-    const handleCancelEditPost = () => {
-        swal({
-            title: '',
-            text: `Do you really want to cancel editing this post "${selectedPost?.label}" ?`,
-            icon: 'warning',
-            buttons: {
-                cancel: true,
-                confirm: {
-                    text: 'Yes, Cancel',
-                    className: 'uploadConfirmBtn',
-                },
-            },
-        }).then((willCancel) => {
             if (willCancel) {
                 //change the values in the edit post form
                 setPostTitle('');
@@ -252,9 +291,10 @@ const ManagePost = (props) => {
                 setMarkdownText('');
                 setSelectedPost(null);
                 setSelectedAssetFile(null);
+                setPostOptions([]);
                 setShouldEditPost(false);
             }
-        });
+        } catch (err) {}
     };
 
     ///when the copy button is clicked
@@ -277,28 +317,50 @@ const ManagePost = (props) => {
         }
     };
 
-    // let assetFetchTimer: ReturnType<typeof setTimeout>;
     let postFetchTimer: ReturnType<typeof setTimeout>;
 
     const getPosts = (inputValue: string): Promise<Post[]> => {
-        console.log('calling getPosts');
         return new Promise<Post[]>(async (resolve) => {
             if (inputValue.length < 2) return;
             clearTimeout(postFetchTimer);
             postFetchTimer = setTimeout(async () => {
-                console.log('inputValue => ', inputValue);
                 try {
                     const res = await authGet(`/posts/search?q=${inputValue}`);
                     setPostOptions(res?.data?.posts || []);
                     const options =
-                        res?.data?.posts?.map(({ _id, title, created_at }: Post) => ({
+                        res?.data?.posts?.map(({ _id, title, created_at, slug }: Post) => ({
                             value: _id,
                             label: `${title} (${moment(created_at).format('MMM DD, YYYY')})`,
                             title,
+                            slug,
                         })) || [];
                     resolve(options);
                 } catch (err) {
-                    console.log('Post Search Error => ', err);
+                    console.error('Post Search Error => ', err);
+                    resolve([]);
+                }
+            }, 1500);
+        });
+    };
+
+    let assetFetchTimer: ReturnType<typeof setTimeout>;
+
+    const getAssets = (inputValue: string): Promise<Asset[]> => {
+        return new Promise<Asset[]>(async (resolve) => {
+            if (inputValue.length < 2) return;
+            clearTimeout(assetFetchTimer);
+            assetFetchTimer = setTimeout(async () => {
+                try {
+                    const res = await authGet(`/assets/search?q=${inputValue}`);
+                    setAssetOptions(res?.data?.assets || []);
+                    const options =
+                        res?.data?.assets?.map(({ name, url, size }: Asset) => ({
+                            value: url,
+                            label: `${name} (${convertByteInString(size)})`,
+                        })) || [];
+                    resolve(options);
+                } catch (err) {
+                    console.error('Asset Search Error => ', err);
                     resolve([]);
                 }
             }, 1500);
@@ -334,42 +396,22 @@ const ManagePost = (props) => {
 
                                     <div className={styles.managePostForm}>
                                         <AsyncSelect
-                                            className="assetFormSelect"
+                                            className="managePostFormSelect"
                                             cacheOptions
-                                            defaultOptions={postOptions.map(({ title, _id, created_at }) => ({
+                                            isClearable={true}
+                                            value={selectedPost}
+                                            defaultOptions={postOptions.map(({ title, _id, created_at, slug }) => ({
                                                 value: _id,
                                                 label: `${title} (${moment(created_at).format('MMM DD, YYYY')})`,
                                                 title,
+                                                slug,
                                             }))}
                                             classNamePrefix="reactSelect"
                                             onChange={handleSelectInputChange}
                                             loadOptions={getPosts}
-                                            placeholder="Type to search for asset..."
+                                            placeholder="Type to search for post..."
                                             styles={{
                                                 menu: () => ({
-                                                    backgroundColor: 'var(--bg-color)',
-                                                    border: '1px solid var(--neutral-color-2)',
-                                                }),
-                                            }}
-                                        />
-                                        {/* <Select
-                                            className="managePostFormSelect"
-                                            defaultValue={selectedPost}
-                                            value={selectedPost}
-                                            classNamePrefix="reactSelect"
-                                            options={props.post.posts
-                                                .filter((post) => post.author_username === props.adminuser.username)
-                                                .map(({ title, _id, created_at }) => ({
-                                                    value: _id,
-                                                    label: `${title} (${moment(created_at).format('MMM DD, YYYY')})`,
-                                                    title,
-                                                }))}
-                                            onChange={handleSelectInputChange}
-                                            isClearable={true}
-                                            isSearchable={true}
-                                            placeholder="Select a post..."
-                                            styles={{
-                                                menu: (provided, state) => ({
                                                     backgroundColor: 'var(--bg-color)',
                                                     border: '1px solid var(--neutral-color-2)',
                                                 }),
@@ -378,12 +420,11 @@ const ManagePost = (props) => {
                                                         ...styles,
                                                         backgroundColor: isSelected
                                                             ? 'var(--pri-blue-normal) !important'
-                                                            : null,
+                                                            : undefined,
                                                     };
                                                 },
                                             }}
-                                        /> */}
-
+                                        />
                                         <div
                                             className={styles.actionBtnsWrapper}
                                             style={{ display: shouldEditPost ? 'none' : 'block' }}
@@ -404,21 +445,21 @@ const ManagePost = (props) => {
                                             <hr style={{ opacity: '0.7' }} />
                                             <h4 className={styles.copyAssetHead}>Copy Asset</h4>
                                             <div className={styles.assetFormSelectWrap}>
-                                                {/* <Select
+                                                <AsyncSelect
                                                     className="assetFormSelect"
-                                                    defaultValue={selectedAssetFile}
+                                                    isClearable={true}
                                                     value={selectedAssetFile}
-                                                    classNamePrefix="reactSelect"
-                                                    options={props.assets.map(({ name, url, size }) => ({
+                                                    cacheOptions
+                                                    defaultOptions={assetOptions.map(({ name, url, size }) => ({
                                                         value: url,
                                                         label: `${name} (${convertByteInString(size)})`,
                                                     }))}
+                                                    classNamePrefix="reactSelect"
                                                     onChange={handleAssetSelectInputChange}
-                                                    isClearable={true}
-                                                    isSearchable={true}
-                                                    placeholder="Select an asset..."
+                                                    loadOptions={getAssets}
+                                                    placeholder="Type to search for asset..."
                                                     styles={{
-                                                        menu: (provided, state) => ({
+                                                        menu: () => ({
                                                             backgroundColor: 'var(--bg-color)',
                                                             border: '1px solid var(--neutral-color-2)',
                                                         }),
@@ -427,11 +468,11 @@ const ManagePost = (props) => {
                                                                 ...styles,
                                                                 backgroundColor: isSelected
                                                                     ? 'var(--pri-blue-normal) !important'
-                                                                    : null,
+                                                                    : undefined,
                                                             };
                                                         },
                                                     }}
-                                                /> */}
+                                                />
                                                 <button onClick={handleCopyBtnClick} className={styles.assetCopyBtn}>
                                                     <i className="neu-copy"></i>
                                                 </button>
@@ -540,7 +581,7 @@ const ManagePost = (props) => {
                                                 </div>
 
                                                 <MarkdownEditor
-                                                    textValue={markdownText}
+                                                    textValue={decode(markdownText)}
                                                     handleMarkdownEditorChange={handleMarkdownEditorChange}
                                                 />
 
