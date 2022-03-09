@@ -40,7 +40,7 @@ const ProgressBar = ({ file, setFile, setStartDownload }: IProgressBar) => {
             setFile(null);
             setStartDownload(false);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url, setFile]);
 
     return (

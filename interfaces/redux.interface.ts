@@ -8,8 +8,8 @@ export interface UserInfo {
         username: string;
         githubusername: string;
         created_at: string;
-    }
-};
+    };
+}
 
 export interface UserGithubInfo {
     login: string;
@@ -36,18 +36,18 @@ export interface UserGithubInfo {
     location: string;
     email: string;
     hireable: boolean;
-    bio: string,
-    twitter_username: string,
-    public_repos: number,
-    public_gists: number,
-    followers: number,
-    following: number,
-    created_at: string,
-    updated_at: string,
-};
+    bio: string;
+    twitter_username: string;
+    public_repos: number;
+    public_gists: number;
+    followers: number;
+    following: number;
+    created_at: string;
+    updated_at: string;
+}
 
 export interface AuthState {
     isAuthenticated: boolean;
     userInfo: UserInfo | null;
     userGithubInfo: UserGithubInfo | null;
-};
+}

@@ -42,3 +42,40 @@ export interface SinglePost {
         slug: string;
     };
 }
+
+export interface PostComment {
+    _id: string;
+    comment_author: string;
+    comment_body: string;
+    isAdmin: boolean;
+    isPostAuthor: boolean;
+    date: Date;
+    replies: Array<{
+        _id: string;
+        reply_author: string;
+        reply_body: string;
+        isAdmin: boolean;
+        isPostAuthor: boolean;
+        date: Date;
+    }>;
+};
+
+export interface CommentPost {
+    _id: string;
+    title: string;
+    slug: string;
+    comments: PostComment[];
+}
+
+export interface CommentPaginatedPosts {
+    docs: CommentPost[];
+    totalDocs: number;
+    perPage: number;
+    totalPages: number;
+    page: number;
+    pagingCounter: number;
+    hasPrevPage: boolean;
+    hasNextPage: boolean;
+    prevPage: undefined;
+    nextPage: undefined;
+}

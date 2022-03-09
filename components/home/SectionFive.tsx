@@ -10,7 +10,6 @@ import { Post } from '../../interfaces/post.interface';
 import { useState, useEffect } from 'react';
 import { authGet } from '../../helper';
 
-
 const SectionFive = ({}) => {
     const [posts, setPosts] = useState<Array<Post>>([]);
 
