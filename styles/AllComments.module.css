@@ -110,3 +110,42 @@
 	}
 	
 }
+
+.paginationWrapper {
+	margin-top: 0rem;
+	padding: 1rem 0 1rem;
+}
+
+.pageStats {
+	margin-bottom: 3rem;
+}
+
+.pagination {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	max-width: 77rem;
+	margin: 0 auto;
+}
+
+.pgnFlexEnd {
+	justify-content: flex-end !important;
+}
+
+.pagination span {
+	display: inline-block;
+	font-family: Lato, var(--default-font);
+}
+
+.pagination span button {
+	text-decoration: none;
+	font-size: 1.5rem;
+	transition: letter-spacing 0.2s ease-in-out;
+	background: transparent;
+	padding: 0.5rem 1rem;
+	border: none;
+}
+
+.pagination span button:hover {
+	letter-spacing: 0.1rem;
+}

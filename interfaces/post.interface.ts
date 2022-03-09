@@ -58,7 +58,7 @@ export interface PostComment {
         isPostAuthor: boolean;
         date: Date;
     }>;
-};
+}
 
 export interface CommentPost {
     _id: string;
