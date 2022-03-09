@@ -1,151 +1,144 @@
-// import Head from 'next/head';
-// import { Fragment, useState } from 'react';
-// import { connect } from 'react-redux';
-// import { getPosts } from '../../store/actions/postActions';
-// import styles from '../../styles/UploadAsset.module.css';
-// import { NextSeo } from 'next-seo';
+import Head from 'next/head';
+import { Fragment, useState, useEffect } from 'react';
+import styles from '../../styles/UploadAsset.module.css';
+import { NextSeo } from 'next-seo';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
-// //get router
-// import { useRouter } from 'next/router';
+//get router
+import { useRouter } from 'next/router';
 
-// import swal from 'sweetalert';
+import swal from 'sweetalert';
 
-// import ProgressBar from '../../components/ProgressBar';
+import ProgressBar from '../../components/ProgressBar';
 
-// const UploadAsset = (props) => {
-//     const router = useRouter();
+const UploadAsset = ({}) => {
+    const router = useRouter();
 
-//     const [file, setFile] = useState(null);
-//     const [error, setError] = useState(null);
-//     const [startDownload, setStartDownload] = useState(false);
+    const auth = useSelector(({ auth }: RootState) => auth);
 
-//     const allowedFileTypes = ['image/png', 'image/jpeg', 'image/gif'];
+    const [file, setFile] = useState<File | null>(null);
+    const [error, setError] = useState<string>('');
+    const [startDownload, setStartDownload] = useState(false);
+    const [loaded, setLoaded] = useState<boolean>(false);
 
-//     const fileChangeHandler = (e) => {
-//         const selected = e.target.files[0];
+    useEffect(() => {
+        setLoaded(true);
+    }, []);
 
-//         if (selected && allowedFileTypes.includes(selected.type)) {
-//             setFile(selected);
-//             setError(null);
-//             swal({
-//                 title: 'Are you sure about this upload?',
-//                 text: `Are you sure you want to upload "${selected.name}" ?`,
-//                 icon: 'warning',
-//                 buttons: {
-//                     cancel: 'Cancel',
-//                     confirm: {
-//                         text: 'Yes, Upload',
-//                         className: 'uploadConfirmBtn',
-//                     },
-//                 },
-//             }).then((willUpload) => {
-//                 if (willUpload) {
-//                     setStartDownload(true);
-//                 } else {
-//                     setStartDownload(false);
-//                     setFile(null);
-//                 }
-//             });
-//         } else {
-//             setFile(null);
-//             setError('Please select an image file (png, jpeg or gif)');
-//             swal({
-//                 title: '',
-//                 text: `Please select an image file (png, jpeg or gif).`,
-//                 icon: 'error',
-//                 buttons: {
-//                     confirm: {
-//                         text: 'Ok',
-//                         className: 'uploadConfirmBtn',
-//                     },
-//                 },
-//             }).then((opt) => {
-//                 setError(null);
-//             });
-//         }
-//     };
+    const allowedFileTypes = ['image/png', 'image/jpeg', 'image/gif'];
 
-//     return (
-//         <Fragment>
-//             <NextSeo noindex={true} nofollow={true} />
-//             <Head>
-//                 <title>Upload Asset - Gideon Idoko</title>
-//             </Head>
-//             <main className={`padding-top-10rem`}>
-//                 <div className="container-max-1248px">
-//                     {!props.isAuthenticated ? (
-//                         <Fragment>
-//                             {!props.isAdminUserLoaded ? (
-//                                 <div>
-//                                     <div className="complex-loader-wrap">
-//                                         <div className="complex-loader"></div>
-//                                     </div>
-//                                 </div>
-//                             ) : (
-//                                 <Fragment>
-//                                     {!props.isAuthenticated && (
-//                                         <div className={`loginRedirectMsg`}>
-//                                             <h1>You are not logged in.</h1>
-//                                             <p>Redirecting to login page...</p>
-//                                             {typeof window !== 'undefined' &&
-//                                                 window.setTimeout(() => {
-//                                                     router.push('/login');
-//                                                 }, 3000)}
-//                                         </div>
-//                                     )}
-//                                 </Fragment>
-//                             )}
-//                         </Fragment>
-//                     ) : (
-//                         <Fragment>
-//                             {/*UPLOAD ASSET PAGE*/}
-//                             <div className={styles.uploadAssetWrap}>
-//                                 <h1>Upload Asset</h1>
-//                                 <p>Click on the upload icon to initiate a file upload.</p>
+    const fileChangeHandler = async (e: React.FormEvent<HTMLInputElement>) => {
+        const files = (e.target as HTMLInputElement)?.files;
 
-//                                 <form className={styles.fileUploadForm}>
-//                                     <label htmlFor="fileUploadInput" className={styles.uploadInitiator}>
-//                                         <i className="neu-up-md"></i>
-//                                     </label>
-//                                     <br />
-//                                     <input
-//                                         type="file"
-//                                         id="fileUploadInput"
-//                                         className={styles.fileUploadInput}
-//                                         onChange={fileChangeHandler}
-//                                     />
-//                                     <div className={styles.output}>
-//                                         {error && <div className={styles.uploadErrorMsg}>{error}</div>}
-//                                         {file && (
-//                                             <div className={styles.selectFileName}>Selected file: {file.name}</div>
-//                                         )}
-//                                         {file && startDownload ? (
-//                                             <ProgressBar
-//                                                 file={file}
-//                                                 setFile={setFile}
-//                                                 setStartDownload={setStartDownload}
-//                                             />
-//                                         ) : null}
+        if (files) {
+            const selected = files[0];
+            if (selected && allowedFileTypes.includes(selected.type)) {
+                setFile(selected);
+                setError('');
+                try {
+                    const willUpload = await swal({
+                        title: 'Are you sure about this upload?',
+                        text: `Are you sure you want to upload "${selected.name}" ?`,
+                        icon: 'warning',
+                        buttons: {
+                            cancel: true,
+                            confirm: {
+                                text: 'Yes, Upload',
+                                className: 'uploadConfirmBtn',
+                            },
+                        },
+                    });
+                    if (willUpload) {
+                        setStartDownload(true);
+                    } else {
+                        setStartDownload(false);
+                        setFile(null);
+                    }
+                } catch (err) {}
+            } else {
+                setFile(null);
+                setError('Please select an image file (png, jpeg or gif)');
+                await swal({
+                    title: '',
+                    text: `Please select an image file (png, jpeg or gif).`,
+                    icon: 'error',
+                    buttons: {
+                        confirm: {
+                            text: 'Ok',
+                            className: 'uploadConfirmBtn',
+                        },
+                    },
+                });
+                setError('');
+            }
+        }
+    };
 
-//                                         {/*
-								
-// 							*/}
-//                                     </div>
-//                                 </form>
-//                             </div>
-//                         </Fragment>
-//                     )}
-//                 </div>
-//             </main>
-//         </Fragment>
-//     );
-// };
+    return (
+        <Fragment>
+            <NextSeo noindex={true} nofollow={true} />
+            <Head>
+                <title>Upload Asset - Gideon Idoko</title>
+            </Head>
+            {loaded && (
+                <main className={`padding-top-10rem`}>
+                    <div className="container-max-1248px">
+                        {!auth.isAuthenticated ? (
+                            <div>
+                                <div className="loginRedirectMsg">
+                                    <h1>You are not logged in.</h1>
+                                    <p>Redirecting to login page...</p>
+                                    {typeof window !== 'undefined' &&
+                                        window.setTimeout(() => {
+                                            router.push('/login');
+                                        }, 3000)}
+                                </div>
+                            </div>
+                        ) : (
+                            <Fragment>
+                                {/*UPLOAD ASSET PAGE*/}
+                                <div className={styles.uploadAssetWrap}>
+                                    <h1>Upload Asset</h1>
+                                    <p>Click on the upload icon to initiate a file upload.</p>
 
-// const mapStateToProps = (state) => ({
-//     post: state.post,
-//     isAuthenticated: state.auth.isAuthenticated,
-//     isAdminUserLoaded: state.auth.isAdminUserLoaded,
-//     projectStorage: state.fire.firebaseStorage,
-// });
+                                    <form className={styles.fileUploadForm}>
+                                        <label htmlFor="fileUploadInput" className={styles.uploadInitiator}>
+                                            <i className="neu-up-md"></i>
+                                        </label>
+                                        <br />
+                                        <input
+                                            type="file"
+                                            id="fileUploadInput"
+                                            className={styles.fileUploadInput}
+                                            onChange={fileChangeHandler}
+                                        />
+                                        <div className={styles.output}>
+                                            {error && <div className={styles.uploadErrorMsg}>{error}</div>}
+                                            {file && (
+                                                <div className={styles.selectFileName}>Selected file: {file.name}</div>
+                                            )}
+                                            {file && startDownload ? (
+                                                <ProgressBar
+                                                    file={file}
+                                                    setFile={setFile}
+                                                    setStartDownload={setStartDownload}
+                                                />
+                                            ) : null}
 
-// export default connect(mapStateToProps, { getPosts })(UploadAsset);
+                                            {/*
+                                    
+                                */}
+                                        </div>
+                                    </form>
+                                </div>
+                            </Fragment>
+                        )}
+                    </div>
+                </main>
+            )}
+        </Fragment>
+    );
+};
+
+export default UploadAsset;

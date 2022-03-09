@@ -396,3 +396,24 @@ export const noAuthPut = (path: string, body: object): Promise<any> => {
         }
     });
 };
+
+export const loadFirebase = () => {
+    if (typeof window !== 'undefined') {
+        const firebase = window.firebase;
+        if (firebase && !window.isFirebaseInitialized) {
+            // Firebase configuration
+            const firebaseConfig = {
+                apiKey: config.firebaseApiKey,
+                authDomain: config.firebaseAuthDomain,
+                projectId: config.firebaseProjectId,
+                storageBucket: config.firebaseStorageBucket,
+                messagingSenderId: config.firebaseMessagingSenderId,
+                appId: config.firebaseAppId,
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            window.isFirebaseInitialized = true;
+            console.log('Firebase app initialized => ', firebase);
+        }
+    }
+};

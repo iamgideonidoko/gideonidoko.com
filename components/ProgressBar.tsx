@@ -1,18 +1,24 @@
 import React, { useEffect } from 'react';
 import useStorage from '../firebase/hooks/useStorage';
-import { connect } from 'react-redux';
 import swal from 'sweetalert';
-import { addAsset } from '../store/actions/assetActions';
 import styles from '../styles/UploadAsset.module.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { IProgressBar } from '../interfaces/asset.interface';
 
-const ProgressBar = ({ file, setFile, setStartDownload, projectStorage, addAsset, adminuser }) => {
-    const currentAdminUsername = adminuser.username;
-    const currentAdminName = adminuser.name;
+const ProgressBar = ({ file, setFile, setStartDownload }: IProgressBar) => {
+    const auth = useSelector(({ auth }: RootState) => auth);
 
-    const { progress, url, error } = useStorage(file, projectStorage, addAsset, currentAdminUsername, currentAdminName);
+    const currentAdminUsername = auth.userInfo?.user?.username;
+    const currentAdminName = auth.userInfo?.user?.name;
+    const projectStorage = window.firebase?.storage();
 
-    // console.log("Upload progress", progress);
-    // console.log("Upload Url", url);
+    const { progress, url, error } = useStorage(
+        file,
+        projectStorage,
+        currentAdminUsername as string,
+        currentAdminName as string,
+    );
 
     useEffect(() => {
         if (error) {
@@ -20,7 +26,7 @@ const ProgressBar = ({ file, setFile, setStartDownload, projectStorage, addAsset
                 title: 'Opps',
                 text: `"Something went wrong. Try again.`,
                 icon: 'error',
-                buttons: false,
+                buttons: [false, false],
             });
             setFile(null);
             setStartDownload(false);
@@ -29,11 +35,12 @@ const ProgressBar = ({ file, setFile, setStartDownload, projectStorage, addAsset
                 title: '',
                 text: `"${file.name}" has been uploaded successfully.`,
                 icon: 'success',
-                buttons: false,
+                buttons: [false, false],
             });
             setFile(null);
             setStartDownload(false);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url, setFile]);
 
     return (
@@ -43,9 +50,4 @@ const ProgressBar = ({ file, setFile, setStartDownload, projectStorage, addAsset
     );
 };
 
-const mapStateToProps = (state) => ({
-    projectStorage: state.fire.firebaseStorage,
-    adminuser: state.auth.adminuser,
-});
-
-export default connect(mapStateToProps, { addAsset })(ProgressBar);
+export default ProgressBar;

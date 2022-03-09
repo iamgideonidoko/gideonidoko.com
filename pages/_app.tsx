@@ -19,6 +19,7 @@ import { RootState } from '../store/store';
 import { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import { loadFirebase } from '../helper';
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -61,6 +62,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         setLoadCursor(true);
         // check for token and refresh on page load
         (async () => await refreshUserTokens())();
+        // load an initialize a firebase app
+        loadFirebase();
     }, []);
 
     useEffect(() => {
