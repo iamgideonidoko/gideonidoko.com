@@ -111,7 +111,7 @@ const CreatePost = ({}) => {
                     };
 
                     try {
-                        const res = await authPost(`/post`, newPost);
+                        await authPost(`/post`, newPost);
                         await swal({
                             title: '',
                             text: `Post successfully created.`,
@@ -137,7 +137,7 @@ const CreatePost = ({}) => {
                                 icon: 'error',
                                 buttons: [false, false],
                             });
-                        } else{
+                        } else {
                             console.error('Post create error => ', err);
                         }
                     }

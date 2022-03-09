@@ -20,6 +20,7 @@ export interface AxiosHeaders {
 }
 
 export interface Asset {
+    _id?: string;
     name: string;
     url: string;
     size: number;
