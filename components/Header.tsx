@@ -33,8 +33,8 @@ const Header = ({
                             src="/assets/img/GideonIdokoDevLogo.png"
                             className="site-logo"
                             alt="Gideon Idoko"
-                            width={70}
-                            height={60}
+                            width={60}
+                            height={50}
                         />
                     </a>
                 </Link>
