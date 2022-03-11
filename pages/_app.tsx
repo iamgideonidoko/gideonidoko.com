@@ -85,7 +85,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
-            {loadCursor && <AnimatedCursor color="217, 149, 67" innerSize={10} outerSize={10} outerScale={4.2} />}
+            {loadCursor && <AnimatedCursor color="253, 187, 45" innerSize={10} outerSize={10} outerScale={4.2} />}
             <div className={!isNavOpen ? 'mobileNavSection' : 'mobileNavSection addNegativeIndex'}>
                 {store.getState().auth.isAuthenticated && (
                     <div className="mobileNavAdminMenu">

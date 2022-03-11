@@ -94,9 +94,7 @@ const SectionTwo = () => {
                     {projects.map((project) => (
                         <div
                             key={project.id}
-                            className={`${
-                                parseInt(project.id) % 2 === 0 ? styles.projectStyleOne : styles.projectStyleTwo
-                            }`}
+                            className={`${project.id % 2 === 0 ? styles.projectStyleOne : styles.projectStyleTwo}`}
                         >
                             <Fade bottom duration={2000}>
                                 <div
@@ -121,11 +119,7 @@ const SectionTwo = () => {
                                     </div>
                                 </div>
                             </Fade>
-                            <Fade
-                                duration={2000}
-                                right={!(parseInt(project.id) % 2 === 0)}
-                                left={parseInt(project.id) % 2 === 0}
-                            >
+                            <Fade duration={2000} right={!(project.id % 2 === 0)} left={project.id % 2 === 0}>
                                 <div className={styles.projectSectionTwo}>
                                     <div>
                                         <div className={styles.projectTech}>

@@ -45,7 +45,7 @@ const FullscreenSwitch = (props) => {
             }
         >
             <button onClick={handleFullscreenSwitch} title="Fullscreen">
-                <i className={isFullscreen ? 'neu-compress' : 'neu-expand-content'}></i>
+                <i className={isFullscreen ? 'neu-compress' : 'neu-expand-view'}></i>
             </button>
         </div>
     );

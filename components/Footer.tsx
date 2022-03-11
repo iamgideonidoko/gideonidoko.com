@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const Footer = () => {
@@ -9,19 +10,34 @@ const Footer = () => {
         <footer className="footer">
             <div className="container-max-1248px footer-wrapper">
                 <div className="footer-content-1">
-                    <Link href="/">
+                    {/* <Link href="/">
                         <a>
-                            <img
+                            <Image
                                 src="/assets/img/GideonIdokoDevLogo.png"
                                 className="site-footer-logo"
                                 alt="Gideon Idoko"
+                                width={27}
+                                height={34}
                             />
                         </a>
-                    </Link>
+                    </Link> */}
                 </div>
                 <div className="footer-content-2">
                     <div>
-                        <h3>Gideon Idoko</h3>
+                        <h3 className="footer-h3-1">
+                            <Link href="/">
+                                <a>
+                                    <Image
+                                        src="/assets/img/GideonIdokoDevLogo.png"
+                                        className="site-footer-logo"
+                                        alt="Gideon Idoko"
+                                        width={38}
+                                        height={32}
+                                    />
+                                </a>
+                            </Link>{' '}
+                            <span>Gideon Idoko</span>
+                        </h3>
                         <p>
                             I love building positive solutions with awesome technologies. I also give back to the
                             community by sharing my experiences. I'm currently available for hiring. <br /> <br /> In

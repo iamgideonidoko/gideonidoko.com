@@ -112,12 +112,16 @@
 	background: transparent;
 	padding: 0.8rem 1rem;
 	outline: none;
-	border: 1px solid var(--pri-blue-normal);
-	color: var(--pri-blue-normal);
+	/* border: 1px solid var(--pri-blue-normal); */
+	color: var(--font-color);
 	font-size: 1.6rem;
 	transition: letter-spacing 0.2s ease-in-out;
 	cursor: pointer;
 	border-radius: 0.5rem;
+	border: 2px double transparent;
+	background-image: var(--btn-grad-img);
+	background-origin: border-box;
+	background-clip: padding-box, border-box;
 }
 
 .submitBtnWrap button i {

@@ -6,6 +6,7 @@ import Nav from './Nav';
 import AdminMenu from './AdminMenu';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import Image from 'next/image';
 
 const Header = ({
     isNavOpen,
@@ -28,7 +29,13 @@ const Header = ({
             <div className="logo-wrap">
                 <Link href="/">
                     <a>
-                        <img src="/assets/img/GideonIdokoDevLogo.png" className="site-logo" alt="Gideon Idoko" />
+                        <Image
+                            src="/assets/img/GideonIdokoDevLogo.png"
+                            className="site-logo"
+                            alt="Gideon Idoko"
+                            width={70}
+                            height={60}
+                        />
                     </a>
                 </Link>
             </div>
@@ -40,7 +47,7 @@ const Header = ({
                 </div>
                 <FullscreenSwitch isNavOpen={isNavOpen} />
                 <ThemeSwitch isNavOpen={isNavOpen} />
-                <Nav isNavOpen={isNavOpen} />
+                <Nav />
                 {
                     //if user is authenticated, show the admin menu
                     auth.isAuthenticated && (

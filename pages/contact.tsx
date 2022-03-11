@@ -195,13 +195,7 @@ const Contact = ({}) => {
                                 </div>
                                 <div className={styles.submitBtnWrap}>
                                     <button type="submit">
-                                        {isSending ? (
-                                            <span>Sending Message...</span>
-                                        ) : (
-                                            <span>
-                                                Send Message <i className="neu-paper-plane"></i>
-                                            </span>
-                                        )}
+                                        {isSending ? <span>Sending Message...</span> : <span>Send Message</span>}
                                     </button>
                                 </div>
                             </form>

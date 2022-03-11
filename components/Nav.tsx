@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const Nav = (props) => {
+const Nav = ({}) => {
     return (
         <nav className={'main-nav navOpen'}>
             <ul>

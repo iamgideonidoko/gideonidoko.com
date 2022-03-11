@@ -6,7 +6,7 @@ const ThemeSwitch = (props) => {
     useEffect(() => {
         setTheme(
             window.localStorage.getItem('gideonidoko.com-theme')
-                ? window.localStorage.getItem('gideonidoko.com-theme')
+                ? (window.localStorage.getItem('gideonidoko.com-theme') as string)
                 : 'dark',
         );
     }, []);
@@ -34,9 +34,13 @@ const ThemeSwitch = (props) => {
         <div
             className={!props.isNavOpen && props.allowForMobile ? 'themeswitch-wrapper' : 'themeswitch-wrapper navOpen'}
         >
-            <button style={{ zIndex: '50000' }} onClick={handleSwitch}>
+            {/* <button style={{ zIndex: '50000' }} onClick={handleSwitch}>
                 <i className={theme === 'dark' ? 'neu-moon-stars' : 'neu-sun'}></i>
-            </button>
+            </button> */}
+            <span>
+                <input type="checkbox" id="toggle" checked={theme === 'dark'} className="offscreen" />
+                <label htmlFor="toggle" className="switch" onClick={handleSwitch}></label>
+            </span>
         </div>
     );
 };
