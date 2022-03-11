@@ -7,42 +7,39 @@ import hljs from 'highlight.js';
 import CommentModal from '../../../components/blog/CommentModal';
 import Custom404 from '../../404';
 import swal from 'sweetalert';
-import { resetPostUpdated, updatePostComments } from '../../../store/actions/postActions';
+// import { resetPostUpdated, updatePostComments } from '../../../store/actions/postActions';
 import { authGet, getReadTime, shareToSocialMedia, strToSlug } from '../../../helper';
 import copy from 'copy-to-clipboard';
 import styles from '../../../styles/SinglePost.module.css';
 import 'highlight.js/styles/monokai.css';
 import { NextSeo } from 'next-seo';
 import { GetServerSideProps } from 'next';
-import { SinglePost } from '../../../interfaces/post.interface';
+import { PostComment, PostCommentReply, SingleFullPost } from '../../../interfaces/post.interface';
 import Head from 'next/head';
 import { decode } from 'html-entities';
+import { config } from '../../../config/keys';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
-const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
+const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
     console.log('Post Info => ', postInfo);
 
     const exactPost = postInfo.post;
     const nextPost = postInfo.nextPost;
-    const previousPost = postInfo.prevPost;
+    const previousPost = postInfo.previousPost;
+
+    const auth = useSelector(({ auth }: RootState) => auth);
+
+    const [comments, setComments] = useState<Array<PostComment>>([]);
+
+    useEffect(() => {
+        setComments(postInfo?.post?.comments);
+    }, []);
 
     // //local state
-    // const [showCommentModal, setShowCommentModal] = useState(false);
-    // const [isCommenting, setIsCommenting] = useState(true);
-    // const [currentCommentId, setCurrentCommentId] = useState('');
-
-    // //handling 404
-    // const [shouldLoad404, setShouldLoad404] = useState(false);
-
-    // //get array of all posts with given slug
-    // const fetchedSinglePost = props.post.posts.filter((post) => post.slug === slug);
-
-    // //get the exact post which is the first and only post
-    // const exactPost = fetchedSinglePost[0];
-
-    // const exactPostIndex = props.post.posts.indexOf(exactPost);
-
-    // const nextPost = props.post.posts[exactPostIndex - 1] ? props.post.posts[exactPostIndex - 1] : null;
-    // const previousPost = props.post.posts[exactPostIndex + 1] ? props.post.posts[exactPostIndex + 1] : null;
+    const [showCommentModal, setShowCommentModal] = useState(false);
+    const [isCommenting, setIsCommenting] = useState(true);
+    const [currentCommentId, setCurrentCommentId] = useState('');
 
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -172,86 +169,92 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
 	function to return dangerous markup
 	*/
     const createMarkup = (markup: string) => {
-        console.log('MARKUP => ', markup);
         return { __html: decode(markup) };
     };
 
-    // const handleAddCommentBtnClick = () => {
-    //     setIsCommenting(true);
-    //     setShowCommentModal(true);
-    // };
+    const handleAddCommentBtnClick = () => {
+        setIsCommenting(true);
+        setShowCommentModal(true);
+    };
 
-    // function handleAddReplyBtnClick() {
-    //     setCurrentCommentId(this.currentCommentId);
-    //     setIsCommenting(false);
-    //     setShowCommentModal(true);
-    // }
+    function handleAddReplyBtnClick(currentCommentId: string) {
+        setCurrentCommentId(currentCommentId);
+        setIsCommenting(false);
+        setShowCommentModal(true);
+    }
 
-    // function handleDeleteComment() {
-    //     //create a deep copy of the currentPostComments
-    //     const newCurrentPostComments = JSON.parse(JSON.stringify(this.currentPostComments));
+    function handleDeleteComment(
+        currentPostComments: PostComment[],
+        currentComment: PostComment,
+        currentPostId: string,
+    ) {
+        //create a deep copy of the currentPostComments
+        const newCurrentPostComments: PostComment[] = JSON.parse(JSON.stringify(currentPostComments));
 
-    //     //create an updated post object
-    //     const updatedPost = {
-    //         //add the new comment to the comments array of the current post
-    //         comments: newCurrentPostComments.filter((comment) => comment._id !== this.currentComment._id),
-    //         commentsUpdateAccessKey: config.commentsUpdateAccessKey,
-    //     };
+        //create an updated post object
+        const updatedPost = {
+            //add the new comment to the comments array of the current post
+            comments: newCurrentPostComments.filter((comment) => comment._id !== currentComment._id),
+            commentsUpdateAccessKey: config.commentsUpdateAccessKey,
+        };
 
-    //     swal({
-    //         title: '',
-    //         text: `Delete reply from "${this.currentComment.comment_author}"?`,
-    //         icon: 'warning',
-    //         buttons: {
-    //             cancel: 'No',
-    //             confirm: {
-    //                 text: 'Yes, Delete',
-    //                 className: 'deleteConfirmBtn',
-    //             },
-    //         },
-    //     }).then((willDelete) => {
-    //         if (willDelete) {
-    //             props.updatePostComments(this.currentPostId, updatedPost);
-    //         }
-    //     });
-    // }
+        swal({
+            title: '',
+            text: `Delete reply from "${currentComment.comment_author}"?`,
+            icon: 'warning',
+            buttons: {
+                cancel: true,
+                confirm: {
+                    text: 'Yes, Delete',
+                    className: 'deleteConfirmBtn',
+                },
+            },
+        }).then((willDelete) => {
+            if (willDelete) {
+                // props.updatePostComments(currentPostId, updatedPost);
+            }
+        });
+    }
 
-    // function handleDeleteReply() {
-    //     //get a new copy of the current post comments array (deep copy)
-    //     const newCurrentPostComments = JSON.parse(JSON.stringify(this.currentPostComments));
+    function handleDeleteReply(
+        currentPostComments: PostComment[],
+        currentComment: PostComment,
+        currentPostId: string,
+        currentReply: PostCommentReply,
+    ) {
+        //get a new copy of the current post comments array (deep copy)
+        const newCurrentPostComments: PostComment[] = JSON.parse(JSON.stringify(currentPostComments));
 
-    //     const mappedCurrentPostComments = newCurrentPostComments.map((comment) => {
-    //         if (comment._id === this.currentComment._id) {
-    //             comment.replies = comment.replies.filter((reply) => reply._id !== this.currentReply._id);
-    //             return comment;
-    //         }
-    //         return comment;
-    //     });
+        const mappedCurrentPostComments: PostComment[] = newCurrentPostComments.map((comment) => {
+            if (comment._id === currentComment._id) {
+                comment.replies = comment.replies.filter((reply) => reply._id !== currentReply._id);
+                return comment;
+            }
+            return comment;
+        });
 
-    //     const updatedPost = {
-    //         comments: mappedCurrentPostComments,
-    //         commentsUpdateAccessKey: config.commentsUpdateAccessKey,
-    //     };
+        const updatedPost = {
+            comments: mappedCurrentPostComments,
+            commentsUpdateAccessKey: config.commentsUpdateAccessKey,
+        };
 
-    //     swal({
-    //         title: '',
-    //         text: `Delete ${this.currentReply.reply_author}'s reply to "${this.currentComment.comment_author}"?`,
-    //         icon: 'warning',
-    //         buttons: {
-    //             cancel: 'No',
-    //             confirm: {
-    //                 text: 'Yes, Delete',
-    //                 className: 'deleteConfirmBtn',
-    //             },
-    //         },
-    //     }).then((willDelete) => {
-    //         if (willDelete) {
-    //             props.updatePostComments(this.currentPostId, updatedPost);
-    //         }
-    //     });
-    // }
-
-    // !props.post.isLoaded ? null : exactPost ? null : setTimeout(() => setShouldLoad404(true), 3000);
+        swal({
+            title: '',
+            text: `Delete ${currentReply.reply_author}'s reply to "${currentComment.comment_author}"?`,
+            icon: 'warning',
+            buttons: {
+                cancel: true,
+                confirm: {
+                    text: 'Yes, Delete',
+                    className: 'deleteConfirmBtn',
+                },
+            },
+        }).then((willDelete) => {
+            if (willDelete) {
+                // props.updatePostComments(currentPostId, updatedPost);
+            }
+        });
+    }
 
     return (
         <Fragment>
@@ -365,191 +368,125 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
 
                                         <div className={styles.postPagination}>
                                             <div className={styles.ppLeft}>
-                                                {previousPost && (
-                                                    <Link href={`/blog/${previousPost.slug}`}>
-                                                        <a>← {previousPost.title}</a>
+                                                {previousPost?.length > 0 && (
+                                                    <Link href={`/blog/${previousPost[0].slug}`}>
+                                                        <a>← {previousPost[0].title}</a>
                                                     </Link>
                                                 )}
                                             </div>
                                             <div className={styles.ppRight}>
-                                                {nextPost && (
-                                                    <Link href={`/blog/${nextPost.slug}`}>
-                                                        <a>{nextPost.title} →</a>
+                                                {nextPost?.length > 0 && (
+                                                    <Link href={`/blog/${nextPost[0].slug}`}>
+                                                        <a>{nextPost[0].title} →</a>
                                                     </Link>
                                                 )}
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* <div className={styles.blogFooter}>
-                                    <div className={styles.commentSection}>
-                                        <div className={styles.commentSectionHeader}>
-                                            <div>
-                                                <span>Comments ({exactPost.comments.length})</span>
-                                            </div>
-                                            <div>
-                                                {!exactPost.is_comment_disabled ? (
-                                                    <button
-                                                        className={styles.commentModalOpenBtn}
-                                                        onClick={handleAddCommentBtnClick}
-                                                    >
-                                                        <i className="neu-pencil-ui"></i> Add a comment
-                                                    </button>
-                                                ) : (
-                                                    <p style={{ opacity: '0.7' }}>Comment disabled.</p>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <CommentModal
-                                            showCommentModal={showCommentModal}
-                                            setShowCommentModal={setShowCommentModal}
-                                            currentPostTitle={exactPost.title}
-                                            currentPostAuthor={exactPost.author_name}
-                                            isCommenting={isCommenting}
-                                            currentPostComments={exactPost.comments}
-                                            currentPostId={exactPost._id}
-                                            updatePostComments={props.updatePostComments}
-                                            resetPostUpdated={props.resetPostUpdated}
-                                            isAdmin={props.isAuthenticated}
-                                            isPostAuthor={
-                                                props.isAuthenticated
-                                                    ? exactPost.author_username === props.adminuser.username
-                                                    : false
-                                            }
-                                            isPostUpdated={props.post.isPostUpdated}
-                                            currentCommentId={currentCommentId}
-                                            currentAdminName={props.isAuthenticated ? props.adminuser.name : null}
-                                        />
-                                        <div className={styles.commentSectionBody}>
-                                            {exactPost.comments.map((comment) => (
-                                                <div key={comment._id} className={styles.singleComment}>
-                                                    <div className={styles.singleCommentMainContent}>
-                                                        <div className={styles.scLeft}>
-                                                            {comment.isAdmin ? (
-                                                                <span className={styles.scLeftAdminGravatar}>
-                                                                    <img
-                                                                        src="/assets/img/GideonIdokoDevGravater.png"
-                                                                        alt=""
-                                                                    />
-                                                                </span>
-                                                            ) : (
-                                                                <span className={styles.scLeftUserGravatar}>
-                                                                    <i className="neu-user-circle"></i>
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        <div className={styles.scRight}>
-                                                            <div className={styles.commentAuthor}>
-                                                                <div>
-                                                                    <span>{comment.comment_author}</span>{' '}
-                                                                    {comment.isAdmin && comment.isPostAuthor && (
-                                                                        <i className="neu-tick-circle"></i>
-                                                                    )}
-                                                                </div>
-                                                                <div>
-                                                                    <span>
-                                                                        {moment(comment.date).format('MMM DD')}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div
-                                                                className={styles.commentBody}
-                                                                dangerouslySetInnerHTML={createMarkup(
-                                                                    comment.comment_body,
-                                                                )}
-                                                            />
-                                                            <div className={styles.commentFooter}>
-                                                                <div>
-                                                                    {!exactPost.is_comment_disabled && (
-                                                                        <button
-                                                                            onClick={handleAddReplyBtnClick.bind({
-                                                                                currentCommentId: comment._id,
-                                                                            })}
-                                                                            className={styles.commentReplyBtn}
-                                                                        >
-                                                                            <i className="neu-turn-right"></i>{' '}
-                                                                            <span>Reply</span>
-                                                                        </button>
-                                                                    )}
-
-                                                                    {props.isAuthenticated &&
-                                                                    exactPost.author_username ===
-                                                                        props.adminuser.username ? (
-                                                                        <button
-                                                                            className={styles.commentDeleteBtn}
-                                                                            onClick={handleDeleteComment.bind({
-                                                                                currentPostComments:
-                                                                                    exactPost.comments,
-                                                                                currentComment: comment,
-                                                                                currentPostId: exactPost._id,
-                                                                            })}
-                                                                        >
-                                                                            <i className="neu-trash"></i>{' '}
-                                                                            <span>Delete</span>
-                                                                        </button>
-                                                                    ) : null}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {comment.replies.map((reply, index) => (
-                                                        <div
-                                                            key={reply._id}
-                                                            className={`${styles.singleReply} ${
-                                                                index == 0 ? styles.firstSingleReply : null
-                                                            }`}
+                                    {/* BLOG FOOTER */}
+                                    <div className={styles.blogFooter}>
+                                        <div className={styles.commentSection}>
+                                            <div className={styles.commentSectionHeader}>
+                                                <div>
+                                                    <span>Comments ({exactPost.comments.length})</span>
+                                                </div>
+                                                <div>
+                                                    {!exactPost.is_comment_disabled ? (
+                                                        <button
+                                                            className={styles.commentModalOpenBtn}
+                                                            onClick={handleAddCommentBtnClick}
                                                         >
-                                                            <div className={styles.srLeft}>
-                                                                {reply.isAdmin ? (
-                                                                    <span className={styles.srLeftAdminGravatar}>
+                                                            <i className="neu-pencil-ui"></i> Add a comment
+                                                        </button>
+                                                    ) : (
+                                                        <p style={{ opacity: '0.7' }}>Comment disabled.</p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <CommentModal
+                                                showCommentModal={showCommentModal}
+                                                setShowCommentModal={setShowCommentModal}
+                                                currentPostTitle={exactPost.title}
+                                                currentPostAuthor={exactPost.author_name}
+                                                isCommenting={isCommenting}
+                                                currentPostComments={exactPost.comments}
+                                                currentPostId={exactPost._id}
+                                                isAdmin={auth.isAuthenticated}
+                                                isPostAuthor={
+                                                    auth.isAuthenticated
+                                                        ? exactPost.author_username === auth.userInfo?.user?.username
+                                                        : false
+                                                }
+                                                currentCommentId={currentCommentId}
+                                                currentAdminName={
+                                                    auth.isAuthenticated ? auth.userInfo?.user?.name : null
+                                                }
+                                            />
+                                            <div className={styles.commentSectionBody}>
+                                                {exactPost.comments.map((comment) => (
+                                                    <div key={comment._id} className={styles.singleComment}>
+                                                        <div className={styles.singleCommentMainContent}>
+                                                            <div className={styles.scLeft}>
+                                                                {comment.isAdmin ? (
+                                                                    <span className={styles.scLeftAdminGravatar}>
                                                                         <img
                                                                             src="/assets/img/GideonIdokoDevGravater.png"
                                                                             alt=""
                                                                         />
                                                                     </span>
                                                                 ) : (
-                                                                    <span className={styles.srLeftUserGravatar}>
+                                                                    <span className={styles.scLeftUserGravatar}>
                                                                         <i className="neu-user-circle"></i>
                                                                     </span>
                                                                 )}
                                                             </div>
-                                                            <div className={styles.srRight}>
-                                                                <div className={styles.replyAuthor}>
+                                                            <div className={styles.scRight}>
+                                                                <div className={styles.commentAuthor}>
                                                                     <div>
-                                                                        <span>{reply.reply_author}</span>{' '}
-                                                                        {reply.isAdmin && reply.isPostAuthor && (
+                                                                        <span>{comment.comment_author}</span>{' '}
+                                                                        {comment.isAdmin && comment.isPostAuthor && (
                                                                             <i className="neu-tick-circle"></i>
                                                                         )}
                                                                     </div>
                                                                     <div>
                                                                         <span>
-                                                                            {moment(reply.date).format('MMM DD')}
+                                                                            {moment(comment.date).format('MMM DD')}
                                                                         </span>
                                                                     </div>
                                                                 </div>
+
                                                                 <div
-                                                                    className={styles.replyBody}
+                                                                    className={styles.commentBody}
                                                                     dangerouslySetInnerHTML={createMarkup(
-                                                                        reply.reply_body,
+                                                                        comment.comment_body,
                                                                     )}
                                                                 />
-
-                                                                <div className={styles.replyFooter}>
+                                                                <div className={styles.commentFooter}>
                                                                     <div>
-                                                                        {props.isAuthenticated &&
-                                                                        exactPost.author_username ===
-                                                                            props.adminuser.username ? (
+                                                                        {!exactPost.is_comment_disabled && (
                                                                             <button
-                                                                                className={styles.replyDeleteBtn}
-                                                                                onClick={handleDeleteReply.bind({
-                                                                                    currentPostComments:
+                                                                                onClick={() =>
+                                                                                    handleAddReplyBtnClick(comment._id)
+                                                                                }
+                                                                                className={styles.commentReplyBtn}
+                                                                            >
+                                                                                <i className="neu-turn-right"></i>{' '}
+                                                                                <span>Reply</span>
+                                                                            </button>
+                                                                        )}
+
+                                                                        {auth.isAuthenticated &&
+                                                                        exactPost.author_username ===
+                                                                            auth?.userInfo?.user?.username ? (
+                                                                            <button
+                                                                                className={styles.commentDeleteBtn}
+                                                                                onClick={() =>
+                                                                                    handleDeleteComment(
                                                                                         exactPost.comments,
-                                                                                    currentReply: reply,
-                                                                                    currentPostId: exactPost._id,
-                                                                                    currentComment: comment,
-                                                                                })}
+                                                                                        comment,
+                                                                                        exactPost._id,
+                                                                                    )
+                                                                                }
                                                                             >
                                                                                 <i className="neu-trash"></i>{' '}
                                                                                 <span>Delete</span>
@@ -559,12 +496,79 @@ const SinglePost = ({ postInfo }: { postInfo: SinglePost }) => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    ))}
-                                                </div>
-                                            ))}
+
+                                                        {comment.replies.map((reply, index) => (
+                                                            <div
+                                                                key={reply._id}
+                                                                className={`${styles.singleReply} ${
+                                                                    index == 0 ? styles.firstSingleReply : null
+                                                                }`}
+                                                            >
+                                                                <div className={styles.srLeft}>
+                                                                    {reply.isAdmin ? (
+                                                                        <span className={styles.srLeftAdminGravatar}>
+                                                                            <img
+                                                                                src="/assets/img/GideonIdokoDevGravater.png"
+                                                                                alt=""
+                                                                            />
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className={styles.srLeftUserGravatar}>
+                                                                            <i className="neu-user-circle"></i>
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                                <div className={styles.srRight}>
+                                                                    <div className={styles.replyAuthor}>
+                                                                        <div>
+                                                                            <span>{reply.reply_author}</span>{' '}
+                                                                            {reply.isAdmin && reply.isPostAuthor && (
+                                                                                <i className="neu-tick-circle"></i>
+                                                                            )}
+                                                                        </div>
+                                                                        <div>
+                                                                            <span>
+                                                                                {moment(reply.date).format('MMM DD')}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        className={styles.replyBody}
+                                                                        dangerouslySetInnerHTML={createMarkup(
+                                                                            reply.reply_body,
+                                                                        )}
+                                                                    />
+
+                                                                    <div className={styles.replyFooter}>
+                                                                        <div>
+                                                                            {auth.isAuthenticated &&
+                                                                            exactPost.author_username ===
+                                                                                auth.userInfo?.user?.username ? (
+                                                                                <button
+                                                                                    className={styles.replyDeleteBtn}
+                                                                                    onClick={() =>
+                                                                                        handleDeleteReply(
+                                                                                            exactPost.comments,
+                                                                                            comment,
+                                                                                            exactPost._id,
+                                                                                            reply,
+                                                                                        )
+                                                                                    }
+                                                                                >
+                                                                                    <i className="neu-trash"></i>{' '}
+                                                                                    <span>Delete</span>
+                                                                                </button>
+                                                                            ) : null}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                </div> */}
                                 </div>
                             </Fragment>
                         </div>

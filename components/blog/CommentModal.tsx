@@ -1,10 +1,25 @@
-import React, { useState, Fragment, useRef, useEffect } from 'react';
+import React, { useState, Fragment, useRef, useEffect, SetStateAction, Dispatch } from 'react';
 import styles from '../../styles/SinglePost.module.css';
 import Rodal from 'rodal';
 import SimpleReactValidator from 'simple-react-validator';
 import { encode } from 'html-entities';
 import { config } from '../../config/keys';
 import 'rodal/lib/rodal.css';
+import { PostComment } from '../../interfaces/post.interface';
+
+interface CommentModalProps {
+    showCommentModal: boolean;
+    setShowCommentModal: Dispatch<SetStateAction<boolean>>;
+    currentPostTitle: string;
+    currentPostAuthor: string;
+    isCommenting: boolean;
+    currentPostComments: Array<PostComment>;
+    currentPostId: string;
+    isAdmin: boolean;
+    isPostAuthor: boolean;
+    currentCommentId: string;
+    currentAdminName: string;
+}
 
 const CommentModal = ({
     showCommentModal,
@@ -14,14 +29,11 @@ const CommentModal = ({
     isCommenting,
     currentPostComments,
     currentPostId,
-    updatePostComments,
-    resetPostUpdated,
     isAdmin,
     isPostAuthor,
-    isPostUpdated,
     currentCommentId,
     currentAdminName,
-}) => {
+}: CommentModalProps) => {
     const getCommentAuthorFromLocalStorage = () => {
         if (typeof window !== 'undefined') {
             const lsCommentAuthor = localStorage.getItem(config.localStorageCommentAuthorId);
@@ -35,12 +47,12 @@ const CommentModal = ({
         currentAdminName ? currentAdminName : getCommentAuthorFromLocalStorage(),
     );
     const [commentBody, setCommentBody] = useState('');
-    const [, forceUpdate] = useState();
+    const [, forceUpdate] = useState<number>();
 
     //instantiate the validator as a singleton
     const simpleValidator = useRef(
         new SimpleReactValidator({
-            element: (message, className) => <div className={'formErrorMsg'}>{message}</div>,
+            element: (message: string) => <div className={'formErrorMsg'}>{message}</div>,
         }),
     );
 
@@ -74,7 +86,7 @@ const CommentModal = ({
                 };
 
                 //update the post comments
-                updatePostComments(currentPostId, updatedPost);
+                // updatePostComments(currentPostId, updatedPost);
             } else {
                 console.log('Attempting to reply...');
                 //get a new copy of the current post comments array (deep copy)
@@ -102,10 +114,9 @@ const CommentModal = ({
                 };
 
                 //update the post comments
-                updatePostComments(currentPostId, updatedPost);
+                // updatePostComments(currentPostId, updatedPost);
             }
         } else {
-            console.log('Not all values are valid');
             //input not valid, so show error
             simpleValidator.current.showMessages(); //show all errors if exist
             forceUpdate(1); //force update component to display error
@@ -132,7 +143,7 @@ const CommentModal = ({
 
     const resolveAfterResetUpdate = () => {
         return new Promise((resolve, reject) => {
-            resetPostUpdated();
+            // resetPostUpdated();
             setTimeout(() => {
                 resolve(true);
             }, 2000);
@@ -158,7 +169,7 @@ const CommentModal = ({
                     <label>
                         {isCommenting ? (
                             <span>
-                                You're commenting on this post:{' '}
+                                You&apos;re commenting on this post:{' '}
                                 <b>
                                     {currentPostTitle.length > 25
                                         ? `${currentPostTitle.substr(0, 25) + '...'}`
@@ -167,7 +178,7 @@ const CommentModal = ({
                             </span>
                         ) : (
                             <span>
-                                You're replying to:{' '}
+                                You&apos;re replying to:{' '}
                                 <b>
                                     {currentPostComments.find((comment) => comment._id === currentCommentId)
                                         ? currentPostComments.find((comment) => comment._id === currentCommentId)

@@ -16,6 +16,25 @@ export interface Post {
     created_at: Date;
 }
 
+export interface FullPost {
+    _id: string;
+    title: string;
+    slug: string;
+    cover_img: string;
+    author_username: string;
+    author_name?: string;
+    read_time: string;
+    body: string;
+    tags?: string[];
+    is_published: boolean;
+    is_pinned: boolean;
+    is_comment_disabled: boolean;
+    keywords?: string[];
+    description: string;
+    created_at: Date;
+    comments: PostComment[];
+}
+
 export interface PaginatedPosts {
     docs: Post[];
     totalDocs: number;
@@ -35,12 +54,35 @@ export interface SinglePost {
         _id: string;
         title: string;
         slug: string;
-    };
-    prevPost: {
+    }[];
+    previousPost: {
         _id: string;
         title: string;
         slug: string;
-    };
+    }[];
+}
+
+export interface SingleFullPost {
+    post: FullPost;
+    nextPost: {
+        _id: string;
+        title: string;
+        slug: string;
+    }[];
+    previousPost: {
+        _id: string;
+        title: string;
+        slug: string;
+    }[];
+}
+
+export interface PostCommentReply {
+    _id: string;
+    reply_author: string;
+    reply_body: string;
+    isAdmin: boolean;
+    isPostAuthor: boolean;
+    date: Date;
 }
 
 export interface PostComment {
@@ -50,14 +92,7 @@ export interface PostComment {
     isAdmin: boolean;
     isPostAuthor: boolean;
     date: Date;
-    replies: Array<{
-        _id: string;
-        reply_author: string;
-        reply_body: string;
-        isAdmin: boolean;
-        isPostAuthor: boolean;
-        date: Date;
-    }>;
+    replies: Array<PostCommentReply>;
 }
 
 export interface CommentPost {
