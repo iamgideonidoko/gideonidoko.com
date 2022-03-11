@@ -8,7 +8,7 @@ import CommentModal from '../../../components/blog/CommentModal';
 import Custom404 from '../../404';
 import swal from 'sweetalert';
 // import { resetPostUpdated, updatePostComments } from '../../../store/actions/postActions';
-import { authGet, getReadTime, shareToSocialMedia, strToSlug } from '../../../helper';
+import { authGet, getReadTime, noAuthPut, shareToSocialMedia, strToSlug } from '../../../helper';
 import copy from 'copy-to-clipboard';
 import styles from '../../../styles/SinglePost.module.css';
 import 'highlight.js/styles/monokai.css';
@@ -186,7 +186,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
         setShowCommentModal(true);
     }
 
-    function handleDeleteComment(
+    async function handleDeleteComment(
         currentPostComments: PostComment[],
         currentComment: PostComment,
         currentPostId: string,
@@ -201,25 +201,32 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
             commentsUpdateAccessKey: config.commentsUpdateAccessKey,
         };
 
-        swal({
-            title: '',
-            text: `Delete reply from "${currentComment.comment_author}"?`,
-            icon: 'warning',
-            buttons: {
-                cancel: true,
-                confirm: {
-                    text: 'Yes, Delete',
-                    className: 'deleteConfirmBtn',
+        try {
+            const willDelete = await swal({
+                title: '',
+                text: `Delete reply from "${currentComment.comment_author}"?`,
+                icon: 'warning',
+                buttons: {
+                    cancel: true,
+                    confirm: {
+                        text: 'Yes, Delete',
+                        className: 'deleteConfirmBtn',
+                    },
                 },
-            },
-        }).then((willDelete) => {
+            });
             if (willDelete) {
-                // props.updatePostComments(currentPostId, updatedPost);
+                // update post comments
+                try {
+                    const res = await noAuthPut(`/post/${currentPostId}/comments`, updatedPost);
+                    setComments(res?.data?.post?.comments);
+                } catch (err) {
+                    console.error('Comment post error => ', err);
+                }
             }
-        });
+        } catch (err) {}
     }
 
-    function handleDeleteReply(
+    async function handleDeleteReply(
         currentPostComments: PostComment[],
         currentComment: PostComment,
         currentPostId: string,
@@ -241,22 +248,29 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
             commentsUpdateAccessKey: config.commentsUpdateAccessKey,
         };
 
-        swal({
-            title: '',
-            text: `Delete ${currentReply.reply_author}'s reply to "${currentComment.comment_author}"?`,
-            icon: 'warning',
-            buttons: {
-                cancel: true,
-                confirm: {
-                    text: 'Yes, Delete',
-                    className: 'deleteConfirmBtn',
+        try {
+            const willDelete = await swal({
+                title: '',
+                text: `Delete ${currentReply.reply_author}'s reply to "${currentComment.comment_author}"?`,
+                icon: 'warning',
+                buttons: {
+                    cancel: true,
+                    confirm: {
+                        text: 'Yes, Delete',
+                        className: 'deleteConfirmBtn',
+                    },
                 },
-            },
-        }).then((willDelete) => {
+            });
             if (willDelete) {
-                // props.updatePostComments(currentPostId, updatedPost);
+                // update post comments
+                try {
+                    const res = await noAuthPut(`/post/${currentPostId}/comments`, updatedPost);
+                    setComments(res?.data?.post?.comments);
+                } catch (err) {
+                    console.error('Comment post error => ', err);
+                }
             }
-        });
+        } catch (err) {}
     }
 
     return (

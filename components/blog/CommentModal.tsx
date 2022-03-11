@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef, useEffect, SetStateAction, Dispatch } from 'react';
+import React, { useState, Fragment, useRef, SetStateAction, Dispatch } from 'react';
 import styles from '../../styles/SinglePost.module.css';
 import Rodal from 'rodal';
 import SimpleReactValidator from 'simple-react-validator';
