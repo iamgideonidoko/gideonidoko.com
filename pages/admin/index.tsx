@@ -45,44 +45,49 @@ const AdminProfile = ({}) => {
                                 {/*ADMIN PROFILE PAGE*/}
                                 <div className={styles.adminProfileWrap}>
                                     <div className={styles.profileHead}>
-                                        <div className={styles.profileAvatar}>
-                                            <img src={auth.userGithubInfo?.avatar_url} alt="" />
+                                        <div>
+                                            <div className={styles.profileAvatar}>
+                                                <img src={auth.userGithubInfo?.avatar_url} alt="" />
+                                            </div>
+                                            <h1 className={styles.adminName}>{auth.userGithubInfo?.name}</h1>
+                                            <p className={styles.adminBio}>{auth.userGithubInfo?.bio}</p>
+                                            <ul className={styles.socialInfo}>
+                                                <li>
+                                                    <span>Joined:</span>{' '}
+                                                    <span>
+                                                        {moment(auth.userInfo?.user?.created_at).format('MMM DD, YYYY')}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span>Email:</span>{' '}
+                                                    <span>
+                                                        <i className="neu-email"></i><span>{auth.userInfo?.user?.email}</span>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span>Social Media:</span>{' '}
+                                                    <span>
+                                                        <a
+                                                            href={`https://twitter.com/${auth.userGithubInfo?.twitter_username}`}
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            <i className="fab fa-twitter"></i>
+                                                        </a>{' '}
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <a
+                                                            href={auth.userGithubInfo?.html_url}
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            <i className="fab fa-github"></i>
+                                                        </a>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span>Location:</span> <span>{auth.userGithubInfo?.location}</span>
+                                                </li>
+                                            </ul>
+                                            <div className={styles.statInfo}>No of posts: 33</div>
                                         </div>
-                                        <h1 className={styles.adminName}>{auth.userGithubInfo?.name}</h1>
-                                        <p className={styles.adminBio}>{auth.userGithubInfo?.bio}</p>
-                                        <ul className={styles.socialInfo}>
-                                            <li>
-                                                <span>Joined:</span>{' '}
-                                                <span>
-                                                    {moment(auth.userInfo?.user?.created_at).format('MMM DD, YYYY')}
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span>Email:</span>{' '}
-                                                <span>
-                                                    <i className="neu-email"></i> {auth.userInfo?.user?.email}
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span>Social Media:</span>{' '}
-                                                <span>
-                                                    <a
-                                                        href={`https://twitter.com/${auth.userGithubInfo?.twitter_username}`}
-                                                        rel="noopener noreferrer"
-                                                    >
-                                                        <i className="fab fa-twitter"></i>
-                                                    </a>{' '}
-                                                    &nbsp;&nbsp;&nbsp;
-                                                    <a href={auth.userGithubInfo?.html_url} rel="noopener noreferrer">
-                                                        <i className="fab fa-github"></i>
-                                                    </a>
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span>Location:</span> <span>{auth.userGithubInfo?.location}</span>
-                                            </li>
-                                        </ul>
-                                        <div className={styles.statInfo}>No of posts: 33</div>
                                         <div className={styles.profileBody}>
                                             <div className={styles.actionLinks}>
                                                 <ul>
