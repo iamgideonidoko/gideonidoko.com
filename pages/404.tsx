@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/Custom404.module.css';
 import { NextSeo } from 'next-seo';
+import Image from 'next/image';
 
 const Custom404 = () => {
     return (
@@ -16,9 +17,9 @@ const Custom404 = () => {
                     <div className={styles.custom404Container}>
                         <div className={styles.custom404ContainerChild}>
                             <div className={styles.custom404ImageWrap}>
-                                <img src="/assets/img/404.svg" alt="404" />
+                                <Image src="/assets/img/404.svg" alt="404" width={300} height={200} />
                             </div>
-                            <h1>404 - Page Not Found &nbsp;&nbsp;: (</h1>
+                            {/* <h1>Page Not Found😢</h1> */}
                             <p>
                                 <small>Well, this is awkward, the page you were trying to view does not exist.</small>
                             </p>
@@ -30,7 +31,7 @@ const Custom404 = () => {
                                 </span>
                                 <span>
                                     <Link href="/blog">
-                                        <a>Go To Blog</a>
+                                        <a>Go to Blog</a>
                                     </Link>
                                 </span>
                             </div>

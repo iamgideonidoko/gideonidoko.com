@@ -40,13 +40,12 @@ const Footer = () => {
                         </h3>
                         <p>
                             I love building positive solutions with awesome technologies. I also give back to the
-                            community by sharing my experiences. I'm currently available for hiring. <br /> <br /> In
-                            need of a developer?
+                            community by sharing my experiences. <br /> <br /> In need of a developer?
                         </p>
                         <p className="lets-talk">
                             <Link href="/contact">
                                 <a>
-                                    Let's talk <i className="neu-right-lg"></i>
+                                    Let&apos;s talk <i className="neu-right-lg"></i>
                                 </a>
                             </Link>
                         </p>
