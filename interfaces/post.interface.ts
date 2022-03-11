@@ -77,12 +77,12 @@ export interface SingleFullPost {
 }
 
 export interface PostCommentReply {
-    _id: string;
+    _id?: string;
     reply_author: string;
     reply_body: string;
     isAdmin: boolean;
     isPostAuthor: boolean;
-    date: Date;
+    date?: Date;
 }
 
 export interface PostComment {

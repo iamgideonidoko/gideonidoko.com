@@ -6,26 +6,26 @@ import { encode } from 'html-entities';
 import { config } from '../../config/keys';
 import 'rodal/lib/rodal.css';
 import { PostComment } from '../../interfaces/post.interface';
+import { noAuthPut } from '../../helper';
 
 interface CommentModalProps {
     showCommentModal: boolean;
     setShowCommentModal: Dispatch<SetStateAction<boolean>>;
     currentPostTitle: string;
-    currentPostAuthor: string;
     isCommenting: boolean;
     currentPostComments: Array<PostComment>;
     currentPostId: string;
     isAdmin: boolean;
     isPostAuthor: boolean;
     currentCommentId: string;
-    currentAdminName: string;
+    currentAdminName: string | undefined | null;
+    setComments: Dispatch<SetStateAction<PostComment[]>>;
 }
 
 const CommentModal = ({
     showCommentModal,
     setShowCommentModal,
     currentPostTitle,
-    currentPostAuthor,
     isCommenting,
     currentPostComments,
     currentPostId,
@@ -33,6 +33,7 @@ const CommentModal = ({
     isPostAuthor,
     currentCommentId,
     currentAdminName,
+    setComments,
 }: CommentModalProps) => {
     const getCommentAuthorFromLocalStorage = () => {
         if (typeof window !== 'undefined') {
@@ -56,14 +57,13 @@ const CommentModal = ({
         }),
     );
 
-    const handleCommentFormSubmit = (e) => {
+    const handleCommentFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         forceUpdate(1);
 
         if (simpleValidator.current.allValid()) {
             //all input is valid
-            console.log('All values are valid');
 
             if (typeof window !== 'undefined') {
                 localStorage.setItem(config.localStorageCommentAuthorId, commentAuthor);
@@ -85,12 +85,20 @@ const CommentModal = ({
                     commentsUpdateAccessKey: config.commentsUpdateAccessKey,
                 };
 
+                try {
+                    const res = await noAuthPut(`/post/${currentPostId}/comments`, updatedPost);
+                    setComments(res?.data?.post?.comments);
+                    cancelCommentModal();
+                } catch (err) {
+                    console.error('Comment post error => ', err);
+                }
+
                 //update the post comments
                 // updatePostComments(currentPostId, updatedPost);
             } else {
                 console.log('Attempting to reply...');
                 //get a new copy of the current post comments array (deep copy)
-                const newCurrentPostComments = JSON.parse(JSON.stringify(currentPostComments));
+                const newCurrentPostComments: PostComment[] = JSON.parse(JSON.stringify(currentPostComments));
 
                 const mappedCurrentPostComments = newCurrentPostComments.map((comment) => {
                     if (comment._id === currentCommentId) {
@@ -114,7 +122,13 @@ const CommentModal = ({
                 };
 
                 //update the post comments
-                // updatePostComments(currentPostId, updatedPost);
+                try {
+                    const res = await noAuthPut(`/post/${currentPostId}/comments`, updatedPost);
+                    setComments(res?.data?.post?.comments);
+                    cancelCommentModal();
+                } catch (err) {
+                    console.error('Comment post error => ', err);
+                }
             }
         } else {
             //input not valid, so show error
@@ -123,7 +137,7 @@ const CommentModal = ({
         }
     };
 
-    const handleCommentInputChange = (e) => {
+    const handleCommentInputChange: React.ChangeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         switch (e.target.name) {
             case 'nameField':
                 setCommentAuthor(e.target.value);
@@ -142,7 +156,7 @@ const CommentModal = ({
     };
 
     const resolveAfterResetUpdate = () => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             // resetPostUpdated();
             setTimeout(() => {
                 resolve(true);
@@ -150,9 +164,9 @@ const CommentModal = ({
         });
     };
 
-    if (isPostUpdated) {
-        resolveAfterResetUpdate().then((res) => res && cancelCommentModal());
-    }
+    // if (isPostUpdated) {
+    //     resolveAfterResetUpdate().then((res) => res && cancelCommentModal());
+    // }
 
     return (
         <Fragment>
@@ -182,7 +196,7 @@ const CommentModal = ({
                                 <b>
                                     {currentPostComments.find((comment) => comment._id === currentCommentId)
                                         ? currentPostComments.find((comment) => comment._id === currentCommentId)
-                                              .comment_author
+                                              ?.comment_author
                                         : null}
                                 </b>
                             </span>
@@ -220,7 +234,7 @@ const CommentModal = ({
                                 : `Reply to ${
                                       currentPostComments.find((comment) => comment._id === currentCommentId)
                                           ? currentPostComments.find((comment) => comment._id === currentCommentId)
-                                                .comment_author
+                                                ?.comment_author
                                           : null
                                   }...`
                         }
