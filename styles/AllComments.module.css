@@ -144,6 +144,7 @@
 	background: transparent;
 	padding: 0.5rem 1rem;
 	border: none;
+	color: var(--font-color);
 }
 
 .pagination span button:hover {
