@@ -83,7 +83,7 @@
 }
 
 .custom404ExitLinks span:nth-child(2) a:hover {
-	background: var(--pri-blue-light-02);
+	/* background: var(--pri-blue-light-02); */
 }
 
 /* >>>>>>>>>>MEDIA QUERIES<<<<<<<<< */
