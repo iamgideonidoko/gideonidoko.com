@@ -397,6 +397,17 @@ export const noAuthPut = (path: string, body: object): Promise<any> => {
     });
 };
 
+export const noAuthPost = (path: string, body: object): Promise<any> => {
+    return new Promise<any>(async (resolve, reject) => {
+        try {
+            const res = await axiosAuth.post(`${config.baseUrl}${path}`, body, axiosHeaders());
+            resolve(res.data);
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
 export const loadFirebase = () => {
     if (typeof window !== 'undefined') {
         const firebase = window.firebase;
