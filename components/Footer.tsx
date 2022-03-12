@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { SocialIcon } from 'react-social-icons';
+import { socialIconStyle } from '../helper';
 
 const Footer = () => {
     //get current year
@@ -49,45 +51,11 @@ const Footer = () => {
                                 </a>
                             </Link>
                         </p>
-                        <div className="social-links">
-                            <ul>
-                                <li>
-                                    <a
-                                        href="https://github.com/IamGideonIdoko"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <i className="fab fa-github"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        href="https://codepen.io/IamGideonIdoko"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <i className="fab fa-codepen"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        href="https://twitter.com/IamGideonIdoko"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <i className="fab fa-twitter"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        href="https://linkedin.com/in/IamGideonIdoko"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <i className="fab fa-linkedin"></i>
-                                    </a>
-                                </li>
-                            </ul>
+                        <div className="socials">
+                            <SocialIcon url="https://github.com/IamGideonIdoko" style={socialIconStyle()} bgColor="var(--font-color)" target="_blank" rel="noopener noreferrer" />
+                            <SocialIcon url="https://codepen.io/IamGideonIdoko" style={socialIconStyle()} bgColor="var(--font-color)" target="_blank" rel="noopener noreferrer"  />
+                            <SocialIcon url="https://twitter.com/IamGideonIdoko" style={socialIconStyle()} fgColor="white" target="_blank" rel="noopener noreferrer"  />
+                            <SocialIcon url="https://linkedin.com/in/IamGideonIdoko" style={socialIconStyle()} fgColor="white" target="_blank" rel="noopener noreferrer"  />
                         </div>
                     </div>
                     <div className="quick-links">

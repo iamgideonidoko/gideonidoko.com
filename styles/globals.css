@@ -826,6 +826,11 @@ body::-webkit-scrollbar-track {
 	font-weight: 600;
 }
 
+.socials {
+	margin-top: 1.5rem;
+	transform: translateX(-1rem);
+}
+
 .social-links {
 	padding: 2rem 0;
 }

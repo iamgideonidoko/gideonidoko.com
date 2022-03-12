@@ -8,6 +8,8 @@ import { NextSeo } from 'next-seo';
 import { encode } from 'html-entities';
 import swal from 'sweetalert';
 import { noAuthPost } from '../helper';
+import { SocialIcon } from 'react-social-icons';
+import { socialIconStyle } from '../helper';
 
 const Contact = ({}) => {
     // internal state
@@ -208,45 +210,11 @@ const Contact = ({}) => {
                                 <p>
                                     Check out my <b>social media</b> presence below to get to know me better:
                                 </p>
-                                <div className={`${styles.socialLinks} social-links`}>
-                                    <ul>
-                                        <li>
-                                            <a
-                                                href="https://github.com/IamGideonIdoko"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <i className="fab fa-github"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="https://codepen.io/IamGideonIdoko"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <i className="fab fa-codepen"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="https://twitter.com/IamGideonIdoko"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <i className="fab fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="https://linkedin.com/in/IamGideonIdoko"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <i className="fab fa-linkedin"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <div className="socials">
+                                    <SocialIcon url="https://github.com/IamGideonIdoko" style={socialIconStyle()} bgColor="var(--font-color)" target="_blank" rel="noopener noreferrer" />
+                                    <SocialIcon url="https://codepen.io/IamGideonIdoko" style={socialIconStyle()} bgColor="var(--font-color)" target="_blank" rel="noopener noreferrer"  />
+                                    <SocialIcon url="https://twitter.com/IamGideonIdoko" style={socialIconStyle()} fgColor="white" target="_blank" rel="noopener noreferrer"  />
+                                    <SocialIcon url="https://linkedin.com/in/IamGideonIdoko" style={socialIconStyle()} fgColor="white" target="_blank" rel="noopener noreferrer"  />
                                 </div>
                             </div>
                         </div>

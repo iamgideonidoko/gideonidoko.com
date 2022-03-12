@@ -428,3 +428,8 @@ export const loadFirebase = () => {
         }
     }
 };
+
+export const socialIconStyle = (other?: object) => ({
+    ...{ height: '4em', width: '4em', borderRadius: '100rem', transform: 'scale(0.6)' },
+    ...other,
+});

@@ -69,7 +69,7 @@ const About = () => {
                             </p>
 
                             <p>
-                                I mostly write about Software Engineering topics and tools on my{' '}
+                                Though familiar with some backend technologies and concerned about every aspect of a product, I focus more on frontend tools. I write about Software Engineering topics and tools on my{' '}
                                 <Link href="/blog">
                                     <a>blog</a>
                                 </Link>{' '}

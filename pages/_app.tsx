@@ -20,6 +20,7 @@ import { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { loadFirebase } from '../helper';
+import Image from 'next/image';
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -110,7 +111,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <div className="mobileAdminName">
                     <Link href="/">
                         <a onClick={closeNav}>
-                            <img src="/assets/img/GideonIdokoDevLogo.png" className="site-logo" alt="Gideon Idoko" />
+                            <Image
+                                src="/assets/img/GideonIdokoDevLogo.png"
+                                className="site-footer-logo"
+                                alt="Gideon Idoko"
+                                width={38}
+                                height={32}
+                            />
                         </a>
                     </Link>
                     <span>Gideon Idoko</span>
@@ -139,30 +146,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                         </li>
                     </ul>
                 </nav>
-                <div className="social-links mobile-social-links">
-                    <ul>
-                        <li>
-                            <a href="https://github.com/IamGideonIdoko" target="_blank" rel="noopener noreferrer">
-                                <i className="fab fa-github"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://codepen.io/IamGideonIdoko" target="_blank" rel="noopener noreferrer">
-                                <i className="fab fa-codepen"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/IamGideonIdoko" target="_blank" rel="noopener noreferrer">
-                                <i className="fab fa-twitter"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://linkedin.com/in/IamGideonIdoko" target="_blank" rel="noopener noreferrer">
-                                <i className="fab fa-linkedin"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
             <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
                 <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
