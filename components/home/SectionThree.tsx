@@ -27,7 +27,7 @@ const SectionThree = () => {
                 try {
                     scrambler = new window.Scrambler();
                 } catch (err) {
-                    console.log('Scrambler Error: ', err);
+                    console.error('Scrambler Error: ', err);
                 }
 
                 if (scrambler) {
@@ -41,6 +41,7 @@ const SectionThree = () => {
                 }
             }
         }, 3000);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

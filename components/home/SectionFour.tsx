@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import styles from '../../styles/Home.module.css';
 import Bounce from 'react-reveal/Bounce';
 import Fade from 'react-reveal/Fade';

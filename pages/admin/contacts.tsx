@@ -10,7 +10,7 @@ import { RootState } from '../../store/store';
 import { authDelete, authGet } from '../../helper';
 import { PaginatedContacts } from '../../interfaces/contact.interface';
 
-const Contacts = (props) => {
+const Contacts = ({}) => {
     const router = useRouter();
     const auth = useSelector(({ auth }: RootState) => auth);
 
