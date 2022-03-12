@@ -19,7 +19,7 @@ function Home({}) {
                     url: 'https://gideonidoko.com',
                     title: 'Gideon Idoko - Software Developer and Technical Writer',
                     description:
-                        'Gideon Idoko is a Software Developer and Technical Writer that develops unique digital experiences and builds positive solutions. Get in touch.',
+                        'Gideon Idoko is a Software Engineer and Technical Writer that develops unique digital experiences and builds positive solutions. Get in touch.',
                     images: [
                         {
                             url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
