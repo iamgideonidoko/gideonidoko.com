@@ -100,7 +100,6 @@ const Page = ({ posts }: { posts: PaginatedPosts }) => {
 // This gets called on every request
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const pageno = context.params?.pageno;
-    console.log(pageno);
 
     // check is the value of pageno is a wrong input
     if (!Number.isInteger(Number(pageno)) || Number(pageno) < 1) return { props: { posts: { docs: [] } } };

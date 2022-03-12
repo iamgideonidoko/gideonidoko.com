@@ -17,7 +17,7 @@ const getPosts = (inputValue: string): Promise<Post[]> => {
         clearTimeout(postFetchTimer);
         postFetchTimer = setTimeout(async () => {
             try {
-                const res = await authGet(`/posts/search?q=${inputValue}`);
+                const res = await authGet(`/posts/searches?q=${inputValue}`);
                 resolve(res?.data?.posts);
             } catch (err) {
                 console.error('Post Search Error => ', err);
