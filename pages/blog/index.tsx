@@ -28,8 +28,8 @@ const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
                     images: [
                         {
                             url: 'https://gideonidoko.com/GideonIdokoCardImage.png',
-                            width: 1004,
-                            height: 591,
+                            width: 1500,
+                            height: 500,
                             alt: "Gideon Idoko's card image",
                         },
                     ],

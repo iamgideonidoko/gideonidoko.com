@@ -103,8 +103,8 @@ const Contact = ({}) => {
                     images: [
                         {
                             url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
-                            width: 1004,
-                            height: 591,
+                            width: 1500,
+                            height: 500,
                             alt: "Gideon Idoko's card image",
                         },
                     ],
