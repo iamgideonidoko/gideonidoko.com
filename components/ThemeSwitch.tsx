@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
 
+const systemTheme = () => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+    }
+    return 'light';
+};
+
 const ThemeSwitch = (props) => {
     const [theme, setTheme] = useState('dark');
 
     useEffect(() => {
+        const currentTheme = window.localStorage.getItem('gideonidoko.com-theme');
         setTheme(
-            window.localStorage.getItem('gideonidoko.com-theme')
+            currentTheme && ['light', 'dark'].includes(currentTheme)
                 ? (window.localStorage.getItem('gideonidoko.com-theme') as string)
-                : 'dark',
+                : systemTheme(),
         );
     }, []);
 
