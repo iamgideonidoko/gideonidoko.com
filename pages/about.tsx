@@ -44,12 +44,12 @@ const About = () => {
                     <h3>
                         Hi there! <i className="neu-robot"></i>
                     </h3>
-                    <h1>I'm Gideon Idoko.</h1>
+                    <h1>I&apos;m Gideon Idoko.</h1>
 
                     <p>
-                        I'm a Software Developer and Technical Writer based in Nigeria interested in learning, building
-                        positive solutions with awesome experiences, sharing design and technical ideas and tips,
-                        writing, making innovative research, blogging and community building. I develop beautiful,
+                        I&apos;m a Software Developer and Technical Writer based in Nigeria interested in learning,
+                        building positive solutions with awesome experiences, sharing design and technical ideas and
+                        tips, writing, making innovative research, blogging and community building. I develop beautiful,
                         secured and accessible applications that meet the business requirements and focus on providing
                         the best experience for their end users. I go a long way to give my best shot, this has made me
                         keen to discovering life changing tech solutions. I devote a good amount of my time to
@@ -66,9 +66,9 @@ const About = () => {
                     </p>
 
                     <p>
-                        I play cool sports like tennis, badminton majorly. When I am not programming I'll probably be
-                        reading some articles, watching movies, engaging in my other hobbies or having a good time with
-                        my family.
+                        I play cool sports like tennis, badminton majorly. When I am not programming I&apos;ll probably
+                        be reading some articles, watching movies, engaging in my other hobbies or having a good time
+                        with my family.
                     </p>
 
                     <p>
@@ -114,22 +114,22 @@ const About = () => {
                     </ul>
 
                     <p>
-                        <b>No idea of what you really want?</b> I’ll assist you come up with a strategic plan which will
-                        help your business seamlessly grow.
+                        <b>No idea of what you really want?</b> I&apos;ll assist you come up with a strategic plan which
+                        will help your business seamlessly grow.
                     </p>
 
                     <p>
-                        <b>Want to chat about my content?</b> I’d be happy to engage in a discussion with you.
+                        <b>Want to chat about my content?</b> I&apos;d be happy to engage in a discussion with you.
                     </p>
 
                     <p>
-                        <b>Want your idea to be a reality?</b> I’ll pay close attention to what your idea is and aim to
-                        achieve and with suggestions, will create the best possible product as envisioned.
+                        <b>Want your idea to be a reality?</b> I&apos;ll pay close attention to what your idea is and
+                        aim to achieve and with suggestions, will create the best possible product as envisioned.
                     </p>
 
                     <p>
-                        <b>Need more hands in your team?</b> I've got pliability and I can work with any team, even if
-                        they’re part way through a project. Just hit me up when you need me.
+                        <b>Need more hands in your team?</b> I&apos;ve got pliability and I can work with any team, even
+                        if they&apos;re part way through a project. Just hit me up when you need me.
                     </p>
                 </div>
             </main>

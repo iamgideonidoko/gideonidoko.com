@@ -2,11 +2,8 @@ import Head from 'next/head';
 import { Fragment } from 'react';
 import Link from 'next/link';
 import styles from '../../styles/Blog.module.css';
-import { config } from '../../config/keys';
-
 import AllPostsRender from '../../components/blog/AllPostsRender';
 import { NextSeo } from 'next-seo';
-import axios from 'axios';
 import { PaginatedPosts } from '../../interfaces/post.interface';
 import { GetServerSideProps } from 'next';
 import { authGet } from '../../helper';

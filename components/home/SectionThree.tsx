@@ -6,9 +6,10 @@ import styles from '../../styles/Home.module.css';
 
 const SectionThree = () => {
     const aboutInfo = [
-        "I'm a Software Developer",
+        "I'm a Software Engineer",
         "I'm a Technical Writer",
         'I focus more on web engineering',
+        'I do more of Frontend engineering',
         'I love building positive solutions',
         'I write and create contents',
         "I've a liking to sharing knowledge",
@@ -20,7 +21,8 @@ const SectionThree = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            let scrambler;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            let scrambler: any;
             if (typeof window !== 'undefined') {
                 try {
                     scrambler = new window.Scrambler();
@@ -48,7 +50,7 @@ const SectionThree = () => {
                     <div className={styles.sectionThreeBgText}>G.I</div>
                 </div>
                 <Bounce left duration={1500}>
-                    <h3>I'm Gideon Idoko.</h3>
+                    <h3>I&apos;m Gideon Idoko.</h3>
                 </Bounce>
                 <h4 className={styles.aboutText}>- {aboutText}.</h4>
                 <div className={styles.s3AboutLink}>

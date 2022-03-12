@@ -155,15 +155,6 @@ const CommentModal = ({
         simpleValidator.current.hideMessages();
     };
 
-    const resolveAfterResetUpdate = () => {
-        return new Promise((resolve) => {
-            // resetPostUpdated();
-            setTimeout(() => {
-                resolve(true);
-            }, 2000);
-        });
-    };
-
     // if (isPostUpdated) {
     //     resolveAfterResetUpdate().then((res) => res && cancelCommentModal());
     // }
@@ -175,7 +166,7 @@ const CommentModal = ({
                 showCloseButton={false}
                 className="commentModal"
                 width={500}
-                customStyle={{ height: 'auto' }}
+                customStyles={{ height: 'auto' }}
                 onClose={cancelCommentModal}
                 closeOnEsc={true}
             >

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styles from '../../styles/Home.module.css';
 
 const SectionOne = () => {
@@ -25,7 +25,7 @@ const SectionOne = () => {
                         }
                     });
 
-                if (h1Element) {
+                if (h1Element && mappedH1ElemArray) {
                     h1Element.innerHTML = mappedH1ElemArray && mappedH1ElemArray.join('');
                 }
             }, 4000);

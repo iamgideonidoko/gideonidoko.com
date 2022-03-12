@@ -1,9 +1,6 @@
 import { Fragment, useState, useEffect } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-import { connect } from 'react-redux';
 import AllPostsRender from '../../components/blog/AllPostsRender';
-import { config } from '../../config/keys';
 import styles from '../../styles/Blog.module.css';
 import { NextSeo } from 'next-seo';
 import { authGet } from '../../helper';

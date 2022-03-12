@@ -1,6 +1,6 @@
 // import react, react-markdown-editor-lite, and a markdown parser you like
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+// import * as ReactDOM from 'react-dom';
 import MarkdownIt from 'markdown-it';
 import dynamic from 'next/dynamic';
 // import style manually

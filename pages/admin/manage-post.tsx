@@ -108,7 +108,7 @@ const ManagePost = ({}) => {
                     };
 
                     try {
-                        const res = await authPut(
+                        await authPut(
                             `/post/${selectedPost?.value}${
                                 postTitle.trim() !== selectedPost?.title?.trim() ? '?new_title=true' : ''
                             }`,
@@ -234,7 +234,7 @@ const ManagePost = ({}) => {
                 });
                 if (willDelete) {
                     try {
-                        const res = await authDelete(`/post/${selectedPost.value}`);
+                        await authDelete(`/post/${selectedPost.value}`);
                         await swal({
                             title: '',
                             text: `Post successfully deleted.`,
