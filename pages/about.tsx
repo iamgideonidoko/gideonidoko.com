@@ -73,11 +73,11 @@ const About = () => {
 
                     <p>
                         <a
-                            href="https://drive.google.com/file/d/1BACncycO0qHDWsom4pKY1hza1C254-zQ/view?usp=sharing"
+                            href="https://docs.google.com/document/d/1VKBYjOOj0pSSD1G8aLOXoY-SZnfyMg-24VGd3wQuF-w/edit?usp=sharing"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            Download Resume.
+                            View my Resume.
                         </a>
                     </p>
 
