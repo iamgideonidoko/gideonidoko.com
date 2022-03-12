@@ -61,7 +61,8 @@ const AdminProfile = ({}) => {
                                                 <li>
                                                     <span>Email:</span>{' '}
                                                     <span>
-                                                        <i className="neu-email"></i><span>{auth.userInfo?.user?.email}</span>
+                                                        <i className="neu-email"></i>
+                                                        <span>{auth.userInfo?.user?.email}</span>
                                                     </span>
                                                 </li>
                                                 <li>
