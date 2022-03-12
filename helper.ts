@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { v4 as uuidv4 } from 'uuid';
-import { CountOptions, SocialShareOptions, AxiosHeaders, Asset } from './interfaces/helper.interface';
+import { CountOptions, SocialShareOptions } from './interfaces/helper.interface';
 import axios, { AxiosRequestConfig } from 'axios';
 import { config } from './config/keys';
 import SimpleCrypto from 'simple-crypto-js';

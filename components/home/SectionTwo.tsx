@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Fade from 'react-reveal/Fade';
 import Bounce from 'react-reveal/Bounce';
 import Wobble from 'react-reveal/Wobble';
@@ -78,9 +79,9 @@ const SectionTwo = () => {
 		*/
     ];
 
-    const firstLetter = (str) => {
-        str = str.split('');
-        return str[0];
+    const firstLetter = (str: string) => {
+        const newStr = str.split('');
+        return newStr[0];
     };
 
     return (
