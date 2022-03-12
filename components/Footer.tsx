@@ -52,10 +52,34 @@ const Footer = () => {
                             </Link>
                         </p>
                         <div className="socials">
-                            <SocialIcon url="https://github.com/IamGideonIdoko" style={socialIconStyle()} bgColor="var(--font-color)" target="_blank" rel="noopener noreferrer" />
-                            <SocialIcon url="https://codepen.io/IamGideonIdoko" style={socialIconStyle()} bgColor="var(--font-color)" target="_blank" rel="noopener noreferrer"  />
-                            <SocialIcon url="https://twitter.com/IamGideonIdoko" style={socialIconStyle()} fgColor="white" target="_blank" rel="noopener noreferrer"  />
-                            <SocialIcon url="https://linkedin.com/in/IamGideonIdoko" style={socialIconStyle()} fgColor="white" target="_blank" rel="noopener noreferrer"  />
+                            <SocialIcon
+                                url="https://github.com/IamGideonIdoko"
+                                style={socialIconStyle()}
+                                bgColor="var(--font-color)"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            />
+                            <SocialIcon
+                                url="https://codepen.io/IamGideonIdoko"
+                                style={socialIconStyle()}
+                                bgColor="var(--font-color)"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            />
+                            <SocialIcon
+                                url="https://twitter.com/IamGideonIdoko"
+                                style={socialIconStyle()}
+                                fgColor="white"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            />
+                            <SocialIcon
+                                url="https://linkedin.com/in/IamGideonIdoko"
+                                style={socialIconStyle()}
+                                fgColor="white"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            />
                         </div>
                     </div>
                     <div className="quick-links">

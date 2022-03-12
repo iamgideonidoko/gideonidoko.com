@@ -209,6 +209,8 @@
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+	gap:  1rem;
+	grid-gap: 1rem;
 }
 
 .postShareBtns span {

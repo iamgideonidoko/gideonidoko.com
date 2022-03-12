@@ -8,7 +8,7 @@ import CommentModal from '../../../components/blog/CommentModal';
 import Custom404 from '../../404';
 import swal from 'sweetalert';
 // import { resetPostUpdated, updatePostComments } from '../../../store/actions/postActions';
-import { authGet, getReadTime, noAuthPut, shareToSocialMedia, strToSlug } from '../../../helper';
+import { authGet, getReadTime, noAuthPut, strToSlug } from '../../../helper';
 import copy from 'copy-to-clipboard';
 import styles from '../../../styles/SinglePost.module.css';
 import 'highlight.js/styles/monokai.css';
@@ -20,6 +20,16 @@ import { decode } from 'html-entities';
 import { config } from '../../../config/keys';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
+import {
+    TwitterShareButton,
+    TwitterIcon,
+    LinkedinShareButton,
+    LinkedinIcon,
+    WhatsappShareButton,
+    WhatsappIcon,
+    FacebookShareButton,
+    FacebookIcon,
+} from 'react-share';
 
 const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
     console.log('Post Info => ', postInfo);
@@ -368,18 +378,36 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                         <div className={styles.postShare}>
                                             <div className={styles.postShareBtns}>
                                                 <span>Share: </span>
-                                                <button
-                                                    className={styles.shareToTwitterBtn}
-                                                    onClick={() =>
-                                                        shareToSocialMedia({
-                                                            type: 'twitter',
-                                                            text: exactPost.description,
-                                                            hashtags: exactPost.tags as string[],
-                                                        })
-                                                    }
+                                                <TwitterShareButton
+                                                    title={exactPost?.title}
+                                                    hashtags={exactPost.tags as string[]}
+                                                    url={window.document.URL}
+                                                    via={exactPost?.description}
                                                 >
-                                                    <i className="fab fa-twitter"></i>
-                                                </button>
+                                                    <TwitterIcon size={32} round={true} />
+                                                </TwitterShareButton>
+                                                <LinkedinShareButton
+                                                    title={exactPost?.title}
+                                                    url={window.document.URL}
+                                                    summary={exactPost?.description}
+                                                    source={"Gideon Idoko's blog"}
+                                                >
+                                                    <LinkedinIcon size={32} round={true} />
+                                                </LinkedinShareButton>
+                                                <FacebookShareButton
+                                                    url={window.document.URL}
+                                                    quote={exactPost?.description}
+                                                    hashtag={exactPost?.tags ? exactPost?.tags[0] : ''}
+                                                >
+                                                    <FacebookIcon size={32} round={true} />
+                                                </FacebookShareButton>
+                                                <WhatsappShareButton
+                                                    title={exactPost?.title}
+                                                    url={window.document.URL}
+                                                    separator={': '}
+                                                >
+                                                    <WhatsappIcon size={32} round={true} />
+                                                </WhatsappShareButton>
                                             </div>
                                         </div>
 
@@ -541,7 +569,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                                                         )}
                                                                     </div>
                                                                     <div className={styles.srRight}>
-                                                                        <div className={styles.replyAuthor}>
+                                                                        <div className={styles.replyAuthor}>````````````````
                                                                             <div>
                                                                                 <span>{reply.reply_author}</span>{' '}
                                                                                 {reply.isAdmin &&
