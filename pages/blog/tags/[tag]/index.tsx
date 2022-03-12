@@ -9,106 +9,110 @@ import AllPostsRender from '../../../../components/blog/AllPostsRender';
 import { config } from '../../../../config/keys';
 import styles from '../../../../styles/Blog.module.css';
 import { NextSeo } from 'next-seo';
+import { GetServerSideProps } from 'next';
+import { authGet } from '../../../../helper';
+import { PaginatedPosts } from '../../../../interfaces/post.interface';
+import Custom404 from '../../../404';
 
-const Tags = (props) => {
+const Tags = ({ posts }: { posts: PaginatedPosts }) => {
     const router = useRouter();
     const { tag } = router.query;
 
-    const allPosts = props.post.posts ? props.post.posts.filter((post) => post.is_published === true) : [];
-
-    const allPostsWithTag = allPosts.filter((post) => post.tags.includes(tag) === true);
-
     return (
         <Fragment>
-            <NextSeo
-                title={
-                    !props.post.isLoaded
-                        ? 'Loading...'
-                        : allPostsWithTag.length === 0
-                        ? '404 Error'
-                        : `Blog (Tag: #${tag}) - Gideon Idoko`
-                }
-                description={
-                    allPostsWithTag.length !== 0
-                        ? `Checkout posts with the tag: #${tag}. I write about Software Development & web engineering topics and tools on my blog here.`
-                        : ''
-                }
-                canonical={`https://gideonidoko.com/blog/tags/${tag}`}
-                openGraph={{
-                    url: `https://gideonidoko.com/blog/tags/${tag}`,
-                    title: !props.post.isLoaded
-                        ? 'Loading...'
-                        : allPostsWithTag.length === 0
-                        ? '404 Error'
-                        : `Blog (Tag: #${tag}) - Gideon Idoko`,
-                    description:
-                        allPostsWithTag.length !== 0
-                            ? `Checkout posts with the tag: #${tag}. I write about Software Development & web engineering topics and tools on my blog here.`
-                            : '',
-                    images: [
-                        {
-                            url: 'https://gideonidoko.com/GideonIdokoCardImage.png',
-                            width: 1500,
-                            height: 500,
-                            alt: "Gideon Idoko's card image",
-                        },
-                    ],
-                    site_name: 'Blog - Gideon Idoko',
-                }}
-                twitter={{
-                    handle: '@IamGideonIdoko',
-                    site: '@IamGideonIdoko',
-                    cardType: 'summary_large_image',
-                }}
-            />
-            <Head>
-                <title>
-                    {!props.post.isLoaded
-                        ? 'Loading...'
-                        : allPostsWithTag.length === 0
-                        ? '404 Error'
-                        : `Blog (Tag: #${tag}) - Gideon Idoko`}
-                </title>
-            </Head>
-            <main className={`padding-top-10rem ${styles.blogMain}`}>
-                <div className="container-max-1248px">
-                    {
-                        //check if posts has been fetched and display
-                        !props.post.isLoaded ? (
-                            <div>
-                                <div className="complex-loader-wrap">
-                                    <div className="complex-loader"></div>
-                                </div>
-                            </div>
-                        ) : allPostsWithTag.length === 0 ? (
-                            <Fragment>PAGE DOES NOT EXIST</Fragment>
-                        ) : (
+            {posts?.docs?.length === 0 ? (
+                <Custom404 />
+            ) : (
+                <Fragment>
+                    <NextSeo
+                        title={`Blog (Tag: #${tag}) - Gideon Idoko`}
+                        description={`Checkout posts with the tag: #${tag}. I write about Software Development & web engineering topics and tools on my blog here.`}
+                        canonical={`https://gideonidoko.com/blog/tags/${tag}`}
+                        openGraph={{
+                            url: `https://gideonidoko.com/blog/tags/${tag}`,
+                            title: `Blog (Tag: #${tag}) - Gideon Idoko`,
+                            description: `Checkout posts with the tag: #${tag}. I write about Software Development & web engineering topics and tools on my blog here.`,
+                            images: [
+                                {
+                                    url: 'https://gideonidoko.com/GideonIdokoCardImage.png',
+                                    width: 1500,
+                                    height: 500,
+                                    alt: "Gideon Idoko's card image",
+                                },
+                            ],
+                            site_name: 'Blog - Gideon Idoko',
+                        }}
+                        twitter={{
+                            handle: '@IamGideonIdoko',
+                            site: '@IamGideonIdoko',
+                            cardType: 'summary_large_image',
+                        }}
+                    />
+                    <Head>
+                        <title>{`Blog (Tag: #${tag}) - Gideon Idoko`}</title>
+                    </Head>
+                    <main className={`padding-top-10rem ${styles.blogMain}`}>
+                        <div className="container-max-1248px">
                             <Fragment>
                                 <h2 style={{ marginBottom: '4rem' }}>
                                     #{tag} &nbsp;{' '}
                                     <small>
                                         (
-                                        {allPostsWithTag.length <= 1
-                                            ? `${allPostsWithTag.length} post`
-                                            : `${allPostsWithTag.length} posts`}
+                                        {posts?.totalDocs <= 1
+                                            ? `${posts?.totalDocs} post`
+                                            : `${posts?.totalDocs} posts`}
                                         )
                                     </small>{' '}
                                 </h2>
 
-                                <AllPostsRender posts={allPostsWithTag} />
+                                <AllPostsRender posts={posts?.docs} />
+
+                                <div className={styles.paginationWrapper}>
+                                    <div className={styles.pagination}>
+                                        <span>
+                                            {posts?.hasPrevPage && (
+                                                <Link
+                                                    href={`/blog${tag}${
+                                                        Number(posts?.page) === 2
+                                                            ? ''
+                                                            : `/page/${Number(posts?.page) - 1}`
+                                                    }`}
+                                                >
+                                                    <a>← Previous Page</a>
+                                                </Link>
+                                            )}
+                                        </span>
+                                        <span>
+                                            {posts?.hasNextPage && (
+                                                <Link href={`/blog/${tag}/page/${Number(posts?.page) + 1}`}>
+                                                    <a>Next Page →</a>
+                                                </Link>
+                                            )}
+                                        </span>
+                                    </div>
+                                </div>
                             </Fragment>
-                        )
-                    }
-                </div>
-            </main>
+                        </div>
+                    </main>
+                </Fragment>
+            )}
         </Fragment>
     );
 };
 
-const mapStateToProps = (state) => ({
-    post: state.post,
-    isAuthenticated: state.auth.isAuthenticated,
-    adminuser: state.auth.adminuser,
-});
+// This gets called on every request
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const tag = context.params?.tag;
 
-export default connect(mapStateToProps, null)(Tags);
+    // Fetch data from external API
+    try {
+        const res = await authGet(`/posts/${tag}`);
+        console.log('response => ', res);
+        return { props: { posts: res?.data?.posts } };
+    } catch (err) {
+        console.log('Fetch Error => ', err);
+        return { props: { posts: { docs: [] } } };
+    }
+};
+
+export default Tags;

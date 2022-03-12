@@ -16,7 +16,6 @@ const Page = ({ posts }: { posts: PaginatedPosts }) => {
     const router = useRouter();
     const { pageno } = router.query;
     const currentPageNumber = Number(pageno);
-    console.log('Posts => ', posts);
 
     return (
         <Fragment>
