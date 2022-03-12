@@ -25,7 +25,7 @@ const Header = ({
     };
 
     return (
-        <header className="header">
+        <header className={`header ${!isNavOpen ? 'force-sticky' : ''}`}>
             <div className="logo-wrap">
                 <Link href="/">
                     <a>

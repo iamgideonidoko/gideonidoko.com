@@ -8,7 +8,7 @@ import SectionFive from '../components/home/SectionFive';
 import styles from '../styles/Home.module.css';
 import { NextSeo } from 'next-seo';
 
-function Home(props) {
+function Home({}) {
     return (
         <Fragment>
             <NextSeo
@@ -23,8 +23,8 @@ function Home(props) {
                     images: [
                         {
                             url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
-                            width: 1004,
-                            height: 591,
+                            width: 1500,
+                            height: 500,
                             alt: "Gideon Idoko's card image",
                         },
                     ],

@@ -485,6 +485,7 @@ body::-webkit-scrollbar-track {
 
 .admin-menu-item a,
 .admin-menu-item span {
+	color: rgba(255, 255, 255, 0.7) !important;
 	display: inline-block;
 	height: 100%;
 	width: 100%;
@@ -962,6 +963,10 @@ body::-webkit-scrollbar-track {
 @media screen and (max-width: 650px) {
 	.header {
 		padding: 2rem 1rem;
+	}
+
+	.force-sticky {
+		position: sticky !important;
 	}
 
 	.main-wrapper {
