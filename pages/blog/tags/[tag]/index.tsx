@@ -1,12 +1,8 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import { connect } from 'react-redux';
-import moment from 'moment';
-import swal from 'sweetalert';
 import AllPostsRender from '../../../../components/blog/AllPostsRender';
-import { config } from '../../../../config/keys';
 import styles from '../../../../styles/Blog.module.css';
 import { NextSeo } from 'next-seo';
 import { GetServerSideProps } from 'next';
@@ -72,7 +68,7 @@ const Tags = ({ posts }: { posts: PaginatedPosts }) => {
                                         <span>
                                             {posts?.hasPrevPage && (
                                                 <Link
-                                                    href={`/blog${tag}${
+                                                    href={`/blog/tags/${tag}${
                                                         Number(posts?.page) === 2
                                                             ? ''
                                                             : `/page/${Number(posts?.page) - 1}`
@@ -84,7 +80,7 @@ const Tags = ({ posts }: { posts: PaginatedPosts }) => {
                                         </span>
                                         <span>
                                             {posts?.hasNextPage && (
-                                                <Link href={`/blog/${tag}/page/${Number(posts?.page) + 1}`}>
+                                                <Link href={`/blog/tags/${tag}/page/${Number(posts?.page) + 1}`}>
                                                     <a>Next Page →</a>
                                                 </Link>
                                             )}
@@ -106,7 +102,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     // Fetch data from external API
     try {
-        const res = await authGet(`/posts/${tag}`);
+        const res = await authGet(`/posts/${tag}?per_page=10`);
         console.log('response => ', res);
         return { props: { posts: res?.data?.posts } };
     } catch (err) {
