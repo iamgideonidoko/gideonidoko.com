@@ -38,6 +38,9 @@ const ThemeSwitch = (props) => {
         );
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const handleChange = () => {};
+
     return (
         <div
             className={!props.isNavOpen && props.allowForMobile ? 'themeswitch-wrapper' : 'themeswitch-wrapper navOpen'}
@@ -46,7 +49,13 @@ const ThemeSwitch = (props) => {
                 <i className={theme === 'dark' ? 'neu-moon-stars' : 'neu-sun'}></i>
             </button> */}
             <span>
-                <input type="checkbox" id="toggle" checked={theme === 'dark'} className="offscreen" />
+                <input
+                    type="checkbox"
+                    id="toggle"
+                    onChange={handleChange}
+                    checked={theme === 'dark'}
+                    className="offscreen"
+                />
                 <label htmlFor="toggle" className="switch" onClick={handleSwitch}></label>
             </span>
         </div>
