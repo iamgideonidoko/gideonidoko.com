@@ -62,6 +62,21 @@ const Contact = ({}) => {
                             icon: 'success',
                             buttons: [false, false],
                         });
+                        try {
+                            const mail = {
+                                subject: `A message was sent via your contact form.`,
+                                text: `${name} (${email}) sent you a message via your contact form. The message: ${message}. Log in here to check it out: ${
+                                    typeof window !== 'undefined' && `${window.location.host}/login`
+                                }`,
+                                html: `<p><b>${name} (${email})</b> sent you a message via your contact form.</p> <br /> <p>The message: ${message}</p> <br /> <p>Log in here to check it out: ${
+                                    typeof window !== 'undefined' &&
+                                    `http${window.location.host === 'localhost' ? '' : 's'}://${
+                                        window.location.host
+                                    }/login`
+                                }</p>`,
+                            };
+                            await noAuthPost(`/mail`, mail);
+                        } catch (err) {}
                         setName('');
                         setEmail('');
                         setMessage('');
