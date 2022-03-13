@@ -375,41 +375,43 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                             ))}
                                         </div>
 
-                                        <div className={styles.postShare}>
-                                            <div className={styles.postShareBtns}>
-                                                <span>Share: </span>
-                                                <TwitterShareButton
-                                                    title={exactPost?.title}
-                                                    hashtags={exactPost.tags as string[]}
-                                                    url={window.document.URL}
-                                                    via={exactPost?.description}
-                                                >
-                                                    <TwitterIcon size={32} round={true} />
-                                                </TwitterShareButton>
-                                                <LinkedinShareButton
-                                                    title={exactPost?.title}
-                                                    url={window.document.URL}
-                                                    summary={exactPost?.description}
-                                                    source={"Gideon Idoko's blog"}
-                                                >
-                                                    <LinkedinIcon size={32} round={true} />
-                                                </LinkedinShareButton>
-                                                <FacebookShareButton
-                                                    url={window.document.URL}
-                                                    quote={exactPost?.description}
-                                                    hashtag={exactPost?.tags ? exactPost?.tags[0] : ''}
-                                                >
-                                                    <FacebookIcon size={32} round={true} />
-                                                </FacebookShareButton>
-                                                <WhatsappShareButton
-                                                    title={exactPost?.title}
-                                                    url={window.document.URL}
-                                                    separator={': '}
-                                                >
-                                                    <WhatsappIcon size={32} round={true} />
-                                                </WhatsappShareButton>
+                                        {typeof window !== 'undefined' && (
+                                            <div className={styles.postShare}>
+                                                <div className={styles.postShareBtns}>
+                                                    <span>Share: </span>
+                                                    <TwitterShareButton
+                                                        title={exactPost?.title}
+                                                        hashtags={exactPost.tags as string[]}
+                                                        url={window.document.URL}
+                                                        via={exactPost?.description}
+                                                    >
+                                                        <TwitterIcon size={32} round={true} />
+                                                    </TwitterShareButton>
+                                                    <LinkedinShareButton
+                                                        title={exactPost?.title}
+                                                        url={window.document.URL}
+                                                        summary={exactPost?.description}
+                                                        source={"Gideon Idoko's blog"}
+                                                    >
+                                                        <LinkedinIcon size={32} round={true} />
+                                                    </LinkedinShareButton>
+                                                    <FacebookShareButton
+                                                        url={window.document.URL}
+                                                        quote={exactPost?.description}
+                                                        hashtag={exactPost?.tags ? exactPost?.tags[0] : ''}
+                                                    >
+                                                        <FacebookIcon size={32} round={true} />
+                                                    </FacebookShareButton>
+                                                    <WhatsappShareButton
+                                                        title={exactPost?.title}
+                                                        url={window.document.URL}
+                                                        separator={': '}
+                                                    >
+                                                        <WhatsappIcon size={32} round={true} />
+                                                    </WhatsappShareButton>
+                                                </div>
                                             </div>
-                                        </div>
+                                        )}
 
                                         <div className={styles.postPagination}>
                                             <div className={styles.ppLeft}>
@@ -468,6 +470,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                                         auth.isAuthenticated ? auth.userInfo?.user?.name : null
                                                     }
                                                     setComments={setComments}
+                                                    exactPost={exactPost}
                                                 />
                                                 <div className={styles.commentSectionBody}>
                                                     {comments.map((comment) => (
@@ -569,7 +572,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                                                         )}
                                                                     </div>
                                                                     <div className={styles.srRight}>
-                                                                        <div className={styles.replyAuthor}>````````````````
+                                                                        <div className={styles.replyAuthor}>
                                                                             <div>
                                                                                 <span>{reply.reply_author}</span>{' '}
                                                                                 {reply.isAdmin &&

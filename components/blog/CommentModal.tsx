@@ -5,8 +5,8 @@ import SimpleReactValidator from 'simple-react-validator';
 import { encode } from 'html-entities';
 import { config } from '../../config/keys';
 import 'rodal/lib/rodal.css';
-import { PostComment } from '../../interfaces/post.interface';
-import { noAuthPut } from '../../helper';
+import { FullPost, PostComment } from '../../interfaces/post.interface';
+import { noAuthPost, noAuthPut } from '../../helper';
 
 interface CommentModalProps {
     showCommentModal: boolean;
@@ -20,6 +20,7 @@ interface CommentModalProps {
     currentCommentId: string;
     currentAdminName: string | undefined | null;
     setComments: Dispatch<SetStateAction<PostComment[]>>;
+    exactPost: FullPost;
 }
 
 const CommentModal = ({
@@ -34,6 +35,7 @@ const CommentModal = ({
     currentCommentId,
     currentAdminName,
     setComments,
+    exactPost,
 }: CommentModalProps) => {
     const getCommentAuthorFromLocalStorage = () => {
         if (typeof window !== 'undefined') {
@@ -89,6 +91,22 @@ const CommentModal = ({
                     const res = await noAuthPut(`/post/${currentPostId}/comments`, updatedPost);
                     setComments(res?.data?.post?.comments);
                     cancelCommentModal();
+                    try {
+                        const mail = {
+                            subject: `A comment was made on your post.`,
+                            text: `${commentAuthor} commented on your post, ${
+                                exactPost?.title
+                            }. The comment: ${commentBody}. Check it out here: ${
+                                typeof window !== 'undefined' && window.document.URL
+                            }`,
+                            html: `<p><b>${commentAuthor}</b> commented on your post, <b>${
+                                exactPost?.title
+                            }</b></p>. <br /> <p>The comment: ${commentBody}</p> <br /> <p>Check it out here: ${
+                                typeof window !== 'undefined' && window.document.URL
+                            }</p>`,
+                        };
+                        await noAuthPost(`/mail`, mail);
+                    } catch (err) {}
                 } catch (err) {
                     console.error('Comment post error => ', err);
                 }
@@ -99,6 +117,8 @@ const CommentModal = ({
                 console.log('Attempting to reply...');
                 //get a new copy of the current post comments array (deep copy)
                 const newCurrentPostComments: PostComment[] = JSON.parse(JSON.stringify(currentPostComments));
+
+                const currentComment = newCurrentPostComments.find((comment) => comment._id === currentCommentId);
 
                 const mappedCurrentPostComments = newCurrentPostComments.map((comment) => {
                     if (comment._id === currentCommentId) {
@@ -126,6 +146,26 @@ const CommentModal = ({
                     const res = await noAuthPut(`/post/${currentPostId}/comments`, updatedPost);
                     setComments(res?.data?.post?.comments);
                     cancelCommentModal();
+                    try {
+                        const mail = {
+                            subject: `A reply was made to a comment on your post.`,
+                            text: `${commentAuthor.trim()} replied to a comment by ${
+                                currentComment?.comment_author
+                            } on your post, ${exactPost?.title}. <br /> The comment: ${
+                                currentComment?.comment_body
+                            } <br /> The reply: ${commentBody} <br /> Check it out here: ${
+                                typeof window !== 'undefined' && window.document.URL
+                            }`,
+                            html: `<p><b>${commentAuthor.trim()}</b> replied to a comment by <b>${
+                                currentComment?.comment_author
+                            }</b> on your post, <b>${exactPost?.title}</b></p>. <br /> <p>The comment: ${
+                                currentComment?.comment_body
+                            }</p> <br /> <p>The reply: ${commentBody}</p> <br /> <p>Check it out here: ${
+                                typeof window !== 'undefined' && window.document.URL
+                            }</p>`,
+                        };
+                        await noAuthPost(`/mail`, mail);
+                    } catch (err) {}
                 } catch (err) {
                     console.error('Comment post error => ', err);
                 }
