@@ -103,10 +103,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     // Fetch data from external API
     try {
         const res = await authGet(`/posts/${tag}?per_page=10`);
-        console.log('response => ', res);
         return { props: { posts: res?.data?.posts } };
     } catch (err) {
-        console.log('Fetch Error => ', err);
         return { props: { posts: { docs: [] } } };
     }
 };

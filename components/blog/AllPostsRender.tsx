@@ -36,10 +36,14 @@ const AllPostsRender = ({ posts }: { posts: Array<Post> }) => {
                                 <span>
                                     <small>{moment(post.created_at).format('MMM DD, YYYY')}</small>
                                 </span>
-                                {/* &nbsp;&nbsp;|&nbsp;&nbsp;
-                                <span>
-                                    <small>{getReadTime(post.body)}</small>
-                                </span> */}
+                                {post?.read_time && (
+                                    <>
+                                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                                        <span>
+                                            <small>{post?.read_time}</small>
+                                        </span>
+                                    </>
+                                )}
                                 &nbsp;&nbsp;|&nbsp;&nbsp;
                                 <span>
                                     <small>{post.author_name}</small>

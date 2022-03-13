@@ -106,7 +106,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         const res = await authGet(`/posts?page=${pageno}`);
         return { props: { posts: res?.data?.posts } };
     } catch (err) {
-        console.log('Fetch Error => ', err);
         return { props: { posts: { docs: [] } } };
     }
 };

@@ -35,13 +35,6 @@ const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
     ssr: false,
 });
 
-// handle markdown editor change
-/*
-const handleEditorChange = ({html, text}) => {    
-  console.log('handleEditorChange', html, text)
-}
-*/
-
 const MarkdownEditor = ({
     textValue,
     handleMarkdownEditorChange,

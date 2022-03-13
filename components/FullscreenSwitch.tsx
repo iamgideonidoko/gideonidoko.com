@@ -17,14 +17,12 @@ const FullscreenSwitch = (props) => {
     };
 
     const handleFullscreenSwitch = () => {
-        console.log('The fullscreen switch was clicked');
-
         if (typeof window !== 'undefined') {
             if (getFullscreenElement()) {
                 window.document.exitFullscreen();
             } else {
                 window.document.documentElement.requestFullscreen().catch((e) => {
-                    console.log(e);
+                    console.error(e);
                 });
             }
         }

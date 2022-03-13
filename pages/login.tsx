@@ -46,11 +46,9 @@ const Login = ({}) => {
                 loginUser({
                     body: adminUser,
                     success(payload) {
-                        console.log('data => ', payload);
                         dispatch(getUserGithubInfo({ githubusername: payload?.data?.user?.user?.githubusername }));
                     },
                     failed(err) {
-                        console.log('Shit failed => ', err.response);
                         setIsAttemptingLogin(false);
                         swal('Login failed!', 'Incorrect credentials', 'error');
                     },

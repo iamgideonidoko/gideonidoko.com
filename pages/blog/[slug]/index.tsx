@@ -32,8 +32,6 @@ import {
 } from 'react-share';
 
 const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
-    console.log('Post Info => ', postInfo);
-
     const exactPost = postInfo.post;
     const nextPost = postInfo.nextPost;
     const previousPost = postInfo.previousPost;
@@ -647,7 +645,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         const res = await authGet(`/post/${slug}`);
         return { props: { postInfo: res?.data?.post } };
     } catch (err) {
-        console.log('Fetch Error => ', err);
         return { props: { postInfo: { post: null, nextPost: [], prevPost: [] } } };
     }
 };

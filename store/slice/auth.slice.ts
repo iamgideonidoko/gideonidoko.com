@@ -64,7 +64,6 @@ export const authSlice = createSlice({
     reducers: {
         updateTokens: (state, { payload }) => {
             if (state.userInfo?.accessToken && state.userInfo?.refreshToken) {
-                console.log('token refreshed');
                 // update the existing token with the new token
                 state.userInfo.accessToken = payload?.accessToken;
                 state.userInfo.refreshToken = payload?.refreshToken;

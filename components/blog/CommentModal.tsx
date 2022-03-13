@@ -114,7 +114,6 @@ const CommentModal = ({
                 //update the post comments
                 // updatePostComments(currentPostId, updatedPost);
             } else {
-                console.log('Attempting to reply...');
                 //get a new copy of the current post comments array (deep copy)
                 const newCurrentPostComments: PostComment[] = JSON.parse(JSON.stringify(currentPostComments));
 

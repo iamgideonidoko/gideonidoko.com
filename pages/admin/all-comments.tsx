@@ -27,7 +27,6 @@ const AllComments = ({}) => {
             setPostsLoading(true);
             const res = await authGet(`/posts/comments?page=${pageNo}&per_page=10`);
             setPostsLoading(false);
-            console.log('Comment fetch response => ', res);
             setPosts(res?.data?.posts || null);
         } catch (err) {
             console.error('Comments fetch error => ', err);

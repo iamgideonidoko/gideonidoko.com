@@ -16,9 +16,6 @@ const Header = ({
     setIsNavOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     const auth = useSelector(({ auth }: RootState) => auth);
-    // const store = useSelector((state: RootState) => state);
-
-    // console.log('Store => ', store);
 
     const handleNavMenuBtnClick = () => {
         setIsNavOpen(!isNavOpen);

@@ -24,7 +24,6 @@ const Contacts = ({}) => {
             setContactsLoading(true);
             const res = await authGet(`/contacts?page=${pageNo}&per_page=10`);
             setContactsLoading(false);
-            console.log('Contacts fetch response => ', res);
             setContacts(res?.data?.contacts || null);
         } catch (err) {
             console.error('Contacts fetch error => ', err);

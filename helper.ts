@@ -164,48 +164,6 @@ export const socialWindow = (url: string) => {
     window.open(url, 'NewWindow', params);
 };
 
-export function shareToSocialMedia(opt: SocialShareOptions) {
-    /*
-	Expect properties of opt object
-	- type (required) [string]
-	- text (for twitter) [string]
-	- hashtags (for twitter) [array]
-	- summary (for linkedin) [string]
-	- title (for linkedin) [string]
-	- source (for linkedin) [string]
-	*/
-    let url;
-
-    if (!opt) {
-        console.log('SOCIAL MEDIA SHARE ERROR: No object bound to the social media share function');
-        return;
-    }
-
-    if (!opt.type) {
-        console.log('SOCIAL MEDIA SHARE ERROR: No type found in object');
-        return;
-    }
-
-    //get the current page url
-    const pageUrl = encodeURIComponent(window.document.URL);
-
-    if (opt.type === 'facebook') {
-        url = 'https://www.facebook.com/sharer.php?u=' + pageUrl;
-        socialWindow(url);
-    } else if (opt.type === 'twitter' && opt.text) {
-        const preText = opt.text;
-        const text = encodeURIComponent(preText.length > 140 ? preText.slice(0, 130) + '...' : preText);
-        url = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${text}&hashtags=${opt.hashtags}&via=IamGideonIdoko`;
-        socialWindow(url);
-    } else if (opt.type === 'linkedin' && opt.summary && opt.source && opt.title) {
-        const title = encodeURIComponent(opt.title);
-        const summary = encodeURIComponent(opt.summary);
-        const source = encodeURIComponent(opt.source);
-        url = `https://www.linkedin.com/shareArticle?mini=true&url=${pageUrl}&title=${title}&summary=${summary}&source=${source}`;
-        socialWindow(url);
-    }
-}
-
 export function isConstructor(f: new () => boolean) {
     try {
         new f();
@@ -227,8 +185,6 @@ export const axiosHeaders = () => {
             'x-auth-api-key': `${config.noAuthKey}${Date.now()}`,
         },
     };
-
-    console.log('AXIOS CONFIG => ', axiosConfig);
 
     return axiosConfig;
 };
@@ -424,7 +380,6 @@ export const loadFirebase = () => {
 
             firebase.initializeApp(firebaseConfig);
             window.isFirebaseInitialized = true;
-            console.log('Firebase app initialized => ', firebase);
         }
     }
 };

@@ -9,8 +9,6 @@ import { GetServerSideProps } from 'next';
 import { authGet } from '../../helper';
 
 const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
-    console.log('Posts => ', posts);
-
     return (
         <Fragment>
             <NextSeo
@@ -94,7 +92,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
         const res = await authGet(`/posts`);
         return { props: { posts: res?.data?.posts } };
     } catch (err) {
-        console.log('Fetch Error => ', err);
         return { props: { posts: { docs: [] } } };
     }
 };

@@ -19,7 +19,7 @@ const SectionFive = ({}) => {
                 const res = await authGet(`/posts?per_page=3`);
                 setPosts(res?.data?.posts?.docs || []);
             } catch (err) {
-                console.log('Err => ', err);
+                console.error('Err => ', err);
             }
         })();
     }, []);
