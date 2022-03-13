@@ -106,9 +106,14 @@
 	position: relative;
 }
 
+.welcomeLine span {
+	/* border: 1px solid red; */
+	text-shadow: 0 0 80px rgb(192 219 255 / 75%), 0 0 32px rgb(65 120 255 / 24%);
+}
+
 
 .welcomeLine2 {
-	font-family: PT-Serif;
+	font-family: inherit;
 	position: relative;
 }
 
@@ -123,7 +128,7 @@
 
 /* SECTION TWO */
 .sectionTwo {
-	background: var(--bg-color);
+	/* background: var(--bg-color); */
 	position: relative;
 	padding: 6rem 0;
 }
@@ -137,9 +142,14 @@
 
 .projectStyleOne,
 .projectStyleTwo {
-	margin: 0 0 10rem 0;
+	margin: 0 0 15rem 0;
 	display: flex;
 	justify-content: space-between;
+}
+
+.projectStyleOne:last-child,
+.projectStyleTwo:last-child {
+	margin: 0 0 15rem 0;
 }
 
 .projectStyleOne {
@@ -187,7 +197,6 @@
 .projectSectionOne p {
 	margin: 2rem 0 0 0;
 	font-weight: 400;
-	font-family: PT-Serif;
 	z-index: 3;
 	border-bottom: 2px solid var(--pri-yellow-dark);
 	padding-bottom: 1rem;
@@ -255,17 +264,24 @@
 	border-radius: 0.6rem;
 	color: var(--font-color);
 	transition: letter-spacing 0.3s ease;
-	border: 1px solid var(--font-color);
+	/* border: 1px solid var(--font-color); */
 	opacity: 0.8;
+	border: 2px double transparent;
+	background-image: var(--btn-grad-img);
+	background-origin: border-box;
+	background-clip: padding-box, border-box;
 }
 
 .projectExtLinks a:hover {
 	background: transparent;
 	color: var(--font-color);
-	border: 1px solid var(--font-color);
 	letter-spacing: 0.2rem;
 	opacity: 1;
 	font-weight: 600;
+	border: 2px double transparent;
+	background-image: var(--btn-grad-img);
+	background-origin: border-box;
+	background-clip: padding-box, border-box;
 }
 
 .moreProjects {
@@ -349,11 +365,13 @@
 	height: 100%;
 	width: 100%;
 	padding: 1rem 0;
-	transition: padding 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	
 }
 
 .aboutSeeMore:hover span:nth-child(1) a {
-	padding: 1rem;
+	padding: 1rem 2rem;
+	color: black;
 }
 
 .aboutSeeMore span:nth-child(1):hover {
@@ -363,6 +381,9 @@
 .aboutSeeMore span:nth-child(1):hover+span {
 	height: 100% !important;
 	width: 100%;
+	background-image: linear-gradient(to right, rgb(34, 193, 195), rgb(253, 187, 45));
+	border: 0;
+	border-radius: 10rem;
 }
 
 .aboutSeeMore span:nth-child(2) {

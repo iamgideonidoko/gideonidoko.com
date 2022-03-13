@@ -108,7 +108,7 @@
 
 .postBody code {
 	line-height: 2.24rem;
-	font-size: 1.35rem;
+	font-size: 1.5rem;
 	font-family: Monaco, monospace !important;
 	background: var(--code-elem-bg-color);
 	border-radius: 0.4rem;
@@ -209,6 +209,8 @@
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+	gap:  1rem;
+	grid-gap: 1rem;
 }
 
 .postShareBtns span {
