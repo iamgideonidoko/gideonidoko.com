@@ -48,7 +48,7 @@ const Login = ({}) => {
                     success(payload) {
                         dispatch(getUserGithubInfo({ githubusername: payload?.data?.user?.user?.githubusername }));
                     },
-                    failed(err) {
+                    failed() {
                         setIsAttemptingLogin(false);
                         swal('Login failed!', 'Incorrect credentials', 'error');
                     },

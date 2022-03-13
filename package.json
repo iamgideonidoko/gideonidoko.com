@@ -9,7 +9,8 @@
     "lint": "next lint",
     "lint:configured": "eslint ./**/*.{js,jsx,ts,tsx} --max-warnings=0",
     "format": "eslint ./**/*.{js,jsx,ts,tsx} --fix",
-    "prettier-format": "prettier --config .prettierrc './**/*.{js,jsx,ts,tsx}' --write"
+    "prettier-format": "prettier --config .prettierrc './**/*.{js,jsx,ts,tsx}' --write",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
@@ -57,7 +58,13 @@
     "eslint-config-next": "12.1.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
     "prettier": "^2.5.1",
     "typescript": "4.5.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lint:configured"
+    }
   }
 }
