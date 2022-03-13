@@ -16,7 +16,7 @@ import { NextSeo } from 'next-seo';
 import { GetServerSideProps } from 'next';
 import { PostComment, PostCommentReply, SingleFullPost } from '../../../interfaces/post.interface';
 import Head from 'next/head';
-import { decode } from 'html-entities';
+// import { decode } from 'html-entities';
 import { config } from '../../../config/keys';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
@@ -45,7 +45,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
         setComments(postInfo?.post?.comments);
         setLoaded(true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [postInfo]);
 
     // //local state
     const [showCommentModal, setShowCommentModal] = useState(false);
@@ -155,6 +155,8 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
 
     const mdParser: MarkdownIt = new MarkdownIt({
         highlight: function (str, lang) {
+            console.log('STR => ', str);
+            console.log('ESCAPED STR => ', mdParser.utils.escapeHtml(str));
             if (lang && hljs.getLanguage(lang)) {
                 try {
                     return (
@@ -171,7 +173,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                 '</code></pre>'
             );
         },
-        // html: true,
+        html: true,
         // linkify: true,
         // breaks: true,
     });
@@ -180,7 +182,8 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
 	function to return dangerous markup
 	*/
     const createMarkup = (markup: string) => {
-        return { __html: decode(markup) };
+        // return { __html: decode(markup) };
+        return { __html: markup };
     };
 
     const handleAddCommentBtnClick = () => {
