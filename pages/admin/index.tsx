@@ -8,14 +8,28 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { authGet } from '../../helper';
 
 const AdminProfile = ({}) => {
     const router = useRouter();
     const [loaded, setLoaded] = useState<boolean>(false);
     const auth = useSelector(({ auth }: RootState) => auth);
+    const [postsStats, setPostsStats] = useState<{
+        no_of_posts: number;
+        no_of_published_posts: number;
+        no_of_pinned_posts: number;
+    } | null>(null);
 
     useEffect(() => {
         setLoaded(true);
+        (async () => {
+            try {
+                const res = await authGet(`/posts/stats`);
+                setPostsStats(res?.data?.stats);
+            } catch (err) {
+                console.error('Post stats fetch error => ', err);
+            }
+        })();
     }, []);
 
     return (
@@ -87,7 +101,22 @@ const AdminProfile = ({}) => {
                                                     <span>Location:</span> <span>{auth.userGithubInfo?.location}</span>
                                                 </li>
                                             </ul>
-                                            <div className={styles.statInfo}>No of posts: 33</div>
+                                            {postsStats ? (
+                                                <ul className={styles.statInfo}>
+                                                    <li>
+                                                        <b>POST STATS</b>
+                                                    </li>
+                                                    <li>No of Posts: {postsStats?.no_of_posts}</li>
+                                                    <li>No of Published Posts: {postsStats?.no_of_published_posts}</li>
+                                                    <li>
+                                                        No of Unpublished Posts:{' '}
+                                                        {postsStats?.no_of_posts - postsStats?.no_of_published_posts}
+                                                    </li>
+                                                    <li>No of Pinned Posts: {postsStats?.no_of_pinned_posts}</li>
+                                                </ul>
+                                            ) : (
+                                                <div>Loading posts stats...</div>
+                                            )}
                                         </div>
                                         <div className={styles.profileBody}>
                                             <div className={styles.actionLinks}>

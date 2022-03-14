@@ -180,8 +180,8 @@ const ManagePost = ({}) => {
                     //change the values in the edit post form
 
                     try {
-                        const res = await authGet(`/post/${selectedPost.slug}`);
-                        const fullSelectedPost = res?.data?.post.post;
+                        const res = await authGet(`/post/${selectedPost.slug}?type=all`);
+                        const fullSelectedPost = res?.data?.post;
                         if (fullSelectedPost) {
                             setPostTitle(fullSelectedPost.title ? fullSelectedPost.title : '');
                             setPostCover(fullSelectedPost.cover_img ? fullSelectedPost.cover_img : '');

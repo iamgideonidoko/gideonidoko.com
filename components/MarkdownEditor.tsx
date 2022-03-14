@@ -5,6 +5,10 @@ import MarkdownIt from 'markdown-it';
 import dynamic from 'next/dynamic';
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
+// plugins
+import markdownItAttrs from 'markdown-it-attrs';
+import markdownItContainer from 'markdown-it-container';
+import { embedHtml } from '../helper';
 
 //get the highlight.js library
 import hljs from 'highlight.js';
@@ -25,10 +29,18 @@ const mdParser = new MarkdownIt({
 
         return ''; //use external default escaping
     },
-    html: true,
+    // html: true,
     // linkify: true,
     // breaks: true,
 });
+
+mdParser.use(markdownItAttrs, {
+    // optional, these are default options
+    leftDelimiter: '{',
+    rightDelimiter: '}',
+    allowedAttributes: ['id', 'class'], // empty array = all attributes are allowed
+});
+mdParser.use(markdownItContainer, 'embedhtml', {});
 
 //dynamically fetch the `react-markdown-editor-lite` libary to avoid running on the server
 const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
@@ -45,7 +57,7 @@ const MarkdownEditor = ({
     return (
         <MdEditor
             style={{ height: '800px' }}
-            renderHTML={(text) => mdParser.render(text)}
+            renderHTML={(text) => embedHtml(mdParser.render(text))}
             onChange={handleMarkdownEditorChange}
             value={textValue}
         />

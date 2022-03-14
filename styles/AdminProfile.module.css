@@ -13,7 +13,7 @@
 }
 
 .profileBody {
-	padding-top: 2rem;
+	padding-top: 4rem;
 }
 
 .profileAvatar {
@@ -75,7 +75,13 @@
 }
 
 .statInfo {
+	font-size: 13px;
 	margin-top: 2rem;
+}
+
+.statInfo li {
+	list-style: none;
+	margin: 0.5rem 0;
 }
 
 .statInfo table {
@@ -122,6 +128,37 @@
 }
 
 /* >>>>>>>>>>MEDIA QUERIES<<<<<<<< */
+@media screen and (max-width: 530px) {
+	.profileHead {
+		grid-template-columns: 1fr;
+		text-align: center;
+	}
+	.profileHead > div:nth-child(1) {
+		text-align: center !important;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.profileAvatar {
+		margin: 0 auto;
+	}
+
+	.statInfo {
+		text-align: center;
+	}
+
+	.socialInfo li  {
+		grid-template-columns: 1fr;
+		text-align: center;
+		justify-content: center;
+	}
+
+	.socialInfo li span:nth-child(1) {
+		text-align: center;
+	}
+}
+
 @media screen and (max-width: 500px) {
 	.socialInfo {
 		flex-direction: column;

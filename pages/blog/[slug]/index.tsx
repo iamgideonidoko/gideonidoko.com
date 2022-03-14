@@ -8,7 +8,7 @@ import CommentModal from '../../../components/blog/CommentModal';
 import Custom404 from '../../404';
 import swal from 'sweetalert';
 // import { resetPostUpdated, updatePostComments } from '../../../store/actions/postActions';
-import { authGet, getReadTime, noAuthPut, strToSlug } from '../../../helper';
+import { authGet, embedHtml, getReadTime, noAuthPut } from '../../../helper';
 import copy from 'copy-to-clipboard';
 import styles from '../../../styles/SinglePost.module.css';
 import 'highlight.js/styles/monokai.css';
@@ -30,6 +30,39 @@ import {
     FacebookShareButton,
     FacebookIcon,
 } from 'react-share';
+import markdownItAttrs from 'markdown-it-attrs';
+import markdownItContainer from 'markdown-it-container';
+
+const mdParser: MarkdownIt = new MarkdownIt({
+    highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+            try {
+                return (
+                    '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
+                    hljs.highlight(lang, str, true).value +
+                    '</code></pre>'
+                );
+            } catch (__) {}
+        }
+
+        return (
+            '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
+            mdParser.utils.escapeHtml(str) +
+            '</code></pre>'
+        );
+    },
+    // html: true,
+    // linkify: true,
+    // breaks: true,
+});
+
+mdParser.use(markdownItAttrs, {
+    // optional, these are default options
+    leftDelimiter: '{',
+    rightDelimiter: '}',
+    allowedAttributes: ['id', 'class'], // empty array = all attributes are allowed
+});
+mdParser.use(markdownItContainer, 'embedhtml', {});
 
 const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
     const exactPost = postInfo.post;
@@ -62,13 +95,6 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
             const allPostBodyAnchors = window.document.querySelectorAll('.truePostBody a');
             const allPostBodyPreCode = window.document.querySelectorAll('.postBodyPreCode');
 
-            const allPostBodyH1 = window.document.querySelectorAll('.truePostBody h1');
-            const allPostBodyH2 = window.document.querySelectorAll('.truePostBody h2');
-            const allPostBodyH3 = window.document.querySelectorAll('.truePostBody h3');
-            const allPostBodyH4 = window.document.querySelectorAll('.truePostBody h4');
-            const allPostBodyH5 = window.document.querySelectorAll('.truePostBody h5');
-            const allPostBodyH6 = window.document.querySelectorAll('.truePostBody h6');
-
             const allPostBodyTable = window.document.querySelectorAll('.truePostBody table');
 
             const truePostBody = window.document.querySelector('.truePostBody');
@@ -84,30 +110,6 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                     truePostBody?.removeChild(table);
                 });
             }
-
-            allPostBodyH1.forEach((h1) => {
-                h1.id = strToSlug(h1.textContent as string);
-            });
-
-            allPostBodyH2.forEach((h2) => {
-                h2.id = strToSlug(h2.textContent as string);
-            });
-
-            allPostBodyH3.forEach((h3) => {
-                h3.id = strToSlug(h3.textContent as string);
-            });
-
-            allPostBodyH4.forEach((h4) => {
-                h4.id = strToSlug(h4.textContent as string);
-            });
-
-            allPostBodyH5.forEach((h5) => {
-                h5.id = strToSlug(h5.textContent as string);
-            });
-
-            allPostBodyH6.forEach((h6) => {
-                h6.id = strToSlug(h6.textContent as string);
-            });
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             allPostBodyAnchors.forEach((a) => {
@@ -152,31 +154,6 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
             });
         }
     }, [exactPost]);
-
-    const mdParser: MarkdownIt = new MarkdownIt({
-        highlight: function (str, lang) {
-            console.log('STR => ', str);
-            console.log('ESCAPED STR => ', mdParser.utils.escapeHtml(str));
-            if (lang && hljs.getLanguage(lang)) {
-                try {
-                    return (
-                        '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
-                        hljs.highlight(lang, str, true).value +
-                        '</code></pre>'
-                    );
-                } catch (__) {}
-            }
-
-            return (
-                '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
-                mdParser.utils.escapeHtml(str) +
-                '</code></pre>'
-            );
-        },
-        html: true,
-        // linkify: true,
-        // breaks: true,
-    });
 
     /*
 	function to return dangerous markup
@@ -363,7 +340,9 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                     <div className={styles.blogBody}>
                                         <div
                                             className={`${styles.postBody} truePostBody`}
-                                            dangerouslySetInnerHTML={createMarkup(mdParser.render(exactPost.body))}
+                                            dangerouslySetInnerHTML={createMarkup(
+                                                embedHtml(mdParser.render(exactPost.body)),
+                                            )}
                                         />
 
                                         <div className={styles.postTags}>

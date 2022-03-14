@@ -388,3 +388,29 @@ export const socialIconStyle = (other?: object) => ({
     ...{ height: '4em', width: '4em', borderRadius: '100rem', transform: 'scale(0.6)' },
     ...other,
 });
+
+const stripScripts = (s: string) => {
+    const div = document.createElement('div');
+    div.innerHTML = s;
+    const scripts = div.getElementsByTagName('script');
+    let i = scripts.length;
+    while (i--) {
+        if (scripts[i]) {
+            scripts[i].parentNode?.removeChild(scripts[i]);
+        }
+    }
+    return div.innerHTML;
+};
+
+export const embedHtml = (html: string) => {
+    //create a parent div
+    const parent = document.createElement('div');
+    parent.innerHTML = html;
+    // get all elements with a class of `embedhtml`
+    const embedDivs = parent.getElementsByClassName('embedhtml');
+    for (let i = 0; i < embedDivs.length; i++) {
+        // decode text and inject
+        embedDivs[i].innerHTML = stripScripts(embedDivs[i]?.textContent as string);
+    }
+    return parent.innerHTML;
+};

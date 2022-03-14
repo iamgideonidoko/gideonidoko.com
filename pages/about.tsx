@@ -25,7 +25,7 @@ const About = () => {
                             alt: "Gideon Idoko's card image",
                         },
                     ],
-                    site_name: 'Gideon Idoko - Software Developer and Technical Writer',
+                    site_name: 'Gideon Idoko - Software Engineer and Technical Writer',
                 }}
                 twitter={{
                     handle: '@IamGideonIdoko',
