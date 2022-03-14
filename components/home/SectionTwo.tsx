@@ -49,7 +49,7 @@ const SectionTwo = () => {
             id: 5,
             name: 'ASCL Website',
             about: "Rebuild of ASCL's website with modern tools.",
-            cover: '/assets/img/asclhomepage.png',
+            cover: '/assets/img/asclhomepage.jpg',
             coverAlt: 'View of UI Implementation.',
             codeLink: 'https://github.com/IamGideonIdoko/ascl-website-frontend',
             projectLink: 'https://ajaokutasteel.com.ng',
