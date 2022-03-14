@@ -7,8 +7,15 @@ const systemTheme = () => {
     return 'light';
 };
 
+const getTheme = () => {
+    const currentTheme = window.localStorage.getItem('gideonidoko.com-theme');
+    return currentTheme && ['light', 'dark'].includes(currentTheme)
+        ? (window.localStorage.getItem('gideonidoko.com-theme') as string)
+        : systemTheme();
+};
+
 const ThemeSwitch = (props) => {
-    const [theme, setTheme] = useState('dark');
+    const [theme, setTheme] = useState(typeof window !== 'undefined' ? getTheme() : 'light');
 
     useEffect(() => {
         const currentTheme = window.localStorage.getItem('gideonidoko.com-theme');
