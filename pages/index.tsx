@@ -12,12 +12,12 @@ function Home({}) {
     return (
         <Fragment>
             <NextSeo
-                title="Gideon Idoko - Software Developer and Technical Writer"
+                title="Gideon Idoko - Software Engineer and Technical Writer"
                 description="I develop unique digital experiences. Get in touch."
                 canonical="https://gideonidoko.com"
                 openGraph={{
                     url: 'https://gideonidoko.com',
-                    title: 'Gideon Idoko - Software Developer and Technical Writer',
+                    title: 'Gideon Idoko - Software Engineer and Technical Writer',
                     description:
                         'Gideon Idoko is a Software Engineer and Technical Writer that develops unique digital experiences and builds positive solutions. Get in touch.',
                     images: [
@@ -28,7 +28,7 @@ function Home({}) {
                             alt: "Gideon Idoko's card image",
                         },
                     ],
-                    site_name: 'Gideon Idoko - Software Developer and Technical Writer',
+                    site_name: 'Gideon Idoko - Software Engineer and Technical Writer',
                 }}
                 twitter={{
                     handle: '@IamGideonIdoko',
@@ -37,7 +37,7 @@ function Home({}) {
                 }}
             />
             <Head>
-                <title>Gideon Idoko - Software Developer and Technical Writer</title>
+                <title>Gideon Idoko - Software Engineer and Technical Writer</title>
                 <meta
                     name="keywords"
                     content="gideon idoko,gideon,idoko,software developer,technical writer,software engineer,developer,engineer,writer"

@@ -35,8 +35,6 @@ import markdownItContainer from 'markdown-it-container';
 
 const mdParser: MarkdownIt = new MarkdownIt({
     highlight: function (str, lang) {
-        console.log('STR => ', str);
-        console.log('ESCAPED STR => ', mdParser.utils.escapeHtml(str));
         if (lang && hljs.getLanguage(lang)) {
             try {
                 return (
