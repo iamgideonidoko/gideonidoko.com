@@ -17,6 +17,8 @@ const getTheme = () => {
 const ThemeSwitch = (props) => {
     const [theme, setTheme] = useState(typeof window !== 'undefined' ? getTheme() : 'light');
 
+    const isWindow = typeof window !== 'undefined';
+
     useEffect(() => {
         const currentTheme = window.localStorage.getItem('gideonidoko.com-theme');
         setTheme(
@@ -24,7 +26,7 @@ const ThemeSwitch = (props) => {
                 ? (window.localStorage.getItem('gideonidoko.com-theme') as string)
                 : systemTheme(),
         );
-    }, []);
+    }, [isWindow]);
 
     const handleSwitch = () => {
         if (typeof window !== 'undefined') {
