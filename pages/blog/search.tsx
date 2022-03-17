@@ -20,7 +20,7 @@ const getPosts = (inputValue: string): Promise<Post[]> => {
                 console.error('Post Search Error => ', err);
                 resolve([]);
             }
-        }, 3000);
+        }, 1500);
     });
 };
 
