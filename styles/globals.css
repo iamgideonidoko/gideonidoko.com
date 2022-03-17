@@ -134,6 +134,10 @@ a {
 	text-decoration: none;
 }
 
+iframe {
+	max-width: 100% !important;
+}
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
 	background: var(--pri-blue-normal);

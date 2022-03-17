@@ -55,12 +55,23 @@ const MarkdownEditor = ({
     handleMarkdownEditorChange: ({ text }: { text: string }) => void;
 }) => {
     return (
-        <MdEditor
-            style={{ height: '800px' }}
-            renderHTML={(text) => embedHtml(mdParser.render(text))}
-            onChange={handleMarkdownEditorChange}
-            value={textValue}
-        />
+        <>
+            <div>
+                <h4>
+                    <i>Tips:</i>
+                </h4>
+                <p>
+                    <pre>{`Use {.class} for class, {#id} for id and \n::: embedhtml\n [html] \n::: to embed html`}</pre>
+                </p>
+            </div>
+            <br />
+            <MdEditor
+                style={{ height: '800px' }}
+                renderHTML={(text) => embedHtml(mdParser.render(text))}
+                onChange={handleMarkdownEditorChange}
+                value={textValue}
+            />
+        </>
     );
 };
 
