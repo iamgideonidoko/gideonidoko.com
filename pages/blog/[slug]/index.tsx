@@ -45,11 +45,13 @@ const mdParser: MarkdownIt = new MarkdownIt({
             } catch (__) {}
         }
 
-        return (
-            '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
-            mdParser.utils.escapeHtml(str) +
-            '</code></pre>'
-        );
+        // return (
+        //     '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
+        //     mdParser.utils.escapeHtml(str) +
+        //     '</code></pre>'
+        // );
+
+        return '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' + str + '</code></pre>';
     },
     // html: true,
     // linkify: true,
