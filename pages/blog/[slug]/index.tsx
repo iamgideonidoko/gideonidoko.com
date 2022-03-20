@@ -36,10 +36,15 @@ import markdownItContainer from 'markdown-it-container';
 const mdParser: MarkdownIt = new MarkdownIt({
     highlight: function (str, lang) {
         if (lang && hljs.getLanguage(lang)) {
+            console.log('lang => ', lang);
             try {
+                const hljsValue =
+                    lang === 'javascript'
+                        ? decode(hljs.highlight(lang, str, true).value)
+                        : hljs.highlight(lang, str, true).value;
                 return (
                     '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
-                    decode(hljs.highlight(lang, str, true).value) +
+                    hljsValue +
                     '</code></pre>'
                 );
             } catch (__) {}
