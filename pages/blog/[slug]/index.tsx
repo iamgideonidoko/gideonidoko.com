@@ -370,7 +370,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                                         title={exactPost?.title}
                                                         hashtags={exactPost.tags as string[]}
                                                         url={window.document.URL}
-                                                        via={exactPost?.description}
+                                                        via={'IamGideonIdoko'}
                                                     >
                                                         <TwitterIcon size={32} round={true} />
                                                     </TwitterShareButton>
@@ -378,7 +378,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                                         title={exactPost?.title}
                                                         url={window.document.URL}
                                                         summary={exactPost?.description}
-                                                        source={"Gideon Idoko's blog"}
+                                                        source={'Blog - Gideon Idoko'}
                                                     >
                                                         <LinkedinIcon size={32} round={true} />
                                                     </LinkedinShareButton>
