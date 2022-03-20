@@ -16,7 +16,7 @@ import { NextSeo } from 'next-seo';
 import { GetServerSideProps } from 'next';
 import { PostComment, PostCommentReply, SingleFullPost } from '../../../interfaces/post.interface';
 import Head from 'next/head';
-// import { decode } from 'html-entities';
+import { decode } from 'html-entities';
 import { config } from '../../../config/keys';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
@@ -39,7 +39,7 @@ const mdParser: MarkdownIt = new MarkdownIt({
             try {
                 return (
                     '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
-                    hljs.highlight(lang, str, true).value +
+                    decode(hljs.highlight(lang, str, true).value) +
                     '</code></pre>'
                 );
             } catch (__) {}
