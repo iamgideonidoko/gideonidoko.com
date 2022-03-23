@@ -228,6 +228,52 @@ body::-webkit-scrollbar-track {
 	padding-top: 10rem
 }
 
+/* >>>>>>> SKELETON LOADER <<<<<<< */
+
+/* .skeleton-loader:empty {
+    max-width: 100%;
+    height: 12rem;
+    display: block;
+    background: linear-gradient( to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% ), lightgray;
+    background-repeat: repeat-y;
+    background-size: 50px 500px;
+    background-position: 0 0;
+    -webkit-animation: shine2 1s infinite;
+    animation: shine2 1s infinite;
+} */
+
+.skeleton-loader:empty {
+    max-width: 100%;
+    height: 12rem;
+    display: block;
+    background: linear-gradient( to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% ), #22C1C330;
+    background-repeat: repeat-y;
+    background-size: 50px 500px;
+    background-position: 0 0;
+    -webkit-animation: shine2 1s infinite;
+    animation: shine2 1s infinite;
+}
+
+@-webkit-keyframes shine2 {
+    to {
+        background-position: 100% 0;
+    }
+}
+
+@keyframes shine2 {
+    to {
+        background-position: 100% 0;
+    }
+}
+
+.v-none {
+	visibility: hidden !important;
+}
+
+.d-none {
+	display: none !important;
+}
+
 
 /*>>>>>HEADER<<<<<<<*/
 
