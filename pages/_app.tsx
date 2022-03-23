@@ -39,6 +39,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const router = useRouter();
 
+    // useEffect(() => {
+    //     router.beforePopState((state) => {
+    //         state.options.scroll = false;
+    //         return true;
+    //     });
+    // }, [router]);
+
     useEffect(() => {
         NProgress.configure({ showSpinner: false });
         const handleStart = () => {
