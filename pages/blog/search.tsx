@@ -51,7 +51,7 @@ const Search = ({}) => {
             <NextSeo
                 title={`Blog (Search Articles) - Gideon Idoko`}
                 description="Search through my posts. I write about Software Development & web engineering topics and tools on my blog here."
-                canonical="https://gideonidoko.com/blog"
+                canonical="https://gideonidoko.com/blog/search"
                 openGraph={{
                     url: 'https://gideonidoko.com/blog/search',
                     title: `Blog (Search Articles) - Gideon Idoko`,
