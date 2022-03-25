@@ -7,7 +7,7 @@ import { Post } from '../../interfaces/post.interface';
 const AllPostsRender = ({ posts }: { posts: Array<Post> }) => {
     const blogCoverDefault = '/assets/img/BlogCoverDefault.jpg';
 
-    const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>, id: string) => {
+    /* const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>, id: string) => {
         if (typeof window !== 'undefined') {
             e.currentTarget.src = blogCoverDefault;
             const skel = window.document.querySelector(`.skeleton-loader-${id}`);
@@ -26,7 +26,7 @@ const AllPostsRender = ({ posts }: { posts: Array<Post> }) => {
             }
             e.currentTarget.classList.remove('d-none');
         }
-    };
+    }; */
 
     if (posts.length === 0) {
         return <b>No Posts.</b>;
@@ -41,14 +41,14 @@ const AllPostsRender = ({ posts }: { posts: Array<Post> }) => {
                                     <a>
                                         <img
                                             src={post.cover_img || blogCoverDefault}
-                                            className={`${styles.postCover} d-none`}
+                                            className={`${styles.postCover}`}
                                             alt={`${post.title} cover image`}
-                                            id={post._id}
+                                            /* id={post._id}
                                             onLoad={(e) => handleImgLoad(e, post._id)}
-                                            onError={(e) => handleImgError(e, post._id)}
+                                            onError={(e) => handleImgError(e, post._id)} */
                                         />
                                         <div className={styles.hoverEffect}></div>
-                                        <div className={`skeleton-loader skeleton-loader-${post._id}`}></div>
+                                        {/* <div className={`skeleton-loader skeleton-loader-${post._id}`}></div> */}
                                     </a>
                                 </Link>
                             </div>
