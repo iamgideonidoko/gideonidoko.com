@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import { Fragment } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/About.module.css';
 import { NextSeo } from 'next-seo';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 const About = () => {
     return (
@@ -45,7 +46,12 @@ const About = () => {
                     <div className={styles.aboutSectionOne}>
                         <div>
                             <div className={styles.photoWrapper}>
-                                <Image src="/assets/img/Ifex.JPG" alt="Gideon Idoko" width={330} height={410} />
+                                <img
+                                    src="/assets/img/Ifex.JPG"
+                                    alt="Gideon Idoko"
+                                    style={{ maxWidth: '100%' }}
+                                    width={330}
+                                />
                             </div>
                         </div>
                         <div>

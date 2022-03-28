@@ -6,7 +6,7 @@ import Nav from './Nav';
 import AdminMenu from './AdminMenu';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 const Header = ({
     isNavOpen,
@@ -26,13 +26,7 @@ const Header = ({
             <div className="logo-wrap">
                 <Link href="/">
                     <a>
-                        <Image
-                            src="/assets/img/GideonIdokoDevLogo.png"
-                            className="site-logo"
-                            alt="Gideon Idoko"
-                            width={60}
-                            height={50}
-                        />
+                        <img src="/assets/img/GideonIdokoDevLogo.png" className="site-logo" alt="Gideon Idoko" />
                     </a>
                 </Link>
             </div>

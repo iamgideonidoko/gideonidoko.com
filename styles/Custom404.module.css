@@ -32,7 +32,7 @@
 
 .custom404ImageWrap img {
 	max-width: 100%;
-	margin: -5rem;
+	/* margin: -5rem; */
 	height: auto;
 	transform: rotateY(0deg);
 	/*animation: flip 5s linear 15s infinite alternate-reverse;

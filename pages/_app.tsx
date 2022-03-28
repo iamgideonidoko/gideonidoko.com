@@ -20,7 +20,7 @@ import { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { loadFirebase } from '../helper';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -118,12 +118,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <div className="mobileAdminName">
                     <Link href="/">
                         <a onClick={closeNav}>
-                            <Image
+                            <img
                                 src="/assets/img/GideonIdokoDevLogo.png"
                                 className="site-footer-logo"
                                 alt="Gideon Idoko"
-                                width={38}
-                                height={32}
                             />
                         </a>
                     </Link>

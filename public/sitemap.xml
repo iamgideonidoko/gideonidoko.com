@@ -9,23 +9,83 @@
 
 <url>
   <loc>https://gideonidoko.com/</loc>
-  <lastmod>2021-05-04T15:12:10+00:00</lastmod>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://gideonidoko.com/blog</loc>
-  <lastmod>2021-05-04T15:12:10+00:00</lastmod>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://gideonidoko.com/about</loc>
-  <lastmod>2021-05-04T15:12:10+00:00</lastmod>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://gideonidoko.com/contact</loc>
-  <lastmod>2021-05-04T15:12:10+00:00</lastmod>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
   <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/search</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/memoization-in-react-done-right</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/reflect-in-javascript-explained</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/javascript-the-strange-yet-tricky-parts</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/tags/react</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/tags/javascript</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/tags/memoization</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/tags/memo</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/tags/reflect</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/tags/trick</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/tags/programming-trick</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://gideonidoko.com/blog/tags/testing-tag</loc>
+  <lastmod>2022-03-28T05:42:06+00:00</lastmod>
+  <priority>0.51</priority>
 </url>
 
 
