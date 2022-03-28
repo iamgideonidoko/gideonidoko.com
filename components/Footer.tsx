@@ -1,4 +1,5 @@
-import Image from 'next/image';
+/* eslint-disable @next/next/no-img-element */
+// import Image from 'next/image';
 import Link from 'next/link';
 import { SocialIcon } from 'react-social-icons';
 import { socialIconStyle } from '../helper';
@@ -29,12 +30,10 @@ const Footer = () => {
                         <h3 className="footer-h3-1">
                             <Link href="/">
                                 <a>
-                                    <Image
+                                    <img
                                         src="/assets/img/GideonIdokoDevLogo.png"
                                         className="site-footer-logo"
                                         alt="Gideon Idoko"
-                                        width={38}
-                                        height={32}
                                     />
                                 </a>
                             </Link>{' '}

@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { Fragment } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/Custom404.module.css';
 import { NextSeo } from 'next-seo';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 const Custom404 = () => {
     return (
@@ -17,7 +18,7 @@ const Custom404 = () => {
                     <div className={styles.custom404Container}>
                         <div className={styles.custom404ContainerChild}>
                             <div className={styles.custom404ImageWrap}>
-                                <Image src="/assets/img/404.svg" alt="404" width={300} height={200} />
+                                <img src="/assets/img/404.svg" alt="404" style={{ maxWidth: '100%' }} width={300} />
                             </div>
                             {/* <h1>Page Not Found😢</h1> */}
                             <p>
