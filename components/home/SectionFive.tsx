@@ -33,7 +33,7 @@ const SectionFive = ({}) => {
                     </Bounce>
                     <Bounce left duration={1800}>
                         <p>
-                            I also write <b>blog articles</b>. Here are the most recent ones:
+                            I also write <b>blog articles</b>.
                         </p>
                     </Bounce>
 
@@ -56,10 +56,14 @@ const SectionFive = ({}) => {
                                                                     {moment(post.created_at).format('MMM DD, YYYY')}
                                                                 </small>
                                                             </span>
-                                                            {/* &nbsp;&nbsp;|&nbsp;&nbsp;
-                                                            <span>
-                                                                <small>{getReadTime(post.body)}</small>
-                                                            </span> */}
+                                                            {post?.read_time && (
+                                                                <>
+                                                                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                                                                    <span>
+                                                                        <small>{post?.read_time}</small>
+                                                                    </span>
+                                                                </>
+                                                            )}
                                                             &nbsp;&nbsp;|&nbsp;&nbsp;{' '}
                                                             <span>
                                                                 <small>{post.author_name}</small>
@@ -84,7 +88,7 @@ const SectionFive = ({}) => {
                             <p className={styles.aboutSeeMore}>
                                 <span>
                                     <Link href="/blog">
-                                        <a>Check out more on my blog.</a>
+                                        <a>Check out my blog.</a>
                                     </Link>
                                 </span>{' '}
                                 <span></span>

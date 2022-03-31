@@ -388,7 +388,7 @@ body::-webkit-scrollbar-track {
 	list-style: none;
 }
 
-.get-in-touch {
+/* .get-in-touch {
 	color: #0000;
 	text-shadow:
 		0 0 0 var(--font-color),
@@ -419,6 +419,25 @@ body::-webkit-scrollbar-track {
 	transition: 0.4s 0.4s, -webkit-clip-path 0.4s;
 	transition: 0.4s 0.4s, clip-path 0.4s;
 	transition: 0.4s 0.4s, clip-path 0.4s, -webkit-clip-path 0.4s;
+} */
+
+.get-in-touch {
+	border-radius: 10px;
+	display: inline-block !important;
+	font-size: 1.7rem;
+	font-family: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	background-image: transparent;
+	transition: background-image 0.2s ease;
+}
+
+.get-in-touch:hover {
+	background-image: linear-gradient(to left, rgb(34, 193, 195), rgb(253, 187, 45));
+	color: black !important;
+}
+.get-in-touch:hover a {
+	color: black
 }
 
 .get-in-touch a {
