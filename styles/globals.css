@@ -1,7 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Proza+Libre&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Proza+Libre&family=Aclonica&display=swap');
 
 /*>>>>FONT DECLARATION<<<<<*/
 @font-face {
@@ -42,7 +39,7 @@
 	--pri-delete-color-01: rgba(255, 77, 77, 0.1);
 	--pri-delete-color-02: rgba(255, 77, 77, 0.2);
 	/*--code-elem-bg-color: #24292e;*/
-	--default-font: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	--default-font: 'Proza Libre', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	--code-elem-bg-color: #2d3339;
 	--bg-from-sectionOne: #3A3D50;
 	--sectionOneBgColor: #43465c;
@@ -108,7 +105,7 @@ body {
 	background: var(--bg-color);
 	color: var(--font-color);
 	font-size: 1.6rem;
-	font-family: 'Proza Libre', Lato, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	font-family: var(--default-font);
 	overflow-x: hidden;
 	overflow-y: visible;
 	width: 100%;
@@ -126,7 +123,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: Lato, var(--default-font);
+	font-family: Aclonica, var(--default-font);
 }
 
 a {
@@ -530,7 +527,6 @@ body::-webkit-scrollbar-track {
 
 .admin-menu-wrap {
 	font-size: 1.4rem !important;
-	/*font-family: Lato;*/
 	background-color: #2B3036 !important;
 }
 
@@ -1096,7 +1092,7 @@ body::-webkit-scrollbar-track {
 	}
 
 	.mobileAdminName span {
-		font-family: Lato, var(--default-font);
+		font-family: Aclonica, var(--default-font);
 	}
 
 	.mobileNavSection nav ul li {

@@ -102,7 +102,7 @@
 	text-align: center;
 	line-height: 10rem;
 	margin: 2rem 0;
-	font-family: Lato !important;
+	font-family: Aclonica, var(--default-font) !important;
 	position: relative;
 }
 
@@ -189,7 +189,7 @@
 	font-size: 2rem;
 	font-weight: 600;
 	text-transform: uppercase;
-	font-family: Lato;
+	font-family: Aclonica, var(--default-font) !important;
 	letter-spacing: .3rem;
 }
 
@@ -556,6 +556,20 @@
 	}
 }
 
+@media screen and (max-width: 1011px) {
+	.welcomeLine {
+		font-size: 8.5rem;
+		line-height: 9rem;
+	}	
+}
+
+@media screen and (max-width: 960px) {
+	.welcomeLine {
+		font-size: 7.3rem;
+		line-height: 9rem;
+	}	
+}
+
 @media screen and (max-width: 835px) {
 	.welcomeLine {
 		font-size: 6.5rem;
@@ -602,6 +616,22 @@
 	}
 }
 
+@media screen and (max-width: 746px) {
+	.welcomeLine {
+		font-size: 6.1rem;
+		line-height: 8rem;
+	}
+	
+}
+
+@media screen and (max-width: 705px) {
+	.welcomeLine {
+		font-size: 5.7rem;
+		line-height: 8rem;
+	}
+	
+}
+
 @media screen and (max-width: 676px) {
 	.welcomeLine {
 		font-size: 5rem;
@@ -636,6 +666,10 @@
 }
 
 @media screen and (max-width: 579px) {
+
+	.welcomeLine {
+		font-size: 4.5rem;
+	}
 
 	.projectStyleOne,
 	.projectStyleTwo {
@@ -682,9 +716,16 @@
 
 }
 
+@media screen and (max-width: 476px) {
+	.welcomeLine {
+		font-size: 3.8rem;
+		line-height: 5rem;
+	}
+}
+
 @media screen and (max-width: 436px) {
 	.welcomeLine {
-		font-size: 3.5rem;
+		font-size: 3.2rem;
 		line-height: 5rem;
 	}
 

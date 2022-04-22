@@ -134,7 +134,7 @@
 
 .pagination span {
 	display: inline-block;
-	font-family: Lato, var(--default-font);
+	font-family: var(--default-font);
 }
 
 .pagination span button {

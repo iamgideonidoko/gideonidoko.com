@@ -46,7 +46,7 @@
 	margin: 0 0 1rem;
 	line-height: 2.8rem;
 	word-spacing: 0.1rem;
-	opacity: 0.85;
+	opacity: 0.9;
 	overflow-wrap: break-word;
 }
 
@@ -83,7 +83,7 @@
 .postBody ul {
 	margin: 2rem 0;
 	line-height: 2.8rem;
-	opacity: 0.85;
+	opacity: 0.9;
 }
 /* code backgroud-color: #f0efed; */
 .postBody li {
@@ -127,13 +127,13 @@
 	padding: 0 0 0 1.6rem;
 	margin: 1.9rem 0;
 	line-height: 2.4em;
-	opacity: 0.85;
+	opacity: 0.9;
 }
 
 .postBody table {
 	font-size: 1.4rem;
 	border-collapse: collapse;
-	opacity: 0.85;
+	opacity: 0.9;
 	overflow-x: scroll;
 	/* margin: 3.2rem 0; */
 }
@@ -362,7 +362,7 @@
 .replyAuthor div:nth-child(1) span:nth-child(1) {
 	font-weight: 600;
 	font-size: 1.5rem;
-	font-family: Lato, var(--default-font);
+	font-family: var(--default-font);
 }
 
 .commentAuthor div:nth-child(1) i,
