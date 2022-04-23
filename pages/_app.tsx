@@ -20,6 +20,7 @@ import { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { loadFirebase } from '../helper';
+import 'prismjs/themes/prism-tomorrow.css';
 // import Image from 'next/image';
 
 store.subscribe(

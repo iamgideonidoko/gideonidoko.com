@@ -8,12 +8,9 @@ import 'react-markdown-editor-lite/lib/index.css';
 // plugins
 import markdownItAttrs from 'markdown-it-attrs';
 import markdownItContainer from 'markdown-it-container';
+import Prism from 'prismjs';
 import { embedHtml } from '../helper';
-
-//get the highlight.js library
-import hljs from 'highlight.js';
-// import 'highlight.js/styles/monokai.css';
-import 'highlight.js/styles/github.css';
+import { loadLanguages } from '../pages/blog/[slug]';
 
 // Register plugins if required
 // MdEditor.use(YOUR_PLUGINS_HERE);
@@ -22,13 +19,21 @@ import 'highlight.js/styles/github.css';
 const mdParser = new MarkdownIt({
     //highlight is used to highlight the code syntax
     highlight: function (str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
+        if (lang) {
+            loadLanguages([lang]);
             try {
-                return hljs.highlight(lang, str).value;
-            } catch (__) {}
+                return `<pre class="postBodyPreCode language-${lang}"><code class="language-${lang}">${Prism.highlight(
+                    str,
+                    Prism.languages[lang],
+                    lang,
+                )}</code></pre>`;
+                // return Prism.highlight(str, Prism.languages[lang], lang);
+            } catch (__) {
+                return `<pre class="postBodyPreCode"><code class="language-${lang}">${str}</code></pre>`;
+            }
         }
 
-        return ''; //use external default escaping
+        return str; //use external default escaping
     },
     // html: true,
     // linkify: true,
