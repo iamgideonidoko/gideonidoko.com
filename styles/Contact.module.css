@@ -21,7 +21,7 @@
 	margin: 0 0 1rem;
 	line-height: 2.8rem;
 	word-spacing: 0.1rem;
-	opacity: 0.85;
+	opacity: 0.9;
 }
 
 .contactMain a {
@@ -59,14 +59,14 @@
 
 .contactForm label {
 	display: block;
-	opacity: 0.85;
+	opacity: 0.9;
 }
 
 .contactForm input {
 	background: transparent;
 	border: none;
 	outline: none;
-	font-family: Lato, var(--default-font);
+	font-family: var(--default-font);
 	border-bottom: 1px solid var(--font-color);
 	display: inline-block;
 	width: 100%;
@@ -81,7 +81,7 @@
 	background: transparent;
 	outline: none;
 	color: var(--font-color);
-	font-family: Lato, var(--default-font);
+	font-family: var(--default-font);
 	margin: 1.5rem 0 0;
 	padding: 0.8rem;
 	border: 1px solid var(--font-color);

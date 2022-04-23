@@ -2,5 +2,12 @@
     "parser": "@typescript-eslint/parser",
     "extends": ["plugin:@typescript-eslint/recommended", "plugin:prettier/recommended", "next/core-web-vitals"],
     "parserOptions": { "ecmaVersion": 2018, "sourceType": "module" },
-    "rules": {}
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "endOfLine": "auto"
+        }
+      ]
+    }
   }

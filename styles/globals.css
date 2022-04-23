@@ -1,13 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Proza+Libre&display=swap');
-
-
-
-/*>>>>FONT DECLARATION<<<<<*/
-@font-face {
-	font-family: Monaco;
-	src: url("/assets/font/Monaco.ttf");
-}
+@import url('https://fonts.googleapis.com/css2?family=Proza+Libre&family=Aclonica&family=Fira+Code&display=swap');
 
 * {
 	padding: 0;
@@ -42,8 +33,8 @@
 	--pri-delete-color-01: rgba(255, 77, 77, 0.1);
 	--pri-delete-color-02: rgba(255, 77, 77, 0.2);
 	/*--code-elem-bg-color: #24292e;*/
-	--default-font: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-	--code-elem-bg-color: #2d3339;
+	--default-font: 'Proza Libre', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	--code-elem-bg-color: #121314;
 	--bg-from-sectionOne: #3A3D50;
 	--sectionOneBgColor: #43465c;
 	--scrolldown-opacity: 0.5;
@@ -56,7 +47,7 @@
 	--searchbox-bg: rgba(255, 255, 255, 0.1);
 	--ps1first-color: rgba(255, 255, 255, 0.04);
 	--btn-grad-img: linear-gradient(rgb(13, 14, 33), rgb(13, 14, 33)), radial-gradient(circle at left top, rgba(34, 193, 195), rgb(253, 187, 45));
-	--code-bg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='7rem' width='500px'><text x='0' y='28' fill='rgba(255,255,255,0.05)' font-size='1.5rem' font-family='Monaco, monospace'>100101010110011010100101010110100110110111</text><text x='0' y='56' fill='rgba(255,255,255,0.05)' font-size='1.5rem' font-family='Monaco, monospace'>010010110101001010101001101010101010100100</text><text x='0' y='84' fill='rgba(255,255,255,0.05)' font-size='1.5rem' font-family='Monaco, monospace'>011100011010110111010110101010100010101100</text><text x='0' y='112' fill='rgba(255,255,255,0.05)' font-size='1.5rem' font-family='Monaco, monospace'>010010101101010110101110011010100101010110</text></svg>");
+	--code-bg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='7rem' width='500px'><text x='0' y='28' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"Fira Code\", monospace'>100101010110011010100101010110100110110111</text><text x='0' y='56' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"Fira Code\", monospace'>010010110101001010101001101010101010100100</text><text x='0' y='84' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"Fira Code\", monospace'>011100011010110111010110101010100010101100</text><text x='0' y='112' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"Fira Code\", monospace'>010010101101010110101110011010100101010110</text></svg>");
 	--header-bg: rgba(3,3,3,.5);
 }
 
@@ -86,7 +77,7 @@
 	--searchbox-bg: rgba(0, 0, 0, 0.1);
 	--ps1first-color: rgba(0, 0, 0, 0.07);
 	--btn-grad-img: linear-gradient(rgb(242, 242, 250), rgb(240, 240, 250)), radial-gradient(circle at left top, rgba(34, 193, 195), rgb(253, 187, 45));
-	--code-bg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='7rem' width='500px'><text x='0' y='28' fill='%23f5f5f5' class='love' font-size='1.5rem' font-family='Monaco, monospace'>100101010110011010100101010110100110110111</text><text x='0' y='56' fill='%23f6f6f6' font-size='1.5rem' font-family='Monaco, monospace'>010010110101001010101001101010101010100100</text><text x='0' y='84' fill='%23f7f7f7' font-size='1.5rem' font-family='Monaco, monospace'>011100011010110111010110101010100010101100</text><text x='0' y='112' fill='%23f6f6f6' font-size='1.5rem' font-family='Monaco, monospace'>010010101101010110101110011010100101010110</text></svg>");
+	--code-bg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='7rem' width='500px'><text x='0' y='28' fill='%23f5f5f5' class='love' font-size='1.5rem' font-family='\"Fira Code\", monospace'>100101010110011010100101010110100110110111</text><text x='0' y='56' fill='%23f6f6f6' font-size='1.5rem' font-family='\"Fira Code\", monospace'>010010110101001010101001101010101010100100</text><text x='0' y='84' fill='%23f7f7f7' font-size='1.5rem' font-family='\"Fira Code\", monospace'>011100011010110111010110101010100010101100</text><text x='0' y='112' fill='%23f6f6f6' font-size='1.5rem' font-family='\"Fira Code\", monospace'>010010101101010110101110011010100101010110</text></svg>");
 	--header-bg: rgba(252,252,252,.5);
 }
 
@@ -108,7 +99,7 @@ body {
 	background: var(--bg-color);
 	color: var(--font-color);
 	font-size: 1.6rem;
-	font-family: 'Proza Libre', Lato, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	font-family: var(--default-font);
 	overflow-x: hidden;
 	overflow-y: visible;
 	width: 100%;
@@ -126,7 +117,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: Lato, var(--default-font);
+	font-family: Aclonica, var(--default-font);
 }
 
 a {
@@ -530,7 +521,6 @@ body::-webkit-scrollbar-track {
 
 .admin-menu-wrap {
 	font-size: 1.4rem !important;
-	/*font-family: Lato;*/
 	background-color: #2B3036 !important;
 }
 
@@ -729,13 +719,13 @@ body::-webkit-scrollbar-track {
 }
 
 .postBodyPreCode {
-	/* background: #1F2937; */
-	background: var(--codebox-bg);
-	padding: 1rem 1.5rem;
-	margin: 2.4rem 0;
-	border-radius: 0.6rem;
-	color: #e1e1ff !important;
-	font-family: Monaco, monospace !important;
+	/* background: var(--codebox-bg); */
+	background-color: #2d2d2d !important;
+	padding: 1rem 1.5rem !important;
+	margin: 2.4rem 0 !important;
+	border-radius: 0.6rem !important;
+	color: #e1e1ff;
+	font-family: "Fira Code", monospace !important;
 	font-size: 1.6rem;
 	overflow: auto;
 	position: relative;
@@ -770,6 +760,7 @@ body::-webkit-scrollbar-track {
 	border-radius: 0rem;
 	padding: 0;
 	font-weight: 500 !important;
+	font-family: "Fira Code", monospace !important;
 }
 
 .postBodyPreCode code .hljs-keyword,
@@ -1096,7 +1087,7 @@ body::-webkit-scrollbar-track {
 	}
 
 	.mobileAdminName span {
-		font-family: Lato, var(--default-font);
+		font-family: Aclonica, var(--default-font);
 	}
 
 	.mobileNavSection nav ul li {

@@ -3,7 +3,8 @@ import { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
 import moment from 'moment';
 import MarkdownIt from 'markdown-it';
-import hljs from 'highlight.js';
+// import hljs from 'highlight.js';
+// import 'highlight.js/styles/monokai.css';
 import CommentModal from '../../../components/blog/CommentModal';
 import Custom404 from '../../404';
 import swal from 'sweetalert';
@@ -11,7 +12,6 @@ import swal from 'sweetalert';
 import { authGet, embedHtml, getReadTime, noAuthPut } from '../../../helper';
 import copy from 'copy-to-clipboard';
 import styles from '../../../styles/SinglePost.module.css';
-import 'highlight.js/styles/monokai.css';
 import { NextSeo } from 'next-seo';
 import { GetServerSideProps } from 'next';
 import { PostComment, PostCommentReply, SingleFullPost } from '../../../interfaces/post.interface';
@@ -32,35 +32,72 @@ import {
 } from 'react-share';
 import markdownItAttrs from 'markdown-it-attrs';
 import markdownItContainer from 'markdown-it-container';
+import Prism from 'prismjs';
+import components from 'prismjs/components.json';
+
+/**
+ * The set of all languages which have been loaded using the below function.
+ *
+ * @type {Set<string>}
+ */
+const loadedLanguages = new Set();
+
+/**
+ * Loads the given languages and adds them to the current Prism instance.
+ *
+ * @param {string|string[]} [languages]
+ * @returns {void}
+ */
+export async function loadLanguages(languages: string[]) {
+    const [lang] = languages;
+
+    if (!lang) return;
+
+    const loaded = [...loadedLanguages, ...Object.keys(Prism.languages)];
+
+    if (loaded.indexOf(lang) !== -1) return;
+
+    if (components && components.languages) {
+        if (!(lang in components.languages)) {
+            console.warn('Language does not exist: ' + lang);
+            return;
+        }
+    }
+
+    try {
+        require(`prismjs/components/prism-${lang}`);
+        loadedLanguages.add(lang);
+    } catch (err) {
+        console.error('Language could not be loaded');
+    }
+}
 
 const mdParser: MarkdownIt = new MarkdownIt({
     highlight: function (str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-            console.log('lang => ', lang);
+        const decodedStr = decode(str);
+        if (lang) {
+            loadLanguages([lang]);
             try {
-                const hljsValue =
-                    lang === 'javascript'
-                        ? decode(hljs.highlight(lang, str, true).value)
-                        : hljs.highlight(lang, str, true).value;
-                return (
-                    '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
-                    hljsValue +
-                    '</code></pre>'
-                );
-            } catch (__) {}
+                return `<pre class="postBodyPreCode language-${lang}"><code class="language-${lang}">${Prism.highlight(
+                    `${decodedStr}`,
+                    Prism.languages[lang],
+                    lang,
+                )}</code></pre>`;
+            } catch (__) {
+                return `<pre class="postBodyPreCode language-${lang}"><code class="language-${lang}">${Prism.highlight(
+                    decodedStr,
+                    Prism.languages['text'],
+                    'text',
+                )}</code></pre>`;
+            }
         }
 
-        // return (
-        //     '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' +
-        //     mdParser.utils.escapeHtml(str) +
-        //     '</code></pre>'
-        // );
-
-        return '<pre style="font-family: Monaco, monospace;" class="postBodyPreCode"><code>' + str + '</code></pre>';
+        return `<pre class="postBodyPreCode"><code>${Prism.highlight(
+            decodedStr,
+            Prism.languages['text'],
+            'text',
+        )}</code></pre>`;
     },
-    // html: true,
-    // linkify: true,
-    // breaks: true,
 });
 
 mdParser.use(markdownItAttrs, {
@@ -95,6 +132,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (window as any).customCopy = copy;
+        Prism.highlightAll();
     }, []);
 
     useEffect(() => {
