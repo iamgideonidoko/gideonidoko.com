@@ -56,7 +56,7 @@ const Contact = ({}) => {
                         setIsSending(true);
                         await noAuthPost(`/contact`, newContact);
                         setIsSending(false);
-                        await swal({
+                        swal({
                             title: '',
                             text: `Your message has been successfully sent.`,
                             icon: 'success',
