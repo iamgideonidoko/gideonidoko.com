@@ -9,7 +9,7 @@ import CommentModal from '../../../components/blog/CommentModal';
 import Custom404 from '../../404';
 import swal from 'sweetalert';
 // import { resetPostUpdated, updatePostComments } from '../../../store/actions/postActions';
-import { authGet, embedHtml, getReadTime, noAuthPut } from '../../../helper';
+import { authGet, purifyHtml, getReadTime, noAuthPut } from '../../../helper';
 import copy from 'copy-to-clipboard';
 import styles from '../../../styles/SinglePost.module.css';
 import { NextSeo } from 'next-seo';
@@ -31,7 +31,6 @@ import {
     FacebookIcon,
 } from 'react-share';
 import markdownItAttrs from 'markdown-it-attrs';
-import markdownItContainer from 'markdown-it-container';
 import Prism from 'prismjs';
 import components from 'prismjs/components.json';
 
@@ -74,7 +73,7 @@ export async function loadLanguages(languages: string[]) {
 
 const mdParser: MarkdownIt = new MarkdownIt({
     highlight: function (str, lang) {
-        const decodedStr = decode(str);
+        const decodedStr = str;
         if (lang) {
             loadLanguages([lang]);
             try {
@@ -98,6 +97,9 @@ const mdParser: MarkdownIt = new MarkdownIt({
             'text',
         )}</code></pre>`;
     },
+    html: true,
+    // linkify: true,
+    // breaks: true,
 });
 
 mdParser.use(markdownItAttrs, {
@@ -106,7 +108,6 @@ mdParser.use(markdownItAttrs, {
     rightDelimiter: '}',
     allowedAttributes: ['id', 'class'], // empty array = all attributes are allowed
 });
-mdParser.use(markdownItContainer, 'embedhtml', {});
 
 const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
     const exactPost = postInfo.post;
@@ -204,7 +205,6 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
 	function to return dangerous markup
 	*/
     const createMarkup = (markup: string) => {
-        // return { __html: decode(markup) };
         return { __html: markup };
     };
 
@@ -386,7 +386,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                         <div
                                             className={`${styles.postBody} truePostBody`}
                                             dangerouslySetInnerHTML={createMarkup(
-                                                embedHtml(mdParser.render(exactPost.body)),
+                                                purifyHtml(mdParser.render(decode(exactPost.body))),
                                             )}
                                         />
 

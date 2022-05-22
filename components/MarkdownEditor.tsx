@@ -7,9 +7,8 @@ import dynamic from 'next/dynamic';
 import 'react-markdown-editor-lite/lib/index.css';
 // plugins
 import markdownItAttrs from 'markdown-it-attrs';
-import markdownItContainer from 'markdown-it-container';
 import Prism from 'prismjs';
-import { embedHtml } from '../helper';
+import { purifyHtml } from '../helper';
 import { loadLanguages } from '../pages/blog/[slug]';
 
 // Register plugins if required
@@ -35,7 +34,7 @@ const mdParser = new MarkdownIt({
 
         return str; //use external default escaping
     },
-    // html: true,
+    html: true,
     // linkify: true,
     // breaks: true,
 });
@@ -46,7 +45,6 @@ mdParser.use(markdownItAttrs, {
     rightDelimiter: '}',
     allowedAttributes: ['id', 'class'], // empty array = all attributes are allowed
 });
-mdParser.use(markdownItContainer, 'embedhtml', {});
 
 //dynamically fetch the `react-markdown-editor-lite` libary to avoid running on the server
 const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
@@ -63,22 +61,22 @@ const MarkdownEditor = ({
     return (
         <>
             <div>
-                <h4>
-                    <i>Tips:</i>
-                </h4>
-                <p>
-                    <pre>{`Use {.class} for class, {#id} for id and \n::: embedhtml\n [html] \n::: to embed html`}</pre>
-                </p>
+                <p>Cover Image suggested size: 1600 x 840 px.</p>
             </div>
+            <br />
             <br />
             <MdEditor
                 style={{ height: '800px' }}
-                renderHTML={(text) => embedHtml(mdParser.render(text))}
+                renderHTML={(text) => purifyHtml(mdParser.render(text))}
                 onChange={handleMarkdownEditorChange}
                 value={textValue}
             />
         </>
     );
 };
+
+/* 
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Lu56xVlZ40M?start=120" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ */
 
 export default MarkdownEditor;
