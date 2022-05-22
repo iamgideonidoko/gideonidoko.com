@@ -10,6 +10,7 @@ import { store, RootReducer } from './store/store';
 import { PreloadedState } from 'redux';
 import { logoutUser, updateTokens } from './store/slice/auth.slice';
 import { decode as htmlDecode } from 'html-entities';
+import DOMPurify from 'isomorphic-dompurify';
 
 const simpleCrypto = new SimpleCrypto(config.reduxStoreSecretKey);
 
@@ -399,6 +400,10 @@ const stripScriptRegex =
 export const embedHtml = (html: string) => {
     let newHtml = html;
     const embedBoxes = html.match(extractEmbedRegex);
+    // const codeBlocks = html.match(codeBlockRegex);
+
+    console.log('embedBoxes => ', embedBoxes);
+    // console.log('codeBlocks => ', codeBlocks);
 
     if (embedBoxes) {
         embedBoxes.forEach((box) => {
@@ -410,4 +415,26 @@ export const embedHtml = (html: string) => {
         });
     }
     return newHtml;
+};
+
+export const purifyHtml = (text: string): string => {
+    return DOMPurify.sanitize(text, {
+        ADD_TAGS: ['iframe'],
+        ADD_ATTR: [
+            'frameborder',
+            'allow',
+            'allowfullscreen',
+            'csp',
+            'fetchpriority',
+            'loading',
+            'name',
+            'referrerpolicy',
+            'sandbox',
+            'srcdoc',
+            'scrolling',
+            'longdesc',
+            'marginheight',
+            'marginwidth',
+        ],
+    });
 };

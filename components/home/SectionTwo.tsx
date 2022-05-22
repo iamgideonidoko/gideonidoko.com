@@ -8,6 +8,16 @@ const SectionTwo = () => {
     const projects = [
         {
             id: 1,
+            name: 'LinAssess',
+            about: 'Ace that LinkedIn assessment.',
+            cover: '/assets/img/linassessdesktopview.jpg',
+            coverAlt: 'View of LinAssess',
+            codeLink: 'https://github.com/IamGideonIdoko/linassess',
+            projectLink: 'https://linassess.netlify.app',
+            tech: ['React', 'Node.js', 'Zustand'],
+        },
+        {
+            id: 2,
             name: 'Color Converter',
             about: 'An app that converts color values.',
             cover: '/assets/img/colorconverter-cover.png',
@@ -17,7 +27,7 @@ const SectionTwo = () => {
             tech: ['HTML', 'CSS', 'JavaScript'],
         },
         {
-            id: 2,
+            id: 3,
             name: 'Cyprobar',
             about: 'Lightweight JavaScript libary for creating circular progress bars.',
             cover: '/assets/img/cyprobar-cover.png',
@@ -27,7 +37,7 @@ const SectionTwo = () => {
             tech: ['JavaScript', 'Parcel', 'TailwindCSS'],
         },
         {
-            id: 3,
+            id: 4,
             name: 'Sirimazone',
             about: 'Full-stack online movie store.',
             cover: '/assets/img/sirimazone-cover.png',
@@ -36,7 +46,7 @@ const SectionTwo = () => {
             tech: ['SCSS', 'JavaScript', 'PHP', 'MySQL'],
         },
         {
-            id: 4,
+            id: 5,
             name: 'Text to Speech',
             about: 'Text to speech app that uses the Web Speech API.',
             cover: '/assets/img/webtts-cover.png',
@@ -46,7 +56,7 @@ const SectionTwo = () => {
             tech: ['React'],
         },
         {
-            id: 5,
+            id: 6,
             name: 'ASCL Website',
             about: "Rebuild of ASCL's website with modern tools.",
             cover: '/assets/img/asclhomepage.jpg',
@@ -56,7 +66,7 @@ const SectionTwo = () => {
             tech: ['React', 'Node.js', 'Express.js', 'MongoDB'],
         },
         {
-            id: 6,
+            id: 7,
             name: 'Border Radius Previewer',
             about: 'Previews border radius and generates its css value.',
             cover: '/assets/img/borderradiuspreviewer-cover.png',

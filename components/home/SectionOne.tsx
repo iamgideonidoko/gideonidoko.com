@@ -28,7 +28,7 @@ const SectionOne = () => {
                 if (h1Element && mappedH1ElemArray) {
                     h1Element.innerHTML = mappedH1ElemArray && mappedH1ElemArray.join('');
                 }
-            }, 4000);
+            }, 1000);
         }
     }, []);
 
