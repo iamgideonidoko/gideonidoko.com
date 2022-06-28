@@ -64,14 +64,13 @@ const About = () => {
                             </h3> */}
 
                             <p>
-                                I&apos;m a Software Engineer and Technical Writer based in Nigeria. I&apos;m interested
-                                in learning, building positive solutions with awesome experiences, sharing design and
-                                technical ideas and tips, writing, making innovative research, blogging and community
-                                building. I develop beautiful, secured and accessible applications that meet the
-                                business requirements and focus on providing the best experience for their end users. I
-                                go a long way to give my best shot, this has made me keen to discovering life changing
-                                tech solutions. I devote a good amount of my time to programming, solving real world
-                                problems and self-development. I aim at building the next positive big thing.
+                                I&apos;m a solution-driven Software Engineer and Technical Writer based in Nigeria.
+                                I&apos;m interested in learning, building positive solutions with awesome experiences,
+                                sharing design and technical ideas and tips, writing, making innovative research, and
+                                community building. I develop beautiful, secure and accessible applications that meet
+                                the business requirements and focus on providing the best experience for their end
+                                users. I go a long way to give my best shot, this has made me keen to discovering life
+                                changing tech solutions. I aim at building the next positive big thing.
                             </p>
 
                             <p>
@@ -85,8 +84,9 @@ const About = () => {
                             </p>
 
                             <p>
-                                I play cool sports like tennis, badminton majorly. When I am not programming I&apos;ll
-                                probably be reading some articles, watching movies, engaging in my other hobbies.
+                                I play sports like tennis and badminton majorly. When I am not in front of my PC,
+                                I&apos;ll probably be reading some articles, watching movies, engaging in my other fun
+                                hobbies.
                             </p>
 
                             <p>
@@ -107,10 +107,10 @@ const About = () => {
                     <ul>
                         <li>HTML & CSS.</li>
                         <li>SASS (SCSS).</li>
-                        <li>Bootstrap.</li>
-                        <li>Tailwind.</li>
+                        <li>Bootstrap</li>
                         <li>JavaScript.</li>
-                        <li>jQuery.</li>
+                        <li>TypeScript.</li>
+                        <li>GraphQL.</li>
                         <li>React.</li>
                         <li>React Native.</li>
                         <li>Redux.</li>

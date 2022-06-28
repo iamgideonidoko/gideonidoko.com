@@ -49,10 +49,10 @@ function Home({}) {
                     <div className={styles.section1WrapperBg}></div>
                     <SectionOne />
                 </div>
+                <SectionThree />
                 <SectionTwo />
                 <div className={styles.waveTop}></div>
                 <div className={styles.section34Wrapper}>
-                    <SectionThree />
                     <SectionFour />
                 </div>
                 <div className={styles.waveBottom}></div>

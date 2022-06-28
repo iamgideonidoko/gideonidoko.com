@@ -314,6 +314,7 @@
 
 .sectionThree {
 	padding: 2rem 0 6rem;
+	margin-top: 10rem;
 }
 
 .sectionThreeBgTextWrap {
@@ -325,7 +326,7 @@
 	position: absolute;
 	top: -5rem;
 	right: 0;
-	color: rgba(0, 0, 0, 0.2);
+	color: var(--ps1first-color);
 	z-index: 1;
 	text-rendering: optimizeLegibility;
 	pointer-events: none;
@@ -349,6 +350,10 @@
 	position: relative;
 	display: inline-block;
 	transition: padding 0.2s ease-in-out;
+	-webkit-transition: padding 0.2s ease-in-out;
+	-moz-transition: padding 0.2s ease-in-out;
+	-ms-transition: padding 0.2s ease-in-out;
+	-o-transition: padding 0.2s ease-in-out;
 }
 
 .aboutSeeMore span:nth-child(1) {
@@ -369,40 +374,70 @@
 	
 }
 
-.aboutSeeMore:hover span:nth-child(1) a {
+.aboutSeeMore span:nth-child(1) a {
 	padding: 1rem 2rem;
 	color: black;
 }
 
-.aboutSeeMore span:nth-child(1):hover {
+.aboutSeeMore span:nth-child(1) {
 	color: #e1e1ff;
 }
 
-.aboutSeeMore span:nth-child(1):hover+span {
+.aboutSeeMore span:nth-child(2) {
 	height: 100% !important;
 	width: 100%;
 	background-image: linear-gradient(to right, rgb(34, 193, 195), rgb(253, 187, 45));
 	border: 0;
 	border-radius: 10rem;
-}
-
-.aboutSeeMore span:nth-child(2) {
 	position: absolute;
 	display: inline-block;
 	bottom: 0;
 	left: 0;
 	z-index: 1;
-	background: var(--pri-blue-normal);
-	width: 100%;
-	height: 0.2rem;
-	transition: all 0.2s ease-in-out;
+	transition: all 0.5s ease-in-out;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
 }
+
+.aboutSeeMore span:nth-child(2)::before {
+	content: "";
+	height: 100% !important;
+	width: 100%;
+	background-image: linear-gradient(to left, rgb(34, 193, 195), rgb(253, 187, 45));
+	border: 0;
+	border-radius: 10rem;
+	position: absolute;
+	display: inline-block;
+	bottom: 0;
+	left: 0;
+	z-index: 2;
+	transition: all 0.5s ease-in-out;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	opacity: 0;
+}
+
+.aboutSeeMore:hover span:nth-child(2)::before {
+	opacity: 1 !important;
+}
+
+/* .aboutSeeMore span:nth-child(1):hover+span {
+	background-image: linear-gradient(to left, rgb(34, 193, 195), rgb(253, 187, 45));
+	width: 100%;
+} */
 
 .aboutText {
 	transition: all 0.2s ease-in-out;
 	word-break: keep-all;
 	height: 5rem;
-
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
 }
 
 
