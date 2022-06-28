@@ -64,10 +64,19 @@
 .resumeBtn {
 	background-image: linear-gradient(to right, rgb(34, 193, 195), rgb(253, 187, 45));
 	color: black !important;
+	text-decoration: none !important;
 	padding: 1rem 2rem;
 	border-radius: 10rem;
 	display: inline-block;
 	margin-top: 1rem;
+	-webkit-border-radius: 10rem;
+	-moz-border-radius: 10rem;
+	-ms-border-radius: 10rem;
+	-o-border-radius: 10rem;
+}
+
+.resumeBtn:hover {
+	opacity: 0.85;
 }
 
 .aboutSectionOne {
