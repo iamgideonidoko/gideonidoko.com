@@ -14,6 +14,7 @@ const SectionThree = () => {
         "I've a liking to sharing knowledge",
         "I'm interested in community building",
         'I reside in Nigeria',
+        "I'm open to collaborations and gigs",
     ];
 
     const [aboutText, setAboutText] = useState(null);
