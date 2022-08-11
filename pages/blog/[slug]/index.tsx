@@ -669,7 +669,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     // Fetch data from external API
     try {
         const res = await authGet(`/post/${slug}`);
-        if (!res?.data?.post) return { notFound: true };
+        if (!res?.data?.post?.post) return { notFound: true };
         return { props: { postInfo: res?.data?.post } };
     } catch (err) {
         // return { props: { postInfo: { post: null, nextPost: [], prevPost: [] } } };
