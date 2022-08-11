@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useState, Fragment, useEffect } from 'react';
 import styles from '../../styles/CreatePost.module.css';
 import MarkdownEditor from '../../components/MarkdownEditor';
@@ -172,10 +171,7 @@ const CreatePost = ({}) => {
 
     return (
         <Fragment>
-            <NextSeo noindex={true} nofollow={true} />
-            <Head>
-                <title>Create Post - Gideon Idoko</title>
-            </Head>
+            <NextSeo title="Create Post - Gideon Idoko" noindex={true} nofollow={true} />
             {loaded && (
                 <main className={`padding-top-10rem`}>
                     <div className="container-max-1248px">

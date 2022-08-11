@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import Link from 'next/link';
 import AllPostsRender from '../../../../components/blog/AllPostsRender';
 import styles from '../../../../styles/Blog.module.css';
@@ -23,12 +22,12 @@ const Page = ({ posts }: { posts: PaginatedPosts }) => {
                 <Fragment>
                     <NextSeo
                         title={`Blog (Page ${currentPageNumber}) - Gideon Idoko`}
-                        description={`Checkout posts on page ${currentPageNumber}. I write about Software Development & web engineering topics and tools on my blog here.`}
+                        description={`Check out posts on page ${currentPageNumber} of this blog where Gideon Idoko writes about software engineering topics, tips, tricks, and tools.`}
                         canonical={`https://gideonidoko.com/blog/page/${currentPageNumber}`}
                         openGraph={{
                             url: `https://gideonidoko.com/blog/page/${currentPageNumber}`,
                             title: `Blog (Page ${currentPageNumber}) - Gideon Idoko`,
-                            description: `Blog (Page ${currentPageNumber}) - Gideon Idoko`,
+                            description: `Check out posts on page ${currentPageNumber} of this blog where Gideon Idoko writes about software engineering topics, tips, tricks, and tools.`,
                             images: [
                                 {
                                     url: 'https://gideonidoko.com/GideonIdokoCardImage.png',
@@ -37,7 +36,7 @@ const Page = ({ posts }: { posts: PaginatedPosts }) => {
                                     alt: "Gideon Idoko's card image",
                                 },
                             ],
-                            site_name: 'Blog - Gideon Idoko',
+                            site_name: 'Gideon Idoko',
                         }}
                         twitter={{
                             handle: '@IamGideonIdoko',
@@ -45,9 +44,6 @@ const Page = ({ posts }: { posts: PaginatedPosts }) => {
                             cardType: 'summary_large_image',
                         }}
                     />
-                    <Head>
-                        <title>{`Blog (Page ${currentPageNumber}) - Gideon Idoko`}</title>
-                    </Head>
                     <main className={`padding-top-10rem ${styles.blogMain}`}>
                         <div className="container-max-1248px">
                             <Fragment>

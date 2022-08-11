@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { Fragment, useState, useEffect } from 'react';
 import styles from '../../styles/UploadAsset.module.css';
 import { NextSeo } from 'next-seo';
@@ -77,10 +76,7 @@ const UploadAsset = ({}) => {
 
     return (
         <Fragment>
-            <NextSeo noindex={true} nofollow={true} />
-            <Head>
-                <title>Upload Asset - Gideon Idoko</title>
-            </Head>
+            <NextSeo title="Upload Asset - Gideon Idoko" noindex={true} nofollow={true} />
             {loaded && (
                 <main className={`padding-top-10rem`}>
                     <div className="container-max-1248px">

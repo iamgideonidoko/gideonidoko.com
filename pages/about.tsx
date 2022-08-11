@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { Fragment } from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/About.module.css';
 import { NextSeo } from 'next-seo';
@@ -11,13 +10,13 @@ const About = () => {
         <Fragment>
             <NextSeo
                 title="About me - Gideon Idoko"
-                description="Gideon Idoko is a Software Engineer and Technical Writer based in Nigeria. I'm interested in learning, building positive solutions with awesome experiences, sharing design and technical ideas and tips, writing, making innovative research, blogging and community building."
+                description="Gideon Idoko is a solution-driven Software Engineer and Technical Writer based in Nigeria. He's interested in learning, building positive solutions with awesome experiences, sharing technical ideas, writing, and community building."
                 canonical="https://gideonidoko.com/about"
                 openGraph={{
                     url: 'https://gideonidoko.com/about',
                     title: 'About me - Gideon Idoko',
                     description:
-                        'Gideon Idoko is a Software Engineer and Technical Writer based in Nigeria interested in learning, building positive solutions with awesome experiences, sharing design and technical ideas and tips, writing, making innovative research, blogging and community building.',
+                        "Gideon Idoko is a solution-driven Software Engineer and Technical Writer based in Nigeria. He's interested in learning, building positive solutions with awesome experiences, sharing technical ideas, writing, and community building.",
                     images: [
                         {
                             url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
@@ -26,7 +25,7 @@ const About = () => {
                             alt: "Gideon Idoko's card image",
                         },
                     ],
-                    site_name: 'Gideon Idoko - Software Engineer and Technical Writer',
+                    site_name: 'Gideon Idoko',
                 }}
                 twitter={{
                     handle: '@IamGideonIdoko',
@@ -34,13 +33,6 @@ const About = () => {
                     cardType: 'summary_large_image',
                 }}
             />
-            <Head>
-                <title>About me - Gideon Idoko</title>
-                <meta
-                    name="keywords"
-                    content="gideon idoko,about gideon idoko,gideon, about gideon, about idoko,idoko,software developer,technical writer,software engineer,developer,engineer,writer"
-                ></meta>
-            </Head>
             <main className={`padding-top-10rem ${styles.aboutMain}`}>
                 <div className="container-max-1248px">
                     <div className={styles.aboutSectionOne}>
@@ -55,9 +47,7 @@ const About = () => {
                             </div>
                         </div>
                         <div>
-                            <h3>
-                                Hi there! <i className="neu-robot"></i>
-                            </h3>
+                            <h3>Hi there! 👋🏽</h3>
                             <h1>I&apos;m Gideon Idoko.</h1>
                             {/* <h3>
                                 Frontend Engineer @ <a>AlphaCX</a>
@@ -66,11 +56,11 @@ const About = () => {
                             <p>
                                 I&apos;m a solution-driven Software Engineer and Technical Writer based in Nigeria.
                                 I&apos;m interested in learning, building positive solutions with awesome experiences,
-                                sharing design and technical ideas and tips, writing, making innovative research, and
-                                community building. I develop beautiful, secure and accessible applications that meet
-                                the business requirements and focus on providing the best experience for their end
-                                users. I go a long way to give my best shot, this has made me keen to discovering life
-                                changing tech solutions. I aim at building the next positive big thing.
+                                sharing technical ideas, writing, and community building. I develop beautiful, secure
+                                and accessible applications that meet the business requirements and focus on providing
+                                the best experience for their end users. I go a long way to give my best shot, this has
+                                made me keen to discovering life changing tech solutions. I aim at building the next
+                                positive big thing.
                             </p>
 
                             <p>

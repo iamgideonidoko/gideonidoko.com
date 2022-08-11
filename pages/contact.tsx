@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { Fragment, useRef, useState } from 'react';
-import Head from 'next/head';
 import { config } from '../config/keys';
 import SimpleReactValidator from 'simple-react-validator';
 import styles from '../styles/Contact.module.css';
@@ -125,7 +124,7 @@ const Contact = ({}) => {
                             alt: "Gideon Idoko's card image",
                         },
                     ],
-                    site_name: 'Gideon Idoko - Software Developer and Technical Writer',
+                    site_name: 'Gideon Idoko',
                 }}
                 twitter={{
                     handle: '@IamGideonIdoko',
@@ -133,13 +132,6 @@ const Contact = ({}) => {
                     cardType: 'summary_large_image',
                 }}
             />
-            <Head>
-                <title>Contact me - Gideon Idoko</title>
-                <meta
-                    name="keywords"
-                    content="gideon idoko,contact gideon idoko,gideon, contact gideon,,idoko,software developer,technical writer,software engineer,developer,engineer,writer,get in touch"
-                ></meta>
-            </Head>
             <main className={`padding-top-10rem ${styles.contactMain}`}>
                 <div className="container-max-1248px">
                     <h1>Contact me.</h1>

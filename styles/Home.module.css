@@ -98,11 +98,11 @@
 }
 
 .welcomeLine {
-	font-size: 9rem;
+	font-size: 9.5rem;
 	text-align: center;
 	line-height: 10rem;
 	margin: 2rem 0;
-	font-family: Aclonica, var(--default-font) !important;
+	font-family: var(--header-font) !important;
 	position: relative;
 }
 
@@ -190,7 +190,7 @@
 	font-size: 2rem;
 	font-weight: 600;
 	text-transform: uppercase;
-	font-family: Aclonica, var(--default-font) !important;
+	font-family: var(--header-font) !important;
 	letter-spacing: .3rem;
 }
 

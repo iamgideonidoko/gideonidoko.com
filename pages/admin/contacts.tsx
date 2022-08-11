@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { Fragment, useState, useEffect } from 'react';
 import moment from 'moment';
 import swal from 'sweetalert';
@@ -79,10 +78,7 @@ const Contacts = ({}) => {
 
     return (
         <Fragment>
-            <NextSeo noindex={true} nofollow={true} />
-            <Head>
-                <title>Contacts - Gideon Idoko</title>
-            </Head>
+            <NextSeo title="Contacts - Gideon Idoko" noindex={true} nofollow={true} />
             {loaded && (
                 <main className={`padding-top-10rem`}>
                     <div className="container-max-1248px">

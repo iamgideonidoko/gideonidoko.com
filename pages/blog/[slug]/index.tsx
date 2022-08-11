@@ -313,12 +313,12 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
             ) : (
                 <Fragment>
                     <NextSeo
-                        title={`${exactPost.title} :: Blog - Gideon Idoko`}
+                        title={`${exactPost.title} - Gideon Idoko`}
                         description={exactPost.description}
                         canonical={`https://gideonidoko.com/blog/${exactPost.slug}`}
                         openGraph={{
                             url: `https://gideonidoko.com/blog/${exactPost.slug}`,
-                            title: `${exactPost.title} :: Blog - Gideon Idoko`,
+                            title: `${exactPost.title} - Gideon Idoko`,
                             description: exactPost.description,
                             type: 'article',
                             article: {
@@ -332,7 +332,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                     alt: `${exactPost.title}'s cover image`,
                                 },
                             ],
-                            site_name: 'Blog - Gideon Idoko',
+                            site_name: 'Gideon Idoko',
                         }}
                         twitter={{
                             handle: '@IamGideonIdoko',
@@ -342,7 +342,6 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                     />
 
                     <Head>
-                        <title>{`${exactPost.title} :: Blog - Gideon Idoko`}</title>
                         <meta name="keywords" content={exactPost?.keywords?.join(',')}></meta>
                     </Head>
                     <main className={`padding-top-10rem ${styles.singlePostMain}`}>
@@ -416,7 +415,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                                         title={exactPost?.title}
                                                         url={window.document.URL}
                                                         summary={exactPost?.description}
-                                                        source={'Blog - Gideon Idoko'}
+                                                        source={'Gideon Idoko'}
                                                     >
                                                         <LinkedinIcon size={32} round={true} />
                                                     </LinkedinShareButton>
