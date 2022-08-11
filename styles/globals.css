@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Proza+Libre&family=Aclonica&family=Fira+Code&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Proza+Libre&family=Exo+2&family=Fira+Code&display=swap');
 
 * {
 	padding: 0;
@@ -34,6 +34,7 @@
 	--pri-delete-color-02: rgba(255, 77, 77, 0.2);
 	/*--code-elem-bg-color: #24292e;*/
 	--default-font: 'Proza Libre', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	--header-font: 'Exo 2', var(--default-font);
 	--code-elem-bg-color: #121314;
 	--bg-from-sectionOne: #3A3D50;
 	--sectionOneBgColor: #43465c;
@@ -117,7 +118,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: Aclonica, var(--default-font);
+	font-family: var(--header-font);
 }
 
 a {

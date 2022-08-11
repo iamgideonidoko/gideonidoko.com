@@ -1,5 +1,4 @@
 import { Fragment, useState, useEffect } from 'react';
-import Head from 'next/head';
 import AllPostsRender from '../../components/blog/AllPostsRender';
 import styles from '../../styles/Blog.module.css';
 import { NextSeo } from 'next-seo';
@@ -49,14 +48,14 @@ const Search = ({}) => {
     return (
         <Fragment>
             <NextSeo
-                title={`Blog (Search Articles) - Gideon Idoko`}
-                description="Search through my posts. I write about Software Development & web engineering topics and tools on my blog here."
+                title={`Search blog - Gideon Idoko`}
+                description="Search through this blog where Gideon Idoko writes about software engineering topics, tips, tricks, and tools."
                 canonical="https://gideonidoko.com/blog/search"
                 openGraph={{
                     url: 'https://gideonidoko.com/blog/search',
-                    title: `Blog (Search Articles) - Gideon Idoko`,
+                    title: `Search blog - Gideon Idoko`,
                     description:
-                        'Search through my posts. I write about Software Development & web engineering topics and tools on my blog here.',
+                        'Search through this blog where Gideon Idoko writes about software engineering topics, tips, tricks, and tools.',
                     images: [
                         {
                             url: 'https://gideonidoko.com/GideonIdokoCardImage.png',
@@ -65,7 +64,7 @@ const Search = ({}) => {
                             alt: "Gideon Idoko's card image",
                         },
                     ],
-                    site_name: 'Blog - Gideon Idoko',
+                    site_name: 'Gideon Idoko',
                 }}
                 twitter={{
                     handle: '@IamGideonIdoko',
@@ -73,9 +72,6 @@ const Search = ({}) => {
                     cardType: 'summary_large_image',
                 }}
             />
-            <Head>
-                <title>Blog (Search Articles) - Gideon Idoko</title>
-            </Head>
             <main className={`padding-top-10rem ${styles.blogMain}`}>
                 <div className="container-max-1248px">
                     <Fragment>

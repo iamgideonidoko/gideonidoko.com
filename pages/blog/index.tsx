@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { Fragment } from 'react';
 import Link from 'next/link';
 import styles from '../../styles/Blog.module.css';
@@ -13,13 +12,13 @@ const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
         <Fragment>
             <NextSeo
                 title="Blog - Gideon Idoko"
-                description="I write about Software Development & web engineering topics and tools on my blog here."
+                description="Gideon Idoko writes about software engineering topics, tips, tricks, and tools on this blog."
                 canonical="https://gideonidoko.com/blog"
                 openGraph={{
                     url: 'https://gideonidoko.com/blog',
                     title: 'Blog - Gideon Idoko',
                     description:
-                        'I write about Software Development & web engineering topics and tools on my blog here.',
+                        'Gideon Idoko writes about software engineering topics, tips, tricks, and tools on this blog.',
                     images: [
                         {
                             url: 'https://gideonidoko.com/GideonIdokoCardImage.png',
@@ -28,7 +27,7 @@ const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
                             alt: "Gideon Idoko's card image",
                         },
                     ],
-                    site_name: 'Blog - Gideon Idoko',
+                    site_name: 'Gideon Idoko',
                 }}
                 twitter={{
                     handle: '@IamGideonIdoko',
@@ -36,13 +35,6 @@ const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
                     cardType: 'summary_large_image',
                 }}
             />
-            <Head>
-                <title>Blog - Gideon Idoko</title>
-                <meta
-                    name="keywords"
-                    content="blog,writing,posts,gideon idoko,software developer,technical writer,software engineer,developer,engineer,writer"
-                ></meta>
-            </Head>
             <main className={`padding-top-10rem ${styles.blogMain}`}>
                 <div className="container-max-1248px">
                     {

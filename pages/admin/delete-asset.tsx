@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import Head from 'next/head';
 import React from 'react';
 import { Fragment, useState, useEffect } from 'react';
 import styles from '../../styles/DeleteAsset.module.css';
@@ -145,10 +144,7 @@ const DeleteAsset = ({}) => {
 
     return (
         <Fragment>
-            <NextSeo noindex={true} nofollow={true} />
-            <Head>
-                <title>Delete Asset - Gideon Idoko</title>
-            </Head>
+            <NextSeo title="Delete Asset - Gideon Idoko" noindex={true} nofollow={true} />
             {loaded && (
                 <main className={`padding-top-10rem`}>
                     <div className="container-max-1248px">

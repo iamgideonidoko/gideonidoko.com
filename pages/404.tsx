@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { Fragment } from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/Custom404.module.css';
 import { NextSeo } from 'next-seo';
@@ -9,10 +8,10 @@ import { NextSeo } from 'next-seo';
 const Custom404 = () => {
     return (
         <Fragment>
-            <NextSeo noindex={true} nofollow={true} />
-            <Head>
+            <NextSeo title="Page Not Found 😔" noindex={true} nofollow={true} />
+            {/* <Head>
                 <title>Page Not Found : ( </title>
-            </Head>
+            </Head> */}
             <main className={`padding-top-10rem ${styles.custom404Main}`}>
                 <div className="container-max-1248px">
                     <div className={styles.custom404Container}>

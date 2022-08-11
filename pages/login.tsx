@@ -1,5 +1,4 @@
 import { Fragment, useRef, useState, FormEvent, ChangeEvent, ChangeEventHandler } from 'react';
-import Head from 'next/head';
 import styles from '../styles/Login.module.css';
 import SimpleReactValidator from 'simple-react-validator';
 import swal from 'sweetalert';
@@ -75,10 +74,7 @@ const Login = ({}) => {
 
     return (
         <Fragment>
-            <NextSeo noindex={true} nofollow={true} />
-            <Head>
-                <title>Login - Gideon Idoko</title>
-            </Head>
+            <NextSeo title="Login - Gideon Idoko" noindex={true} nofollow={true} />
             <main className={`padding-top-10rem`}>
                 <div className="container-max-1248px">
                     {isAuthenticated ? (

@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useEffect, Fragment, useState } from 'react';
 import styles from '../../styles/ManagePost.module.css';
 import swal from 'sweetalert';
@@ -369,10 +368,7 @@ const ManagePost = ({}) => {
 
     return (
         <Fragment>
-            <NextSeo noindex={true} nofollow={true} />
-            <Head>
-                <title>Manage Post - Gideon Idoko</title>
-            </Head>
+            <NextSeo title="Manage Post - Gideon Idoko" noindex={true} nofollow={true} />
             {loaded && (
                 <main className={`padding-top-10rem`}>
                     <div className="container-max-1248px">

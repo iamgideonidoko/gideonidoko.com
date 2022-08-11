@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from '../../styles/AllComments.module.css';
@@ -47,10 +46,7 @@ const AllComments = ({}) => {
 
     return (
         <Fragment>
-            <NextSeo noindex={true} nofollow={true} />
-            <Head>
-                <title>Received Comments - Gideon Idoko</title>
-            </Head>
+            <NextSeo title="Received Comments - Gideon Idoko" noindex={true} nofollow={true} />
             {loaded && (
                 <main className={`padding-top-10rem`}>
                     <div className="container-max-1248px">

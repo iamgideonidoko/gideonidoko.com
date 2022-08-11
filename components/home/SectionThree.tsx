@@ -40,7 +40,7 @@ const SectionThree = () => {
                     printText();
                 }
             }
-        }, 3000);
+        }, 1000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -51,7 +51,7 @@ const SectionThree = () => {
                     <div className={styles.sectionThreeBgText}>G.I</div>
                 </div>
                 <Bounce left duration={1500}>
-                    <h3>Meet Gideon Idoko 👋🏾.</h3>
+                    <h3>Meet Gideon Idoko 👋🏽.</h3>
                 </Bounce>
                 <h4 className={styles.aboutText}>- {aboutText}.</h4>
                 <div className={styles.s3AboutLink}>
