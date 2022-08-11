@@ -21,7 +21,7 @@ const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
                         'Gideon Idoko writes about software engineering topics, tips, tricks, and tools on this blog.',
                     images: [
                         {
-                            url: 'https://gideonidoko.com/GideonIdokoCardImage.png',
+                            url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
                             width: 1500,
                             height: 500,
                             alt: "Gideon Idoko's card image",
