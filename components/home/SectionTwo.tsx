@@ -19,7 +19,7 @@ const SectionTwo = () => {
         {
             id: 2,
             name: 'Color Converter',
-            about: 'An app that converts color values.',
+            about: 'Convert color between 5 models.',
             cover: '/assets/img/colorconverter-cover.png',
             coverAlt: 'View of Color Converter',
             codeLink: 'https://github.com/IamGideonIdoko/colorconverter',
@@ -29,7 +29,7 @@ const SectionTwo = () => {
         {
             id: 3,
             name: 'Cyprobar',
-            about: 'Lightweight JavaScript libary for creating circular progress bars.',
+            about: 'Lightweight JS libary for circular progress bars.',
             cover: '/assets/img/cyprobar-cover.png',
             coverAlt: "View of Cyprobar's doc site.",
             codeLink: 'https://github.com/IamGideonIdoko/cyprobar',
@@ -39,7 +39,7 @@ const SectionTwo = () => {
         {
             id: 4,
             name: 'Sirimazone',
-            about: 'Full-stack online movie store.',
+            about: 'Simple online movie store.',
             cover: '/assets/img/sirimazone-cover.png',
             coverAlt: 'View of Sirimazone.',
             codeLink: 'https://github.com/IamGideonIdoko/sirimazone',
@@ -48,7 +48,7 @@ const SectionTwo = () => {
         {
             id: 5,
             name: 'Text to Speech',
-            about: 'Text to speech app that uses the Web Speech API.',
+            about: 'Convert text to speech.',
             cover: '/assets/img/webtts-cover.png',
             coverAlt: 'View of Text-to-speech app.',
             codeLink: 'https://github.com/IamGideonIdoko/text-to-speech-app',
@@ -58,35 +58,33 @@ const SectionTwo = () => {
         {
             id: 6,
             name: 'ASCL Website',
-            about: "Rebuild of ASCL's website with modern tools.",
-            cover: '/assets/img/asclhomepage.jpg',
-            coverAlt: 'View of UI Implementation.',
+            about: "ASCL's modern website.",
+            cover: '/assets/img/asclhomepage.png',
+            coverAlt: 'View of ASCL website.',
             codeLink: 'https://github.com/IamGideonIdoko/ascl-website-frontend',
             projectLink: 'https://ajaokutasteel.com.ng',
             tech: ['React', 'Node.js', 'Express.js', 'MongoDB'],
         },
         {
             id: 7,
-            name: 'Border Radius Previewer',
-            about: 'Previews border radius and generates its css value.',
-            cover: '/assets/img/borderradiuspreviewer-cover.png',
-            coverAlt: 'View of Border Radius Previewer app.',
-            codeLink: 'https://github.com/IamGideonIdoko/border-radius-previewer',
-            projectLink: 'https://borderradiuspreviewer.surge.sh',
-            tech: ['HTML', 'CSS', 'JavaScript'],
+            name: 'Dentbud',
+            about: 'AI/Mobile-based Smart Personal Assistant for students.',
+            cover: '/assets/img/dentbud_mockup.png',
+            coverAlt: 'View of Dentbud.',
+            codeLink: 'https://github.com/IamGideonIdoko/dentbud',
+            projectLink: 'https://dentbud.surge.sh',
+            tech: ['React Native', 'Node.js', 'Express.js', 'Python', 'Rasa'],
         },
-        /*
-		{
-			id: 6,
-			name: 'G231',
-			about: 'Landing page for Logitech G231 headphone.',
-			cover: '/assets/img/g231-cover.png',
-			coverAlt: 'View of G231 landing page.',
-			codeLink: 'https://github.com/IamGideonIdoko/g231',
-			projectLink: 'http://g231.surge.sh',
-			tech: ['HTML', 'CSS']
-		}
-		*/
+        {
+            id: 8,
+            name: 'BAS',
+            about: 'Track student attendance using fingerprint biometrics.',
+            cover: '/assets/img/bas_mockup.png',
+            coverAlt: 'View of BAS.',
+            codeLink: 'https://github.com/IamGideonIdoko/bio-attendance-sys',
+            projectLink: 'https://github.com/IamGideonIdoko/bio-attendance-sys#screenshots',
+            tech: ['React', 'Node.js', 'Express.js', 'Python', 'Flask', 'Computer Vision'],
+        },
     ];
 
     const firstLetter = (str: string) => {

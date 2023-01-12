@@ -199,7 +199,7 @@
 	margin: 2rem 0 0 0;
 	font-weight: 400;
 	z-index: 3;
-	border-bottom: 2px solid var(--pri-yellow-dark);
+	/* border-bottom: 2px solid var(--pri-yellow-dark); */
 	padding-bottom: 1rem;
 	/*font-size: 4rem;*/
 	font-size: calc(14px + (26-14) * ((100vw - 400px) / (1280 - 400)));

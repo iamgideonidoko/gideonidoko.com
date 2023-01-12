@@ -11,13 +11,18 @@ import { RootState } from '../store/store';
 const Header = ({
     isNavOpen,
     setIsNavOpen,
+    contentScrollPos,
 }: {
     isNavOpen: boolean;
     setIsNavOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    contentScrollPos: React.MutableRefObject<number>;
 }) => {
     const auth = useSelector(({ auth }: RootState) => auth);
 
     const handleNavMenuBtnClick = () => {
+        if (isNavOpen) {
+            contentScrollPos.current = window.scrollY;
+        }
         setIsNavOpen(!isNavOpen);
     };
 

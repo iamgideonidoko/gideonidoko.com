@@ -33,7 +33,7 @@ const SectionFive = ({}) => {
                     </Bounce>
                     <Bounce left duration={1800}>
                         <p>
-                            I also write <b>blog articles</b>.
+                            I also <b>write</b> ✍🏽.
                         </p>
                     </Bounce>
 

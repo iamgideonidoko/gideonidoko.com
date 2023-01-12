@@ -184,7 +184,7 @@ export const axiosHeaders = () => {
     const axiosConfig: AxiosRequestConfig<object> = {
         headers: {
             'Content-Type': 'application/json',
-            'x-auth-api-key': `${config.noAuthKey}${Date.now()}`,
+            'x-auth-api-key': config.noAuthKey,
         },
     };
 

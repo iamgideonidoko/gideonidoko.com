@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import '../styles/globals.css';
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { createWrapper } from 'next-redux-wrapper';
 import makeStore, { store } from '../store/store';
@@ -35,8 +35,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(true);
     const [loadCursor, setLoadCursor] = useState<boolean>(false);
     const auth = useSelector(({ auth }: RootState) => auth);
+    const contentScrollPos = useRef<number>(0);
 
-    const closeNav = () => setIsNavOpen(true);
+    const closeNav = () => {
+        contentScrollPos.current = 0;
+        setIsNavOpen(true);
+    };
 
     const router = useRouter();
 
@@ -46,6 +50,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     //         return true;
     //     });
     // }, [router]);
+
+    useEffect(() => {
+        const mainWrapper = window.document.querySelector('.main-wrapper') as HTMLDivElement;
+        if (isNavOpen) {
+            window.scrollTo(0, contentScrollPos.current);
+        } else {
+            mainWrapper?.scrollTo(0, contentScrollPos.current);
+        }
+    }, [isNavOpen]);
 
     useEffect(() => {
         NProgress.configure({ showSpinner: false });
@@ -154,7 +167,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </nav>
             </div>
             <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
-                <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
+                <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} contentScrollPos={contentScrollPos} />
                 <Component {...pageProps} />
                 <Footer />
             </div>

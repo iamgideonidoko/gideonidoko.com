@@ -75,8 +75,7 @@ const About = () => {
 
                             <p>
                                 I play sports like tennis and badminton majorly. When I am not in front of my PC,
-                                I&apos;ll probably be reading some articles, watching movies, engaging in my other fun
-                                hobbies.
+                                I&apos;ll prolly be engaging in other fun stuff.
                             </p>
 
                             <p>

@@ -19,10 +19,10 @@ const SectionFour = () => {
                                         <span></span>
                                     </div>
                                     <div>
-                                        <h5>Web Design / Development</h5>
+                                        <h5>Product Development</h5>
                                         <p>
-                                            I design, integrate and maintain software solutions like websites, web apps,
-                                            portals, PWAs, APIs etc.
+                                            I develop, integrate and maintain software solutions like websites, web
+                                            apps, portals, PWAs, APIs etc.
                                         </p>
                                     </div>
                                 </li>
@@ -47,7 +47,7 @@ const SectionFour = () => {
                                         <span></span>
                                     </div>
                                     <div>
-                                        <h5>Website Review</h5>
+                                        <h5>Product Review</h5>
                                         <p>
                                             I ensure a product is in its best performance by reviewing for potential
                                             issues and making improvements that could fix it.
