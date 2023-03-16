@@ -31,6 +31,9 @@ store.subscribe(
     }, 800),
 );
 
+const pageWithoutHeader = ['/p/test'];
+const pageWithoutFooter = ['/p/test'];
+
 function MyApp({ Component, pageProps }: AppProps) {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(true);
     const [loadCursor, setLoadCursor] = useState<boolean>(false);
@@ -43,6 +46,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
 
     const router = useRouter();
+
+    const shouldHaveHeader = pageWithoutHeader.indexOf(router.pathname) === -1;
+    const shouldHaveFooter = pageWithoutFooter.indexOf(router.pathname) === -1;
 
     // useEffect(() => {
     //     router.beforePopState((state) => {
@@ -167,9 +173,11 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </nav>
             </div>
             <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
-                <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} contentScrollPos={contentScrollPos} />
+                {shouldHaveHeader && (
+                    <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} contentScrollPos={contentScrollPos} />
+                )}
                 <Component {...pageProps} />
-                <Footer />
+                {shouldHaveFooter && <Footer />}
             </div>
         </Fragment>
     );
