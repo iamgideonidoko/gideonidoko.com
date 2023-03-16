@@ -8,6 +8,10 @@ declare module 'react-animated-cursor' {
         outerScale?: number;
         trailingSpeed?: number;
         outerSize: number;
+        hasBlendMode?: boolean;
+        outerStyle?: {
+            [key: string]: unknown;
+        };
     }
 
     export default function AnimatedCursor(props: AnimatedCursorProps);

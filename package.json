@@ -7,9 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:configured": "eslint ./**/*.{js,jsx,ts,tsx} --max-warnings=0",
-    "format": "eslint ./**/*.{js,jsx,ts,tsx} --fix",
-    "prettier-format": "prettier --config .prettierrc './**/*.{js,jsx,ts,tsx}' --write",
+    "lint:configured": "eslint . --ext .js,jsx,.ts,.tsx --max-warnings=0",
+    "format": "eslint . --ext .js,jsx,.ts,.tsx --fix",
     "prepare": "husky install"
   },
   "dependencies": {

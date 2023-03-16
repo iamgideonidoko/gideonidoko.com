@@ -7,8 +7,8 @@ import styles from '../../styles/Home.module.css';
 const SectionThree = () => {
     const aboutInfo = [
         "I'm a solution-driven Software Engineer",
-        "I'm a Technical Writer",
         'I focus more on web engineering',
+        'I also have a thing for mobile engineering',
         'I love building positive solutions',
         'I create technical contents',
         "I've a liking to sharing knowledge",

@@ -11,14 +11,14 @@ function Home({}) {
     return (
         <Fragment>
             <NextSeo
-                title="Gideon Idoko - Software Engineer and Technical Writer"
-                description="Gideon Idoko is a solution-driven Software Engineer and Technical Writer interested in learning, building positive solutions with awesome experiences, sharing technical ideas, writing, and community building."
+                title="Gideon Idoko - Software Engineer"
+                description="Gideon Idoko is a solution-driven Software Engineer interested in learning, building positive solutions with awesome experiences, sharing technical ideas, writing, and community building."
                 canonical="https://gideonidoko.com"
                 openGraph={{
                     url: 'https://gideonidoko.com',
-                    title: 'Gideon Idoko - Software Engineer and Technical Writer',
+                    title: 'Gideon Idoko - Software Engineer',
                     description:
-                        'Gideon Idoko is a solution-driven Software Engineer and Technical Writer interested in learning, building positive solutions with awesome experiences, sharing technical ideas, writing, and community building.',
+                        'Gideon Idoko is a solution-driven Software Engineer interested in learning, building positive solutions with awesome experiences, sharing technical ideas, writing, and community building.',
                     images: [
                         {
                             url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
