@@ -12,7 +12,7 @@ const SectionThree = () => {
         'I love building positive solutions',
         'I create technical contents',
         "I've a liking to sharing knowledge",
-        "I'm interested in community building",
+        "I'm interested in community engagement",
         'I reside in Nigeria',
         "I'm open to collaborations and gigs",
     ];
