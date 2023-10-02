@@ -49,9 +49,6 @@ const About = () => {
                         <div>
                             <h3>Hi there! 👋🏽</h3>
                             <h1>I&apos;m Gideon Idoko.</h1>
-                            {/* <h3>
-                                Frontend Engineer @ <a>AlphaCX</a>
-                            </h3> */}
 
                             <p>
                                 I&apos;m a solution-driven Software Engineer based in Nigeria. I&apos;m interested in
@@ -66,11 +63,7 @@ const About = () => {
                             <p>
                                 Though familiar with some backend technologies and concerned about every aspect of a
                                 product, I focus more on frontend tools. I write about Software Engineering topics and
-                                tools on my{' '}
-                                <Link href="/blog">
-                                    <a>blog</a>
-                                </Link>{' '}
-                                and other platforms.
+                                tools on my <Link href="/blog">blog</Link> and other platforms.
                             </p>
 
                             <p>

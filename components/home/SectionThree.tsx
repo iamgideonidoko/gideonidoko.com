@@ -58,9 +58,7 @@ const SectionThree = () => {
                     <Wobble duration={2000}>
                         <p className={styles.aboutSeeMore}>
                             <span>
-                                <Link href="/about">
-                                    <a>See more about me.</a>
-                                </Link>
+                                <Link href="/about">See more about me.</Link>
                             </span>{' '}
                             <span></span>
                         </p>

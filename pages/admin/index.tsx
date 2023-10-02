@@ -118,34 +118,22 @@ const AdminProfile = ({}) => {
                                             <div className={styles.actionLinks}>
                                                 <ul>
                                                     <li>
-                                                        <Link href="/admin/create-post">
-                                                            <a>Create Post</a>
-                                                        </Link>
+                                                        <Link href="/admin/create-post">Create Post</Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/admin/manage-post">
-                                                            <a>Manage Post</a>
-                                                        </Link>
+                                                        <Link href="/admin/manage-post">Manage Post</Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/admin/upload-asset">
-                                                            <a>Upload Asset</a>
-                                                        </Link>
+                                                        <Link href="/admin/upload-asset">Upload Asset</Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/admin/delete-asset">
-                                                            <a>Delete Asset</a>
-                                                        </Link>
+                                                        <Link href="/admin/delete-asset">Delete Asset</Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/admin/contacts">
-                                                            <a>Your Contacts</a>
-                                                        </Link>
+                                                        <Link href="/admin/contacts">Your Contacts</Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/admin/all-comments">
-                                                            <a>All Comments</a>
-                                                        </Link>
+                                                        <Link href="/admin/all-comments">All Comments</Link>
                                                     </li>
                                                 </ul>
                                             </div>

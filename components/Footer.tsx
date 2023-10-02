@@ -14,7 +14,7 @@ const Footer = () => {
             <div className="container-max-1248px footer-wrapper">
                 <div className="footer-content-1">
                     {/* <Link href="/">
-                        <a>
+                        
                             <Image
                                 src="/assets/img/GideonIdokoDevLogo.png"
                                 className="site-footer-logo"
@@ -22,20 +22,18 @@ const Footer = () => {
                                 width={27}
                                 height={34}
                             />
-                        </a>
+                        
                     </Link> */}
                 </div>
                 <div className="footer-content-2">
                     <div>
                         <h3 className="footer-h3-1">
                             <Link href="/">
-                                <a>
-                                    <img
-                                        src="/assets/img/GideonIdokoDevLogo.png"
-                                        className="site-footer-logo"
-                                        alt="Gideon Idoko"
-                                    />
-                                </a>
+                                <img
+                                    src="/assets/img/GideonIdokoDevLogo.png"
+                                    className="site-footer-logo"
+                                    alt="Gideon Idoko"
+                                />
                             </Link>{' '}
                             <span>Gideon Idoko</span>
                         </h3>
@@ -45,9 +43,7 @@ const Footer = () => {
                         </p>
                         <p className="lets-talk">
                             <Link href="/contact">
-                                <a>
-                                    Let&apos;s talk <i className="neu-right-lg"></i>
-                                </a>
+                                Let&apos;s talk <i className="neu-right-lg"></i>
                             </Link>
                         </p>
                         <div className="socials">
@@ -85,27 +81,19 @@ const Footer = () => {
                         <h4>Quick Links</h4>
                         <ul>
                             <li>
-                                <Link href="/">
-                                    <a>Home</a>
-                                </Link>
+                                <Link href="/">Home</Link>
                             </li>
                             <li>
-                                <Link href="/blog">
-                                    <a>Blog</a>
-                                </Link>
+                                <Link href="/blog">Blog</Link>
                             </li>
                             <li>
-                                <Link href="/about">
-                                    <a>About</a>
-                                </Link>
+                                <Link href="/about">About</Link>
                             </li>
                             {/*
-							<li><Link href="/#services"><a>Services</a></Link></li>
+							<li><Link href="/#services">Services</Link></li>
 							*/}
                             <li>
-                                <Link href="/contact">
-                                    <a>Contact</a>
-                                </Link>
+                                <Link href="/contact">Contact</Link>
                             </li>
                         </ul>
                     </div>

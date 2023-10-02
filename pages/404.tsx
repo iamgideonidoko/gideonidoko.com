@@ -25,14 +25,10 @@ const Custom404 = () => {
                             </p>
                             <div className={styles.custom404ExitLinks}>
                                 <span>
-                                    <Link href="/">
-                                        <a>Go Home</a>
-                                    </Link>
+                                    <Link href="/">Go Home</Link>
                                 </span>
                                 <span>
-                                    <Link href="/blog">
-                                        <a>Go to Blog</a>
-                                    </Link>
+                                    <Link href="/blog">Go to Blog</Link>
                                 </span>
                             </div>
                         </div>

@@ -38,26 +38,22 @@ const AllPostsRender = ({ posts }: { posts: Array<Post> }) => {
                         <div className={styles.blogBoxLeft}>
                             <div className={styles.postCoverWrap}>
                                 <Link href={`/blog/${post.slug}`}>
-                                    <a>
-                                        <img
-                                            src={post.cover_img || blogCoverDefault}
-                                            className={`${styles.postCover}`}
-                                            alt={`${post.title} cover image`}
-                                            /* id={post._id}
+                                    <img
+                                        src={post.cover_img || blogCoverDefault}
+                                        className={`${styles.postCover}`}
+                                        alt={`${post.title} cover image`}
+                                        /* id={post._id}
                                             onLoad={(e) => handleImgLoad(e, post._id)}
                                             onError={(e) => handleImgError(e, post._id)} */
-                                        />
-                                        <div className={styles.hoverEffect}></div>
-                                        {/* <div className={`skeleton-loader skeleton-loader-${post._id}`}></div> */}
-                                    </a>
+                                    />
+                                    <div className={styles.hoverEffect}></div>
+                                    {/* <div className={`skeleton-loader skeleton-loader-${post._id}`}></div> */}
                                 </Link>
                             </div>
                         </div>
                         <div className={styles.blogBoxRight}>
                             <h3>
-                                <Link href={`/blog/${post.slug}`}>
-                                    <a>{post.title}</a>
-                                </Link>
+                                <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                             </h3>
                             <div className={styles.bbrSmallMetaOne}>
                                 <span>

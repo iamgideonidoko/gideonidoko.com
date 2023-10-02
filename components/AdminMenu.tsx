@@ -62,46 +62,30 @@ const AdminMenu = ({
             </MenuItem>
             <MenuDivider />
             <MenuItem className="admin-menu-item">
-                <Link href="/blog">
-                    <a>Blog Home</a>
-                </Link>
+                <Link href="/blog">Blog Home</Link>
             </MenuItem>
             <MenuDivider />
             <MenuItem className="admin-menu-item">
-                <Link href="/admin">
-                    <a>Your Profile</a>
-                </Link>
+                <Link href="/admin">Your Profile</Link>
             </MenuItem>
             <MenuItem className="admin-menu-item">
-                <Link href="/admin/contacts">
-                    <a>Your Contacts</a>
-                </Link>
+                <Link href="/admin/contacts">Your Contacts</Link>
             </MenuItem>
             <MenuDivider />
             <MenuItem className="admin-menu-item">
-                <Link href="/admin/create-post">
-                    <a>Create Post</a>
-                </Link>
+                <Link href="/admin/create-post">Create Post</Link>
             </MenuItem>
             <MenuItem className="admin-menu-item">
-                <Link href="/admin/manage-post">
-                    <a>Manage Post</a>
-                </Link>
+                <Link href="/admin/manage-post">Manage Post</Link>
             </MenuItem>
             <MenuItem className="admin-menu-item">
-                <Link href="/admin/upload-asset">
-                    <a>Upload Asset</a>
-                </Link>
+                <Link href="/admin/upload-asset">Upload Asset</Link>
             </MenuItem>
             <MenuItem className="admin-menu-item">
-                <Link href="/admin/delete-asset">
-                    <a>Delete Asset</a>
-                </Link>
+                <Link href="/admin/delete-asset">Delete Asset</Link>
             </MenuItem>
             <MenuItem className="admin-menu-item">
-                <Link href="/admin/all-comments">
-                    <a>All Comments</a>
-                </Link>
+                <Link href="/admin/all-comments">All Comments</Link>
             </MenuItem>
             <MenuDivider />
             <MenuItem className="admin-menu-item" onClick={logoutAdmin}>

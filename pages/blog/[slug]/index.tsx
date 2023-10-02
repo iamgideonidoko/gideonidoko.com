@@ -351,10 +351,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                     <div className={styles.blogHeader}>
                                         <h5 className={styles.breadcrumb}>
                                             <small>
-                                                &gt;&gt;&nbsp;{' '}
-                                                <Link href="/blog">
-                                                    <a>Blog</a>
-                                                </Link>
+                                                &gt;&gt;&nbsp; <Link href="/blog">Blog</Link>
                                                 &nbsp; &gt;&gt; {exactPost.title}
                                             </small>
                                         </h5>
@@ -392,9 +389,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                         <div className={styles.postTags}>
                                             {exactPost.tags?.map((tag, idx) => (
                                                 <span key={idx}>
-                                                    <Link href={`/blog/tags/${tag}`}>
-                                                        <a>#{tag}</a>
-                                                    </Link>
+                                                    <Link href={`/blog/tags/${tag}`}>#{tag}</Link>
                                                 </span>
                                             ))}
                                         </div>
@@ -441,14 +436,14 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                                             <div className={styles.ppLeft}>
                                                 {previousPost?.length > 0 && (
                                                     <Link href={`/blog/${previousPost[0].slug}`}>
-                                                        <a>← {previousPost[0].title}</a>
+                                                        ← {previousPost[0].title}
                                                     </Link>
                                                 )}
                                             </div>
                                             <div className={styles.ppRight}>
                                                 {nextPost?.length > 0 && (
                                                     <Link href={`/blog/${nextPost[0].slug}`}>
-                                                        <a>{nextPost[0].title} →</a>
+                                                        {nextPost[0].title} →
                                                     </Link>
                                                 )}
                                             </div>

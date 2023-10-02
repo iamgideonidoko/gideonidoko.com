@@ -136,37 +136,31 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </div>
 
                 <div className="mobileAdminName">
-                    <Link href="/">
-                        <a onClick={closeNav}>
-                            <img
-                                src="/assets/img/GideonIdokoDevLogo.png"
-                                className="site-footer-logo"
-                                alt="Gideon Idoko"
-                            />
-                        </a>
+                    <Link href="/" onClick={closeNav}>
+                        <img src="/assets/img/GideonIdokoDevLogo.png" className="site-footer-logo" alt="Gideon Idoko" />
                     </Link>
                     <span>Gideon Idoko</span>
                 </div>
                 <nav>
                     <ul>
                         <li>
-                            <Link href="/">
-                                <a onClick={closeNav}>Home</a>
+                            <Link href="/" onClick={closeNav}>
+                                Home
                             </Link>
                         </li>
                         <li>
-                            <Link href="/blog">
-                                <a onClick={closeNav}>Blog</a>
+                            <Link href="/blog" onClick={closeNav}>
+                                Blog
                             </Link>
                         </li>
                         <li>
-                            <Link href="/about">
-                                <a onClick={closeNav}>About</a>
+                            <Link href="/about" onClick={closeNav}>
+                                About
                             </Link>
                         </li>
                         <li>
-                            <Link href="/contact">
-                                <a onClick={closeNav}>Get in touch</a>
+                            <Link href="/contact" onClick={closeNav}>
+                                Get in touch
                             </Link>
                         </li>
                     </ul>

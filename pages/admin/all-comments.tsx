@@ -79,10 +79,11 @@ const AllComments = ({}) => {
                                                         </span>
 
                                                         <span>
-                                                            <Link href={`/blog/${post.slug}`}>
-                                                                <a className={styles.externalLink}>
-                                                                    <i className="neu-external-link"></i>
-                                                                </a>
+                                                            <Link
+                                                                href={`/blog/${post.slug}`}
+                                                                className={styles.externalLink}
+                                                            >
+                                                                <i className="neu-external-link"></i>
                                                             </Link>
                                                             <button
                                                                 className={styles.togglePostBtn}
