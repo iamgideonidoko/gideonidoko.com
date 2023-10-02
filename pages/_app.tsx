@@ -9,7 +9,6 @@ import Footer from '../components/Footer';
 import ThemeSwitch from '../components/ThemeSwitch';
 import FullscreenSwitch from '../components/FullscreenSwitch';
 import AdminMenu from '../components/AdminMenu';
-import AnimatedCursor from 'react-animated-cursor';
 import Head from 'next/head';
 import { debounce } from 'debounce';
 import { saveState, refreshUserTokens } from '../helper';
@@ -22,6 +21,7 @@ import 'nprogress/nprogress.css';
 import { loadFirebase } from '../helper';
 import 'prismjs/themes/prism-tomorrow.css';
 // import Image from 'next/image';
+import Lenis from '@studio-freight/lenis';
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -36,7 +36,6 @@ const pageWithoutFooter = ['/p/test'];
 
 function MyApp({ Component, pageProps }: AppProps) {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(true);
-    const [loadCursor, setLoadCursor] = useState<boolean>(false);
     const auth = useSelector(({ auth }: RootState) => auth);
     const contentScrollPos = useRef<number>(0);
 
@@ -87,11 +86,25 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, [router]);
 
     useEffect(() => {
-        setLoadCursor(true);
         // check for token and refresh on page load
         (async () => await refreshUserTokens())();
         // load an initialize a firebase app
         loadFirebase();
+        // enable smooth scrolling
+        const lenis = new Lenis({
+            lerp: 0.05,
+            smoothTouch: true,
+            smoothWheel: true,
+        });
+
+        lenis.on('scroll', () => {
+            //
+        });
+        const scrollFn = (time: number) => {
+            lenis.raf(time); // Runs lenis' requestAnimationFrame method
+            requestAnimationFrame(scrollFn);
+        };
+        requestAnimationFrame(scrollFn); // Start the animation frame loop
     }, []);
 
     useEffect(() => {
@@ -113,7 +126,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
-            {loadCursor && <AnimatedCursor color="253, 187, 45" innerSize={10} outerSize={10} outerScale={4.2} />}
             <div className={!isNavOpen ? 'mobileNavSection' : 'mobileNavSection addNegativeIndex'}>
                 {store.getState().auth.isAuthenticated && (
                     <div className="mobileNavAdminMenu">

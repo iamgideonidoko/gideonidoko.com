@@ -1186,6 +1186,11 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.5.1.tgz#5f1b518ec5fa54437c0b7c4a821546c64fed6922"
   integrity sha512-6i/8UoL0P5y4leBIGzvkZdS85RDMG9y1ihZzmTZQ5LdHUYmZ7pKFoj8X0236s3lusPs1Fa5HTQUpwI+UfTcmeA==
 
+"@studio-freight/lenis@^1.0.25":
+  version "1.0.25"
+  resolved "https://registry.yarnpkg.com/@studio-freight/lenis/-/lenis-1.0.25.tgz#742fc219c2ca8284e2fd1995de7c050f462870e5"
+  integrity sha512-O/yBzy+SEMbp+x/isXm5CqFsGUbazwOKTGeMo5tZCHgTEUINxndttTI/90jgysXNRx0f+QDJBKaBTdx40KBF7w==
+
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-2.2.3.tgz#ee34985952ca21558ab0d952f00298ad2190c053"
@@ -2995,6 +3000,11 @@ graceful-fs@^4.1.6, graceful-fs@^4.2.0:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
   integrity sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==
 
+gsap@^3.12.2:
+  version "3.12.2"
+  resolved "https://registry.yarnpkg.com/gsap/-/gsap-3.12.2.tgz#6e88203eed360761cbf2a2cb3a8d702aa87f3f6d"
+  integrity sha512-EkYnpG8qHgYBFAwsgsGEqvT1WUidX0tt/ijepx7z8EUJHElykg91RvW1XbkT59T0gZzzszOpjQv7SE41XuIXyQ==
+
 has-bigints@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/has-bigints/-/has-bigints-1.0.1.tgz#64fe6acb020673e3b78db035a5af69aa9d07b113"
@@ -4249,12 +4259,10 @@ ranges-sort@^5.0.12:
   resolved "https://registry.yarnpkg.com/ranges-sort/-/ranges-sort-5.0.12.tgz#3f323e41dbf814ca6e3982042eeadcc53dadae34"
   integrity sha512-/tCfYzEFrdNc4bpyPrXeVubkZCpIABzwyZXVH/x2H+tXnZEs+A/yk6shQEaBa5QUN+zyMzW2bTVoNkwM0TWKSQ==
 
-react-animated-cursor@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/react-animated-cursor/-/react-animated-cursor-2.5.2.tgz#7d960034d25960ecfba3c3c5eb5b924514689dca"
-  integrity sha512-eIURDOrMENJ2LIggS6RZJ+P39/zVCF4AihDQNmyS+q973+ZqXP5k3yReub84JOpee1f7zHCoy+sYhsf3lxAQpQ==
-  dependencies:
-    prop-types "^15.8.1"
+react-animated-cursor@^2.10.1:
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/react-animated-cursor/-/react-animated-cursor-2.10.1.tgz#83ed56bcc70a3117fe0d20c993bf98a3018e2cc9"
+  integrity sha512-yT9HMLYXXl4uCJ+Y7rAl1VYZow9veFtLhx8tbOjmNBvielU5LEHmXWclZ72bKZ2M4FBHcdXEEcPsgSp5/FUOng==
 
 react-dom@^18.2.0:
   version "18.2.0"
