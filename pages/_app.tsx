@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import '../styles/globals.css';
+import 'splitting/dist/splitting.css';
+import 'splitting/dist/splitting-cells.css';
 import React, { Fragment, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { createWrapper } from 'next-redux-wrapper';
@@ -22,6 +24,8 @@ import { loadFirebase } from '../helper';
 import 'prismjs/themes/prism-tomorrow.css';
 // import Image from 'next/image';
 import Lenis from '@studio-freight/lenis';
+import Cursor from '../classes/Cursor';
+import ButtonCtrl from '../classes/ButtonCtrl';
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -105,6 +109,29 @@ function MyApp({ Component, pageProps }: AppProps) {
             requestAnimationFrame(scrollFn);
         };
         requestAnimationFrame(scrollFn); // Start the animation frame loop
+
+        const cursorElement = document.querySelector<SVGElement>('.cursor');
+        if (cursorElement) {
+            const cursor = new Cursor(cursorElement);
+
+            [...document.querySelectorAll('a'), ...document.querySelectorAll('.wl-word .char')].forEach((el) => {
+                el.addEventListener('mouseenter', () => cursor.emit('enter'));
+                el.addEventListener('mouseleave', () => cursor.emit('leave'));
+            });
+
+            setTimeout(() => {
+                [...document.querySelectorAll('.wl-word .char')].forEach((el) => {
+                    el.addEventListener('mouseenter', () => cursor.emit('enter'));
+                    el.addEventListener('mouseleave', () => cursor.emit('leave'));
+                });
+            }, 1000);
+
+            [...document.querySelectorAll<HTMLButtonElement>('.scroll-button')].forEach((el) => {
+                const button = new ButtonCtrl(el);
+                button.on('enter', () => cursor.emit('enter'));
+                button.on('leave', () => cursor.emit('leave'));
+            });
+        }
     }, []);
 
     useEffect(() => {
@@ -185,6 +212,21 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <Component {...pageProps} />
                 {shouldHaveFooter && <Footer />}
             </div>
+            <svg className="cursor" width="140" height="140" viewBox="0 0 140 140">
+                <defs>
+                    <filter id="filter-1" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
+                        <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="10" result="warp" />
+                        <feDisplacementMap
+                            xChannelSelector="R"
+                            yChannelSelector="G"
+                            scale="60"
+                            in="SourceGraphic"
+                            in2="warp"
+                        />
+                    </filter>
+                </defs>
+                <circle className="cursor__inner" cx="70" cy="70" r="60" />
+            </svg>
         </Fragment>
     );
 }

@@ -47,6 +47,7 @@
     "rodal": "^1.8.3",
     "simple-crypto-js": "^3.0.1",
     "simple-react-validator": "^1.6.1",
+    "splitting": "^1.0.6",
     "string-strip-html": "^9.1.6",
     "sweetalert": "^2.1.2",
     "uuid": "^8.3.2"
@@ -58,6 +59,7 @@
     "@types/markdown-it-container": "^2.0.5",
     "@types/nprogress": "^0.2.0",
     "@types/prismjs": "^1.26.0",
+    "@types/splitting": "^1.0.3",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",

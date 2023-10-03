@@ -7,20 +7,10 @@
 	/* border-bottom: 2px solid var(--bg-color-dark); */
 }
 
-.section1WrapperBg {
-	background: var(--bg-color-dark-2);
-	height: 50%;
-	position: absolute;
-	width: 100%;
-	bottom: 0;
-}
-
 
 .sectionOne {
 	width: 100%;
-	height: 100vh;
-	max-height: 85rem;
-	min-height: 46rem;
+	min-height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -29,68 +19,19 @@
 	padding: 2rem;
 }
 
-.sectionOneShape {
+.sectionScrollButtonWrapper {
+	position: absolute;
+	bottom: 10%;
+}
+
+
+.scrollText {
 	position: absolute;
 	z-index: 0;
-}
-
-.text1 {
-	bottom: 5rem;
-	left: -3.5rem;
-	transform: rotate(270deg) scale(0.9);
+	top: 20%;
+	left: 3%;
 	font-weight: 600;
 	opacity: var(--scrolldown-opacity);
-
-}
-
-.shape1 {
-	border: 1px solid transparent;
-	bottom: -2rem;
-	right: -2rem;
-	width: 15rem;
-	height: 15rem;
-	border-radius: 100%;
-	transform: scale(0.7);
-	background: var(--pri-blue-normal);
-	opacity: var(--s1-shape-op);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.shape1 div {
-	width: 15rem;
-	height: 15rem;
-	border-radius: 100%;
-	opacity: 0.2;
-	background: var(--pri-yellow-dark);
-	opacity: 0.6;
-	transform: translateX(-70%);
-}
-
-.shape2 {
-	border: 1px solid transparent;
-	top: -2rem;
-	left: -2rem;
-	width: 15rem;
-	height: 15rem;
-	border-radius: 100%;
-	transform: scale(0.7) rotate(90deg);
-	background: var(--pri-blue-normal);
-	opacity: var(--s1-shape-op);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.shape2 div {
-	width: 15rem;
-	height: 15rem;
-	border-radius: 100%;
-	opacity: 0.2;
-	background: var(--pri-yellow-dark);
-	opacity: 0.6;
-	transform: translateY(-70%);
 }
 
 .sectionOne h4 span {
@@ -98,23 +39,60 @@
 }
 
 .welcomeLine {
-	font-size: 9.5rem;
+	font-size: clamp(5rem, 8vw, 22rem);
 	text-align: center;
-	line-height: 10rem;
 	margin: 2rem 0;
-	font-family: var(--header-font) !important;
+	/* font-family: var(--header-font) !important; */
+	font-family: 'Space Grotesk' !important;
+	position: relative;
+	text-transform: lowercase;
+	line-height: 80%;
+	font-weight: 400;
+	letter-spacing: 0.1em;
+}
+
+.welcomeLine > span {
+	/* border: 1px solid red; */
+	display: block;
+}
+
+.welcomeLine > span:nth-child(1),
+.welcomeLine > span:nth-child(2),
+.welcomeLine > span:nth-child(3) {
 	position: relative;
 }
 
-.welcomeLine span {
-	/* border: 1px solid red; */
-	text-shadow: 0 0 80px rgb(192 219 255 / 75%), 0 0 32px rgb(65 120 255 / 24%);
+.welcomeLine > span:nth-child(2) {
+	font-style: italic !important;
+	transform: skew(-10deg)
+}
+
+.welcomeLine > span:nth-child(1):before {
+	position: absolute;
+	left: 0;
+	content: '<';
+	transform: translateX(50%);
+}
+
+.welcomeLine > span:nth-child(2):after {
+	position: absolute;
+	content: '•';
+	transform: translateY(-12%);
+}
+
+
+.welcomeLine > span:nth-child(3):after {
+	position: absolute;
+	content: '/>';
+	transform: translateX(-8%);
+	letter-spacing: -0.2em;
 }
 
 
 .welcomeLine2 {
 	font-family: inherit;
 	position: relative;
+	font-family: 'Space Grotesk' !important;
 }
 
 .homeSeparator1 {
@@ -592,25 +570,7 @@
 	}
 }
 
-@media screen and (max-width: 1011px) {
-	.welcomeLine {
-		font-size: 8.5rem;
-		line-height: 9rem;
-	}	
-}
-
-@media screen and (max-width: 960px) {
-	.welcomeLine {
-		font-size: 7.3rem;
-		line-height: 9rem;
-	}	
-}
-
 @media screen and (max-width: 835px) {
-	.welcomeLine {
-		font-size: 6.5rem;
-		line-height: 8rem;
-	}
 
 	.servicesWrapper ul {
 		grid-template-columns: 1fr 1fr;
@@ -652,26 +612,7 @@
 	}
 }
 
-@media screen and (max-width: 746px) {
-	.welcomeLine {
-		font-size: 6.1rem;
-		line-height: 8rem;
-	}
-	
-}
-
-@media screen and (max-width: 705px) {
-	.welcomeLine {
-		font-size: 5.7rem;
-		line-height: 8rem;
-	}
-	
-}
-
 @media screen and (max-width: 676px) {
-	.welcomeLine {
-		font-size: 5rem;
-	}
 
 	.projectTech {
 		flex-direction: row;
@@ -703,10 +644,6 @@
 
 @media screen and (max-width: 579px) {
 
-	.welcomeLine {
-		font-size: 4.5rem;
-	}
-
 	.projectStyleOne,
 	.projectStyleTwo {
 		flex-direction: column-reverse;
@@ -728,10 +665,6 @@
 }
 
 @media screen and (max-width: 533px) {
-	.welcomeLine {
-		font-size: 4rem;
-		line-height: 5rem;
-	}
 
 	.sectionThree h4 {
 		font-size: 1.6rem;
@@ -752,18 +685,7 @@
 
 }
 
-@media screen and (max-width: 476px) {
-	.welcomeLine {
-		font-size: 3.8rem;
-		line-height: 5rem;
-	}
-}
-
 @media screen and (max-width: 436px) {
-	.welcomeLine {
-		font-size: 3.2rem;
-		line-height: 5rem;
-	}
 
 	.projectSectionOne p {
 		font-size: 1.5rem;

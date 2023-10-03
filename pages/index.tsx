@@ -37,7 +37,6 @@ function Home({}) {
             />
             <main>
                 <div className={styles.section1Wrapper}>
-                    <div className={styles.section1WrapperBg}></div>
                     <SectionOne />
                 </div>
                 <SectionThree />

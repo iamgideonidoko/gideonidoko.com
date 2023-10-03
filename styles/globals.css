@@ -1,5 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Proza+Libre&family=Exo+2&family=Fira+Code&display=swap');
 
+@font-face {
+	font-family: 'Space Grotesk';
+	src: url('/assets/font/SpaceGrotesk-Bold.woff2') format('woff2'),
+			url('/assets/font/SpaceGrotesk-Bold.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Space Grotesk';
+	src: url('/assets/font/SpaceGrotesk-Medium.woff2') format('woff2'),
+			url('/assets/font/SpaceGrotesk-Medium.woff') format('woff');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Space Grotesk';
+	src: url('/assets/font/SpaceGrotesk-Light.woff2') format('woff2'),
+			url('/assets/font/SpaceGrotesk-Light.woff') format('woff');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Space Grotesk';
+	src: url('/assets/font/SpaceGrotesk-Regular.woff2') format('woff2'),
+			url('/assets/font/SpaceGrotesk-Regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Space Grotesk';
+	src: url('/assets/font/SpaceGrotesk-SemiBold.woff2') format('woff2'),
+			url('/assets/font/SpaceGrotesk-SemiBold.woff') format('woff');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+
 * {
 	padding: 0;
 	margin: 0;
@@ -15,14 +61,15 @@
 	--neutral-color-4: rgba(255, 255, 255, 0.1);
 	/* --bg-color: #252733; */
 	--bg-color: #000000;
+	/* --bg-color: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%); */
 	/* --bg-color-dark: #15171e; */
 	--bg-color-dark: #15171e;
 	/* --bg-color-dark-2: #20222c; */
 	--bg-color-dark-2: #0d0d0d;
-	--pri-blue-normal: #22C1C3;
+	--pri-neutral: #fff;
+	--pri-blue-normal: var(--pri-neutral);
 	--pri-blue-dark: #188b8d;
 	--pri-blue-light: #22c0c354;
-	--pri-neutral: #fff;
 	--pri-blue-dark-02: rgba(3, 88, 70, 0.2);
 	--pri-blue-light-02: rgba(34, 193, 195, 0.2);
 	--pri-blue-light-03: rgba(34, 193, 195, 0.1);
@@ -33,8 +80,8 @@
 	--pri-delete-color-01: rgba(255, 77, 77, 0.1);
 	--pri-delete-color-02: rgba(255, 77, 77, 0.2);
 	/*--code-elem-bg-color: #24292e;*/
-	--default-font: 'Proza Libre', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-	--header-font: 'Exo 2', var(--default-font);
+	--default-font: 'Space Grotesk', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	--header-font: 'Space Grotesk', var(--default-font);
 	--code-elem-bg-color: #121314;
 	--bg-from-sectionOne: #3A3D50;
 	--sectionOneBgColor: #43465c;
@@ -50,6 +97,17 @@
 	--btn-grad-img: linear-gradient(rgb(13, 14, 33), rgb(13, 14, 33)), radial-gradient(circle at left top, rgba(34, 193, 195), rgb(253, 187, 45));
 	--code-bg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='7rem' width='500px'><text x='0' y='28' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"Fira Code\", monospace'>100101010110011010100101010110100110110111</text><text x='0' y='56' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"Fira Code\", monospace'>010010110101001010101001101010101010100100</text><text x='0' y='84' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"Fira Code\", monospace'>011100011010110111010110101010100010101100</text><text x='0' y='112' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"Fira Code\", monospace'>010010101101010110101110011010100101010110</text></svg>");
 	--header-bg: rgba(3,3,3,.5);
+
+	font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+		/* Cursor styles */
+		--cursor-fill: none;
+		--cursor-stroke: var(--font-color);
+		--cursor-stroke-width: 3px;	
 }
 
 [data-theme="light"] {
@@ -206,6 +264,7 @@ body::-webkit-scrollbar-track {
 	margin: 0 auto;
 }
 
+
 .container-max-1248px {
 	max-width: 1248px;
 	margin: 0 auto;
@@ -213,6 +272,11 @@ body::-webkit-scrollbar-track {
 
 .container-max-1280px {
 	max-width: 1280px;
+	margin: 0 auto;
+}
+
+.container-full {
+	max-width: 100%;
 	margin: 0 auto;
 }
 
@@ -1190,4 +1254,122 @@ body::-webkit-scrollbar-track {
 	.mobile-nav-view {
 		transform: translateX(-90vw);
 	}
+}
+
+@media (any-pointer: fine) {
+	.cursor {
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: block;
+		pointer-events: none;
+		opacity: 0;
+		z-index: 99999;
+	}
+	.cursor__inner {
+		fill: var(--cursor-fill);
+		stroke: var(--cursor-stroke);
+		stroke-width: var(--cursor-stroke-width);
+	}
+}
+
+.wl-word .char {
+	display: inline-block;
+	-webkit-text-stroke: 0.015em var(--font-color);
+  -webkit-text-fill-color: transparent;
+}
+
+.wl-word .char:hover {
+	transform: scale(1.3);
+	transition: all 0.3s ease-out;
+	-webkit-text-fill-color: var(--font-color);
+}
+
+/* SCROLL BUTTON */
+
+
+.scroll-button {
+	--button-border-radius: 50%;
+	--button-bg: transparent;
+	--button-stroke-1: #5a5456;
+	--button-stroke-2: #5a5456;
+	--button-stroke-width: 1px;
+	--button-text: var(--font-color);
+	--button-bg-hover: transparent;
+	--button-stroke-hover-1: #31a290;
+	--button-stroke-hover-2: #31a290;
+	--button-stroke-width-hover: 1px;
+	--button-text-hover: var(--font-color);;
+	cursor: pointer;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	border: 0;
+	color: var(--button-text);
+	background: none;
+	width: 10rem;
+	height: 10rem;
+	padding: 0;
+	margin: 1rem;
+	font-family: inherit;
+	font-size: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.scroll-button:focus,
+.scroll-button--hover {
+	outline: none;
+	border-color: var(--button-stroke-hover);
+	color: var(--button-text-hover);
+	background: var(--button-bg-hover);
+}
+
+.scroll-button .button__deco {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-width: var(--button-stroke-width);
+	border-style: solid;
+	border-radius: var(--button-border-radius);
+}
+
+.scroll-button .button__deco--1 {
+	border-color: var(--button-stroke-1);
+}
+
+.scroll-button--hover .button__deco--1 {
+	border-color: var(--button-stroke-hover-1);
+}
+
+.scroll-button .button__deco--2 {
+	border-color: var(--button-stroke-2);
+}
+
+.scroll-button--hover .button__deco--2 {
+	border-color: var(--button-stroke-hover-2);
+}
+
+.scroll-button .button__text, 
+.scroll-button .button__text-inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+.scroll-button .button__text {
+	overflow: hidden;
+	display: inline-block;
+	transform: scale(1.5) !important;
+}
+
+.scroll-button .button__text__sectionone {
+	display: inline-block;
+	transform: scale(1.5) !important;
 }

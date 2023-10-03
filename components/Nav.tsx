@@ -12,7 +12,7 @@ const Nav = ({}) => {
                 </li>
                 <li className="get-in-touch-wrapper">
                     <div className="get-in-touch">
-                        <Link href="/contact">Get in touch</Link>
+                        <Link href="/contact">AVAILABLE FOR FREELANCE</Link>
                     </div>
                 </li>
             </ul>

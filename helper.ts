@@ -445,3 +445,46 @@ export const isValidURL = (url: string): boolean => {
     );
     return res !== null;
 };
+
+export const wrapElements = (elems: HTMLElement[], wrapType: keyof HTMLElementTagNameMap, wrapClass: string) => {
+    elems.forEach((word) => {
+        const wrapEl = document.createElement(wrapType);
+        (wrapEl.classList as unknown) = wrapClass;
+
+        // Get a reference to the parent
+        const parent = word.parentNode;
+
+        // Insert the wrapper before the word in the DOM tree
+        parent && parent.insertBefore(wrapEl, word);
+
+        // Move the word inside the wrapper
+        wrapEl.appendChild(word);
+    });
+};
+
+// Map number x from range [a, b] to [c, d]
+const map = (x: number, a: number, b: number, c: number, d: number) => ((x - a) * (d - c)) / (b - a) + c;
+
+// Linear interpolation
+const lerp = (a: number, b: number, n: number) => (1 - n) * a + n * b;
+
+const calcWinsize = () => {
+    return { width: window.innerWidth, height: window.innerHeight };
+};
+
+// Gets the mouse position
+const getMousePos = (e: MouseEvent) => {
+    return {
+        x: e.clientX,
+        y: e.clientY,
+    };
+};
+
+const distance = (x1: number, y1: number, x2: number, y2: number) => {
+    const a = x1 - x2;
+    const b = y1 - y2;
+
+    return Math.hypot(a, b);
+};
+
+export { map, lerp, calcWinsize, getMousePos, distance };

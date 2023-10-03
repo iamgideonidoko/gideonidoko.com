@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import ThemeSwitch from './ThemeSwitch';
-import FullscreenSwitch from './FullscreenSwitch';
+// import FullscreenSwitch from './FullscreenSwitch';
 import Nav from './Nav';
 import AdminMenu from './AdminMenu';
 import { useSelector } from 'react-redux';
@@ -39,7 +39,7 @@ const Header = ({
                         <i className={!isNavOpen ? 'neu-close-lg' : 'neu-hamburger-menu'}></i>
                     </button>
                 </div>
-                <FullscreenSwitch isNavOpen={isNavOpen} />
+                {/* <FullscreenSwitch isNavOpen={isNavOpen} /> */}
                 <ThemeSwitch isNavOpen={isNavOpen} />
                 <Nav />
                 {
