@@ -313,6 +313,7 @@
 	z-index: 1;
 	text-rendering: optimizeLegibility;
 	pointer-events: none;
+	mix-blend-mode: color-burn;
 }
 
 .sectionThree h3 {

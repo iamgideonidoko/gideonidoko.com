@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import Bounce from 'react-reveal/Bounce';
+/* eslint-disable @next/next/no-img-element */
+import React, { useState, useEffect, useMemo } from 'react';
 import Wobble from 'react-reveal/Wobble';
 import Link from 'next/link';
 import styles from '../../styles/Home.module.css';
 
-const SectionThree = () => {
-    const aboutInfo = [
-        "I'm a solution-driven Software Engineer",
-        'I focus more on web engineering',
-        'I also have a thing for mobile engineering',
-        'I love building positive solutions',
-        'I create technical contents',
-        "I've a liking to sharing knowledge",
-        "I'm interested in community engagement",
-        'I reside in Nigeria',
-        "I'm open to collaborations and gigs",
-    ];
+const ScrambledText = () => {
+    const aboutInfo = useMemo(
+        () => [
+            "I'm a solution-driven Software Engineer",
+            'I focus more on web engineering',
+            'I also have a thing for mobile engineering',
+            'I love building positive solutions',
+            'I create technical contents',
+            "I've a liking to sharing knowledge",
+            "I'm interested in community engagement",
+            'I reside in Nigeria',
+            "I'm open to collaborations and gigs",
+        ],
+        [],
+    );
 
     const [aboutText, setAboutText] = useState(null);
 
@@ -41,19 +44,34 @@ const SectionThree = () => {
                 }
             }
         }, 1000);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [aboutInfo]);
+
+    return <h4 className={styles.aboutText}>- {aboutText}.</h4>;
+};
+
+const SectionThree = () => {
+    console.log('rendered');
 
     return (
         <div className={styles.sectionThree}>
-            <div className="container-max-1248px">
+            <div className="container-full">
                 <div className={styles.sectionThreeBgTextWrap}>
                     <div className={styles.sectionThreeBgText}>G.I</div>
                 </div>
-                <Bounce left duration={1500}>
-                    <h3>Meet Gideon Idoko 👋🏽.</h3>
-                </Bounce>
-                <h4 className={styles.aboutText}>- {aboutText}.</h4>
+
+                <ScrambledText />
+
+                <div>
+                    <img src="/assets/img/Ifex.JPG" alt="Gideon Idoko" style={{ maxWidth: '100%' }} width={330} />
+                </div>
+
+                <div className="marquee">
+                    <div className="marquee__inner" aria-hidden="true">
+                        <span>Gideon Idoko -&nbsp;</span>
+                        <span>Gideon Idoko -&nbsp;</span>
+                        <span>Gideon Idoko -&nbsp;</span>
+                    </div>
+                </div>
                 <div className={styles.s3AboutLink}>
                     <Wobble duration={2000}>
                         <div>
