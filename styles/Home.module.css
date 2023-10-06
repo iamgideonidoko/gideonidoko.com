@@ -278,15 +278,19 @@
 	width: 100vw;
 	margin: 0 -2rem;
 	height: 15rem;
-	background-image: var(--waveBgImgUrl);
+	background-color: transparent;
+	background-image: var(--wave-top-Bg);
+	margin-bottom: -2.1rem;
+	background-repeat: repeat-x;
 }
 
 .waveBottom {
 	width: 100vw;
 	margin: 0 -2rem;
 	height: 15rem;
-	background-image: var(--waveBgImgUrl);
-	transform: scale(-1, -1);
+	background-image: var(--wave-bottom-Bg);
+	background-color: transparent;
+	background-repeat: repeat-x;
 }
 
 /*>>>>>>>SECTION THREE<<<<<<<*/

@@ -69,16 +69,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         NProgress.done();
     };
 
-    const handleScrollButtonEffect = () => {
-        if (cursorRef.current) {
-            [...document.querySelectorAll<HTMLButtonElement>('.scroll-button')].forEach((el) => {
-                const button = new ButtonCtrl(el);
-                button.on('enter', () => cursorRef.current?.emit('enter'));
-                button.on('leave', () => cursorRef.current?.emit('leave'));
-            });
-        }
-    };
-
     // EFFECTS
 
     useEffect(() => {
@@ -150,16 +140,19 @@ function MyApp({ Component, pageProps }: AppProps) {
                     el.addEventListener('mouseleave', () => cursorRef.current?.emit('leave'));
                 });
             }, 1000);
-        }
 
-        handleScrollButtonEffect();
-        window.addEventListener('resize', handleScrollButtonEffect);
+            [...document.querySelectorAll<HTMLButtonElement>('.scroll-button')].forEach((el) => {
+                console.log('element: ', el);
+                const button = new ButtonCtrl(el);
+                button.on('enter', () => cursorRef.current?.emit('enter'));
+                button.on('leave', () => cursorRef.current?.emit('leave'));
+            });
+        }
 
         return () => {
             router.events.off('routeChangeStart', handleRouteChangeStart);
             router.events.off('routeChangeComplete', handleRouteChangeComplete);
             router.events.off('routeChangeError', handleRouteChangeError);
-            window.removeEventListener('resize', handleScrollButtonEffect);
         };
     }, [router]);
 

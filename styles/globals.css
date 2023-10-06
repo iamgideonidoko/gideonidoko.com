@@ -53,8 +53,8 @@
 }
 
 :root {
-	--font-color: #e1e1ff;
-	--light-font-color: #e1e1ff;
+	--font-color: #fff8f8;
+	--light-font-color: #fff8f8;
 	--neutral-color-1: #fff;
 	--neutral-color-2: rgba(255, 255, 255, 0.7);
 	--neutral-color-3: rgba(255, 255, 255, 0.5);
@@ -88,7 +88,8 @@
 	--sectionOneBgColor: #43465c;
 	--scrolldown-opacity: 0.5;
 	--coverHoverEffect: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.1) 50%);
-	--waveBgImgUrl: url("/assets/img/top-wave-dark.svg");
+	--wave-top-Bg: url('data:image/svg+xml,<svg width="500" height="150" viewBox="0 0 500 150" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 28.9805C149.99 129 349.2 -70.9795 500 28.9805V129H0L0 28.9805Z" fill="%230D0D0D"/></svg>');
+	--wave-bottom-Bg: url('data:image/svg+xml,<svg width="500" height="150" viewBox="0 0 500 150" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M500 100.02C350.01 -0.000484467 150.8 199.98 0 100.02V-0.000488281L500 -0.000488281V100.02Z" fill="%230D0D0D"/></svg>');
 	--s1-shape-op: 0.1;
 	--codebox-bg: #0d0d0d;
 	--mobile-container-shadow: rgba(255, 255, 255, 0.1);
@@ -136,7 +137,8 @@
 	--pri-delete-color-01: rgba(199, 0, 0, 0.1);
 	--scrolldown-opacity: 0.8;
 	--pri-delete-color-02: rgba(199, 0, 0, 0.2);
-	--waveBgImgUrl: url("/assets/img/top-wave-light.svg");
+	--wave-top-Bg: url('data:image/svg+xml,<svg width="500" height="129" viewBox="0 0 500 129" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 28.9805C149.99 129 349.2 -70.9795 500 28.9805V129H0L0 28.9805Z" fill="%23EFEFEF"/></svg>');
+	--wave-bottom-Bg: url('data:image/svg+xml,<svg width="500" height="129" viewBox="0 0 500 129" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M500 100.02C350.01 -0.000484467 150.8 199.98 0 100.02V-0.000488281L500 -0.000488281V100.02Z" fill="%23EFEFEF"/></svg>');
 	--s1-shape-op: 0.1;
 	--codebox-bg: #1F2937;
 	--mobile-container-shadow: rgba(20, 18, 19, 0.44);
@@ -1464,6 +1466,7 @@ body::-webkit-scrollbar-track {
 	top: -100%;
 	width: 300%;
 	filter: var(--noise-bg-filter);
+	pointer-events: none;
 }
 
 @keyframes grain {
