@@ -56,12 +56,14 @@ const SectionThree = () => {
                 <h4 className={styles.aboutText}>- {aboutText}.</h4>
                 <div className={styles.s3AboutLink}>
                     <Wobble duration={2000}>
-                        <p className={styles.aboutSeeMore}>
-                            <span>
-                                <Link href="/about">See more about me.</Link>
-                            </span>{' '}
-                            <span></span>
-                        </p>
+                        <div>
+                            <Link
+                                href="/about"
+                                className={`animated-button animated-button--pallene__outline ${styles.aboutSeeMore}`}
+                            >
+                                See more about me.
+                            </Link>
+                        </div>
                     </Wobble>
                 </div>
             </div>

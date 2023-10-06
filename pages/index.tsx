@@ -39,6 +39,7 @@ function Home({}) {
                 <div className={styles.section1Wrapper}>
                     <SectionOne />
                 </div>
+                <div className="wobble-divider" />
                 <SectionThree />
                 <SectionTwo />
                 <div className={styles.waveTop}></div>

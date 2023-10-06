@@ -324,90 +324,11 @@
 	margin: 3rem 0 0;
 }
 
+
 .aboutSeeMore {
-	margin: 1rem 0;
-	position: relative;
-	display: inline-block;
-	transition: padding 0.2s ease-in-out;
-	-webkit-transition: padding 0.2s ease-in-out;
-	-moz-transition: padding 0.2s ease-in-out;
-	-ms-transition: padding 0.2s ease-in-out;
-	-o-transition: padding 0.2s ease-in-out;
-}
-
-.aboutSeeMore span:nth-child(1) {
-	display: inline-block;
-	z-index: 4;
-	position: relative;
-	transition: color 0.2s ease-in-out;
-	height: 100%;
-	width: 100%;
-}
-
-.aboutSeeMore span:nth-child(1) a {
-	display: inline-block;
-	height: 100%;
-	width: 100%;
-	padding: 1rem 0;
-	transition: all 0.2s ease-in-out;
-	
-}
-
-.aboutSeeMore span:nth-child(1) a {
 	padding: 1rem 2rem;
-	color: black;
 }
 
-.aboutSeeMore span:nth-child(1) {
-	color: #e1e1ff;
-}
-
-.aboutSeeMore span:nth-child(2) {
-	height: 100% !important;
-	width: 100%;
-	background-image: linear-gradient(to right, rgb(34, 193, 195), rgb(253, 187, 45));
-	border: 0;
-	border-radius: 10rem;
-	position: absolute;
-	display: inline-block;
-	bottom: 0;
-	left: 0;
-	z-index: 1;
-	transition: all 0.5s ease-in-out;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-ms-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-}
-
-.aboutSeeMore span:nth-child(2)::before {
-	content: "";
-	height: 100% !important;
-	width: 100%;
-	background-image: linear-gradient(to left, rgb(34, 193, 195), rgb(253, 187, 45));
-	border: 0;
-	border-radius: 10rem;
-	position: absolute;
-	display: inline-block;
-	bottom: 0;
-	left: 0;
-	z-index: 2;
-	transition: all 0.5s ease-in-out;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-ms-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	opacity: 0;
-}
-
-.aboutSeeMore:hover span:nth-child(2)::before {
-	opacity: 1 !important;
-}
-
-/* .aboutSeeMore span:nth-child(1):hover+span {
-	background-image: linear-gradient(to left, rgb(34, 193, 195), rgb(253, 187, 45));
-	width: 100%;
-} */
 
 .aboutText {
 	transition: all 0.2s ease-in-out;

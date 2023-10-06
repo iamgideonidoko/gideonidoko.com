@@ -145,14 +145,16 @@ const SectionTwo = () => {
                 </div>
                 <div className={styles.moreProjects}>
                     <Wobble duration={2000}>
-                        <p className={styles.aboutSeeMore}>
-                            <span>
-                                <a href="https://github.com/IamGideonIdoko" target="_blank" rel="noopener noreferrer">
-                                    View more projects.
-                                </a>
-                            </span>{' '}
-                            <span></span>
-                        </p>
+                        <div>
+                            <a
+                                href="https://github.com/IamGideonIdoko"
+                                className={`animated-button animated-button--pallene__outline ${styles.aboutSeeMore}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                View more projects.
+                            </a>
+                        </div>
                     </Wobble>
                 </div>
             </div>

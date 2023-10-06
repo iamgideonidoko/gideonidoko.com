@@ -83,12 +83,14 @@ const SectionFive = ({}) => {
 
                     <div>
                         <Wobble duration={2000}>
-                            <p className={styles.aboutSeeMore}>
-                                <span>
-                                    <Link href="/blog">Check out my blog.</Link>
-                                </span>{' '}
-                                <span></span>
-                            </p>
+                            <div>
+                                <Link
+                                    href="/blog"
+                                    className={`animated-button animated-button--pallene__outline ${styles.aboutSeeMore}`}
+                                >
+                                    Check out my blog.
+                                </Link>
+                            </div>
                         </Wobble>
                     </div>
                 </div>
