@@ -330,6 +330,7 @@ body::-webkit-scrollbar-track {
 	background-color: rgba(0, 0, 0, 0.25);
 	border-radius: 20px;
 	transition: all 0.3s;
+	transform: translateY(0.3rem);
   }
   
   .switch:after {
@@ -369,6 +370,12 @@ body::-webkit-scrollbar-track {
 	top: 0;
 	backdrop-filter: blur(8px) saturate(180%);
 	background: var(--header-bg);
+}
+
+.header > div:nth-child(2) {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 
@@ -543,6 +550,7 @@ body::-webkit-scrollbar-track {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto;
 	margin-right: 0rem;
+	align-items: center;
 }
 
 .admin-menu-initiator {
@@ -1086,7 +1094,7 @@ body::-webkit-scrollbar-track {
 		padding: 0 1.5rem;
 	}
 
-	.navOpen {
+	.navOpen, .get-in-touch-desktop {
 		display: none !important;
 	}
 

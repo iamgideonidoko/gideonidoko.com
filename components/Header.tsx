@@ -33,6 +33,10 @@ const Header = ({
                     <img src="/assets/img/GideonIdokoDevLogo.png" className="site-logo" alt="Gideon Idoko" />
                 </Link>
             </div>
+            <div>
+                <ThemeSwitch isNavOpen={isNavOpen} />
+                <Nav />
+            </div>
             <div className="nav-adminmenu-wrap">
                 <div>
                     <button onClick={handleNavMenuBtnClick} className="nav-menu-btn">
@@ -40,8 +44,9 @@ const Header = ({
                     </button>
                 </div>
                 {/* <FullscreenSwitch isNavOpen={isNavOpen} /> */}
-                <ThemeSwitch isNavOpen={isNavOpen} />
-                <Nav />
+                <div className="get-in-touch get-in-touch-desktop">
+                    <Link href="/contact">AVAILABLE FOR FREELANCE</Link>
+                </div>
                 {
                     //if user is authenticated, show the admin menu
                     auth.isAuthenticated && (

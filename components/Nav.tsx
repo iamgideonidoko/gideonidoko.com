@@ -10,11 +10,6 @@ const Nav = ({}) => {
                 <li>
                     <Link href="/about">About</Link>
                 </li>
-                <li className="get-in-touch-wrapper">
-                    <div className="get-in-touch">
-                        <Link href="/contact">AVAILABLE FOR FREELANCE</Link>
-                    </div>
-                </li>
             </ul>
         </nav>
     );
