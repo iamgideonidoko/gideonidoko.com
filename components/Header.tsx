@@ -44,9 +44,12 @@ const Header = ({
                     </button>
                 </div>
                 {/* <FullscreenSwitch isNavOpen={isNavOpen} /> */}
-                <div className="get-in-touch get-in-touch-desktop">
-                    <Link href="/contact">AVAILABLE FOR FREELANCE</Link>
+                <div className="get-in-touch-desktop">
+                    <Link href="/contact" className="animated-button animated-button--pallene__outline">
+                        AVAILABLE FOR FREELANCE
+                    </Link>
                 </div>
+
                 {
                     //if user is authenticated, show the admin menu
                     auth.isAuthenticated && (

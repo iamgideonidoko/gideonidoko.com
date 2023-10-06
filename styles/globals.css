@@ -379,14 +379,20 @@ body::-webkit-scrollbar-track {
 	z-index: 10;
 	left: 0;
 	top: 0;
-	backdrop-filter: blur(8px) saturate(180%);
-	background: var(--header-bg);
+	/* backdrop-filter: blur(8px) saturate(180%); */
+	/* background: var(--header-bg); */
 }
 
 .header > div:nth-child(2) {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.get-in-touch-desktop a {
+	backdrop-filter: blur(8px) saturate(180%);
+	background: var(--header-bg) !important;
+	padding: 0.2rem 1.6rem;
 }
 
 
@@ -422,17 +428,9 @@ body::-webkit-scrollbar-track {
 }
 
 .main-nav ul li:not(.get-in-touch-wrapper) a {
-	padding: 1rem 1.5rem;
-	border-radius: 0.8rem;
-	font-size: 1.7rem;
-	font-weight: 600;
-	transition: all 0.1s ease-in;
+	padding: 0.2rem 1.5rem;
 }
 
-.main-nav ul li:not(.get-in-touch-wrapper) a:hover {
-	/*background: rgba(0, 0, 0, 0.1);*/
-	background: var(--pri-blue-light-02);
-}
 
 
 /* .get-in-touch a {
@@ -450,39 +448,6 @@ body::-webkit-scrollbar-track {
 .get-in-touch-wrapper {
 	list-style: none;
 }
-
-/* .get-in-touch {
-	color: #0000;
-	text-shadow:
-		0 0 0 var(--font-color),
-		0 70px 0 #fff;
-	box-shadow: 0 70px 0 var(--pri-blue-normal);
-	-webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-	clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-	background: linear-gradient(var(--pri-blue-normal) 0 0) 0 70px no-repeat;
-	transition: 0.4s, -webkit-clip-path 0s;
-	transition: 0.4s, clip-path 0s;
-	transition: 0.4s, clip-path 0s, -webkit-clip-path 0s;
-	border-radius: 10px;
-	display: inline-block !important;
-	font-size: 1.7rem;
-	font-family: inherit;
-	font-weight: 600;
-	cursor: pointer;
-}
-
-.get-in-touch:hover {
-	text-shadow:
-		0 -70px 0 green,
-		0 0 0 white;
-	box-shadow: 0 0 0 var(--pri-blue-normal);
-	background-position: 0 0;
-	-webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% + 70px), 0 calc(100% + 70px));
-	clip-path: polygon(0 0, 100% 0, 100% calc(100% + 70px), 0 calc(100% + 70px));
-	transition: 0.4s 0.4s, -webkit-clip-path 0.4s;
-	transition: 0.4s 0.4s, clip-path 0.4s;
-	transition: 0.4s 0.4s, clip-path 0.4s, -webkit-clip-path 0.4s;
-} */
 
 .get-in-touch {
 	border-radius: 10px;
@@ -1438,6 +1403,21 @@ body::-webkit-scrollbar-track {
 	color: var(--pri-neutral-inverse);
 }
 
+.animated-button--pallene__outlineless {
+	box-shadow: inset 0 0 0 0px var(--pri-neutral);
+	transition: border-radius 0.3s, box-shadow 0.3s, color 0.3s, border-color 0.3s;
+	transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+	border: 0px solid var(--pri-neutral);
+	color: var(--font-color);
+}
+
+.animated-button--pallene__outlineless:hover {
+	transition-delay: 0s, 0s, 0.1s;
+	box-shadow: inset 0 0 0 40px var(--pri-neutral);
+	border: 0px solid transparent;
+	color: var(--pri-neutral-inverse);
+}
+
 /* DIVIDER */
 .wobble-divider {
 	background-image: var(--wobbly-divider-bg);
@@ -1495,7 +1475,7 @@ body::-webkit-scrollbar-track {
 	--move-initial: calc(-5vw);
 	--move-final: calc(-117.5vw);
 	--item-font-size: 15vw;
-	--animation-duration: 5s;
+	--animation-duration: 15s;
 	position: relative;
 	width: var(--marquee-width);
 	margin: 0 -2rem;
