@@ -1,7 +1,6 @@
 /* SECTION ONE */
 .section1Wrapper {
 	margin: 0 -2rem;
-	background-color: var(--bg-color);
 	position: relative;
 	/* background-image: var(--sectionOneBgImgUrl); */
 	/* border-bottom: 2px solid var(--bg-color-dark); */
@@ -39,7 +38,7 @@
 }
 
 .welcomeLine {
-	font-size: clamp(5rem, 8vw, 22rem);
+	font-size: clamp(3.2rem, 8vw, 22rem);
 	text-align: center;
 	margin: 2rem 0;
 	/* font-family: var(--header-font) !important; */
@@ -47,7 +46,7 @@
 	position: relative;
 	text-transform: lowercase;
 	line-height: 80%;
-	font-weight: 400;
+	font-weight: 900;
 	letter-spacing: 0.1em;
 }
 
@@ -93,6 +92,7 @@
 	font-family: inherit;
 	position: relative;
 	font-family: 'Space Grotesk' !important;
+	font-weight: bold;
 }
 
 .homeSeparator1 {

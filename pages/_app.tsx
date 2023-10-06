@@ -69,6 +69,16 @@ function MyApp({ Component, pageProps }: AppProps) {
         NProgress.done();
     };
 
+    const handleScrollButtonEffect = () => {
+        if (cursorRef.current) {
+            [...document.querySelectorAll<HTMLButtonElement>('.scroll-button')].forEach((el) => {
+                const button = new ButtonCtrl(el);
+                button.on('enter', () => cursorRef.current?.emit('enter'));
+                button.on('leave', () => cursorRef.current?.emit('leave'));
+            });
+        }
+    };
+
     // EFFECTS
 
     useEffect(() => {
@@ -140,18 +150,16 @@ function MyApp({ Component, pageProps }: AppProps) {
                     el.addEventListener('mouseleave', () => cursorRef.current?.emit('leave'));
                 });
             }, 1000);
-
-            [...document.querySelectorAll<HTMLButtonElement>('.scroll-button')].forEach((el) => {
-                const button = new ButtonCtrl(el);
-                button.on('enter', () => cursorRef.current?.emit('enter'));
-                button.on('leave', () => cursorRef.current?.emit('leave'));
-            });
         }
+
+        handleScrollButtonEffect();
+        window.addEventListener('resize', handleScrollButtonEffect);
 
         return () => {
             router.events.off('routeChangeStart', handleRouteChangeStart);
             router.events.off('routeChangeComplete', handleRouteChangeComplete);
             router.events.off('routeChangeError', handleRouteChangeError);
+            window.removeEventListener('resize', handleScrollButtonEffect);
         };
     }, [router]);
 
@@ -213,6 +221,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </nav>
             </div>
             <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
+                <div className="noise-bg">backgroud</div>
                 {shouldHaveHeader && (
                     <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} contentScrollPos={contentScrollPos} />
                 )}

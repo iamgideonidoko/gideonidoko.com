@@ -112,6 +112,9 @@
 
 	/* DIVIDER */
 	--wobbly-divider-bg: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' id='wobble-svg' viewBox='-18 17.5 20 5'%3e%3cpath class='line' fill='none' stroke='%23fff' stroke-width='1' d='M-18 21.5c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3'/%3e%3cstyle type='text/css'%3e .line %7b animation: shift 3s linear infinite;%7d %40keyframes shift %7b from %7b transform: translateX(-20px);%7d to %7b transform: translateX(0);%7d %7d %3c/style%3e%3c/svg%3e");
+
+	/* NOISE BG */
+	--noise-bg-filter: invert(100%);
 }
 
 [data-theme="light"] {
@@ -144,6 +147,7 @@
 	--code-bg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='7rem' width='500px'><text x='0' y='28' fill='%23f5f5f5' class='love' font-size='1.5rem' font-family='\"Fira Code\", monospace'>100101010110011010100101010110100110110111</text><text x='0' y='56' fill='%23f6f6f6' font-size='1.5rem' font-family='\"Fira Code\", monospace'>010010110101001010101001101010101010100100</text><text x='0' y='84' fill='%23f7f7f7' font-size='1.5rem' font-family='\"Fira Code\", monospace'>011100011010110111010110101010100010101100</text><text x='0' y='112' fill='%23f6f6f6' font-size='1.5rem' font-family='\"Fira Code\", monospace'>010010101101010110101110011010100101010110</text></svg>");
 	--header-bg: rgba(252,252,252,.5);
 	--wobbly-divider-bg: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' id='wobble-svg' viewBox='-18 17.5 20 5'%3e%3cpath class='line' fill='none' stroke='%23000' stroke-width='1' d='M-18 21.5c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3'/%3e%3cstyle type='text/css'%3e .line %7b animation: shift 3s linear infinite;%7d %40keyframes shift %7b from %7b transform: translateX(-20px);%7d to %7b transform: translateX(0);%7d %7d %3c/style%3e%3c/svg%3e");
+	--noise-bg-filter: invert(0%);
 }
 
 html {
@@ -249,6 +253,7 @@ body::-webkit-scrollbar-track {
 	padding: 0 2rem;
 	transition: all 0.2s ease-in-out;
 	background: var(--bg-color);
+	position: relative;
 	/* background-image: var(--code-bg); */
 }
 
@@ -1406,28 +1411,28 @@ body::-webkit-scrollbar-track {
 	color: var(--pri-neutral-inverse);
 	transition: border-radius 0.3s, box-shadow 0.3s, color 0.3s, border-color 0.3s;;
 	transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
-	border: 2px solid transparent;
+	border: 1px solid transparent;
 }
 
 .animated-button--pallene__solid:hover {
 	box-shadow: inset 0 0 0 0px var(--pri-neutral);
 	transition-delay: 0s, 0s, 0.1s;
 	color: var(--font-color);
-	border: 2px solid var(--pri-neutral);
+	border: 1px solid var(--pri-neutral);
 }
 
 .animated-button--pallene__outline {
 	box-shadow: inset 0 0 0 0px var(--pri-neutral);
 	transition: border-radius 0.3s, box-shadow 0.3s, color 0.3s, border-color 0.3s;
 	transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
-	border: 2px solid var(--pri-neutral);
+	border: 1px solid var(--pri-neutral);
 	color: var(--font-color);
 }
 
 .animated-button--pallene__outline:hover {
 	transition-delay: 0s, 0s, 0.1s;
 	box-shadow: inset 0 0 0 40px var(--pri-neutral);
-	border: 2px solid transparent;
+	border: 1px solid transparent;
 	color: var(--pri-neutral-inverse);
 }
 
@@ -1439,4 +1444,37 @@ body::-webkit-scrollbar-track {
 	width: 100%;
 	height: 10px;
 	background-repeat: repeat-x;
+}
+
+/* NOISE BACKGROUND */
+.noise-bg {
+	/* background-color: red; */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	animation: grain 8s steps(10) infinite;
+	background-image: url(/assets/img/noise.png);
+	content: '';
+	height: 300%;
+	left: -50%;
+	opacity: 0.6;
+	position: fixed;
+	top: -100%;
+	width: 300%;
+	filter: var(--noise-bg-filter);
+}
+
+@keyframes grain {
+  0%, 100% { transform:translate(0, 0); }
+  10% { transform:translate(-5%, -10%); }
+  20% { transform:translate(-15%, 5%); }
+  30% { transform:translate(7%, -25%); }
+  40% { transform:translate(-5%, 25%); }
+  50% { transform:translate(-15%, 10%); }
+  60% { transform:translate(15%, 0%); }
+  70% { transform:translate(0%, 15%); }
+  80% { transform:translate(3%, 35%); }
+  90% { transform:translate(-10%, 10%); }
 }

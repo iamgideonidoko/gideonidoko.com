@@ -109,13 +109,10 @@ export default class ButtonCtrl extends EventEmitter {
         this.state.hover = true;
 
         this.DOM.el.classList.add('button--hover');
-        document.body.classList.add('active');
-
-        gsap.killTweensOf(document.body);
         gsap.killTweensOf(this.DOM.textinner!);
 
         gsap.timeline()
-            .to(document.body, 0.2, { backgroundColor: '#000' })
+            // .to(document.body, 0.2, { backgroundColor: '#000' })
             .to(
                 this.DOM.textinner!,
                 0.1,
@@ -138,9 +135,6 @@ export default class ButtonCtrl extends EventEmitter {
         this.state.hover = false;
 
         this.DOM.el.classList.remove('button--hover');
-        document.body.classList.remove('active');
-
-        gsap.killTweensOf(document.body);
         gsap.killTweensOf(this.DOM.textinner!);
 
         gsap.timeline()

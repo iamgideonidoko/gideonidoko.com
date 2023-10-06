@@ -27,7 +27,7 @@ const SectionOne = () => {
                 </button>
             </div>
             <div className={`${styles.scrollText}`}>
-                SCROLL DOWN <i className="neu-down-lg"></i>
+                scroll down <i className="neu-down-lg"></i>
             </div>
 
             <div>
