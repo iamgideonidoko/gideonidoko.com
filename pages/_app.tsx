@@ -53,12 +53,23 @@ function MyApp({ Component, pageProps }: AppProps) {
     const shouldHaveHeader = pageWithoutHeader.indexOf(router.pathname) === -1;
     const shouldHaveFooter = pageWithoutFooter.indexOf(router.pathname) === -1;
 
-    // useEffect(() => {
-    //     router.beforePopState((state) => {
-    //         state.options.scroll = false;
-    //         return true;
-    //     });
-    // }, [router]);
+    // REFS
+    const cursorRef = useRef<Cursor | null>(null);
+
+    // HANDLERS
+    const handleRouteChangeStart = () => {
+        NProgress.start();
+    };
+
+    const handleRouteChangeComplete = () => {
+        NProgress.done();
+    };
+
+    const handleRouteChangeError = () => {
+        NProgress.done();
+    };
+
+    // EFFECTS
 
     useEffect(() => {
         const mainWrapper = window.document.querySelector('.main-wrapper') as HTMLDivElement;
@@ -68,26 +79,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             mainWrapper?.scrollTo(0, contentScrollPos.current);
         }
     }, [isNavOpen]);
-
-    useEffect(() => {
-        NProgress.configure({ showSpinner: false });
-        const handleStart = () => {
-            NProgress.start();
-        };
-        const handleStop = () => {
-            NProgress.done();
-        };
-
-        router.events.on('routeChangeStart', handleStart);
-        router.events.on('routeChangeComplete', handleStop);
-        router.events.on('routeChangeError', handleStop);
-
-        return () => {
-            router.events.off('routeChangeStart', handleStart);
-            router.events.off('routeChangeComplete', handleStop);
-            router.events.off('routeChangeError', handleStop);
-        };
-    }, [router]);
 
     useEffect(() => {
         // check for token and refresh on page load
@@ -112,29 +103,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         const cursorElement = document.querySelector<SVGElement>('.cursor');
         if (cursorElement) {
-            const cursor = new Cursor(cursorElement);
-
-            [...document.querySelectorAll('a'), ...document.querySelectorAll('.wl-word .char')].forEach((el) => {
-                el.addEventListener('mouseenter', () => cursor.emit('enter'));
-                el.addEventListener('mouseleave', () => cursor.emit('leave'));
-            });
-
-            setTimeout(() => {
-                [...document.querySelectorAll('.wl-word .char')].forEach((el) => {
-                    el.addEventListener('mouseenter', () => cursor.emit('enter'));
-                    el.addEventListener('mouseleave', () => cursor.emit('leave'));
-                });
-            }, 1000);
-
-            [...document.querySelectorAll<HTMLButtonElement>('.scroll-button')].forEach((el) => {
-                const button = new ButtonCtrl(el);
-                button.on('enter', () => cursor.emit('enter'));
-                button.on('leave', () => cursor.emit('leave'));
-            });
+            cursorRef.current = new Cursor(cursorElement);
         }
-    }, []);
 
-    useEffect(() => {
+        // ANALYTICS
         if (typeof window !== 'undefined') {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).dataLayer = (window as any).dataLayer || [];
@@ -147,6 +119,41 @@ function MyApp({ Component, pageProps }: AppProps) {
             gtag('config', 'G-QJ2RYXMK6E');
         }
     }, []);
+
+    useEffect(() => {
+        NProgress.configure({ showSpinner: false });
+
+        router.events.on('routeChangeStart', handleRouteChangeStart);
+        router.events.on('routeChangeComplete', handleRouteChangeComplete);
+        router.events.on('routeChangeError', handleRouteChangeError);
+
+        // Register when route changes
+        if (cursorRef.current) {
+            [...document.querySelectorAll('a'), ...document.querySelectorAll('.wl-word .char')].forEach((el) => {
+                el.addEventListener('mouseenter', () => cursorRef.current?.emit('enter'));
+                el.addEventListener('mouseleave', () => cursorRef.current?.emit('leave'));
+            });
+
+            setTimeout(() => {
+                [...document.querySelectorAll('.wl-word .char')].forEach((el) => {
+                    el.addEventListener('mouseenter', () => cursorRef.current?.emit('enter'));
+                    el.addEventListener('mouseleave', () => cursorRef.current?.emit('leave'));
+                });
+            }, 1000);
+
+            [...document.querySelectorAll<HTMLButtonElement>('.scroll-button')].forEach((el) => {
+                const button = new ButtonCtrl(el);
+                button.on('enter', () => cursorRef.current?.emit('enter'));
+                button.on('leave', () => cursorRef.current?.emit('leave'));
+            });
+        }
+
+        return () => {
+            router.events.off('routeChangeStart', handleRouteChangeStart);
+            router.events.off('routeChangeComplete', handleRouteChangeComplete);
+            router.events.off('routeChangeError', handleRouteChangeError);
+        };
+    }, [router]);
 
     return (
         <Fragment>
