@@ -67,6 +67,7 @@
 	/* --bg-color-dark-2: #20222c; */
 	--bg-color-dark-2: #0d0d0d;
 	--pri-neutral: #fff;
+	--pri-neutral-inverse: #000;
 	--pri-blue-normal: var(--pri-neutral);
 	--pri-blue-dark: #188b8d;
 	--pri-blue-light: #22c0c354;
@@ -117,6 +118,7 @@
 	--bg-color-dark: #ccc;
 	--bg-color-dark-2: #EFEFEF;
 	--pri-neutral: #000;
+	--pri-neutral-inverse: #fff;
 	--neutral-color-1: black;
 	--neutral-color-2: rgba(0, 0, 0, 0.5);
 	--neutral-color-3: rgba(0, 0, 0, 0.4);
@@ -190,13 +192,8 @@ iframe {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: var(--pri-blue-normal);
+	background: var(--pri-neutral);
 	border-radius: 1rem;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-	background: var(--pri-yellow-dark);
 }
 
 /* width */
@@ -208,34 +205,26 @@ iframe {
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background: #f1f1f1;
+	background: var(--pri-neutral-inverse);
 	border-radius: 1rem;
 }
 
 /* Handle */
 body::-webkit-scrollbar-thumb {
-	/* background: var(--pri-blue-normal) !important; */
+	background: var(--pri-neutral) !important;
 	border-radius: 1rem;
-	background: rgb(34,193,195) !important;
-	background: linear-gradient(90deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%) !important;
-}
-
-/* Handle on hover */
-body::-webkit-scrollbar-thumb:hover {
-	background: var(--pri-yellow-dark) !important;
-	background: linear-gradient(270deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%) !important;
 }
 
 /* width */
 body::-webkit-scrollbar {
-	width: 1.1rem !important;
+	width: 0.5rem !important;
 	height: 0.8rem !important;
 	opacity: 0.7;
 }
 
 /* Track */
 body::-webkit-scrollbar-track {
-	background: transparent !important;
+	background: var(--pri-neutral-inverse) !important;
 	border-radius: 1rem;
 }
 
@@ -804,19 +793,14 @@ body::-webkit-scrollbar-track {
 
 /* Track */
 .postBodyPreCode::-webkit-scrollbar-track {
-	background: #f1f1f1;
+	background: #2D2D2D;
 	border-radius: 1rem;
 }
 
 /* Handle */
 .postBodyPreCode::-webkit-scrollbar-thumb {
-	background: var(--pri-blue-normal);
+	background: #fff;
 	border-radius: 1rem;
-}
-
-/* Handle on hover */
-.postBodyPreCode::-webkit-scrollbar-thumb:hover {
-	background: var(--pri-yellow-dark);
 }
 
 .postBodyPreCode code {
