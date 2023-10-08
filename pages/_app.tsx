@@ -92,7 +92,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             smoothWheel: true,
         });
 
-        lenis.on('scroll', () => {
+        lenis.on('scroll', (e) => {
+            console.log('LENIS SCROLLING: ', e);
             //
         });
         const scrollFn = (time: number) => {

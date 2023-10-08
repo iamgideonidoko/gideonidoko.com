@@ -11,3 +11,8 @@ declare interface Window {
     isFirebaseInitialized: boolean;
     Scrambler: typeof Scrambler;
 }
+
+declare module '*.glsl' {
+    const file: string;
+    export default file;
+}

@@ -11,6 +11,7 @@ import { PreloadedState } from 'redux';
 import { logoutUser, updateTokens } from './store/slice/auth.slice';
 import { decode as htmlDecode } from 'html-entities';
 import DOMPurify from 'isomorphic-dompurify';
+import * as THREE from 'three';
 
 const simpleCrypto = new SimpleCrypto(config.reduxStoreSecretKey);
 
@@ -485,6 +486,57 @@ const distance = (x1: number, y1: number, x2: number, y2: number) => {
     const b = y1 - y2;
 
     return Math.hypot(a, b);
+};
+
+export const clamp = (val: number, min = 0, max = 1) => Math.max(min, Math.min(max, val));
+
+export const getRatio = (
+    { x: w, y: h }: Record<'x' | 'y', number>,
+    { width, height }: Record<'width' | 'height', number>,
+    r = 0,
+) => {
+    const m = multiplyMatrixAndPoint(rotateMatrix(THREE.MathUtils.degToRad(r)), [w, h]);
+    const originalRatio = {
+        w: m[0] / width,
+        h: m[1] / height,
+    };
+
+    const coverRatio = 1 / Math.max(originalRatio.w, originalRatio.h);
+
+    return new THREE.Vector2(originalRatio.w * coverRatio, originalRatio.h * coverRatio);
+};
+
+const rotateMatrix = (a: number) => [Math.cos(a), -Math.sin(a), Math.sin(a), Math.cos(a)];
+
+const multiplyMatrixAndPoint = (matrix: number[], point: number[]) => {
+    const c0r0 = matrix[0];
+    const c1r0 = matrix[1];
+    const c0r1 = matrix[2];
+    const c1r1 = matrix[3];
+    const x = point[0];
+    const y = point[1];
+    return [Math.abs(x * c0r0 + y * c0r1), Math.abs(x * c1r0 + y * c1r1)];
+};
+
+export const wrap = (el: HTMLElement, wrapper: HTMLElement) => {
+    if (el.parentNode) {
+        el.parentNode.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
+    }
+};
+
+export const unwrap = (content: HTMLElement[]) => {
+    for (let i = 0; i < content.length; i++) {
+        const el = content[i];
+        const parent = el.parentNode as HTMLElement;
+
+        if (parent && parent.parentNode) parent.outerHTML = el.innerHTML;
+    }
+};
+
+export const ev = (eventName: string, data: unknown) => {
+    const e = new CustomEvent(eventName, { detail: data });
+    document.dispatchEvent(e);
 };
 
 export { map, lerp, calcWinsize, getMousePos, distance };
