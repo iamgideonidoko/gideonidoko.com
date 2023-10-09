@@ -83,7 +83,7 @@ export default class Canvas {
         }
         if (this.renderer) {
             this.renderer.setSize(this.W, this.H);
-            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
         }
     }
 
