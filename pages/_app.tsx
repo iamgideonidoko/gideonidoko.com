@@ -26,6 +26,7 @@ import 'prismjs/themes/prism-tomorrow.css';
 import Lenis from '@studio-freight/lenis';
 import Cursor from '../classes/Cursor';
 import ButtonCtrl from '../classes/ButtonCtrl';
+import Canvas from '../classes/Canvas';
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -55,6 +56,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     // REFS
     const cursorRef = useRef<Cursor | null>(null);
+    const canvasRef = useRef<Canvas | null>(null);
 
     // HANDLERS
     const handleRouteChangeStart = () => {
@@ -92,9 +94,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             smoothWheel: true,
         });
 
+        window.lenis = lenis;
+
         lenis.on('scroll', (e) => {
-            console.log('LENIS SCROLLING: ', e);
             //
+            console.log('LENIS EVENT: ', e);
         });
         const scrollFn = (time: number) => {
             lenis.raf(time); // Runs lenis' requestAnimationFrame method
@@ -105,6 +109,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         const cursorElement = document.querySelector<SVGElement>('.cursor');
         if (cursorElement) {
             cursorRef.current = new Cursor(cursorElement);
+        }
+        const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
+        console.log('canvasElement: ', canvasElement);
+        if (canvasElement) {
+            canvasRef.current = new Canvas(canvasElement);
         }
 
         // ANALYTICS
@@ -215,6 +224,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </nav>
             </div>
             <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
+                <canvas id="canvas" />
                 <div className="noise-bg">backgroud</div>
                 {shouldHaveHeader && (
                     <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} contentScrollPos={contentScrollPos} />

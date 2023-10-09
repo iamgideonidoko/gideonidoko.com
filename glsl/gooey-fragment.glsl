@@ -1,4 +1,4 @@
-#pragma glslify: snoise3 = require('glsl-noise/simplex/3d')
+#pragma glslify: cnoise3 = require('glsl-noise/classic/3d')
 
 uniform sampler2D u_map;
 uniform sampler2D u_hovermap;
@@ -47,8 +47,8 @@ void main() {
 
   float offX = uv.x + sin(uv.y + time * 2.);
   float offY = uv.y - time * .2 - cos(time * 2.) * 0.1;
-  float nc = (snoise3(vec3(offX, offY, time * .5) * 8.)) * progressHover;
-  float nh = (snoise3(vec3(offX, offY, time * .5 ) * 2.)) * .1;
+  float nc = (cnoise3(vec3(offX, offY, time * .5) * 8.)) * progressHover;
+  float nh = (cnoise3(vec3(offX, offY, time * .5 ) * 2.)) * .1;
 
   c2 = smoothstep(.1, .8, c2 * 5. + nc * 3. - 1.);
 
@@ -75,4 +75,5 @@ void main() {
   image = mix(image, hover, clamp(c2 + progress, 0., 1.));
 
   gl_FragColor = vec4(image.rgb, u_alpha * finalMask);
+  // gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
 }

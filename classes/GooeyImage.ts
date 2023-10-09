@@ -1,10 +1,16 @@
 import * as THREE from 'three';
 import { gsap, Power2, Power3, Expo } from 'gsap';
 import vertexShader from '../glsl/vertex.glsl';
+import gooeyFragmentShader from '../glsl/gooey-fragment.glsl';
 
 import { getRatio } from '../helper';
 
 type UniformType = 'f' | 'i' | 'v2' | 'v3' | 'v4' | 'm3' | 'm4' | 't' | 'sampler2D' | 'sampleCube';
+
+type LenisScrollEvent = {
+    animatedScroll: number;
+    dimensions: Record<'height' | 'width' | 'scrollHeight' | 'scrollWidth', number>;
+};
 
 export default class GooeyImage {
     private elements: Record<'body' | 'el', HTMLElement>;
@@ -35,11 +41,14 @@ export default class GooeyImage {
         u_time: THREE.IUniform<number>;
         u_res: THREE.IUniform<THREE.Vector2>;
     };
-    public mesh?: THREE.Mesh;
+    private mesh?: THREE.Mesh;
     private geometry?: THREE.PlaneGeometry;
     private material?: THREE.ShaderMaterial;
-    constructor(element: HTMLElement, duration: number, fragmentShader: string) {
-        // this.scene = scene;
+    private onInitImageSuccess?: (mesh: THREE.Mesh) => void;
+    private scroll: number;
+    private prevScroll: number;
+    private delta = 0;
+    constructor(element: HTMLElement, duration: number, onInitImageSuccess: (mesh: THREE.Mesh) => void) {
         this.elements = {
             body: document.body,
             el: element,
@@ -56,7 +65,7 @@ export default class GooeyImage {
         this.offset = new THREE.Vector2(0, 0);
 
         this.vertexShader = vertexShader;
-        this.fragmentShader = fragmentShader;
+        this.fragmentShader = gooeyFragmentShader;
 
         this.clock = new THREE.Clock();
 
@@ -69,18 +78,22 @@ export default class GooeyImage {
 
         this.loader = new THREE.TextureLoader();
         if (this.img.src && this.img.dataset.hover) {
-            this.preload([this.img.src, this.img.dataset.hover, '/dist/img/shape.jpg'], () => {
-                this.initTile();
+            this.preload([this.img.src, this.img.dataset.hover], () => {
+                this.initImage();
             });
         }
 
         this.bindEvent();
+        this.onInitImageSuccess = onInitImageSuccess;
+
+        this.scroll = 0;
+        this.prevScroll = 0;
     }
 
     bindEvent() {
-        document.addEventListener('gooeyImage:zoom', (e) => {
-            this.zoom((e as unknown as Event & { detail: { gooeyImage: GooeyImage; open: boolean } }).detail);
-        });
+        // document.addEventListener('gooeyImage:zoom', (e) => {
+        //     this.zoom((e as unknown as Event & { detail: { gooeyImage: GooeyImage; open: boolean } }).detail);
+        // });
 
         window.addEventListener('resize', () => {
             this.onResize();
@@ -89,15 +102,30 @@ export default class GooeyImage {
             this.onMouseMove(e);
         });
 
-        // this.elements.link.addEventListener('mouseenter', () => {
-        //     this.onPointerEnter();
-        // });
-        // this.elements.link.addEventListener('mouseleave', () => {
-        //     this.onPointerLeave();
-        // });
+        this.img.addEventListener('mouseenter', () => {
+            this.onPointerEnter();
+        });
+        this.img.addEventListener('mouseleave', () => {
+            this.onPointerLeave();
+        });
         // this.elements.link.addEventListener('click', (e) => {
         //     this.onClick(e);
         // });
+
+        if (window.lenis) {
+            window.lenis.on('scroll', (e: LenisScrollEvent) => {
+                this.onScroll({
+                    offset: {
+                        x: window.scrollX,
+                        y: e.animatedScroll,
+                    },
+                    limit: {
+                        x: e.dimensions.scrollWidth,
+                        y: e.dimensions.scrollHeight,
+                    },
+                });
+            });
+        }
     }
 
     /* Handlers
@@ -122,7 +150,7 @@ export default class GooeyImage {
 
         gsap.to(this.uniforms.u_progressHover, {
             duration: this.duration,
-            value: 1,
+            value: 0.7,
             ease: Power2.easeInOut,
         });
     }
@@ -149,6 +177,11 @@ export default class GooeyImage {
         this.uniforms.u_res.value.set(window.innerWidth, window.innerHeight);
     }
 
+    onScroll({ offset, limit }: Record<'offset' | 'limit', Record<'x' | 'y', number>>) {
+        // this.scroll = offset.x / limit.x;
+        this.scroll = offset.y / limit.y;
+    }
+
     onMouseMove(event: MouseEvent) {
         if (this.isZoomed || this.hasClicked || this.isMobile) return;
 
@@ -162,7 +195,7 @@ export default class GooeyImage {
     /* Actions
     --------------------------------------------------------- */
 
-    initTile() {
+    initImage() {
         const texture = this.images[0];
         const hoverTexture = this.images[1];
 
@@ -185,13 +218,14 @@ export default class GooeyImage {
         this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
 
         this.material = new THREE.ShaderMaterial({
+            // wireframe: true,
             uniforms: this.uniforms,
             vertexShader: this.vertexShader,
             fragmentShader: this.fragmentShader,
             transparent: true,
             defines: {
                 PI: Math.PI,
-                PR: window.devicePixelRatio.toFixed(1),
+                PR: Math.min(window.devicePixelRatio, 1).toFixed(1),
             },
         });
 
@@ -202,9 +236,8 @@ export default class GooeyImage {
 
         this.mesh.scale.set(this.sizes.x, this.sizes.y, 1);
 
-        // this.scene.mainScene.add(this.mesh);
-
         this.img.classList.add('is-loaded');
+        if (this.onInitImageSuccess) this.onInitImageSuccess(this.mesh);
     }
 
     move() {
@@ -216,18 +249,24 @@ export default class GooeyImage {
             y: this.offset.y,
         });
 
-        // gsap.to(this.mesh.scale, {
-        //     duration: 0.3,
-        //     x: this.sizes.x - this.delta,
-        //     y: this.sizes.y - this.delta,
-        //     z: 1,
-        // });
+        gsap.to(this.mesh.scale, {
+            duration: 0.3,
+            // x: this.sizes.x - this.delta,
+            // y: this.sizes.y - this.delta,
+            x: this.sizes.x,
+            y: this.sizes.y,
+            z: 1,
+        });
     }
 
     update() {
         if (!this.mesh) return;
 
+        this.delta = Math.abs((this.scroll - this.prevScroll) * 2000);
+
         this.move();
+
+        this.prevScroll = this.scroll;
 
         if (!this.isHovering || !this.uniforms) return;
         this.uniforms.u_time.value += this.clock.getDelta();
@@ -289,7 +328,8 @@ export default class GooeyImage {
             ease: Expo.easeInOut,
         });
 
-        gsap.to(this.uniforms.u_hoverratio.value, 1.2, {
+        gsap.to(this.uniforms.u_hoverratio.value, {
+            duration: 1.2,
             delay,
             x: newRatio.x,
             y: newRatio.y,
@@ -320,7 +360,6 @@ export default class GooeyImage {
 
     getBounds() {
         const { width, height, left, top } = this.img.getBoundingClientRect();
-
         if (!this.sizes.equals(new THREE.Vector2(width, height))) {
             this.sizes.set(width, height);
         }

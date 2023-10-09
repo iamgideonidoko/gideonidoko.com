@@ -69,6 +69,8 @@
     "eslint-config-next": "^13.5.3",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "glsl-noise": "^0.0.0",
+    "glslify-import-loader": "^0.1.2",
     "glslify-loader": "^2.0.0",
     "husky": "^7.0.4",
     "prettier": "^2.5.1",

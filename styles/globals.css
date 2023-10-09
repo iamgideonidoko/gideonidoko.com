@@ -1524,3 +1524,31 @@ body::-webkit-scrollbar-track {
 		transform: translate3d(var(--move-final), 0, 0);
 	}
 }
+
+/* CANVAS */
+#canvas {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 3;
+	width: 100%;
+	height: 100vh;
+	pointer-events: none;
+}
+
+/* GOOEY IMAGE */
+.gooey__image {
+	position: relative;
+	width: max-content;
+}
+
+.gooey__image > img {
+	object-fit: cover;
+	object-position: center;
+	transition: opacity .3s;
+	user-select: none;
+}
+
+.gooey__image > img.is-loaded {
+	opacity: 0;
+}

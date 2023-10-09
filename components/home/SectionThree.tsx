@@ -50,8 +50,6 @@ const ScrambledText = () => {
 };
 
 const SectionThree = () => {
-    console.log('rendered');
-
     return (
         <div className={styles.sectionThree}>
             <div className="container-full">
@@ -62,7 +60,15 @@ const SectionThree = () => {
                 <ScrambledText />
 
                 <div>
-                    <img src="/assets/img/Ifex.JPG" alt="Gideon Idoko" style={{ maxWidth: '100%' }} width={330} />
+                    <div className="gooey__image">
+                        <img
+                            src="/assets/img/Ifex.JPG"
+                            data-hover="/assets/img/Ifex-hover.JPG"
+                            alt="Gideon Idoko"
+                            style={{ maxWidth: '100%' }}
+                            width={330}
+                        />
+                    </div>
                 </div>
 
                 <div className="marquee">
