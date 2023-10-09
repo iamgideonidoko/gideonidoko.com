@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import Fade from 'react-reveal/Fade';
-import Bounce from 'react-reveal/Bounce';
 import Wobble from 'react-reveal/Wobble';
 import styles from '../../styles/Home.module.css';
 
@@ -94,11 +93,7 @@ const SectionTwo = () => {
 
     return (
         <div className={styles.sectionTwo}>
-            <div className="container-max-1248px">
-                <Bounce left duration={1800}>
-                    <h2 className={styles.projectsHead}>Projects - </h2>
-                </Bounce>
-
+            <div className="container-full">
                 <div className={styles.projectsWrapper}>
                     {projects.map((project) => (
                         <div

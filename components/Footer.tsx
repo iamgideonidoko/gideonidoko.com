@@ -11,7 +11,7 @@ const Footer = () => {
 
     return (
         <footer className="footer">
-            <div className="container-max-1248px footer-wrapper">
+            <div className=" footer-wrapper">
                 <div className="footer-content-1">
                     {/* <Link href="/">
                         

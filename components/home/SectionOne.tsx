@@ -13,10 +13,27 @@ const SectionOne = () => {
             } catch (e) {}
         })();
     }, []);
+
+    const handleScrollButtonClick = () => {
+        const sectionThreeWrapper = document.querySelector('#section-three-wrapper');
+        if (sectionThreeWrapper && window.lenis) {
+            window.lenis.scrollTo(sectionThreeWrapper, {
+                easing: (x: number) => {
+                    return x === 0
+                        ? 0
+                        : x === 1
+                        ? 1
+                        : x < 0.5
+                        ? Math.pow(2, 20 * x - 10) / 2
+                        : (2 - Math.pow(2, -20 * x + 10)) / 2;
+                },
+            });
+        }
+    };
     return (
         <div className={`${styles.sectionOne} container-full`}>
             <div className={styles.sectionScrollButtonWrapper}>
-                <button className="scroll-button">
+                <button className="scroll-button" onClick={handleScrollButtonClick}>
                     <div className="button__deco button__deco--2"></div>
                     <div className="button__deco button__deco--1"></div>
                     <span className="button__text button__text__sectionone">
@@ -27,7 +44,7 @@ const SectionOne = () => {
                 </button>
             </div>
             <div className={`${styles.scrollText}`}>
-                scroll down <i className="neu-down-lg"></i>
+                01//04 — SCROLL <i className="neu-down-lg"></i>
             </div>
 
             <div>

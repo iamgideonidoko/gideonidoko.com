@@ -96,9 +96,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         window.lenis = lenis;
 
-        lenis.on('scroll', (e) => {
+        lenis.on('scroll', () => {
             //
-            console.log('LENIS EVENT: ', e);
         });
         const scrollFn = (time: number) => {
             lenis.raf(time); // Runs lenis' requestAnimationFrame method
@@ -111,7 +110,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             cursorRef.current = new Cursor(cursorElement);
         }
         const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
-        console.log('canvasElement: ', canvasElement);
         if (canvasElement) {
             canvasRef.current = new Canvas(canvasElement);
         }
@@ -152,7 +150,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             }, 1000);
 
             [...document.querySelectorAll<HTMLButtonElement>('.scroll-button')].forEach((el) => {
-                console.log('element: ', el);
                 const button = new ButtonCtrl(el);
                 button.on('enter', () => cursorRef.current?.emit('enter'));
                 button.on('leave', () => cursorRef.current?.emit('leave'));

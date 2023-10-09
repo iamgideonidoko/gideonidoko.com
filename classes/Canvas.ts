@@ -58,12 +58,7 @@ export default class Canvas {
 
         this.camera = new THREE.PerspectiveCamera(fov, this.W / this.H, 1, 10000);
         this.camera.position.set(0, 0, perspective);
-        // this.camera = new THREE.PerspectiveCamera(75, this.W / this.H, 0.1, 100);
-        // this.camera.position.set(4, 1, -4);
-        // if (this.scene) this.scene.add(this.camera);
-
-        // const controls = new OrbitControls(this.camera, this.canvas);
-        // controls.enableDamping = true;
+        this.scene?.add(this.camera);
     }
 
     private initLights() {
@@ -78,12 +73,15 @@ export default class Canvas {
         this.W = window.innerWidth;
         this.H = window.innerHeight;
         if (this.camera) {
-            this.camera.aspect = this.W / this.H;
-            this.camera.updateProjectionMatrix();
+            // this.camera.aspect = this.W / this.H;
+            // this.camera.updateProjectionMatrix();
+            // Updating the projection matrix deosn't work for now (for some weird reasons)
+            this.scene?.remove(this.camera);
+            this.initCamera();
         }
         if (this.renderer) {
             this.renderer.setSize(this.W, this.H);
-            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
+            // this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
         }
     }
 

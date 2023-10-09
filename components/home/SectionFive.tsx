@@ -26,7 +26,7 @@ const SectionFive = ({}) => {
 
     return (
         <div className={styles.sectionFive}>
-            <div className="container-max-1248px">
+            <div className="container-full">
                 <div className={styles.sectionFiveWrapper}>
                     <Bounce left duration={1800}>
                         <h3 className={styles.servicesHead}>Articles -</h3>

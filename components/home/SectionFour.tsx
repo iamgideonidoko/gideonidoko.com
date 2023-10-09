@@ -6,7 +6,7 @@ import Fade from 'react-reveal/Fade';
 const SectionFour = () => {
     return (
         <div className={styles.sectionFour} id="#services">
-            <div className="container-max-1248px">
+            <div className="container-full">
                 <div className={styles.sectionFourWrapper}>
                     <Bounce left duration={1800}>
                         <h3 className={styles.servicesHead}>Services -</h3>

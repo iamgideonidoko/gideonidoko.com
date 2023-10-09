@@ -293,6 +293,17 @@
 	background-repeat: repeat-x;
 }
 
+.homeMeta {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	align-items: center;
+	margin-top: 1.5rem;
+}
+
+.homeMeta > div:last-child {
+	justify-self: flex-end;
+}
+
 /*>>>>>>>SECTION THREE<<<<<<<*/
 
 .sectionThree {
@@ -343,6 +354,51 @@
 	-moz-transition: all 0.2s ease-in-out;
 	-ms-transition: all 0.2s ease-in-out;
 	-o-transition: all 0.2s ease-in-out;
+}
+
+.nameMarquee {
+	z-index: 4;
+}
+
+.profileImgWrapper {
+	display: flex;
+	justify-content: center;
+	transform: translateY(-9vw)
+}
+
+.profileImgWrapper > div:first-child {
+	width: clamp(50rem, 30vw, 100rem);
+	max-width: 100%;
+}
+
+.profileImgWrapper > div:first-child > img {
+	/* border: 3px solid orange !important;
+	opacity: 1 !important; */
+	width: 100%;
+}
+
+.briefInfo {
+	position: relative;
+	margin-top: -5vw;
+	margin-bottom: 4vw;
+}
+
+.briefInfo p {
+	font-size: clamp(0.8em, 3vw, 2em);
+	max-width: 100%;
+	width: calc(50% + 1vw);
+	line-height: 1.2em;
+	text-transform: uppercase;
+}
+
+.briefInfo p::first-letter {
+	margin-left: 3vw;
+}
+
+.learnMoreAboutBtn {
+	position: absolute;
+	top: -5vw;
+	right: 2vw;
 }
 
 

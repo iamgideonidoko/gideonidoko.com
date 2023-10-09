@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { gsap, Power2, Power3, Expo } from 'gsap';
+import { gsap, Power2 } from 'gsap';
 import vertexShader from '../glsl/vertex.glsl';
 import gooeyFragmentShader from '../glsl/gooey-fragment.glsl';
 
@@ -24,7 +24,6 @@ export default class GooeyImage {
     private clock: THREE.Clock;
     private mouse: THREE.Vector2;
     private hasClicked: boolean;
-    private isZoomed: boolean;
     private loader: THREE.TextureLoader;
     private isMobile: boolean;
     private isHovering?: boolean;
@@ -41,9 +40,9 @@ export default class GooeyImage {
         u_time: THREE.IUniform<number>;
         u_res: THREE.IUniform<THREE.Vector2>;
     };
-    private mesh?: THREE.Mesh;
-    private geometry?: THREE.PlaneGeometry;
-    private material?: THREE.ShaderMaterial;
+    public mesh?: THREE.Mesh;
+    public geometry?: THREE.PlaneGeometry;
+    public material?: THREE.ShaderMaterial;
     private onInitImageSuccess?: (mesh: THREE.Mesh) => void;
     private scroll: number;
     private prevScroll: number;
@@ -72,7 +71,6 @@ export default class GooeyImage {
         this.mouse = new THREE.Vector2(0, 0);
 
         this.hasClicked = false;
-        this.isZoomed = false;
 
         this.isMobile = window.matchMedia('(max-width: 767px)').matches;
 
@@ -91,10 +89,6 @@ export default class GooeyImage {
     }
 
     bindEvent() {
-        // document.addEventListener('gooeyImage:zoom', (e) => {
-        //     this.zoom((e as unknown as Event & { detail: { gooeyImage: GooeyImage; open: boolean } }).detail);
-        // });
-
         window.addEventListener('resize', () => {
             this.onResize();
         });
@@ -144,7 +138,7 @@ export default class GooeyImage {
     onPointerEnter() {
         this.isHovering = true;
 
-        if (this.isZoomed || this.hasClicked || this.isMobile) return;
+        if (this.hasClicked || this.isMobile) return;
 
         if (!this.mesh || !this.uniforms) return;
 
@@ -156,7 +150,7 @@ export default class GooeyImage {
     }
 
     onPointerLeave() {
-        if (!this.mesh || this.isZoomed || this.hasClicked || this.isMobile || !this.uniforms) return;
+        if (!this.mesh || this.hasClicked || this.isMobile || !this.uniforms) return;
 
         gsap.to(this.uniforms.u_progressHover, {
             duration: this.duration,
@@ -169,10 +163,13 @@ export default class GooeyImage {
     }
 
     onResize() {
-        this.getBounds();
-
         if (!this.mesh || !this.uniforms) return;
+        console.log('resizing');
 
+        this.getBounds();
+        console.log('SIZE: ', this.sizes);
+        this.mesh.position.x = this.offset.x;
+        this.mesh.position.y = this.offset.y;
         this.mesh.scale.set(this.sizes.x, this.sizes.y, 1);
         this.uniforms.u_res.value.set(window.innerWidth, window.innerHeight);
     }
@@ -183,7 +180,7 @@ export default class GooeyImage {
     }
 
     onMouseMove(event: MouseEvent) {
-        if (this.isZoomed || this.hasClicked || this.isMobile) return;
+        if (this.hasClicked || this.isMobile) return;
 
         gsap.to(this.mouse, {
             duration: 0.5,
@@ -241,7 +238,7 @@ export default class GooeyImage {
     }
 
     move() {
-        if (!this.mesh || this.isZoomed || this.hasClicked) return;
+        if (!this.mesh || this.hasClicked) return;
         this.getBounds();
 
         gsap.set(this.mesh.position, {
@@ -270,89 +267,6 @@ export default class GooeyImage {
 
         if (!this.isHovering || !this.uniforms) return;
         this.uniforms.u_time.value += this.clock.getDelta();
-    }
-
-    zoom({ gooeyImage, open }: { gooeyImage: GooeyImage; open: boolean }) {
-        if (!this.uniforms || !this.mesh) return;
-        const shouldZoom = gooeyImage === this;
-
-        const newScl = {
-            x: shouldZoom ? window.innerWidth * 0.44 : this.sizes.x,
-            y: shouldZoom ? window.innerHeight - 140 : this.sizes.y,
-        };
-
-        const newPos = {
-            x: shouldZoom ? window.innerWidth / 2 - window.innerWidth * 0.05 - this.sizes.x * 0.95 : this.offset.x,
-            y: shouldZoom ? -20 : this.offset.y,
-        };
-
-        const newRatio = getRatio(newScl, this.images[1].image);
-
-        const delay = shouldZoom ? 0.4 : 0;
-
-        this.hide(!shouldZoom, !open);
-
-        gsap.to(this.uniforms.u_progressClick, {
-            duration: 1.2,
-            value: shouldZoom ? 1 : 0,
-            ease: Power2.easeInOut,
-            onComplete: () => {
-                if (!this.uniforms) return;
-                this.isZoomed = shouldZoom;
-                this.hasClicked = open;
-
-                gsap.to(this.uniforms.u_progressHover, {
-                    duration: this.duration,
-                    value: shouldZoom ? 1 : 0,
-                    ease: Power2.easeInOut,
-                });
-            },
-        });
-
-        gsap.to(this.mesh.scale, {
-            duration: 1.2,
-            delay,
-            x: newScl.x,
-            y: newScl.y,
-            ease: Expo.easeInOut,
-            onUpdate: () => {
-                this.getBounds();
-            },
-        });
-
-        gsap.to(this.mesh.position, {
-            duration: 1.2,
-            delay,
-            x: newPos.x,
-            y: newPos.y,
-            ease: Expo.easeInOut,
-        });
-
-        gsap.to(this.uniforms.u_hoverratio.value, {
-            duration: 1.2,
-            delay,
-            x: newRatio.x,
-            y: newRatio.y,
-            ease: Expo.easeInOut,
-        });
-    }
-
-    hide(shouldHide: boolean, force: boolean) {
-        if (!this.uniforms) return;
-        const delay = shouldHide && !force ? 0 : 1.2;
-        gsap.to(this.uniforms.u_alpha, {
-            duration: 0.5,
-            delay,
-            value: shouldHide && !force ? 0 : 1,
-            ease: Power3.easeIn,
-        });
-
-        gsap.to(this.elements.el, {
-            duration: 0.5,
-            delay,
-            alpha: shouldHide && !force ? 0 : 1,
-            force3D: true,
-        });
     }
 
     /* Values

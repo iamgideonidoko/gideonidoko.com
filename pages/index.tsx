@@ -40,7 +40,20 @@ function Home({}) {
                     <SectionOne />
                 </div>
                 <div className="wobble-divider" />
+                <div className={styles.homeMeta}>
+                    <div>03/</div>
+                    <div>ABOUT</div>
+                    <div>
+                        <span>EMAIL /&nbsp;</span>
+                        <span>GITHUB /&nbsp;</span>
+                        <span>LINKEDIN /&nbsp;</span>
+                        <span>TWITTER /&nbsp;</span>
+                        <span>INSTAGRAM</span>
+                    </div>
+                    <div>04/</div>
+                </div>
                 <SectionThree />
+                <div className="wobble-divider" />
                 <SectionTwo />
                 <div className={styles.waveTop}></div>
                 <div className={styles.section34Wrapper}>
