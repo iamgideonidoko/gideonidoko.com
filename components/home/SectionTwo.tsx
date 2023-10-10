@@ -1,98 +1,131 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from '../../styles/Home.module.css';
-// import Flip from 'gsap/Flip';
-// import ScrollTrigger from 'gsap/ScrollTrigger';
-// import gsap from 'gsap';
+import { useMemo, useEffect } from 'react';
+import { firstLetter } from '../../helper';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+import gsap from 'gsap';
 
-// gsap.registerPlugin(Flip, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 const SectionTwo = () => {
-    const projects = [
-        {
-            id: 1,
-            name: 'LinAssess',
-            about: 'Ace that LinkedIn assessment.',
-            cover: '/assets/img/linassessdesktopview.jpg',
-            coverAlt: 'View of LinAssess',
-            codeLink: 'https://github.com/IamGideonIdoko/linassess',
-            projectLink: 'https://linassess.netlify.app',
-            tech: ['React', 'Node.js', 'Zustand'],
-        },
-        {
-            id: 2,
-            name: 'Color Converter',
-            about: 'Convert color between 5 models.',
-            cover: '/assets/img/colorconverter-cover.png',
-            coverAlt: 'View of Color Converter',
-            codeLink: 'https://github.com/IamGideonIdoko/colorconverter',
-            projectLink: 'https://colorconverter.surge.sh',
-            tech: ['HTML', 'CSS', 'JavaScript'],
-        },
-        {
-            id: 3,
-            name: 'Cyprobar',
-            about: 'Lightweight JS libary for circular progress bars.',
-            cover: '/assets/img/cyprobar-cover.png',
-            coverAlt: "View of Cyprobar's doc site.",
-            codeLink: 'https://github.com/IamGideonIdoko/cyprobar',
-            projectLink: 'https://IamGideonIdoko.github.io/cyprobar',
-            tech: ['JavaScript', 'Parcel', 'TailwindCSS'],
-        },
-        {
-            id: 4,
-            name: 'Sirimazone',
-            about: 'Simple online movie store.',
-            cover: '/assets/img/sirimazone-cover.png',
-            coverAlt: 'View of Sirimazone.',
-            codeLink: 'https://github.com/IamGideonIdoko/sirimazone',
-            tech: ['SCSS', 'JavaScript', 'PHP', 'MySQL'],
-        },
-        {
-            id: 5,
-            name: 'Text to Speech',
-            about: 'Convert text to speech.',
-            cover: '/assets/img/webtts-cover.png',
-            coverAlt: 'View of Text-to-speech app.',
-            codeLink: 'https://github.com/IamGideonIdoko/text-to-speech-app',
-            projectLink: 'https://webtts.vercel.app',
-            tech: ['React'],
-        },
-        {
-            id: 6,
-            name: 'ASCL Website',
-            about: "ASCL's modern website.",
-            cover: '/assets/img/asclhomepage.png',
-            coverAlt: 'View of ASCL website.',
-            codeLink: 'https://github.com/IamGideonIdoko/ascl-website-frontend',
-            projectLink: 'https://ajaokutasteel.com.ng',
-            tech: ['React', 'Node.js', 'Express.js', 'MongoDB'],
-        },
-        {
-            id: 7,
-            name: 'Dentbud',
-            about: 'AI/Mobile-based Smart Personal Assistant for students.',
-            cover: '/assets/img/dentbud_mockup.png',
-            coverAlt: 'View of Dentbud.',
-            codeLink: 'https://github.com/IamGideonIdoko/dentbud',
-            projectLink: 'https://dentbud.surge.sh',
-            tech: ['React Native', 'Node.js', 'Express.js', 'Python', 'Rasa'],
-        },
-        {
-            id: 8,
-            name: 'BAS',
-            about: 'Track student attendance using fingerprint biometrics.',
-            cover: '/assets/img/bas_mockup.png',
-            coverAlt: 'View of BAS.',
-            codeLink: 'https://github.com/IamGideonIdoko/bio-attendance-sys',
-            projectLink: 'https://github.com/IamGideonIdoko/bio-attendance-sys#screenshots',
-            tech: ['React', 'Node.js', 'Express.js', 'Python', 'Flask', 'Computer Vision'],
-        },
-    ];
+    const projects = useMemo(
+        () => [
+            {
+                id: 1,
+                name: 'LinAssess',
+                about: 'Ace that LinkedIn assessment.',
+                cover: '/assets/img/linassessdesktopview.jpg',
+                coverAlt: 'View of LinAssess',
+                codeLink: 'https://github.com/IamGideonIdoko/linassess',
+                projectLink: 'https://linassess.netlify.app',
+                tech: ['React', 'Node.js', 'Zustand'],
+            },
+            {
+                id: 2,
+                name: 'Color Converter',
+                about: 'Convert color between 5 models.',
+                cover: '/assets/img/colorconverter-cover.png',
+                coverAlt: 'View of Color Converter',
+                codeLink: 'https://github.com/IamGideonIdoko/colorconverter',
+                projectLink: 'https://colorconverter.surge.sh',
+                tech: ['HTML', 'CSS', 'JavaScript'],
+            },
+            {
+                id: 3,
+                name: 'Cyprobar',
+                about: 'Lightweight JS libary for circular progress bars.',
+                cover: '/assets/img/cyprobar-cover.png',
+                coverAlt: "View of Cyprobar's doc site.",
+                codeLink: 'https://github.com/IamGideonIdoko/cyprobar',
+                projectLink: 'https://IamGideonIdoko.github.io/cyprobar',
+                tech: ['JavaScript', 'Parcel', 'TailwindCSS'],
+            },
+            {
+                id: 4,
+                name: 'Sirimazone',
+                about: 'Simple online movie store.',
+                cover: '/assets/img/sirimazone-cover.png',
+                coverAlt: 'View of Sirimazone.',
+                codeLink: 'https://github.com/IamGideonIdoko/sirimazone',
+                tech: ['SCSS', 'JavaScript', 'PHP', 'MySQL'],
+            },
+            {
+                id: 5,
+                name: 'Text to Speech',
+                about: 'Convert text to speech.',
+                cover: '/assets/img/webtts-cover.png',
+                coverAlt: 'View of Text-to-speech app.',
+                codeLink: 'https://github.com/IamGideonIdoko/text-to-speech-app',
+                projectLink: 'https://webtts.vercel.app',
+                tech: ['React'],
+            },
+            {
+                id: 6,
+                name: 'ASCL Website',
+                about: "ASCL's modern website.",
+                cover: '/assets/img/asclhomepage.png',
+                coverAlt: 'View of ASCL website.',
+                codeLink: 'https://github.com/IamGideonIdoko/ascl-website-frontend',
+                projectLink: 'https://ajaokutasteel.com.ng',
+                tech: ['React', 'Node.js', 'Express.js', 'MongoDB'],
+            },
+            {
+                id: 7,
+                name: 'Dentbud',
+                about: 'AI/Mobile-based Smart Personal Assistant for students.',
+                cover: '/assets/img/dentbud_mockup.png',
+                coverAlt: 'View of Dentbud.',
+                codeLink: 'https://github.com/IamGideonIdoko/dentbud',
+                projectLink: 'https://dentbud.surge.sh',
+                tech: ['React Native', 'Node.js', 'Express.js', 'Python', 'Rasa'],
+            },
+            {
+                id: 8,
+                name: 'BAS',
+                about: 'Track student attendance using fingerprint biometrics.',
+                cover: '/assets/img/bas_mockup.png',
+                coverAlt: 'View of BAS.',
+                codeLink: 'https://github.com/IamGideonIdoko/bio-attendance-sys',
+                projectLink: 'https://github.com/IamGideonIdoko/bio-attendance-sys#screenshots',
+                tech: ['React', 'Node.js', 'Express.js', 'Python', 'Flask', 'Computer Vision'],
+            },
+        ],
+        [],
+    );
 
-    const firstLetter = (str: string) => {
-        const newStr = str.split('');
-        return newStr[0];
-    };
+    useEffect(() => {
+        [
+            ...document.querySelectorAll('.project-section-item-left'),
+            ...document.querySelectorAll('.project-section-item-right'),
+        ].forEach((elem) => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    markers: false,
+                    start: 'clamp(top bottom-=0%)',
+                    end: 'bottom 90%',
+                    trigger: elem,
+                    scrub: true,
+                    once: true,
+                },
+            });
+
+            tl.fromTo(
+                elem,
+                {
+                    xPercent: elem.classList.contains('project-section-item-left')
+                        ? -100
+                        : elem.classList.contains('project-section-item-right')
+                        ? 100
+                        : 0,
+                    opacity: 0,
+                },
+                {
+                    xPercent: 0,
+                    opacity: 1,
+                },
+            );
+        });
+    }, []);
 
     return (
         <div className={styles.sectionTwo}>
@@ -125,7 +158,12 @@ const SectionTwo = () => {
                             key={project.id}
                             className={`${project.id % 2 === 0 ? styles.projectStyleOne : styles.projectStyleTwo}`}
                         >
-                            <div data-first-letter={firstLetter(project.about)} className={styles.projectSectionOne}>
+                            <div
+                                data-first-letter={firstLetter(project.about)}
+                                className={`${styles.projectSectionOne} ${
+                                    project.id % 2 === 1 ? 'project-section-item-left' : 'project-section-item-right'
+                                }`}
+                            >
                                 <div className={styles.nameAboutWrapper}>
                                     <h3>{project.name}</h3>
                                     <p className="project-abt">{project.about}</p>
@@ -153,7 +191,11 @@ const SectionTwo = () => {
                                     )}
                                 </div>
                             </div>
-                            <div className={styles.projectSectionTwo}>
+                            <div
+                                className={`${styles.projectSectionTwo} ${
+                                    project.id % 2 === 0 ? 'project-section-item-left' : 'project-section-item-right'
+                                }`}
+                            >
                                 <div>
                                     <div className={styles.projectTech}>
                                         {project.tech.map((x, idx) => (

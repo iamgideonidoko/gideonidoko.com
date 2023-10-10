@@ -540,3 +540,8 @@ export const ev = (eventName: string, data: unknown) => {
 };
 
 export { map, lerp, calcWinsize, getMousePos, distance };
+
+export const firstLetter = (str: string) => {
+    const newStr = str.split('');
+    return newStr[0];
+};
