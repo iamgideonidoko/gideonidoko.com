@@ -88,7 +88,7 @@ export default class GooeyImage {
         this.prevScroll = 0;
     }
 
-    bindEvent() {
+    private bindEvent() {
         window.addEventListener('resize', () => {
             this.onResize();
         });
@@ -162,24 +162,21 @@ export default class GooeyImage {
         });
     }
 
-    onResize() {
+    private onResize() {
         if (!this.mesh || !this.uniforms) return;
-        console.log('resizing');
-
         this.getBounds();
-        console.log('SIZE: ', this.sizes);
         this.mesh.position.x = this.offset.x;
         this.mesh.position.y = this.offset.y;
         this.mesh.scale.set(this.sizes.x, this.sizes.y, 1);
         this.uniforms.u_res.value.set(window.innerWidth, window.innerHeight);
     }
 
-    onScroll({ offset, limit }: Record<'offset' | 'limit', Record<'x' | 'y', number>>) {
+    private onScroll({ offset, limit }: Record<'offset' | 'limit', Record<'x' | 'y', number>>) {
         // this.scroll = offset.x / limit.x;
         this.scroll = offset.y / limit.y;
     }
 
-    onMouseMove(event: MouseEvent) {
+    private onMouseMove(event: MouseEvent) {
         if (this.hasClicked || this.isMobile) return;
 
         gsap.to(this.mouse, {
@@ -192,7 +189,7 @@ export default class GooeyImage {
     /* Actions
     --------------------------------------------------------- */
 
-    initImage() {
+    private initImage() {
         const texture = this.images[0];
         const hoverTexture = this.images[1];
 
@@ -237,7 +234,7 @@ export default class GooeyImage {
         if (this.onInitImageSuccess) this.onInitImageSuccess(this.mesh);
     }
 
-    move() {
+    private move() {
         if (!this.mesh || this.hasClicked) return;
         this.getBounds();
 
@@ -256,7 +253,7 @@ export default class GooeyImage {
         });
     }
 
-    update() {
+    public update() {
         if (!this.mesh) return;
 
         this.delta = Math.abs((this.scroll - this.prevScroll) * 2000);
@@ -272,7 +269,7 @@ export default class GooeyImage {
     /* Values
     --------------------------------------------------------- */
 
-    getBounds() {
+    private getBounds() {
         const { width, height, left, top } = this.img.getBoundingClientRect();
         if (!this.sizes.equals(new THREE.Vector2(width, height))) {
             this.sizes.set(width, height);
@@ -287,7 +284,7 @@ export default class GooeyImage {
         }
     }
 
-    preload(imageUrls: string[], allImagesLoadedCallback: () => void) {
+    private preload(imageUrls: string[], allImagesLoadedCallback: () => void) {
         let loadedCounter = 0;
         const toBeLoadedNumber = imageUrls.length;
         const preloadImage = (url: string, anImageLoadedCallback: () => void) => {

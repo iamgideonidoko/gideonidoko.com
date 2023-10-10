@@ -1,6 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-// import React, { useState, useEffect, useMemo } from 'react';
-// import Wobble from 'react-reveal/Wobble';
 import Link from 'next/link';
 import styles from '../../styles/Home.module.css';
 

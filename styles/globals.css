@@ -1553,3 +1553,9 @@ body::-webkit-scrollbar-track {
 .gooey__image > img.is-loaded {
 	opacity: 0;
 }
+
+/* PHYSICS BOX */
+.physics--box {
+	border: 1px solid red;
+	min-height: 50rem;
+}

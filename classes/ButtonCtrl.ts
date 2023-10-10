@@ -104,7 +104,7 @@ export default class ButtonCtrl extends EventEmitter {
 
         requestAnimationFrame(() => this.render());
     }
-    enter() {
+    private enter() {
         this.emit('enter');
         this.state.hover = true;
 
