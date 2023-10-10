@@ -140,7 +140,7 @@
 }
 
 .projectSectionOne {
-	padding: 2rem 2rem 0.5rem;
+	padding: 0.8vw 1.5vw 0.5vw;
 	position: relative;
 	z-index: 3;
 	height: auto;
@@ -153,10 +153,11 @@
 	content: attr(data-first-letter);
 	position: absolute;
 	top: 0;
-	font-size: 20rem;
+	font-size: clamp(20rem, 15vw, 15vw);
 	color: var(--ps1first-color);
-	z-index: 0;
+	z-index: 1;
 	pointer-events: none !important;
+	mix-blend-mode: color-burn;
 }
 
 .projectStyleOne .projectSectionOne:before {
@@ -164,9 +165,8 @@
 }
 
 .projectSectionOne h3 {
-	color: var(--pri-yellow-dark);
-	font-size: 2rem;
-	font-weight: 600;
+	font-size: clamp(2rem, 5vw, 5vw);
+	font-weight: 800;
 	text-transform: uppercase;
 	font-family: var(--header-font) !important;
 	letter-spacing: .3rem;
@@ -174,13 +174,11 @@
 
 
 .projectSectionOne p {
-	margin: 2rem 0 0 0;
+	margin: 1.5vw 0 0 0;
 	font-weight: 400;
 	z-index: 3;
-	/* border-bottom: 2px solid var(--pri-yellow-dark); */
 	padding-bottom: 1rem;
-	/*font-size: 4rem;*/
-	font-size: calc(14px + (26-14) * ((100vw - 400px) / (1280 - 400)));
+	font-size: clamp(1.6rem, 2vw, 3vw);
 }
 
 .projectSectionTwo {
@@ -218,6 +216,8 @@
 	flex-direction: column;
 	top: 0;
 	z-index: 2;
+	height: 100%;
+	flex-wrap: wrap;
 }
 
 .projectTech span {
@@ -228,40 +228,23 @@
 	color: rgba(0, 0, 0, 0.7);
 	text-align: center;
 	font-size: 1.3rem;
+	border-radius: 0.8rem;
 }
 
 .projectExtLinks {
-	padding: 1rem 0;
-	margin: 1rem 0 0;
+	padding: 1vw 0;
+	margin: 2vw 0 0;
 }
 
 .projectExtLinks a {
-	font-size: 1.5rem;
-	/*background: var(--pri-blue-normal);*/
-	padding: 1rem;
-	margin-right: 2rem;
-	border-radius: 0.6rem;
-	color: var(--font-color);
-	transition: letter-spacing 0.3s ease;
-	/* border: 1px solid var(--font-color); */
-	opacity: 0.8;
-	border: 2px double transparent;
-	background-image: var(--btn-grad-img);
-	background-origin: border-box;
-	background-clip: padding-box, border-box;
+	font-size: clamp(1.5rem, 2vw, 3vw);
+	margin: clamp(2rem, 2vw, 2vw) 0 0;
 }
 
-.projectExtLinks a:hover {
-	background: transparent;
-	color: var(--font-color);
-	letter-spacing: 0.2rem;
-	opacity: 1;
-	font-weight: 600;
-	border: 2px double transparent;
-	background-image: var(--btn-grad-img);
-	background-origin: border-box;
-	background-clip: padding-box, border-box;
+.projectExtLinks a:first-child {
+	margin-right: 2vw;
 }
+
 
 .moreProjects {
 	margin: -2rem 0 2rem;
@@ -302,6 +285,35 @@
 
 .homeMeta > div:last-child {
 	justify-self: flex-end;
+}
+
+.sec2Header {
+	position: relative;
+	margin-top: 2vw;
+	margin-bottom: 6vw;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.sec2Header p {
+	font-size: clamp(0.8em, 3vw, 2em);
+	max-width: 100%;
+	/* width: calc(75% + 1vw); */
+	line-height: 1.2em;
+	text-transform: uppercase;
+	justify-self: end;
+	grid-column: 2 / 5;
+}
+
+.sec2Header p::first-letter {
+	margin-left: 7vw;
+}
+
+.sec2Header > div {
+	grid-column: 1 / 2;
+	align-items: start;
+	justify-content: start;
+	transform: translateY(-2em)
 }
 
 /*>>>>>>>SECTION THREE<<<<<<<*/
@@ -596,10 +608,10 @@
 
 @media screen and (max-width: 676px) {
 
-	.projectTech {
+	/* .projectTech {
 		flex-direction: row;
 		flex-wrap: wrap;
-	}
+	} */
 }
 
 @media screen and (max-width: 650px) {
@@ -610,14 +622,6 @@
 }
 
 @media screen and (max-width: 638px) {
-	.projectExtLinks a {
-		font-size: 1.4rem;
-		padding: 0.7rem;
-	}
-
-	.projectExtLinks a:hover {
-		letter-spacing: 0.1rem;
-	}
 
 	.sectionThree h4 {
 		font-size: 1.8rem;
@@ -636,9 +640,9 @@
 		width: 100%;
 	}
 
-	.projectTech {
+	/* .projectTech {
 		flex-direction: column;
-	}
+	} */
 
 	.projectSectionOne p {
 		margin: 1.5rem 0 0 0;

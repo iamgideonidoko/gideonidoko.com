@@ -1,7 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import Fade from 'react-reveal/Fade';
-import Wobble from 'react-reveal/Wobble';
 import styles from '../../styles/Home.module.css';
+// import Flip from 'gsap/Flip';
+// import ScrollTrigger from 'gsap/ScrollTrigger';
+// import gsap from 'gsap';
+
+// gsap.registerPlugin(Flip, ScrollTrigger);
 
 const SectionTwo = () => {
     const projects = [
@@ -94,63 +97,74 @@ const SectionTwo = () => {
     return (
         <div className={styles.sectionTwo}>
             <div className="container-full">
+                <div className={styles.sec2Header}>
+                    <div>
+                        <a
+                            href="https://github.com/iamgideonidoko"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="scroll-button"
+                        >
+                            <div className="button__deco button__deco--2"></div>
+                            <div className="button__deco button__deco--1"></div>
+                            <span className="button__text button__text__sectionone">
+                                <span className="button__text-inner">
+                                    <i className="neu-arrow"></i>
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                    <p>
+                        Here&apos;re some selected projects that showcase my passion for crafting memorable experiences
+                        and products:
+                    </p>
+                </div>
                 <div className={styles.projectsWrapper}>
                     {projects.map((project) => (
                         <div
                             key={project.id}
                             className={`${project.id % 2 === 0 ? styles.projectStyleOne : styles.projectStyleTwo}`}
                         >
-                            <Fade bottom duration={2000}>
-                                <div
-                                    data-first-letter={firstLetter(project.about)}
-                                    className={styles.projectSectionOne}
-                                >
-                                    <div className={styles.nameAboutWrapper}>
-                                        <h3>{project.name}</h3>
-                                        <p className="project-abt">{project.about}</p>
-                                    </div>
-                                    <div className={styles.projectExtLinks}>
-                                        {project.projectLink && (
-                                            <a href={project.projectLink} target="_blank" rel="noopener noreferrer">
-                                                View Project <i className="neu-right-lg"></i>
-                                            </a>
-                                        )}
-                                        {project.codeLink && (
-                                            <a href={project.codeLink} target="_blank" rel="noopener noreferrer">
-                                                View Code <i className="neu-right-lg"></i>
-                                            </a>
-                                        )}
-                                    </div>
+                            <div data-first-letter={firstLetter(project.about)} className={styles.projectSectionOne}>
+                                <div className={styles.nameAboutWrapper}>
+                                    <h3>{project.name}</h3>
+                                    <p className="project-abt">{project.about}</p>
                                 </div>
-                            </Fade>
-                            <Fade duration={2000} right={!(project.id % 2 === 0)} left={project.id % 2 === 0}>
-                                <div className={styles.projectSectionTwo}>
-                                    <div>
-                                        <div className={styles.projectTech}>
-                                            {project.tech.map((x, idx) => (
-                                                <span key={idx}>{x}</span>
-                                            ))}
-                                        </div>
-                                        <img src={project.cover} alt={project.coverAlt} />
-                                    </div>
+                                <div className={styles.projectExtLinks}>
+                                    {project.projectLink && (
+                                        <a
+                                            href={project.projectLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`animated-button animated-button--pallene__solid ${styles.aboutSeeMore}`}
+                                        >
+                                            View Project <i className="neu-right-lg"></i>
+                                        </a>
+                                    )}
+                                    {project.codeLink && (
+                                        <a
+                                            href={project.codeLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`animated-button animated-button--pallene__outline ${styles.aboutSeeMore}`}
+                                        >
+                                            View Code <i className="neu-right-lg"></i>
+                                        </a>
+                                    )}
                                 </div>
-                            </Fade>
+                            </div>
+                            <div className={styles.projectSectionTwo}>
+                                <div>
+                                    <div className={styles.projectTech}>
+                                        {project.tech.map((x, idx) => (
+                                            <span key={idx}>{x}</span>
+                                        ))}
+                                    </div>
+                                    <img src={project.cover} alt={project.coverAlt} />
+                                </div>
+                            </div>
                         </div>
                     ))}
-                </div>
-                <div className={styles.moreProjects}>
-                    <Wobble duration={2000}>
-                        <div>
-                            <a
-                                href="https://github.com/IamGideonIdoko"
-                                className={`animated-button animated-button--pallene__outline ${styles.aboutSeeMore}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                View more projects.
-                            </a>
-                        </div>
-                    </Wobble>
                 </div>
             </div>
         </div>
