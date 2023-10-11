@@ -431,7 +431,6 @@
 .servicesWrapper {
 	display: grid;
 	border-radius: 0.6rem;
-	border: 1px solid var(--pri-neutral);
 }
 
 .servicesWrapper ul {
@@ -439,14 +438,15 @@
 	height: clamp(80rem, 50vw, 100rem);
 	overflow: hidden;
 	position: relative;
-	border-radius: 10rem !important;
+	border-radius: 3rem;
+	border: 1px dashed var(--physics-border);
 }
 
 .servicesWrapper ul li {
 	list-style: none;
 	position: relative;
 	display: flex;
-	border: 1px solid var(--pri-neutral);
+	border: 1px solid var(--font-color);
 	width: clamp(20rem, 16vw, 16vw);
 	height: clamp(20rem, 16vw, 16vw);;
 	justify-content: center;

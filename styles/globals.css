@@ -67,6 +67,7 @@
 	/* --bg-color-dark-2: #20222c; */
 	--bg-color-dark-2: #0d0d0d;
 	--pri-neutral: #fff;
+	--physics-border: #ffffff4a;
 	--pri-neutral-inverse: #000;
 	--pri-blue-normal: var(--pri-neutral);
 	--pri-blue-dark: #188b8d;
@@ -125,6 +126,7 @@
 	--bg-color-dark: #ccc;
 	--bg-color-dark-2: #EFEFEF;
 	--pri-neutral: #000;
+	--physics-border: #0000004a;
 	--pri-neutral-inverse: #fff;
 	--neutral-color-1: black;
 	--neutral-color-2: rgba(0, 0, 0, 0.5);
@@ -1557,7 +1559,6 @@ body::-webkit-scrollbar-track {
 /* PHYSICS BOX */
 .physics--box {
 	position: relative;
-	border-radius: 10rem !important;
 }
 
 .physics--box__item {
