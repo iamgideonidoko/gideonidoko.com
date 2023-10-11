@@ -1556,6 +1556,14 @@ body::-webkit-scrollbar-track {
 
 /* PHYSICS BOX */
 .physics--box {
-	border: 1px solid red;
-	min-height: 50rem;
+	position: relative;
+	border-radius: 10rem !important;
+}
+
+.physics--box__item {
+	width: 20rem;
+	height: 20rem;
+	position: absolute;
+	top: 0;
+	left: 0;
 }

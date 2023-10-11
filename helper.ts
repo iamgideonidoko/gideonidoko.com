@@ -545,3 +545,13 @@ export const firstLetter = (str: string) => {
     const newStr = str.split('');
     return newStr[0];
 };
+
+export const calculateScale = (size: number, newSize: number) => newSize / size;
+
+export const vwToPx = (valueInVw: number) => {
+    // Get the viewport width
+    const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    // Calculate the equivalent value in pixels
+    const valueInPx = (valueInVw * viewportWidth) / 100;
+    return valueInPx;
+};

@@ -1,18 +1,51 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from '../../styles/Home.module.css';
+import PhysicsBox from '../../classes/PhysicsBox';
+import { useEffect, useRef } from 'react';
 
 const SectionFour = () => {
+    const physicsBoxesRef = useRef<PhysicsBox[] | null>(null);
+    useEffect(() => {
+        physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
+            return new PhysicsBox(elem, {
+                radius: {
+                    unit: 'vw',
+                    value: 8,
+                },
+                minRadius: {
+                    unit: 'px',
+                    value: 100,
+                },
+                maxRadius: {
+                    unit: 'vw',
+                    value: 8,
+                },
+                // radius: {
+                //     unit: 'vw',
+                //     value: 2,
+                // },
+                // minRadius: {
+                //     unit: 'px',
+                //     value: 50,
+                // },
+                // maxRadius: {
+                //     unit: 'vw',
+                //     value: 2,
+                // },
+            });
+        });
+        return () => {
+            physicsBoxesRef.current?.forEach((item) => item.destroy());
+        };
+    }, []);
     return (
         <div className={styles.sectionFour} id="#services">
             <div className="container-full">
                 <div className={styles.sectionFourWrapper}>
                     <h3 className={styles.servicesHead}>— Services —</h3>
                     <div className={styles.servicesWrapper}>
-                        <ul>
-                            <li>
-                                <div>
-                                    <span></span>
-                                </div>
+                        <ul className="physics--box">
+                            <li className="physics--box__item">
                                 <div>
                                     <h5>Product Development</h5>
                                     <p>
@@ -21,10 +54,7 @@ const SectionFour = () => {
                                     </p>
                                 </div>
                             </li>
-                            <li>
-                                <div>
-                                    <span></span>
-                                </div>
+                            <li className="physics--box__item">
                                 <div>
                                     <h5>User Friendly Products</h5>
                                     <p>
@@ -33,10 +63,7 @@ const SectionFour = () => {
                                     </p>
                                 </div>
                             </li>
-                            <li>
-                                <div>
-                                    <span></span>
-                                </div>
+                            <li className="physics--box__item">
                                 <div>
                                     <h5>Product Review</h5>
                                     <p>
@@ -45,10 +72,7 @@ const SectionFour = () => {
                                     </p>
                                 </div>
                             </li>
-                            <li>
-                                <div>
-                                    <span></span>
-                                </div>
+                            <li className="physics--box__item">
                                 <div>
                                     <h5>Ongoing Support</h5>
                                     <p>
@@ -57,10 +81,7 @@ const SectionFour = () => {
                                     </p>
                                 </div>
                             </li>
-                            <li>
-                                <div>
-                                    <span></span>
-                                </div>
+                            <li className="physics--box__item">
                                 <div>
                                     <h5>Tailored Development</h5>
                                     <p>
@@ -69,10 +90,7 @@ const SectionFour = () => {
                                     </p>
                                 </div>
                             </li>
-                            <li>
-                                <div>
-                                    <span></span>
-                                </div>
+                            <li className="physics--box__item">
                                 <div>
                                     <h5>Rigorous Testing</h5>
                                     <p>
@@ -82,10 +100,6 @@ const SectionFour = () => {
                                 </div>
                             </li>
                         </ul>
-                    </div>
-
-                    <div className="physics--box">
-                        <div className="physics--box__item">This is an item</div>
                     </div>
                 </div>
             </div>

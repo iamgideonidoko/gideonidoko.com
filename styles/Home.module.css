@@ -431,36 +431,44 @@
 .servicesWrapper {
 	display: grid;
 	border-radius: 0.6rem;
-	border: 1px solid red;
+	border: 1px solid var(--pri-neutral);
 }
 
 .servicesWrapper ul {
+	width: 100%;
+	height: clamp(80rem, 50vw, 100rem);
+	overflow: hidden;
+	position: relative;
+	border-radius: 10rem !important;
 }
 
 .servicesWrapper ul li {
 	list-style: none;
 	position: relative;
 	display: flex;
-	border: 1px solid green;
+	border: 1px solid var(--pri-neutral);
+	width: clamp(20rem, 16vw, 16vw);
+	height: clamp(20rem, 16vw, 16vw);;
+	justify-content: center;
+	align-items: center;
+	border-radius: 100%;
+	padding: 5rem;
+	text-align: center;
+	position: absolute;
+	overflow: hidden;
+	user-select: none;
 }
 
-.servicesWrapper ul li div:nth-child(1) span {
-	width: 3rem;
-	height: 3rem;
-	/*background: var(--font-color);*/
-	background: var(--pri-neutral);
-	display: inline-block;
-	border-radius: 1000rem;
-	margin: 0.7rem 2rem 0 0;
+.servicesWrapper ul li h5 {
+	/* font-size: 1.8rem; */
+	font-size: clamp(1.4rem, 1.2vw, 1.2vw);
 }
 
-.servicesWrapper ul li div:nth-child(2) h5 {
-	font-size: 1.8rem;
-}
-
-.servicesWrapper ul li div:nth-child(2) p {
+.servicesWrapper ul li p {
 	opacity: 0.8;
-	margin-top: 1rem;
+	margin-top: 0.6vw;
+	font-size: clamp(1.2rem, 1vw, 1vw);
+	line-height: clamp(1.2rem, 1.2vw, 1.2vw);
 }
 
 /*>>>>>>>>>SECTION FIVE<<<<<<<<*/
