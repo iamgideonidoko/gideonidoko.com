@@ -468,12 +468,24 @@
 	opacity: 0.8;
 	margin-top: 0.6vw;
 	font-size: clamp(1.2rem, 1vw, 1vw);
-	line-height: clamp(1.2rem, 1.2vw, 1.2vw);
+	line-height: clamp(1.1rem, 1.2vw, 1.2vw);
 }
 
 /*>>>>>>>>>SECTION FIVE<<<<<<<<*/
 .sectionFive {
 	padding: 6rem 0 0;
+}
+
+.sec5Intro {
+	font-size: clamp(0.8em, 2vw, 2vw);
+	max-width: 100%;
+	/* width: calc(75% + 1vw); */
+	line-height: 1.2em;
+	text-transform: uppercase;
+	justify-self: end;
+	grid-column: 2 / 5;
+	text-align: center;
+	margin-bottom: 3vw;
 }
 
 .s5PostWrapper {
@@ -485,33 +497,36 @@
 
 .s5PostFlex {
 	margin: 2rem;
-	max-width: 30rem;
+	max-width: clamp(30rem, 30vw, 30vw);
 }
 
 .s5PostImg {
-	width: 30rem;
+	width: clamp(30rem, 30vw, 30vw);
 }
 
 .s5PostImg img {
 	max-width: 100%;
-	max-height: 25rem;
 	transition: all 0.2s ease-in;
 	border-radius: 0.8rem;
 }
 
 .s5PostInfo {
 	width: 90%;
-	margin: -2rem auto 0;
+	margin: -2em auto 0;
 	transition: all 0.2s ease-in;
 	background: var(--bg-color-dark);
 	position: relative;
-	padding: 1rem;
+	padding: 1em;
 	border-radius: 0.8rem;
 	overflow-wrap: break-word;
 }
 
+.s5PostInfo > h3 {
+	font-size: clamp(2rem, 2vw, 2vw);
+}
+
 .s5PostHref:hover .s5PostImg img {
-	transform: translateY(-1.5rem);
+	transform: translateY(-1.5em);
 }
 
 .s5PostHref:hover .s5PostInfo {
@@ -519,13 +534,14 @@
 }
 
 .s5PostInfo div {
-	font-size: 1.3rem;
+	font-size: clamp(1.3rem, 1.2vw, 1.2vw);
 	margin: 0.3rem 0;
 }
 
 .s5PostInfo p {
-	font-size: 1.45rem;
-	margin: 1.2rem 0 0;
+	font-size: clamp(1.45rem, 1.5vw, 1.5vw) !important;
+	line-height: 1.45em;
+	margin: 0.5em 0 0;
 }
 
 .s5PostInfo div,
@@ -537,6 +553,18 @@
 	word-spacing: 0.1rem;
 	line-height: 2rem;
 	font-size: 1.3rem !important;
+}
+
+.sec5SeeMore {
+	padding: 1vw 0;
+	margin: 2vw 0 0;
+	text-align: center;
+	margin-bottom: 5vw;
+}
+
+.sec5SeeMore a {
+	font-size: clamp(1.5rem, 1.5vw, 1.5vw);
+	margin: clamp(2rem, 2vw, 2vw) 0 0;
 }
 
 /* >>>>>>>>>>>>MEDIA QUERIES<<<<<<<<<<<<<<< */

@@ -27,8 +27,8 @@ const SectionFive = ({}) => {
                 <div className={styles.sectionFiveWrapper}>
                     <h3 className={styles.servicesHead}>— Articles —</h3>
 
-                    <p>
-                        I also <b>write</b> ✍🏽.
+                    <p className={styles.sec5Intro}>
+                        I also <b>write</b> ✍🏽. Here&apos;re the latest on my blog:
                     </p>
 
                     <div className={styles.s5PostWrapper}>
@@ -72,7 +72,7 @@ const SectionFive = ({}) => {
                     </div>
 
                     <div>
-                        <div>
+                        <div className={styles.sec5SeeMore}>
                             <Link
                                 href="/blog"
                                 className={`animated-button animated-button--pallene__outline ${styles.aboutSeeMore}`}
