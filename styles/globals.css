@@ -117,6 +117,10 @@
 
 	/* NOISE BG */
 	--noise-bg-filter: invert(100%);
+
+	/* FOOTER BG COLOR */
+	--c1: rgba(255, 255, 255, 1);
+	--c2: rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="light"] {
@@ -152,6 +156,8 @@
 	--header-bg: rgba(252,252,252,.5);
 	--wobbly-divider-bg: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' id='wobble-svg' viewBox='-18 17.5 20 5'%3e%3cpath class='line' fill='none' stroke='%23000' stroke-width='1' d='M-18 21.5c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3'/%3e%3cstyle type='text/css'%3e .line %7b animation: shift 3s linear infinite;%7d %40keyframes shift %7b from %7b transform: translateX(-20px);%7d to %7b transform: translateX(0);%7d %7d %3c/style%3e%3c/svg%3e");
 	--noise-bg-filter: invert(0%);
+	--c1: rgba(0, 0, 0, 1);
+	--c2: rgba(0, 0, 0, 0.1);
 }
 
 html {
@@ -872,10 +878,16 @@ body::-webkit-scrollbar-track {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	--d: 2500ms;
+	--angle: 90deg;
+	--gradX: 100%;
+	--gradY: 50%;
 }
 
 .footer-wrapper {
 	text-align: center;
+	position: relative;
 }
 
 .site-footer-logo {
@@ -884,6 +896,7 @@ body::-webkit-scrollbar-track {
 
 .footer-main-heading {
 	font-size: clamp(4rem, 8vw, 8vw);
+	white-space: nowrap;
 }
 
 .footer-question {
@@ -941,6 +954,47 @@ body::-webkit-scrollbar-track {
 @media screen and (max-width: 923px) {
 	.footer-footer {
 		flex-direction: column;
+	}
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 90deg;
+  inherits: true;
+}
+
+@property --gradX {
+  syntax: '<percentage>';
+  initial-value: 50%;
+  inherits: true;
+}
+
+@property --gradY {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: true;
+}
+
+.footer-bg {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	/* background: #000; */
+	z-index: 0;
+	place-self: center;
+	left: 0;
+	top: 0;
+	margin: 0 auto;
+	border: 0.8rem solid;
+	border-image: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.1turn, var(--c1) 0.15turn, var(--c2) 0.25turn) 30;
+	animation: borderRotate var(--d) linear infinite forwards;
+	/* background-color: #00000010; */
+	overflow: hidden;
+}
+
+@keyframes borderRotate {
+	100% {
+		--angle: 420deg;
 	}
 }
 

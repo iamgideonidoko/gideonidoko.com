@@ -1,14 +1,73 @@
 /* eslint-disable @next/next/no-img-element */
-// import Image from 'next/image';
+import { useEffect } from 'react';
 import Link from 'next/link';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+import gsap from 'gsap';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
     //get current year
     const date = new Date();
     const currentYear = date.getFullYear();
 
+    useEffect(() => {
+        [...document.querySelectorAll('.footer-main-heading')].forEach((elem) => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    markers: false,
+                    start: 'clamp(top bottom-=0%)',
+                    end: 'center center',
+                    trigger: elem,
+                    scrub: true,
+                },
+            });
+
+            tl.fromTo(
+                elem,
+                {
+                    letterSpacing: '0.5em',
+                },
+                {
+                    letterSpacing: '0em',
+                },
+            );
+        });
+
+        [...document.querySelectorAll('.footer-bg')].forEach((elem) => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    markers: true,
+                    start: 'clamp(top bottom-=50%)',
+                    end: 'top top',
+                    trigger: elem,
+                    scrub: true,
+                },
+            });
+
+            tl.fromTo(
+                elem,
+                {
+                    width: '100%',
+                    height: '100%',
+                    xPercent: 0,
+                    yPercent: 0,
+                    opacity: -1,
+                },
+                {
+                    width: '90%',
+                    height: '80%',
+                    xPercent: 5,
+                    yPercent: 12.5,
+                    opacity: 1,
+                },
+            );
+        });
+    }, []);
+
     return (
         <footer className="footer">
+            <div className="footer-bg"></div>
             <div className=" footer-wrapper">
                 <div>
                     <img src="/assets/img/GideonIdokoDevLogo.png" className="site-footer-logo" alt="Gideon Idoko" />
