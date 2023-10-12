@@ -43,16 +43,20 @@ export default class PhysicsBox {
 
         this.itemBodies = [];
 
-        this.itemBodies = [...this.items].map(() =>
-            Bodies.circle(
+        this.itemBodies = [...this.items].map((item) => {
+            item.addEventListener('mousedown', () => {
+                item.style.cursor = 'grabbing';
+            });
+            item.addEventListener('mouseup', () => {
+                item.style.cursor = 'grab';
+            });
+            return Bodies.circle(
                 Math.random() * (this.boxRect.width * 0.8 - this.boxRect.width * 0.2) + this.boxRect.width * 0.2,
                 // this.boxRect.width * 0.5,
                 this.boxRect.height * 0.5,
                 this.itemRadius,
-            ),
-        );
-
-        console.log('itembodies: ', this.itemBodies);
+            );
+        });
 
         this.walls = [
             // TOP
@@ -132,7 +136,6 @@ export default class PhysicsBox {
         });
         // Do something upon resize
         if (this.render) {
-            console.log('resizing...');
             this.render.bounds.max.x = this.boxRect.width;
             this.render.bounds.max.y = this.boxRect.height;
             this.render.options.width = this.boxRect.width;
@@ -170,7 +173,6 @@ export default class PhysicsBox {
                 item.style.left = `${body.position.x - item.getBoundingClientRect().width * 0.5}px`;
             }
         });
-        // console.log('items: ', this);
         Engine.update(this.engine);
         window.requestAnimationFrame(this.initRenderer.bind(this));
     }
