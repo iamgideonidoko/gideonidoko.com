@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import gsap from 'gsap';
@@ -11,58 +11,65 @@ const Footer = () => {
     const date = new Date();
     const currentYear = date.getFullYear();
 
+    const timeLineRefs = useRef<gsap.core.Timeline[]>([]);
+
     useEffect(() => {
-        [...document.querySelectorAll('.footer-main-heading')].forEach((elem) => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    markers: false,
-                    start: 'clamp(top bottom-=0%)',
-                    end: 'center center',
-                    trigger: elem,
-                    scrub: true,
-                },
+        setTimeout(() => {
+            [...document.querySelectorAll('.footer-main-heading')].forEach((elem) => {
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        markers: false,
+                        start: 'clamp(top bottom-=0%)',
+                        end: 'center center',
+                        trigger: elem,
+                        scrub: true,
+                    },
+                });
+                tl.fromTo(
+                    elem,
+                    {
+                        letterSpacing: '0.5em',
+                    },
+                    {
+                        letterSpacing: '0em',
+                    },
+                );
+                timeLineRefs.current.push(tl);
             });
-
-            tl.fromTo(
-                elem,
-                {
-                    letterSpacing: '0.5em',
-                },
-                {
-                    letterSpacing: '0em',
-                },
-            );
-        });
-
-        [...document.querySelectorAll('.footer-bg')].forEach((elem) => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    markers: true,
-                    start: 'clamp(top bottom-=50%)',
-                    end: 'top top',
-                    trigger: elem,
-                    scrub: true,
-                },
+            [...document.querySelectorAll('.footer-bg')].forEach((elem) => {
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        markers: true,
+                        start: 'clamp(top bottom-=50%)',
+                        end: 'top top',
+                        trigger: elem,
+                        scrub: true,
+                    },
+                });
+                tl.fromTo(
+                    elem,
+                    {
+                        width: '100%',
+                        height: '100%',
+                        xPercent: 0,
+                        yPercent: 0,
+                        opacity: -1,
+                    },
+                    {
+                        width: '90%',
+                        height: '80%',
+                        xPercent: 5,
+                        yPercent: 12.5,
+                        opacity: 1,
+                    },
+                );
+                timeLineRefs.current.push(tl);
             });
-
-            tl.fromTo(
-                elem,
-                {
-                    width: '100%',
-                    height: '100%',
-                    xPercent: 0,
-                    yPercent: 0,
-                    opacity: -1,
-                },
-                {
-                    width: '90%',
-                    height: '80%',
-                    xPercent: 5,
-                    yPercent: 12.5,
-                    opacity: 1,
-                },
-            );
-        });
+        }, 3000);
+        return () => {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            timeLineRefs.current.forEach((tl) => tl.kill());
+        };
     }, []);
 
     return (
