@@ -60,14 +60,31 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     // HANDLERS
     const handleRouteChangeStart = () => {
+        console.log('route change start');
+        const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
+        if (canvasElement) {
+            canvasElement.style.visibility = 'hidden';
+        }
         NProgress.start();
     };
 
     const handleRouteChangeComplete = () => {
+        const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
+        if (canvasElement) {
+            setTimeout(() => {
+                canvasElement.style.visibility = 'visible';
+            }, 1000);
+        }
         NProgress.done();
     };
 
     const handleRouteChangeError = () => {
+        const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
+        if (canvasElement) {
+            setTimeout(() => {
+                canvasElement.style.visibility = 'visible';
+            }, 1000);
+        }
         NProgress.done();
     };
 
@@ -135,6 +152,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         router.events.on('routeChangeStart', handleRouteChangeStart);
         router.events.on('routeChangeComplete', handleRouteChangeComplete);
         router.events.on('routeChangeError', handleRouteChangeError);
+        router.events.on('beforeHistoryChange', () => console.log('before history change'));
 
         // Register when route changes
         if (cursorRef.current) {
@@ -158,6 +176,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
 
         return () => {
+            console.log('useeffect cleanup');
             router.events.off('routeChangeStart', handleRouteChangeStart);
             router.events.off('routeChangeComplete', handleRouteChangeComplete);
             router.events.off('routeChangeError', handleRouteChangeError);
