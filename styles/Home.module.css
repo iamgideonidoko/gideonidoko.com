@@ -457,6 +457,12 @@
 	position: absolute;
 	overflow: hidden;
 	user-select: none;
+	cursor: grab;
+}
+
+.servicesWrapper ul li:hover {
+	color: var(--pri-neutral-inverse);
+	background: var(--font-color);
 }
 
 .servicesWrapper ul li h5 {
@@ -473,7 +479,7 @@
 
 /*>>>>>>>>>SECTION FIVE<<<<<<<<*/
 .sectionFive {
-	padding: 6rem 0 0;
+	padding: 6vw 0 0;
 }
 
 .sec5Intro {
@@ -492,7 +498,7 @@
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	margin: 1rem 0;
+	margin: 1vw 0;
 }
 
 .s5PostFlex {
@@ -516,7 +522,7 @@
 	transition: all 0.2s ease-in;
 	background: var(--bg-color-dark);
 	position: relative;
-	padding: 1em;
+	padding: 1.2vw;
 	border-radius: 0.8rem;
 	overflow-wrap: break-word;
 }
@@ -534,13 +540,13 @@
 }
 
 .s5PostInfo div {
-	font-size: clamp(1.3rem, 1.2vw, 1.2vw);
+	font-size: clamp(1.3rem, 1.1vw, 1.1vw);
 	margin: 0.3rem 0;
 }
 
 .s5PostInfo p {
-	font-size: clamp(1.45rem, 1.5vw, 1.5vw) !important;
-	line-height: 1.45em;
+	font-size: clamp(1.45rem, 1.3vw, 1.3vw) !important;
+	line-height: 1.7em;
 	margin: 0.5em 0 0;
 }
 
