@@ -458,6 +458,7 @@
 	overflow: hidden;
 	user-select: none;
 	cursor: grab;
+	visibility: hidden;
 }
 
 .servicesWrapper ul li:hover {

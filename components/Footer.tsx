@@ -39,7 +39,7 @@ const Footer = () => {
             [...document.querySelectorAll('.footer-bg')].forEach((elem) => {
                 const tl = gsap.timeline({
                     scrollTrigger: {
-                        markers: true,
+                        markers: false,
                         start: 'clamp(top bottom-=50%)',
                         end: 'top top',
                         trigger: elem,

@@ -44,6 +44,7 @@ export default class PhysicsBox {
         this.itemBodies = [];
 
         this.itemBodies = [...this.items].map((item) => {
+            item.style.visibility = 'visible';
             item.addEventListener('mousedown', () => {
                 item.style.cursor = 'grabbing';
             });

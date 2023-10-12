@@ -2,44 +2,57 @@
 import styles from '../../styles/Home.module.css';
 import PhysicsBox from '../../classes/PhysicsBox';
 import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 const SectionFour = () => {
     const physicsBoxesRef = useRef<PhysicsBox[] | null>(null);
     useEffect(() => {
-        physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
-            return new PhysicsBox(elem, {
-                radius: {
-                    unit: 'vw',
-                    value: 8,
-                },
-                minRadius: {
-                    unit: 'px',
-                    value: 100,
-                },
-                maxRadius: {
-                    unit: 'vw',
-                    value: 8,
-                },
-                // radius: {
-                //     unit: 'vw',
-                //     value: 2,
-                // },
-                // minRadius: {
-                //     unit: 'px',
-                //     value: 50,
-                // },
-                // maxRadius: {
-                //     unit: 'vw',
-                //     value: 2,
-                // },
-            });
+        ScrollTrigger.create({
+            trigger: '.services-section',
+            start: 'clamp(top bottom-=70%)',
+            end: 'top top',
+            markers: false,
+            once: true,
+            onEnter: () => {
+                console.log('start');
+                physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
+                    return new PhysicsBox(elem, {
+                        radius: {
+                            unit: 'vw',
+                            value: 8,
+                        },
+                        minRadius: {
+                            unit: 'px',
+                            value: 100,
+                        },
+                        maxRadius: {
+                            unit: 'vw',
+                            value: 8,
+                        },
+                        // radius: {
+                        //     unit: 'vw',
+                        //     value: 2,
+                        // },
+                        // minRadius: {
+                        //     unit: 'px',
+                        //     value: 50,
+                        // },
+                        // maxRadius: {
+                        //     unit: 'vw',
+                        //     value: 2,
+                        // },
+                    });
+                });
+            },
         });
         return () => {
             physicsBoxesRef.current?.forEach((item) => item.destroy());
         };
     }, []);
     return (
-        <div className={styles.sectionFour} id="#services">
+        <div className={`${styles.sectionFour} services-section`} id="#services">
             <div className="container-full">
                 <div className={styles.sectionFourWrapper}>
                     <h3 className={styles.servicesHead}>— Services —</h3>
