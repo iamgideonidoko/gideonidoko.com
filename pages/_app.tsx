@@ -109,10 +109,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         if (cursorElement) {
             cursorRef.current = new Cursor(cursorElement);
         }
-        const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
-        if (canvasElement) {
-            canvasRef.current = new Canvas(canvasElement);
-        }
 
         // ANALYTICS
         if (typeof window !== 'undefined') {
@@ -129,6 +125,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, []);
 
     useEffect(() => {
+        const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
+        if (canvasElement) {
+            canvasRef.current = new Canvas(canvasElement);
+        }
+
         NProgress.configure({ showSpinner: false });
 
         router.events.on('routeChangeStart', handleRouteChangeStart);

@@ -9,44 +9,50 @@ gsap.registerPlugin(ScrollTrigger);
 const SectionFour = () => {
     const physicsBoxesRef = useRef<PhysicsBox[] | null>(null);
     useEffect(() => {
-        ScrollTrigger.create({
-            trigger: '.services-section',
-            start: 'clamp(top bottom-=70%)',
-            end: 'top top',
-            markers: false,
-            once: true,
-            onEnter: () => {
-                console.log('start');
-                physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
-                    return new PhysicsBox(elem, {
-                        radius: {
-                            unit: 'vw',
-                            value: 8,
+        try {
+            ScrollTrigger.create({
+                trigger: '.services-section',
+                start: 'clamp(top bottom-=70%)',
+                end: 'top top',
+                markers: false,
+                once: true,
+                onEnter: () => {
+                    console.log('start');
+                    physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map(
+                        (elem) => {
+                            return new PhysicsBox(elem, {
+                                radius: {
+                                    unit: 'vw',
+                                    value: 8,
+                                },
+                                minRadius: {
+                                    unit: 'px',
+                                    value: 100,
+                                },
+                                maxRadius: {
+                                    unit: 'vw',
+                                    value: 8,
+                                },
+                                // radius: {
+                                //     unit: 'vw',
+                                //     value: 2,
+                                // },
+                                // minRadius: {
+                                //     unit: 'px',
+                                //     value: 50,
+                                // },
+                                // maxRadius: {
+                                //     unit: 'vw',
+                                //     value: 2,
+                                // },
+                            });
                         },
-                        minRadius: {
-                            unit: 'px',
-                            value: 100,
-                        },
-                        maxRadius: {
-                            unit: 'vw',
-                            value: 8,
-                        },
-                        // radius: {
-                        //     unit: 'vw',
-                        //     value: 2,
-                        // },
-                        // minRadius: {
-                        //     unit: 'px',
-                        //     value: 50,
-                        // },
-                        // maxRadius: {
-                        //     unit: 'vw',
-                        //     value: 2,
-                        // },
-                    });
-                });
-            },
-        });
+                    );
+                },
+            });
+        } catch (err) {
+            console.error('ERROR: ', err);
+        }
         return () => {
             physicsBoxesRef.current?.forEach((item) => item.destroy());
         };
