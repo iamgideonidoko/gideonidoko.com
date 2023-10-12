@@ -22,7 +22,7 @@ const SectionFive = ({}) => {
     }, []);
 
     return (
-        <div className={styles.sectionFive}>
+        <div className={`${styles.sectionFive} section-five`}>
             <div className="container-full">
                 <div className={styles.sectionFiveWrapper}>
                     <h3 className={styles.servicesHead}>— Articles —</h3>
