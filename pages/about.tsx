@@ -37,13 +37,16 @@ const About = () => {
                 <div className="container-max-1248px">
                     <div className={styles.aboutSectionOne}>
                         <div>
-                            <div className={styles.photoWrapper}>
-                                <img
-                                    src="/assets/img/Ifex.JPG"
-                                    alt="Gideon Idoko"
-                                    style={{ maxWidth: '100%' }}
-                                    width={330}
-                                />
+                            <div className={styles.profileImgWrapper}>
+                                <div className="gooey__image">
+                                    <img
+                                        src="/assets/img/gideon.jpeg"
+                                        data-hover="/assets/img/gideon-hover.jpeg"
+                                        alt="Gideon Idoko"
+                                        style={{ maxWidth: '100%' }}
+                                        width={330}
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div>

@@ -33,9 +33,11 @@ const Footer = () => {
                         elem,
                         {
                             letterSpacing: '0.5em',
+                            opacity: 0,
                         },
                         {
                             letterSpacing: '0em',
+                            opacity: 1,
                         },
                     );
                     timeLineRefs.current.push(tl);
@@ -88,16 +90,14 @@ const Footer = () => {
                 <p className="footer-question">GOT A PROJECT IN MIND?</p>
                 <h3 className="footer-main-heading">LET&apos;S CONNECT</h3>
                 <div className="write-msg-btn">
-                    <Link href="/about">
-                        <button className="scroll-button">
-                            <div className="button__deco button__deco--2"></div>
-                            <div className="button__deco button__deco--1"></div>
-                            <span className="button__text button__text__sectionone">
-                                <span className="button__text-inner footer-write-text">
-                                    WRITE A <br /> &nbsp;&nbsp;MESSAGE
-                                </span>
+                    <Link href="/about" className="scroll-button">
+                        <div className="button__deco button__deco--2"></div>
+                        <div className="button__deco button__deco--1"></div>
+                        <span className="button__text button__text__sectionone">
+                            <span className="button__text-inner footer-write-text">
+                                WRITE A <br /> &nbsp;&nbsp;MESSAGE
                             </span>
-                        </button>
+                        </span>
                     </Link>
                 </div>
             </div>

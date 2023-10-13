@@ -112,6 +112,19 @@
 	padding: 6rem 0;
 }
 
+.projectImgWrapper {
+	max-width: 100%;
+}
+
+.projectImgWrapper > div {
+	width: 100%;
+}
+
+.projectImgWrapper img {
+	width: 100%;
+	height: auto;
+}
+
 .projectsHead {
 	font-size: 5rem;
 	/* font-size: calc(20px + (50-20) * ((100vw - 400px) / (1280 - 400))); */
@@ -175,11 +188,19 @@
 
 
 .projectSectionOne p {
-	margin: 1.5vw 0 0 0;
+	margin: 1vw 0 1.5vw;
 	font-weight: 400;
 	z-index: 3;
-	padding-bottom: 1rem;
-	font-size: clamp(1.6rem, 1.8vw, 1.8vw);
+	padding-bottom: 0.2em;
+	line-height: 1.2em !important;
+}
+
+.projectAbout {
+	font-size: clamp(1.6rem, 1.6vw, 1.6vw);
+}
+
+.projectRole, .projectStack {
+	font-size: clamp(1.4rem, 1.2vw, 1.2vw);
 }
 
 .projectSectionTwo {
@@ -199,6 +220,7 @@
 	-moz-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
 	-ms-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
 	-o-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
+	width: 100%;
 }
 
 .projectStyleOne:hover img,
@@ -316,6 +338,11 @@
 	align-items: start;
 	justify-content: start;
 	transform: translateY(-2em)
+}
+
+
+.sec2BottomSeeMoreText {
+	font-size: 1.3rem !important;
 }
 
 /*>>>>>>>SECTION THREE<<<<<<<*/
