@@ -217,8 +217,8 @@ const SectionTwo = () => {
                                     <div className={styles.projectImgWrapper}>
                                         <div className="gooey__image">
                                             <img
-                                                src={project.cover1}
-                                                data-hover={project.cover2}
+                                                src={project.cover2}
+                                                data-hover={project.cover1}
                                                 alt={project.alt}
                                                 style={{ maxWidth: '100%' }}
                                                 // width={330}
