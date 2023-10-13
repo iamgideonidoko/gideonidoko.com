@@ -45,9 +45,12 @@ const Header = ({
                 </div>
                 {/* <FullscreenSwitch isNavOpen={isNavOpen} /> */}
                 <div className="get-in-touch-desktop">
-                    <Link href="/contact" className="animated-button animated-button--pallene__outline">
+                    <a
+                        href="mailto:iamgideonidoko@gmail.com?subject=I%20want%20to%20connect%20with%20you&body=Hello%2C%20I%27m%20..."
+                        className="animated-button animated-button--pallene__outline"
+                    >
                         AVAILABLE FOR FREELANCE
-                    </Link>
+                    </a>
                 </div>
 
                 {

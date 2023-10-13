@@ -90,7 +90,10 @@ const Footer = () => {
                 <p className="footer-question">GOT A PROJECT IN MIND?</p>
                 <h3 className="footer-main-heading">LET&apos;S CONNECT</h3>
                 <div className="write-msg-btn">
-                    <Link href="/about" className="scroll-button">
+                    <a
+                        href="mailto:iamgideonidoko@gmail.com?subject=I%20want%20to%20connect%20with%20you&body=Hello%2C%20I%27m%20..."
+                        className="scroll-button"
+                    >
                         <div className="button__deco button__deco--2"></div>
                         <div className="button__deco button__deco--1"></div>
                         <span className="button__text button__text__sectionone">
@@ -98,7 +101,7 @@ const Footer = () => {
                                 WRITE A <br /> &nbsp;&nbsp;MESSAGE
                             </span>
                         </span>
-                    </Link>
+                    </a>
                 </div>
             </div>
             <div className="footer-footer">
