@@ -17,7 +17,6 @@ const SectionFour = () => {
                 markers: false,
                 once: true,
                 onEnter: () => {
-                    console.log('start');
                     physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map(
                         (elem) => {
                             return new PhysicsBox(elem, {

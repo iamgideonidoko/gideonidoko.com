@@ -403,9 +403,6 @@ export const embedHtml = (html: string) => {
     const embedBoxes = html.match(extractEmbedRegex);
     // const codeBlocks = html.match(codeBlockRegex);
 
-    console.log('embedBoxes => ', embedBoxes);
-    // console.log('codeBlocks => ', codeBlocks);
-
     if (embedBoxes) {
         embedBoxes.forEach((box) => {
             // strip opening and closing tags
