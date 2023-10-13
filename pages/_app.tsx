@@ -177,6 +177,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         return () => {
             console.log('useeffect cleanup');
+            canvasRef.current?.cleanUp();
             router.events.off('routeChangeStart', handleRouteChangeStart);
             router.events.off('routeChangeComplete', handleRouteChangeComplete);
             router.events.off('routeChangeError', handleRouteChangeError);

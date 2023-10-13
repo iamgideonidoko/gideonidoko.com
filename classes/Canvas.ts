@@ -96,4 +96,17 @@ export default class Canvas {
             });
         if (this.renderer && this.scene && this.camera) this.renderer.render(this.scene, this.camera);
     }
+
+    // clean up the canvas
+    public cleanUp() {
+        if (this.gooeyImages)
+            this.gooeyImages.forEach((gooeyImage) => {
+                gooeyImage.material?.dispose();
+                gooeyImage.geometry?.dispose();
+                if (gooeyImage.mesh) {
+                    this.scene?.remove(gooeyImage.mesh);
+                }
+            });
+        this.renderer?.dispose();
+    }
 }
