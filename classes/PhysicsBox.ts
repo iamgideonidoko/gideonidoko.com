@@ -88,6 +88,7 @@ export default class PhysicsBox {
     }
 
     private calculateBoxHeight() {
+        return;
         const heightOffset = this.itemRadius * 2;
         const itemRows = Math.floor(this.defaultBoxRect.width / (this.itemRadius * 2));
         const itemColumns = Math.ceil(this.items.length / itemRows);

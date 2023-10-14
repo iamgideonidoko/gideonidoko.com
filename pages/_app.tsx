@@ -93,13 +93,14 @@ function MyApp({ Component, pageProps }: AppProps) {
     // EFFECTS
 
     useEffect(() => {
-        if (!pathname.match(/\/blog\/+/g) && !pathname.match(/\/admin\/+/g)) {
+        if (!pathname.startsWith('/blog/') && !pathname.startsWith('/admin/')) {
+            console.log('YES SCROLL');
             // enable smooth scrolling
             lenisRef.current = new Lenis({
                 lerp: 0.05,
                 smoothTouch: true,
                 smoothWheel: true,
-                syncTouch: true,
+                syncTouch: false,
                 gestureOrientation: 'both',
             });
 
@@ -109,13 +110,18 @@ function MyApp({ Component, pageProps }: AppProps) {
                 //
             });
             const scrollFn = (time: number) => {
-                lenisRef.current?.raf(time); // Runs lenis' requestAnimationFrame method
-                requestAnimationFrame(scrollFn);
+                if (lenisRef.current) {
+                    lenisRef.current.raf(time); // Runs lenis' requestAnimationFrame method
+                    requestAnimationFrame(scrollFn);
+                }
             };
             requestAnimationFrame(scrollFn); // Start the animation frame loop
+        } else {
+            console.log('NO SCROLL');
         }
         return () => {
             lenisRef.current?.destroy();
+            lenisRef.current = null;
             window.lenis = undefined;
         };
     }, [pathname]);
@@ -200,7 +206,10 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
-            <div className={!isNavOpen ? 'mobileNavSection' : 'mobileNavSection addNegativeIndex'}>
+            <div
+                className={!isNavOpen ? 'mobileNavSection' : 'mobileNavSection addNegativeIndex'}
+                suppressHydrationWarning
+            >
                 {store.getState().auth.isAuthenticated && (
                     <div className="mobileNavAdminMenu">
                         <div>
@@ -260,7 +269,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     </ul>
                 </nav>
             </div>
-            <div style={{ position: 'absolute', top: 0, left: 0 }}>
+            <div style={{ position: 'absolute', top: 0, left: 0 }} suppressHydrationWarning>
                 <svg className="cursor" width="140" height="140" viewBox="0 0 140 140">
                     <defs>
                         <filter

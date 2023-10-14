@@ -29,7 +29,8 @@ const About = () => {
                                 },
                                 minRadius: {
                                     unit: 'px',
-                                    value: 70,
+                                    // value: 70,
+                                    value: 50,
                                 },
                                 maxRadius: {
                                     unit: 'vw',
@@ -133,7 +134,6 @@ const About = () => {
                     <div className={`${styles.aboutStack} about-stack-section`}>
                         <h2>Stack {`<Tools / Languages / Frameworks / Libraries>`}</h2>
                         <ul className="physics--box">
-                            <li className="physics--box__item">HTML & CSS</li>
                             <li className="physics--box__item">SCSS</li>
                             <li className="physics--box__item">Bootstrap</li>
                             <li className="physics--box__item">JavaScript</li>

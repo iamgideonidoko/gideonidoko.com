@@ -63,8 +63,8 @@
 	position: relative;
 	display: flex;
 	border: 1px solid var(--font-color);
-	width: clamp(14rem, 6vw, 6vw);
-	height: clamp(14rem, 6vw, 6vw);
+	width: clamp(6rem, 6vw, 6vw);
+	height: clamp(6rem, 6vw, 6vw);
 	/* width: 15rem;
 	height: 15rem; */
 	justify-content: center;
@@ -76,7 +76,7 @@
 	overflow: hidden;
 	user-select: none;
 	cursor: grab;
-	visibility: hidden;
+	/* visibility: hidden; */
 }
 
 .aboutStack ul li:hover {
