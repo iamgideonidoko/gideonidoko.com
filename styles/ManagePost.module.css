@@ -25,7 +25,7 @@
 	background: var(--pri-blue-normal);
 	border: 2px solid var(--pri-blue-normal);
 	border-radius: 0.6rem;
-	color: rgba(255, 255, 255, 0.8);
+	color: var(--pri-neutral-inverse)
 }
 
 .deletePostBtn {
@@ -128,7 +128,7 @@
 	border-radius: 0.5rem;
 	cursor: pointer;
 	background: var(--pri-blue-normal);
-	color: rgba(255, 255, 255, 0.9);
+	color: var(--pri-neutral-inverse);
 	margin-right: 1rem;
 }
 

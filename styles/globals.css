@@ -743,7 +743,7 @@ body::-webkit-scrollbar-track {
 
 
 .uploadConfirmBtn {
-	background-color: var(--pri-blue-normal) !important;
+	background-color: black !important;
 }
 
 .uploadConfirmBtn:hover {

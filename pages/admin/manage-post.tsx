@@ -386,7 +386,7 @@ const ManagePost = ({}) => {
                         ) : (
                             <Fragment>
                                 {/*MANAGE POST PAGE*/}
-                                <div className={styles.managePostWrap}>
+                                <div className={styles.managePostWrap} data-lenis-prevent>
                                     <h1>Manage Post</h1>
                                     <p>Select a post to manage. You can only manage posts created by you.</p>
 

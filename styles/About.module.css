@@ -76,7 +76,7 @@
 	overflow: hidden;
 	user-select: none;
 	cursor: grab;
-	/* visibility: hidden; */
+	visibility: hidden;
 }
 
 .aboutStack ul li:hover {

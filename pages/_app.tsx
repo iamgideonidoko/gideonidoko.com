@@ -27,7 +27,6 @@ import Lenis from '@studio-freight/lenis';
 import Cursor from '../classes/Cursor';
 import ButtonCtrl from '../classes/ButtonCtrl';
 import Canvas from '../classes/Canvas';
-import { usePathname } from 'next/navigation';
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -51,7 +50,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
 
     const router = useRouter();
-    const pathname = usePathname();
 
     const shouldHaveHeader = pageWithoutHeader.indexOf(router.pathname) === -1;
     const shouldHaveFooter = pageWithoutFooter.indexOf(router.pathname) === -1;
@@ -78,6 +76,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             }, 1000);
         }
         NProgress.done();
+        console.log('routing done!');
     };
 
     const handleRouteChangeError = () => {
@@ -93,38 +92,28 @@ function MyApp({ Component, pageProps }: AppProps) {
     // EFFECTS
 
     useEffect(() => {
-        if (!pathname.startsWith('/blog/') && !pathname.startsWith('/admin/')) {
-            console.log('YES SCROLL');
-            // enable smooth scrolling
-            lenisRef.current = new Lenis({
-                lerp: 0.05,
-                smoothTouch: true,
-                smoothWheel: true,
-                syncTouch: false,
-                gestureOrientation: 'both',
-            });
+        // enable smooth scrolling
+        lenisRef.current = new Lenis({
+            lerp: 0.05,
+            smoothTouch: true,
+            smoothWheel: true,
+            syncTouch: true,
+            gestureOrientation: 'both',
+        });
 
-            window.lenis = lenisRef.current;
+        window.lenis = lenisRef.current;
 
-            lenisRef.current.on('scroll', () => {
-                //
-            });
-            const scrollFn = (time: number) => {
-                if (lenisRef.current) {
-                    lenisRef.current.raf(time); // Runs lenis' requestAnimationFrame method
-                    requestAnimationFrame(scrollFn);
-                }
-            };
-            requestAnimationFrame(scrollFn); // Start the animation frame loop
-        } else {
-            console.log('NO SCROLL');
-        }
-        return () => {
-            lenisRef.current?.destroy();
-            lenisRef.current = null;
-            window.lenis = undefined;
+        lenisRef.current.on('scroll', () => {
+            //
+        });
+        const scrollFn = (time: number) => {
+            if (lenisRef.current) {
+                lenisRef.current.raf(time); // Runs lenis' requestAnimationFrame method
+                requestAnimationFrame(scrollFn);
+            }
         };
-    }, [pathname]);
+        requestAnimationFrame(scrollFn); // Start the animation frame loop
+    }, []);
 
     useEffect(() => {
         const mainWrapper = window.document.querySelector('.main-wrapper') as HTMLDivElement;
