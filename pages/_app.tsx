@@ -55,7 +55,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     const shouldHaveFooter = pageWithoutFooter.indexOf(router.pathname) === -1;
 
     // REFS
-    const lenisRef = useRef<Lenis | null>(null);
     const cursorRef = useRef<Cursor | null>(null);
     const canvasRef = useRef<Canvas | null>(null);
 
@@ -92,30 +91,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     // EFFECTS
 
     useEffect(() => {
-        // enable smooth scrolling
-        lenisRef.current = new Lenis({
-            lerp: 0.05,
-            smoothTouch: true,
-            smoothWheel: true,
-            syncTouch: true,
-            gestureOrientation: 'both',
-        });
-
-        window.lenis = lenisRef.current;
-
-        lenisRef.current.on('scroll', () => {
-            //
-        });
-        const scrollFn = (time: number) => {
-            if (lenisRef.current) {
-                lenisRef.current.raf(time); // Runs lenis' requestAnimationFrame method
-                requestAnimationFrame(scrollFn);
-            }
-        };
-        requestAnimationFrame(scrollFn); // Start the animation frame loop
-    }, []);
-
-    useEffect(() => {
         const mainWrapper = window.document.querySelector('.main-wrapper') as HTMLDivElement;
         if (isNavOpen) {
             window.scrollTo(0, contentScrollPos.current);
@@ -147,6 +122,24 @@ function MyApp({ Component, pageProps }: AppProps) {
 
             gtag('config', 'G-QJ2RYXMK6E');
         }
+
+        // Enable Lenis scrolling
+        const lenis = new Lenis({
+            lerp: 0.05,
+            smoothTouch: true,
+            smoothWheel: true,
+            // syncTouch: true,
+            // gestureOrientation: 'both',
+        });
+
+        lenis.on('scroll', () => {
+            //
+        });
+        const scrollFn = (time: number) => {
+            lenis.raf(time); // Runs lenis' requestAnimationFrame method
+            requestAnimationFrame(scrollFn);
+        };
+        requestAnimationFrame(scrollFn); // Start the animation frame loop
     }, []);
 
     useEffect(() => {

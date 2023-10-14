@@ -39,7 +39,8 @@
 
 .welcomeLine {
 	/* font-size: clamp(3.2rem, 8vw, 22rem); */
-	font-size: clamp(3.2rem, 8vw, 8vw);
+	/* font-size: clamp(3.2rem, 8vw, 8vw); */
+	font-size: clamp(4rem, 8vw, 8vw);
 	text-align: center;
 	margin: 2rem 0;
 	/* font-family: var(--header-font) !important; */
@@ -305,6 +306,14 @@
 	grid-template-columns: repeat(4, 1fr);
 	align-items: center;
 	margin-top: 1.5rem;
+}
+
+.hmMobile {
+	display: none;
+}
+
+.homeMeta a:hover {
+	text-decoration: underline;
 }
 
 .homeMeta > div:last-child {
@@ -680,6 +689,8 @@
 		transform: rotate(270deg) scale(0.75);
 		bottom: 4rem
 	}
+
+
 }
 
 @media screen and (max-width: 638px) {
@@ -690,6 +701,14 @@
 
 	.briefInfo p {
 		width: calc(65% + 1vw);
+	}
+
+	.hmDesktop {
+		display: none;
+	}
+
+	.hmMobile {
+		display: inline;
 	}
 }
 

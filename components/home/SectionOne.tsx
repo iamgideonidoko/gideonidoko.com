@@ -44,7 +44,7 @@ const SectionOne = () => {
                 </button>
             </div>
             <div className={`${styles.scrollText}`}>
-                01//04 — SCROLL <i className="neu-down-lg"></i>
+                01//05 — SCROLL <i className="neu-down-lg"></i>
             </div>
 
             <div>
