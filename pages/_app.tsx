@@ -27,6 +27,7 @@ import Lenis from '@studio-freight/lenis';
 import Cursor from '../classes/Cursor';
 import ButtonCtrl from '../classes/ButtonCtrl';
 import Canvas from '../classes/Canvas';
+import { usePathname } from 'next/navigation';
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -50,11 +51,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
 
     const router = useRouter();
+    const pathname = usePathname();
 
     const shouldHaveHeader = pageWithoutHeader.indexOf(router.pathname) === -1;
     const shouldHaveFooter = pageWithoutFooter.indexOf(router.pathname) === -1;
 
     // REFS
+    const lenisRef = useRef<Lenis | null>(null);
     const cursorRef = useRef<Cursor | null>(null);
     const canvasRef = useRef<Canvas | null>(null);
 
@@ -91,6 +94,38 @@ function MyApp({ Component, pageProps }: AppProps) {
     // EFFECTS
 
     useEffect(() => {
+        console.log('PATHNAME: ', pathname);
+        if (!pathname.match(/\/blog\/+/g)) {
+            console.log('YES LENIS');
+            // enable smooth scrolling
+            lenisRef.current = new Lenis({
+                lerp: 0.05,
+                smoothTouch: true,
+                smoothWheel: true,
+                syncTouch: true,
+                gestureOrientation: 'both',
+            });
+
+            window.lenis = lenisRef.current;
+
+            lenisRef.current.on('scroll', () => {
+                //
+            });
+            const scrollFn = (time: number) => {
+                lenisRef.current?.raf(time); // Runs lenis' requestAnimationFrame method
+                requestAnimationFrame(scrollFn);
+            };
+            requestAnimationFrame(scrollFn); // Start the animation frame loop
+        } else {
+            console.log('NO LENIS');
+        }
+        return () => {
+            lenisRef.current?.destroy();
+            window.lenis = undefined;
+        };
+    }, [pathname]);
+
+    useEffect(() => {
         const mainWrapper = window.document.querySelector('.main-wrapper') as HTMLDivElement;
         if (isNavOpen) {
             window.scrollTo(0, contentScrollPos.current);
@@ -104,23 +139,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         (async () => await refreshUserTokens())();
         // load an initialize a firebase app
         loadFirebase();
-        // enable smooth scrolling
-        const lenis = new Lenis({
-            lerp: 0.05,
-            smoothTouch: true,
-            smoothWheel: true,
-        });
-
-        window.lenis = lenis;
-
-        lenis.on('scroll', () => {
-            //
-        });
-        const scrollFn = (time: number) => {
-            lenis.raf(time); // Runs lenis' requestAnimationFrame method
-            requestAnimationFrame(scrollFn);
-        };
-        requestAnimationFrame(scrollFn); // Start the animation frame loop
 
         const cursorElement = document.querySelector<SVGElement>('.cursor');
         if (cursorElement) {
@@ -234,8 +252,16 @@ function MyApp({ Component, pageProps }: AppProps) {
                         </li>
                         <li>
                             <Link href="/contact" onClick={closeNav}>
-                                Get in touch
+                                Contact
                             </Link>
+                        </li>
+                        <li>
+                            <a
+                                href="mailto:iamgideonidoko@gmail.com?subject=I%20want%20to%20connect%20with%20you&body=Hello%2C%20I%27m%20..."
+                                // className="animated-button animated-button--pallene__outline"
+                            >
+                                AVAILABLE FOR FREELANCE
+                            </a>
                         </li>
                     </ul>
                 </nav>

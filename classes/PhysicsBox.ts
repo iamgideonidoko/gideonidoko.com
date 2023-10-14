@@ -8,6 +8,7 @@ export default class PhysicsBox {
     private items: NodeListOf<HTMLElement>;
     private itemRadius: number;
     private boxRect: DOMRect;
+    private defaultBoxRect: DOMRect;
     private itemBodies: Body[];
     private engine: Engine;
     private mouseConstraint?: MouseConstraint;
@@ -36,6 +37,10 @@ export default class PhysicsBox {
                 ? this.itemOptions.maxRadius.value
                 : vwToPx(this.itemOptions.maxRadius.value),
         );
+
+        this.defaultBoxRect = this.box.getBoundingClientRect();
+
+        this.calculateBoxHeight();
 
         this.boxRect = this.box.getBoundingClientRect();
 
@@ -82,6 +87,14 @@ export default class PhysicsBox {
         this.debugMode ? this.initDebugOperation() : this.initOperation();
     }
 
+    private calculateBoxHeight() {
+        const heightOffset = this.itemRadius * 2;
+        const itemRows = Math.floor(this.defaultBoxRect.width / (this.itemRadius * 2));
+        const itemColumns = Math.ceil(this.items.length / itemRows);
+        const newBoxHeight = itemColumns * (this.itemRadius * 2) + heightOffset;
+        this.box.style.height = `clamp(${newBoxHeight}px, 50vw, 100rem);`;
+    }
+
     private bindEvent() {
         window.addEventListener('resize', () => {
             this.onResize();
@@ -98,6 +111,7 @@ export default class PhysicsBox {
     }
 
     private onResize() {
+        this.calculateBoxHeight();
         this.boxRect = this.box.getBoundingClientRect();
         this.itemRadius = clamp(
             this.itemOptions.radius.unit === 'px'

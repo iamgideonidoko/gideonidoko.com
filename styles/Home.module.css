@@ -317,6 +317,7 @@
 	margin-bottom: 6vw;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 1em;
 }
 
 .sec2Header p {
@@ -686,6 +687,10 @@
 	.sectionThree h4 {
 		font-size: 1.8rem;
 	}
+
+	.briefInfo p {
+		width: calc(65% + 1vw);
+	}
 }
 
 @media screen and (max-width: 579px) {
@@ -727,6 +732,16 @@
 		width: 2rem;
 		height: 2rem;
 		margin-right: 1rem;
+	}
+
+	.briefInfo p {
+		width: 100%;
+	}
+
+	.learnMoreAboutBtn {
+		position: relative;
+		top: 1em;
+		left: 0;
 	}
 
 }

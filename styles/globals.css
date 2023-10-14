@@ -162,7 +162,7 @@
 
 html {
 	font-size: 62.5%;
-	/* scroll-behavior: smooth; */
+	scroll-behavior: smooth;
 	width: 100%;
 	overflow-x: hidden;
 	overflow-y: visible;
@@ -184,6 +184,26 @@ body {
 	width: 100%;
 	position: relative;
 	/* background-image: var(--code-bg) !important; */
+}
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 p:not(.project-abt) {

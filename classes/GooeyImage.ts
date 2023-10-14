@@ -72,7 +72,8 @@ export default class GooeyImage {
 
         this.hasClicked = false;
 
-        this.isMobile = window.matchMedia('(max-width: 767px)').matches;
+        // this.isMobile = window.matchMedia('(max-width: 767px)').matches;
+        this.isMobile = false;
 
         this.loader = new THREE.TextureLoader();
         if (this.img.src && this.img.dataset.hover) {

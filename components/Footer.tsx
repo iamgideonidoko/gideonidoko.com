@@ -66,7 +66,7 @@ const Footer = () => {
                             height: '80%',
                             xPercent: 5,
                             yPercent: 12.5,
-                            opacity: 1,
+                            opacity: 0.8,
                         },
                     );
                     timeLineRefs.current.push(tl);

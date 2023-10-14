@@ -82,7 +82,8 @@
 	padding: 1.5rem;
 	/* background: var(--bg-color); */
 	/* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2); */
-	box-shadow: 1px 1px 5px 1px var(--blogrighth3-shadow);
+	/* box-shadow: 1px 1px 5px 1px var(--blogrighth3-shadow); */
+	box-shadow: none;
 	z-index: 4;
 	position: relative;
 	border-radius: 1rem;

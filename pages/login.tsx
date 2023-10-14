@@ -131,11 +131,18 @@ const Login = ({}) => {
                                                     }
                                                 </div>
                                                 <div className={styles.submitFC}>
-                                                    <input
+                                                    <button
+                                                        type="submit"
+                                                        disabled={isAttemptingLogin}
+                                                        className={`animated-button animated-button--pallene__solid ${styles.aboutSeeMore}`}
+                                                    >
+                                                        {isAttemptingLogin ? 'Attempting Login...' : 'Log in'}
+                                                    </button>
+                                                    {/* <input
                                                         type="submit"
                                                         name="submit"
                                                         value={isAttemptingLogin ? 'Attempting Login...' : 'Log in'}
-                                                    />
+                                                    /> */}
                                                 </div>
                                             </div>
                                         </form>
