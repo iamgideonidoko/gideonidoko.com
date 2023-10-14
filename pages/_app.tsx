@@ -63,7 +63,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     // HANDLERS
     const handleRouteChangeStart = () => {
-        console.log('route change start');
         const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
         if (canvasElement) {
             canvasElement.style.visibility = 'hidden';
@@ -94,9 +93,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     // EFFECTS
 
     useEffect(() => {
-        console.log('PATHNAME: ', pathname);
-        if (!pathname.match(/\/blog\/+/g)) {
-            console.log('YES LENIS');
+        if (!pathname.match(/\/blog\/+/g) && !pathname.match(/\/admin\/+/g)) {
             // enable smooth scrolling
             lenisRef.current = new Lenis({
                 lerp: 0.05,
@@ -116,8 +113,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                 requestAnimationFrame(scrollFn);
             };
             requestAnimationFrame(scrollFn); // Start the animation frame loop
-        } else {
-            console.log('NO LENIS');
         }
         return () => {
             lenisRef.current?.destroy();
@@ -170,7 +165,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         router.events.on('routeChangeStart', handleRouteChangeStart);
         router.events.on('routeChangeComplete', handleRouteChangeComplete);
         router.events.on('routeChangeError', handleRouteChangeError);
-        router.events.on('beforeHistoryChange', () => console.log('before history change'));
 
         // Register when route changes
         if (cursorRef.current) {
