@@ -100,6 +100,24 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, [isNavOpen]);
 
     useEffect(() => {
+        // Enable Lenis scrolling
+        const lenis = new Lenis({
+            lerp: 0.05,
+            smoothTouch: true,
+            smoothWheel: true,
+            syncTouch: true,
+            gestureOrientation: 'both',
+        });
+
+        lenis.on('scroll', () => {
+            //
+        });
+        const scrollFn = (time: number) => {
+            lenis.raf(time); // Runs lenis' requestAnimationFrame method
+            requestAnimationFrame(scrollFn);
+        };
+        requestAnimationFrame(scrollFn); // Start the animation frame loop
+
         // check for token and refresh on page load
         (async () => await refreshUserTokens())();
         // load an initialize a firebase app
@@ -122,24 +140,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
             gtag('config', 'G-QJ2RYXMK6E');
         }
-
-        // Enable Lenis scrolling
-        const lenis = new Lenis({
-            lerp: 0.05,
-            smoothTouch: true,
-            smoothWheel: true,
-            // syncTouch: true,
-            // gestureOrientation: 'both',
-        });
-
-        lenis.on('scroll', () => {
-            //
-        });
-        const scrollFn = (time: number) => {
-            lenis.raf(time); // Runs lenis' requestAnimationFrame method
-            requestAnimationFrame(scrollFn);
-        };
-        requestAnimationFrame(scrollFn); // Start the animation frame loop
     }, []);
 
     useEffect(() => {

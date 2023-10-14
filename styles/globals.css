@@ -162,7 +162,7 @@
 
 html {
 	font-size: 62.5%;
-	scroll-behavior: smooth;
+	/* scroll-behavior: smooth; */
 	width: 100%;
 	overflow-x: hidden;
 	overflow-y: visible;
@@ -189,22 +189,22 @@ body {
 html.lenis {
   height: auto;
 }
-
+/* 
 .lenis.lenis-smooth {
   scroll-behavior: auto;
-}
+} */
 
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
 
-.lenis.lenis-stopped {
+/* .lenis.lenis-stopped {
   overflow: hidden;
 }
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
-}
+} */
 
 p:not(.project-abt) {
 	line-height: 24px;
@@ -1005,7 +1005,7 @@ body::-webkit-scrollbar-track {
 	left: 0;
 	top: 0;
 	margin: 0 auto;
-	border: 0.8rem solid;
+	border: 0.3rem solid;
 	border-image: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.1turn, var(--c1) 0.15turn, var(--c2) 0.25turn) 30;
 	animation: borderRotate var(--d) linear infinite forwards;
 	/* background-color: #00000010; */

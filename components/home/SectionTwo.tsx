@@ -106,7 +106,7 @@ const SectionTwo = () => {
                     end: 'bottom 90%',
                     trigger: elem,
                     scrub: true,
-                    once: true,
+                    once: false,
                 },
             });
 
