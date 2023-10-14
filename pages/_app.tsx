@@ -102,7 +102,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     useEffect(() => {
         // Enable Lenis scrolling
         const lenis = new Lenis({
-            lerp: 0.05,
+            lerp: 0.1,
             smoothTouch: true,
             smoothWheel: true,
             syncTouch: true,
