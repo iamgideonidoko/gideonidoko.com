@@ -240,6 +240,30 @@ function MyApp({ Component, pageProps }: AppProps) {
                     </ul>
                 </nav>
             </div>
+            <div style={{ position: 'absolute', top: 0, left: 0 }}>
+                <svg className="cursor" width="140" height="140" viewBox="0 0 140 140">
+                    <defs>
+                        <filter
+                            id="filter-1"
+                            x="-50%"
+                            y="-50%"
+                            width="200%"
+                            height="200%"
+                            filterUnits="objectBoundingBox"
+                        >
+                            <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="10" result="warp" />
+                            <feDisplacementMap
+                                xChannelSelector="R"
+                                yChannelSelector="G"
+                                scale="60"
+                                in="SourceGraphic"
+                                in2="warp"
+                            />
+                        </filter>
+                    </defs>
+                    <circle className="cursor__inner" cx="70" cy="70" r="60" />
+                </svg>
+            </div>
             <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
                 <canvas id="canvas" />
                 <div className="noise-bg">backgroud</div>
@@ -249,21 +273,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <Component {...pageProps} />
                 {shouldHaveFooter && <Footer />}
             </div>
-            <svg className="cursor" width="140" height="140" viewBox="0 0 140 140">
-                <defs>
-                    <filter id="filter-1" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
-                        <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="10" result="warp" />
-                        <feDisplacementMap
-                            xChannelSelector="R"
-                            yChannelSelector="G"
-                            scale="60"
-                            in="SourceGraphic"
-                            in2="warp"
-                        />
-                    </filter>
-                </defs>
-                <circle className="cursor__inner" cx="70" cy="70" r="60" />
-            </svg>
         </Fragment>
     );
 }

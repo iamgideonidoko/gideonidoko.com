@@ -241,7 +241,12 @@ const SectionTwo = () => {
                         <div className="button__deco button__deco--1"></div>
                         <span className="button__text button__text__sectionone">
                             <span className={`button__text-inner ${styles.sec2BottomSeeMoreText}`}>
-                                SEE <br /> MORE <i className="neu-arrow"></i>
+                                <span>
+                                    <span>
+                                        SEE <i className="neu-arrow"></i>
+                                    </span>{' '}
+                                    <br /> <span>MORE </span>
+                                </span>
                             </span>
                         </span>
                     </a>

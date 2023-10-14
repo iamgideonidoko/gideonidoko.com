@@ -7,6 +7,7 @@ import { EventEmitter } from 'events';
 let mouse = { x: 0, y: 0 };
 if (typeof window !== 'undefined') {
     window.addEventListener('mousemove', (ev) => (mouse = getMousePos(ev)));
+    window.addEventListener('touchmove', (e) => e.preventDefault());
 }
 
 export default class Cursor extends EventEmitter {
@@ -26,6 +27,8 @@ export default class Cursor extends EventEmitter {
         this.DOM = { el: el };
         this.DOM.el.style.opacity = '0';
         this.DOM.circleInner = this.DOM.el.querySelector('.cursor__inner') as SVGElement;
+
+        this.DOM.circleInner.style.fill = 'none';
 
         this.filterId = '#filter-1';
         this.DOM.feTurbulence = document.querySelector(`${this.filterId} > feTurbulence`) as SVGElement;

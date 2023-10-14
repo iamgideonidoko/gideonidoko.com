@@ -96,11 +96,11 @@ const About = () => {
                         </div>
                         <div>
                             <p>
-                                I&apos;m a Software Engineer based in Nigeria. I&apos;m interested in learning, building
-                                positive solutions, developing unique experiences, sharing technical ideas, writing and
-                                community building. I go a long way to ensure the security, accessibility and usability
-                                of any product I work on and that they meet the business requirements; focusing on
-                                providing the best experience for their end users.
+                                I&apos;m a Nigeria-based Software Engineer interested in learning, building solutions
+                                with unique experiences, sharing technical ideas, writing and community building. I go a
+                                long way to ensure the security, accessibility and usability of any product I work on
+                                and that they meet the business requirements while focusing on providing the best
+                                experience for their end users.
                             </p>
 
                             <p>
