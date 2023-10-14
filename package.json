@@ -78,6 +78,9 @@
     "raw-loader": "^4.0.2",
     "typescript": "4.5.5"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "yarn run lint:configured"
