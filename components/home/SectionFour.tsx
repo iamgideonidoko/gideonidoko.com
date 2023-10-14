@@ -63,7 +63,7 @@ const SectionFour = () => {
                     <h3 className={styles.servicesHead}>— Services —</h3>
                     <div className={styles.servicesWrapper}>
                         <ul className="physics--box">
-                            <li className="physics--box__item">
+                            <li className="physics--box__item" data-lenis-prevent>
                                 <div>
                                     <h5>Product Development</h5>
                                     <p>
@@ -72,7 +72,7 @@ const SectionFour = () => {
                                     </p>
                                 </div>
                             </li>
-                            <li className="physics--box__item">
+                            <li className="physics--box__item" data-lenis-prevent>
                                 <div>
                                     <h5>User Friendly Products</h5>
                                     <p>
@@ -81,7 +81,7 @@ const SectionFour = () => {
                                     </p>
                                 </div>
                             </li>
-                            <li className="physics--box__item">
+                            <li className="physics--box__item" data-lenis-prevent>
                                 <div>
                                     <h5>Product Review</h5>
                                     <p>
@@ -90,7 +90,7 @@ const SectionFour = () => {
                                     </p>
                                 </div>
                             </li>
-                            <li className="physics--box__item">
+                            <li className="physics--box__item" data-lenis-prevent>
                                 <div>
                                     <h5>Ongoing Support</h5>
                                     <p>
@@ -99,7 +99,7 @@ const SectionFour = () => {
                                     </p>
                                 </div>
                             </li>
-                            <li className="physics--box__item">
+                            <li className="physics--box__item" data-lenis-prevent>
                                 <div>
                                     <h5>Tailored Development</h5>
                                     <p>
@@ -108,7 +108,7 @@ const SectionFour = () => {
                                     </p>
                                 </div>
                             </li>
-                            <li className="physics--box__item">
+                            <li className="physics--box__item" data-lenis-prevent>
                                 <div>
                                     <h5>Rigorous Testing</h5>
                                     <p>

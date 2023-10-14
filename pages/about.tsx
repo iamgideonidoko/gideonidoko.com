@@ -134,23 +134,57 @@ const About = () => {
                     <div className={`${styles.aboutStack} about-stack-section`}>
                         <h2>Stack {`<Tools / Languages / Frameworks / Libraries>`}</h2>
                         <ul className="physics--box">
-                            <li className="physics--box__item">SCSS</li>
-                            <li className="physics--box__item">Bootstrap</li>
-                            <li className="physics--box__item">JavaScript</li>
-                            <li className="physics--box__item">TypeScript</li>
-                            <li className="physics--box__item">GraphQL</li>
-                            <li className="physics--box__item">React</li>
-                            <li className="physics--box__item">React Native</li>
-                            <li className="physics--box__item">RTK</li>
-                            <li className="physics--box__item">NextJS</li>
-                            <li className="physics--box__item">NodeJS</li>
-                            <li className="physics--box__item">ExpressJS</li>
-                            <li className="physics--box__item">MongoDB</li>
-                            <li className="physics--box__item">Redis</li>
-                            <li className="physics--box__item">Firebase</li>
-                            <li className="physics--box__item">PHP</li>
-                            <li className="physics--box__item">MySQL</li>
-                            <li className="physics--box__item">Wordpress</li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                SCSS
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                Bootstrap
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                JavaScript
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                TypeScript
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                GraphQL
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                React
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                React Native
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                RTK
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                NextJS
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                NodeJS
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                ExpressJS
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                MongoDB
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                Redis
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                Firebase
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                PHP
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                MySQL
+                            </li>
+                            <li className="physics--box__item" data-lenis-prevent>
+                                Wordpress
+                            </li>
                         </ul>
                     </div>
 

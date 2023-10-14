@@ -9,7 +9,6 @@ import makeStore, { store } from '../store/store';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ThemeSwitch from '../components/ThemeSwitch';
-import FullscreenSwitch from '../components/FullscreenSwitch';
 import AdminMenu from '../components/AdminMenu';
 import Head from 'next/head';
 import { debounce } from 'debounce';
@@ -208,7 +207,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <button onClick={() => setIsNavOpen(true)} className="closeMenuBtn">
                         <i className="neu-close-lg"></i>Close Menu
                     </button>
-                    <FullscreenSwitch allowForMobile={true} />
+                    {/* <FullscreenSwitch allowForMobile={true} /> */}
                     <ThemeSwitch allowForMobile={true} />
                 </div>
 
