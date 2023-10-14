@@ -26,6 +26,10 @@ import Lenis from '@studio-freight/lenis';
 import Cursor from '../classes/Cursor';
 import ButtonCtrl from '../classes/ButtonCtrl';
 import Canvas from '../classes/Canvas';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+import gsap from 'gsap';
+
+gsap.registerPlugin(ScrollTrigger);
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -101,16 +105,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     useEffect(() => {
         // Enable Lenis scrolling
         const lenis = new Lenis({
-            lerp: 0.1,
+            lerp: 0.03,
             smoothTouch: true,
             smoothWheel: true,
             syncTouch: true,
             gestureOrientation: 'both',
         });
 
-        lenis.on('scroll', () => {
-            //
-        });
+        lenis.on('scroll', ScrollTrigger.update);
+
         const scrollFn = (time: number) => {
             lenis.raf(time); // Runs lenis' requestAnimationFrame method
             requestAnimationFrame(scrollFn);
