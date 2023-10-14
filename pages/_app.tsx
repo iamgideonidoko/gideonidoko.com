@@ -112,6 +112,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             gestureOrientation: 'both',
         });
 
+        window.lenis = lenis;
+
         lenis.on('scroll', ScrollTrigger.update);
 
         const scrollFn = (time: number) => {
