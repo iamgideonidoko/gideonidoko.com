@@ -1,120 +1,150 @@
 /* eslint-disable @next/next/no-img-element */
-// import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { SocialIcon } from 'react-social-icons';
-import { socialIconStyle } from '../helper';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+import gsap from 'gsap';
+import { useRouter } from 'next/router';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
     //get current year
     const date = new Date();
     const currentYear = date.getFullYear();
+    const router = useRouter();
+
+    const timeLineRefs = useRef<gsap.core.Timeline[]>([]);
+
+    useEffect(() => {
+        const articleSectionAvailable = document.querySelector('.section-five');
+        setTimeout(
+            () => {
+                [...document.querySelectorAll('.footer-main-heading')].forEach((elem) => {
+                    const tl = gsap.timeline({
+                        scrollTrigger: {
+                            markers: false,
+                            start: 'clamp(top bottom-=0%)',
+                            end: 'center center',
+                            trigger: elem,
+                            scrub: true,
+                        },
+                    });
+                    tl.fromTo(
+                        elem,
+                        {
+                            letterSpacing: '0.5em',
+                            opacity: 0,
+                        },
+                        {
+                            letterSpacing: '0em',
+                            opacity: 1,
+                        },
+                    );
+                    timeLineRefs.current.push(tl);
+                });
+                [...document.querySelectorAll('.footer-bg')].forEach((elem) => {
+                    const tl = gsap.timeline({
+                        scrollTrigger: {
+                            markers: false,
+                            start: 'clamp(top bottom-=50%)',
+                            end: 'top top',
+                            trigger: elem,
+                            scrub: true,
+                        },
+                    });
+                    tl.fromTo(
+                        elem,
+                        {
+                            width: '100%',
+                            height: '100%',
+                            xPercent: 0,
+                            yPercent: 0,
+                            opacity: -1,
+                        },
+                        {
+                            width: '90%',
+                            height: '80%',
+                            xPercent: 5,
+                            yPercent: 12.5,
+                            opacity: 0.8,
+                        },
+                    );
+                    timeLineRefs.current.push(tl);
+                });
+            },
+            articleSectionAvailable ? 3000 : 0,
+        );
+        return () => {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            timeLineRefs.current.forEach((tl) => tl.kill());
+        };
+    }, [router]);
 
     return (
         <footer className="footer">
-            <div className="container-max-1248px footer-wrapper">
-                <div className="footer-content-1">
-                    {/* <Link href="/">
-                        <a>
-                            <Image
-                                src="/assets/img/GideonIdokoDevLogo.png"
-                                className="site-footer-logo"
-                                alt="Gideon Idoko"
-                                width={27}
-                                height={34}
-                            />
+            <div className="footer-bg"></div>
+            <div className=" footer-wrapper">
+                <div>
+                    <img src="/assets/img/GideonIdokoDevLogo.png" className="site-footer-logo" alt="Gideon Idoko" />
+                </div>
+                <p className="footer-question">GOT A PROJECT IN MIND?</p>
+                <h3 className="footer-main-heading">LET&apos;S CONNECT</h3>
+                <div className="write-msg-btn">
+                    <a
+                        href="mailto:iamgideonidoko@gmail.com?subject=I%20want%20to%20connect%20with%20you&body=Hello%2C%20I%27m%20..."
+                        className="scroll-button"
+                    >
+                        <div className="button__deco button__deco--2"></div>
+                        <div className="button__deco button__deco--1"></div>
+                        <span className="button__text button__text__sectionone">
+                            <span className="button__text-inner footer-write-text">
+                                WRITE A <br /> &nbsp;&nbsp;MESSAGE
+                            </span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div className="footer-footer">
+                <div>
+                    <span>FEEL FREE TO CONNECT WITH ME ON SOCIAL</span>
+                </div>
+                <div>
+                    <span>
+                        <a
+                            href="https://twitter.com/IamGideonIdoko"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="animated-button animated-button--pallene__outlineless"
+                        >
+                            TWITTER
                         </a>
-                    </Link> */}
-                </div>
-                <div className="footer-content-2">
-                    <div>
-                        <h3 className="footer-h3-1">
-                            <Link href="/">
-                                <a>
-                                    <img
-                                        src="/assets/img/GideonIdokoDevLogo.png"
-                                        className="site-footer-logo"
-                                        alt="Gideon Idoko"
-                                    />
-                                </a>
-                            </Link>{' '}
-                            <span>Gideon Idoko</span>
-                        </h3>
-                        <p>
-                            I love building positive solutions with awesome technologies. I also give back to the
-                            community by sharing my experiences. <br /> <br /> In need of a developer?
-                        </p>
-                        <p className="lets-talk">
-                            <Link href="/contact">
-                                <a>
-                                    Let&apos;s talk <i className="neu-right-lg"></i>
-                                </a>
-                            </Link>
-                        </p>
-                        <div className="socials">
-                            <SocialIcon
-                                url="https://github.com/IamGideonIdoko"
-                                style={socialIconStyle()}
-                                bgColor="var(--font-color)"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            />
-                            <SocialIcon
-                                url="https://codepen.io/IamGideonIdoko"
-                                style={socialIconStyle()}
-                                bgColor="var(--font-color)"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            />
-                            <SocialIcon
-                                url="https://twitter.com/IamGideonIdoko"
-                                style={socialIconStyle()}
-                                fgColor="white"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            />
-                            <SocialIcon
-                                url="https://linkedin.com/in/IamGideonIdoko"
-                                style={socialIconStyle()}
-                                fgColor="white"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            />
-                        </div>
-                    </div>
-                    <div className="quick-links">
-                        <h4>Quick Links</h4>
-                        <ul>
-                            <li>
-                                <Link href="/">
-                                    <a>Home</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/blog">
-                                    <a>Blog</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/about">
-                                    <a>About</a>
-                                </Link>
-                            </li>
-                            {/*
-							<li><Link href="/#services"><a>Services</a></Link></li>
-							*/}
-                            <li>
-                                <Link href="/contact">
-                                    <a>Contact</a>
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="footer-content-3">
-                    <p>
-                        <i className="neu-code"></i> with <i className="neu-love"></i> by Gideon Idoko &copy;{' '}
-                        {currentYear}
-                    </p>
+                    </span>
+                    <span>
+                        <a
+                            href="https://linkedin.com/in/IamGideonIdoko"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="animated-button animated-button--pallene__outlineless"
+                        >
+                            LINKEDIN
+                        </a>
+                    </span>
+                    <span>
+                        <a
+                            href="https://instagram.com/IamGideonIdoko"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="animated-button animated-button--pallene__outlineless"
+                        >
+                            INSTAGRAM
+                        </a>
+                    </span>
+                    <span>
+                        <Link href="/contact">
+                            CONTACT <i className="neu-arrow"></i>
+                        </Link>
+                    </span>
+                    <span>&copy; {currentYear}</span>
                 </div>
             </div>
         </footer>

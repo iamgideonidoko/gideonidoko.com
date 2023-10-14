@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import '../styles/globals.css';
+import 'splitting/dist/splitting.css';
+import 'splitting/dist/splitting-cells.css';
 import React, { Fragment, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { createWrapper } from 'next-redux-wrapper';
@@ -9,7 +11,6 @@ import Footer from '../components/Footer';
 import ThemeSwitch from '../components/ThemeSwitch';
 import FullscreenSwitch from '../components/FullscreenSwitch';
 import AdminMenu from '../components/AdminMenu';
-import AnimatedCursor from 'react-animated-cursor';
 import Head from 'next/head';
 import { debounce } from 'debounce';
 import { saveState, refreshUserTokens } from '../helper';
@@ -22,6 +23,10 @@ import 'nprogress/nprogress.css';
 import { loadFirebase } from '../helper';
 import 'prismjs/themes/prism-tomorrow.css';
 // import Image from 'next/image';
+import Lenis from '@studio-freight/lenis';
+import Cursor from '../classes/Cursor';
+import ButtonCtrl from '../classes/ButtonCtrl';
+import Canvas from '../classes/Canvas';
 
 store.subscribe(
     // we use debounce to save the state once each 800ms
@@ -36,7 +41,6 @@ const pageWithoutFooter = ['/p/test'];
 
 function MyApp({ Component, pageProps }: AppProps) {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(true);
-    const [loadCursor, setLoadCursor] = useState<boolean>(false);
     const auth = useSelector(({ auth }: RootState) => auth);
     const contentScrollPos = useRef<number>(0);
 
@@ -50,12 +54,41 @@ function MyApp({ Component, pageProps }: AppProps) {
     const shouldHaveHeader = pageWithoutHeader.indexOf(router.pathname) === -1;
     const shouldHaveFooter = pageWithoutFooter.indexOf(router.pathname) === -1;
 
-    // useEffect(() => {
-    //     router.beforePopState((state) => {
-    //         state.options.scroll = false;
-    //         return true;
-    //     });
-    // }, [router]);
+    // REFS
+    const cursorRef = useRef<Cursor | null>(null);
+    const canvasRef = useRef<Canvas | null>(null);
+
+    // HANDLERS
+    const handleRouteChangeStart = () => {
+        const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
+        if (canvasElement) {
+            canvasElement.style.visibility = 'hidden';
+        }
+        NProgress.start();
+    };
+
+    const handleRouteChangeComplete = () => {
+        const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
+        if (canvasElement) {
+            setTimeout(() => {
+                canvasElement.style.visibility = 'visible';
+            }, 1000);
+        }
+        NProgress.done();
+        console.log('routing done!');
+    };
+
+    const handleRouteChangeError = () => {
+        const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
+        if (canvasElement) {
+            setTimeout(() => {
+                canvasElement.style.visibility = 'visible';
+            }, 1000);
+        }
+        NProgress.done();
+    };
+
+    // EFFECTS
 
     useEffect(() => {
         const mainWrapper = window.document.querySelector('.main-wrapper') as HTMLDivElement;
@@ -67,34 +100,17 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, [isNavOpen]);
 
     useEffect(() => {
-        NProgress.configure({ showSpinner: false });
-        const handleStart = () => {
-            NProgress.start();
-        };
-        const handleStop = () => {
-            NProgress.done();
-        };
-
-        router.events.on('routeChangeStart', handleStart);
-        router.events.on('routeChangeComplete', handleStop);
-        router.events.on('routeChangeError', handleStop);
-
-        return () => {
-            router.events.off('routeChangeStart', handleStart);
-            router.events.off('routeChangeComplete', handleStop);
-            router.events.off('routeChangeError', handleStop);
-        };
-    }, [router]);
-
-    useEffect(() => {
-        setLoadCursor(true);
         // check for token and refresh on page load
         (async () => await refreshUserTokens())();
         // load an initialize a firebase app
         loadFirebase();
-    }, []);
 
-    useEffect(() => {
+        const cursorElement = document.querySelector<SVGElement>('.cursor');
+        if (cursorElement) {
+            cursorRef.current = new Cursor(cursorElement);
+        }
+
+        // ANALYTICS
         if (typeof window !== 'undefined') {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).dataLayer = (window as any).dataLayer || [];
@@ -106,15 +122,76 @@ function MyApp({ Component, pageProps }: AppProps) {
 
             gtag('config', 'G-QJ2RYXMK6E');
         }
+
+        // Enable Lenis scrolling
+        const lenis = new Lenis({
+            lerp: 0.05,
+            smoothTouch: true,
+            smoothWheel: true,
+            // syncTouch: true,
+            // gestureOrientation: 'both',
+        });
+
+        lenis.on('scroll', () => {
+            //
+        });
+        const scrollFn = (time: number) => {
+            lenis.raf(time); // Runs lenis' requestAnimationFrame method
+            requestAnimationFrame(scrollFn);
+        };
+        requestAnimationFrame(scrollFn); // Start the animation frame loop
     }, []);
+
+    useEffect(() => {
+        const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
+        if (canvasElement) {
+            canvasRef.current = new Canvas(canvasElement);
+        }
+
+        NProgress.configure({ showSpinner: false });
+
+        router.events.on('routeChangeStart', handleRouteChangeStart);
+        router.events.on('routeChangeComplete', handleRouteChangeComplete);
+        router.events.on('routeChangeError', handleRouteChangeError);
+
+        // Register when route changes
+        if (cursorRef.current) {
+            [...document.querySelectorAll('a'), ...document.querySelectorAll('.wl-word .char')].forEach((el) => {
+                el.addEventListener('mouseenter', () => cursorRef.current?.emit('enter'));
+                el.addEventListener('mouseleave', () => cursorRef.current?.emit('leave'));
+            });
+
+            setTimeout(() => {
+                [...document.querySelectorAll('.wl-word .char')].forEach((el) => {
+                    el.addEventListener('mouseenter', () => cursorRef.current?.emit('enter'));
+                    el.addEventListener('mouseleave', () => cursorRef.current?.emit('leave'));
+                });
+            }, 1000);
+
+            [...document.querySelectorAll<HTMLButtonElement>('.scroll-button')].forEach((el) => {
+                const button = new ButtonCtrl(el);
+                button.on('enter', () => cursorRef.current?.emit('enter'));
+                button.on('leave', () => cursorRef.current?.emit('leave'));
+            });
+        }
+
+        return () => {
+            canvasRef.current?.cleanUp();
+            router.events.off('routeChangeStart', handleRouteChangeStart);
+            router.events.off('routeChangeComplete', handleRouteChangeComplete);
+            router.events.off('routeChangeError', handleRouteChangeError);
+        };
+    }, [router]);
 
     return (
         <Fragment>
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
-            {loadCursor && <AnimatedCursor color="253, 187, 45" innerSize={10} outerSize={10} outerScale={4.2} />}
-            <div className={!isNavOpen ? 'mobileNavSection' : 'mobileNavSection addNegativeIndex'}>
+            <div
+                className={!isNavOpen ? 'mobileNavSection' : 'mobileNavSection addNegativeIndex'}
+                suppressHydrationWarning
+            >
                 {store.getState().auth.isAuthenticated && (
                     <div className="mobileNavAdminMenu">
                         <div>
@@ -136,43 +213,71 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </div>
 
                 <div className="mobileAdminName">
-                    <Link href="/">
-                        <a onClick={closeNav}>
-                            <img
-                                src="/assets/img/GideonIdokoDevLogo.png"
-                                className="site-footer-logo"
-                                alt="Gideon Idoko"
-                            />
-                        </a>
+                    <Link href="/" onClick={closeNav}>
+                        <img src="/assets/img/GideonIdokoDevLogo.png" className="site-footer-logo" alt="Gideon Idoko" />
                     </Link>
                     <span>Gideon Idoko</span>
                 </div>
                 <nav>
                     <ul>
                         <li>
-                            <Link href="/">
-                                <a onClick={closeNav}>Home</a>
+                            <Link href="/" onClick={closeNav}>
+                                Home
                             </Link>
                         </li>
                         <li>
-                            <Link href="/blog">
-                                <a onClick={closeNav}>Blog</a>
+                            <Link href="/blog" onClick={closeNav}>
+                                Blog
                             </Link>
                         </li>
                         <li>
-                            <Link href="/about">
-                                <a onClick={closeNav}>About</a>
+                            <Link href="/about" onClick={closeNav}>
+                                About
                             </Link>
                         </li>
                         <li>
-                            <Link href="/contact">
-                                <a onClick={closeNav}>Get in touch</a>
+                            <Link href="/contact" onClick={closeNav}>
+                                Contact
                             </Link>
+                        </li>
+                        <li>
+                            <a
+                                href="mailto:iamgideonidoko@gmail.com?subject=I%20want%20to%20connect%20with%20you&body=Hello%2C%20I%27m%20..."
+                                // className="animated-button animated-button--pallene__outline"
+                            >
+                                AVAILABLE FOR FREELANCE
+                            </a>
                         </li>
                     </ul>
                 </nav>
             </div>
+            <div style={{ position: 'absolute', top: 0, left: 0 }} suppressHydrationWarning>
+                <svg className="cursor" width="140" height="140" viewBox="0 0 140 140">
+                    <defs>
+                        <filter
+                            id="filter-1"
+                            x="-50%"
+                            y="-50%"
+                            width="200%"
+                            height="200%"
+                            filterUnits="objectBoundingBox"
+                        >
+                            <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="10" result="warp" />
+                            <feDisplacementMap
+                                xChannelSelector="R"
+                                yChannelSelector="G"
+                                scale="60"
+                                in="SourceGraphic"
+                                in2="warp"
+                            />
+                        </filter>
+                    </defs>
+                    <circle className="cursor__inner" cx="70" cy="70" r="60" />
+                </svg>
+            </div>
             <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
+                <canvas id="canvas" />
+                <div className="noise-bg">backgroud</div>
                 {shouldHaveHeader && (
                     <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} contentScrollPos={contentScrollPos} />
                 )}

@@ -1,59 +1,65 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styles from '../../styles/Home.module.css';
+import type { Result as SplittingResult } from 'splitting';
 
 const SectionOne = () => {
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setTimeout(() => {
-                const h1Element = window.document.querySelector('.mainWelcomeLine');
-                const h1ElementContent = h1Element && h1Element.textContent;
-                const h1ElemArray = h1ElementContent && h1ElementContent.split('');
-                // const h1ElemArrayClone = JSON.parse(JSON.stringify(h1ElemArray));
-
-                const mappedH1ElemArray =
-                    h1ElemArray &&
-                    h1ElemArray.map((x, index) => {
-                        if (x !== ' ') {
-                            if (index === 15) {
-                                return `<span class="h1Span">${x}</span> <br />`;
-                            } else if (index === 8 || index === 23) {
-                                return `<span class="h1Span">${x}</span><span class=" h1SpanBlock"></span>`;
-                            }
-                            return `<span class="h1Span">${x}</span>`;
-                        } else {
-                            return ' ';
-                        }
-                    });
-
-                if (h1Element && mappedH1ElemArray) {
-                    h1Element.innerHTML = mappedH1ElemArray && mappedH1ElemArray.join('');
-                }
-            }, 1000);
-        }
+        (async () => {
+            const Splitting = await import('splitting');
+            try {
+                Splitting.default({
+                    target: '.wl-word',
+                }) as unknown as SplittingResult[];
+            } catch (e) {}
+        })();
     }, []);
 
+    const handleScrollButtonClick = () => {
+        const sectionThreeWrapper = document.querySelector('#section-three-wrapper');
+        if (sectionThreeWrapper && window.lenis) {
+            window.lenis.scrollTo(sectionThreeWrapper, {
+                easing: (x: number) => {
+                    return x === 0
+                        ? 0
+                        : x === 1
+                        ? 1
+                        : x < 0.5
+                        ? Math.pow(2, 20 * x - 10) / 2
+                        : (2 - Math.pow(2, -20 * x + 10)) / 2;
+                },
+            });
+        }
+    };
     return (
-        <div className={`${styles.sectionOne} container-max-1248px`}>
-            <div className={`${styles.sectionOneShape} ${styles.text1}`}>
-                <i className="neu-left-lg"></i>scroll down
+        <div className={`${styles.sectionOne} container-full`}>
+            <div className={styles.sectionScrollButtonWrapper}>
+                <button className="scroll-button" onClick={handleScrollButtonClick}>
+                    <div className="button__deco button__deco--2"></div>
+                    <div className="button__deco button__deco--1"></div>
+                    <span className="button__text button__text__sectionone">
+                        <span className="button__text-inner">
+                            <i className="neu-down-lg"></i>
+                        </span>
+                    </span>
+                </button>
             </div>
-            <div className={`${styles.sectionOneShape} ${styles.shape1}`}>
-                <div></div>
-            </div>
-            <div className={`${styles.sectionOneShape} ${styles.shape2}`}>
-                <div></div>
+            <div className={`${styles.scrollText}`}>
+                01//05 — SCROLL <i className="neu-down-lg"></i>
             </div>
 
             <div>
-                <h4 className={styles.welcomeLine2}>
-                    <span>Curate.</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span>Build.</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span> Improve.</span>
-                </h4>
+                <h4 className={styles.welcomeLine2}>Gideon Idoko - Software Engineer</h4>
             </div>
             <h1 className={`${styles.welcomeLine} mainWelcomeLine`}>
-                I develop unique <br />
-                digital experiences.
+                <span>
+                    <span className="wl-word">Crafting</span>
+                </span>
+                <span>
+                    <span className="wl-word">Awesome</span>
+                </span>
+                <span>
+                    <span className="wl-word">Experiences</span>
+                </span>
             </h1>
         </div>
     );

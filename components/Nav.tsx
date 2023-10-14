@@ -5,15 +5,14 @@ const Nav = ({}) => {
         <nav className={'main-nav navOpen'}>
             <ul>
                 <li>
-                    <Link href="/blog">Blog</Link>
+                    <Link href="/blog" className="animated-button animated-button--pallene__outlineless">
+                        Blog
+                    </Link>
                 </li>
                 <li>
-                    <Link href="/about">About</Link>
-                </li>
-                <li className="get-in-touch-wrapper">
-                    <div className="get-in-touch">
-                        <Link href="/contact">Get in touch</Link>
-                    </div>
+                    <Link href="/about" className="animated-button animated-button--pallene__outlineless">
+                        About
+                    </Link>
                 </li>
             </ul>
         </nav>

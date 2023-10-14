@@ -53,6 +53,12 @@
 	margin-top: 4rem;
 }
 
+.submitFC button {
+	width: 100%;
+	padding: 1rem 1.2rem;
+	border-radius: 0.6rem;
+}
+
 
 .submitFC input {
 	width: 100%;

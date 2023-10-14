@@ -3,9 +3,51 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 import styles from '../styles/About.module.css';
 import { NextSeo } from 'next-seo';
-// import Image from 'next/image';
+import PhysicsBox from '../classes/PhysicsBox';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
+    const physicsBoxesRef = useRef<PhysicsBox[] | null>(null);
+    useEffect(() => {
+        try {
+            ScrollTrigger.create({
+                trigger: '.about-stack-section',
+                start: 'clamp(top bottom-=70%)',
+                end: 'top top',
+                markers: false,
+                once: true,
+                onEnter: () => {
+                    physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map(
+                        (elem) => {
+                            return new PhysicsBox(elem, {
+                                radius: {
+                                    unit: 'vw',
+                                    value: 3,
+                                },
+                                minRadius: {
+                                    unit: 'px',
+                                    // value: 70,
+                                    value: 50,
+                                },
+                                maxRadius: {
+                                    unit: 'vw',
+                                    value: 3,
+                                },
+                            });
+                        },
+                    );
+                },
+            });
+        } catch (err) {
+            console.error('ERROR: ', err);
+        }
+        return () => {
+            physicsBoxesRef.current?.forEach((item) => item.destroy());
+        };
+    }, []);
     return (
         <Fragment>
             <NextSeo
@@ -34,96 +76,83 @@ const About = () => {
                 }}
             />
             <main className={`padding-top-10rem ${styles.aboutMain}`}>
-                <div className="container-max-1248px">
+                <div className="container-full">
                     <div className={styles.aboutSectionOne}>
                         <div>
-                            <div className={styles.photoWrapper}>
-                                <img
-                                    src="/assets/img/Ifex.JPG"
-                                    alt="Gideon Idoko"
-                                    style={{ maxWidth: '100%' }}
-                                    width={330}
-                                />
+                            <h3>Hi there! 👋🏽</h3>
+                            <h1>
+                                I&apos;m <strong>Gideon Idoko</strong>.
+                            </h1>
+                            <div className={styles.profileImgWrapper}>
+                                <div className="gooey__image">
+                                    <img
+                                        src="/assets/img/gideon.jpeg"
+                                        data-hover="/assets/img/gideon-hover.jpeg"
+                                        alt="Gideon Idoko"
+                                        style={{ maxWidth: '100%' }}
+                                        width={330}
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div>
-                            <h3>Hi there! 👋🏽</h3>
-                            <h1>I&apos;m Gideon Idoko.</h1>
-                            {/* <h3>
-                                Frontend Engineer @ <a>AlphaCX</a>
-                            </h3> */}
-
                             <p>
-                                I&apos;m a solution-driven Software Engineer based in Nigeria. I&apos;m interested in
-                                learning, building positive solutions, developing unique experiences, sharing technical
-                                ideas, writing and community engagement. I develop beautiful, secure and accessible
-                                applications that meet the business requirements and focus on providing the best
-                                experience for their end users. I go a long way to give my best shot, this has made me
-                                keen to discovering life changing tech solutions. I aim at building the next positive
-                                big thing.
+                                I&apos;m a Nigeria-based Software Engineer interested in learning, building solutions
+                                with unique experiences, sharing technical ideas, writing and community building. I go a
+                                long way to ensure the security, accessibility and usability of any product I work on
+                                and that they meet the business requirements while focusing on providing the best
+                                experience for their end users.
                             </p>
 
                             <p>
-                                Though familiar with some backend technologies and concerned about every aspect of a
-                                product, I focus more on frontend tools. I write about Software Engineering topics and
-                                tools on my{' '}
-                                <Link href="/blog">
-                                    <a>blog</a>
-                                </Link>{' '}
-                                and other platforms.
+                                I write about Software Engineering topics and tools on my <Link href="/blog">blog</Link>{' '}
+                                and other platforms. When I am not in front of my IDE, I&apos;ll prolly be engaging in
+                                surfing or sports like play tennis and badminton.
                             </p>
 
-                            <p>
-                                I play sports like tennis and badminton majorly. When I am not in front of my PC,
-                                I&apos;ll prolly be engaging in other fun stuff.
-                            </p>
-
-                            <p>
+                            <div className={styles.resumeBtnWrapper}>
                                 <a
                                     href="https://docs.google.com/document/d/1VKBYjOOj0pSSD1G8aLOXoY-SZnfyMg-24VGd3wQuF-w/edit?usp=sharing"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className={styles.resumeBtn}
+                                    className="scroll-button"
+                                    suppressHydrationWarning
                                 >
-                                    My Resume
+                                    <div className="button__deco button__deco--2" suppressHydrationWarning></div>
+                                    <div className="button__deco button__deco--1" suppressHydrationWarning></div>
+                                    <span className="button__text button__text__sectionone">
+                                        <span className={`button__text-inner ${styles.resumeBtnText}`}>
+                                            <span>RESUME</span>
+                                            <i className="neu-arrow"></i>
+                                        </span>
+                                    </span>
                                 </a>
-                            </p>
+                            </div>
                         </div>
                     </div>
 
-                    <h2>Stack.</h2>
-                    <h4>Tools (Languages/Frameworks/Libraries):</h4>
-                    <ul>
-                        <li>HTML & CSS.</li>
-                        <li>SASS (SCSS).</li>
-                        <li>Bootstrap</li>
-                        <li>JavaScript.</li>
-                        <li>TypeScript.</li>
-                        <li>GraphQL.</li>
-                        <li>React.</li>
-                        <li>React Native.</li>
-                        <li>Redux.</li>
-                        <li>NextJS.</li>
-                        <li>NodeJS.</li>
-                        <li>ExpressJS.</li>
-                        <li>MongoDB.</li>
-                        <li>Redis.</li>
-                        <li>Firebase.</li>
-                        <li>PHP.</li>
-                        <li>MySQL.</li>
-                        <li>Wordpress.</li>
-                    </ul>
-
-                    <h4>On The Job:</h4>
-                    <ul>
-                        <li>Responsive Design.</li>
-                        <li>PSD to HTML.</li>
-                        <li>Version Control.</li>
-                        <li>Clean code and best practices.</li>
-                        <li>Testing.</li>
-                        <li>Documentation.</li>
-                        <li>CI/CD.</li>
-                    </ul>
+                    <div className={`${styles.aboutStack} about-stack-section`}>
+                        <h2>Stack {`<Tools / Languages / Frameworks / Libraries>`}</h2>
+                        <ul className="physics--box">
+                            <li className="physics--box__item">SCSS</li>
+                            <li className="physics--box__item">Bootstrap</li>
+                            <li className="physics--box__item">JavaScript</li>
+                            <li className="physics--box__item">TypeScript</li>
+                            <li className="physics--box__item">GraphQL</li>
+                            <li className="physics--box__item">React</li>
+                            <li className="physics--box__item">React Native</li>
+                            <li className="physics--box__item">RTK</li>
+                            <li className="physics--box__item">NextJS</li>
+                            <li className="physics--box__item">NodeJS</li>
+                            <li className="physics--box__item">ExpressJS</li>
+                            <li className="physics--box__item">MongoDB</li>
+                            <li className="physics--box__item">Redis</li>
+                            <li className="physics--box__item">Firebase</li>
+                            <li className="physics--box__item">PHP</li>
+                            <li className="physics--box__item">MySQL</li>
+                            <li className="physics--box__item">Wordpress</li>
+                        </ul>
+                    </div>
 
                     <div className={styles.aboutFooter}>
                         <p>

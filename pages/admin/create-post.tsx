@@ -189,7 +189,7 @@ const CreatePost = ({}) => {
                         ) : (
                             <Fragment>
                                 {/*CREATE POST PAGE*/}
-                                <div className={styles.createPostWrap}>
+                                <div className={styles.createPostWrap} data-lenis-prevent>
                                     <h1 className={styles.pageTitle}>Create Post</h1>
                                     <hr style={{ opacity: '0.7' }} />
                                     <h4 className={styles.copyAssetHead}>Copy Asset</h4>
@@ -396,7 +396,12 @@ const CreatePost = ({}) => {
                                             </label>
                                         </div>
                                         <div className={`${styles.postCreatePostBtnWrap} ${styles.createFormDivChild}`}>
-                                            <button type="submit">Create Post</button>
+                                            <button
+                                                type="submit"
+                                                className={`animated-button animated-button--pallene__solid ${styles.aboutSeeMore}`}
+                                            >
+                                                Create Post
+                                            </button>
                                         </div>
                                     </form>
 

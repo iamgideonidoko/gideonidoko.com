@@ -54,10 +54,7 @@ const ThemeSwitch = (props) => {
         <div
             className={!props.isNavOpen && props.allowForMobile ? 'themeswitch-wrapper' : 'themeswitch-wrapper navOpen'}
         >
-            {/* <button style={{ zIndex: '50000' }} onClick={handleSwitch}>
-                <i className={theme === 'dark' ? 'neu-moon-stars' : 'neu-sun'}></i>
-            </button> */}
-            <span>
+            <div>
                 <input
                     type="checkbox"
                     id="toggle"
@@ -66,7 +63,7 @@ const ThemeSwitch = (props) => {
                     className="offscreen"
                 />
                 <label htmlFor="toggle" className="switch" onClick={handleSwitch}></label>
-            </span>
+            </div>
         </div>
     );
 };

@@ -41,9 +41,7 @@ const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
                         <Fragment>
                             <div className={styles.searchLinkWrapper}>
                                 <Link href="/blog/search">
-                                    <a>
-                                        <i className="neu-browse"></i> Search articles
-                                    </a>
+                                    <i className="neu-browse"></i> Search articles
                                 </Link>
                             </div>
 
@@ -62,9 +60,7 @@ const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
                                 <div className={styles.paginationWrapper}>
                                     <div className={`${styles.pagination} ${styles.pgnFlexEnd}`}>
                                         <span>
-                                            <Link href={`/blog/page/${Number(posts?.page) + 1}`}>
-                                                <a>Next Page →</a>
-                                            </Link>
+                                            <Link href={`/blog/page/${Number(posts?.page) + 1}`}>Next Page →</Link>
                                         </span>
                                     </div>
                                 </div>

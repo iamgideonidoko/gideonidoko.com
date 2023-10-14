@@ -85,17 +85,12 @@
 
 
 .postCreatePostBtnWrap button {
-	border: none;
-	padding: 0.8rem 1.2rem;
+	padding: 0.8rem 1.2rem !important;
 	border-radius: 0.5rem;
 	cursor: pointer;
-	background: var(--pri-blue-normal);
-	color: rgba(255, 255, 255, 0.9);
+	border: 1px solid;
 }
 
-.postCreatePostBtnWrap button:hover {
-	opacity: 0.7;
-}
 
 .blogPostStats {
 	margin: 3rem 0 0;

@@ -70,14 +70,14 @@ const Tags = ({ posts }: { posts: PaginatedPosts }) => {
                                                             : `/page/${Number(posts?.page) - 1}`
                                                     }`}
                                                 >
-                                                    <a>← Previous Page</a>
+                                                    ← Previous Page
                                                 </Link>
                                             )}
                                         </span>
                                         <span>
                                             {posts?.hasNextPage && (
                                                 <Link href={`/blog/tags/${tag}/page/${Number(posts?.page) + 1}`}>
-                                                    <a>Next Page →</a>
+                                                    Next Page →
                                                 </Link>
                                             )}
                                         </span>
