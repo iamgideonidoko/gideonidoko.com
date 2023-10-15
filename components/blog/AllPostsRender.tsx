@@ -42,6 +42,7 @@ const AllPostsRender = ({ posts }: { posts: Array<Post> }) => {
                                         src={post.cover_img || blogCoverDefault}
                                         className={`${styles.postCover}`}
                                         alt={`${post.title} cover image`}
+                                        loading="lazy"
                                         /* id={post._id}
                                             onLoad={(e) => handleImgLoad(e, post._id)}
                                             onError={(e) => handleImgError(e, post._id)} */

@@ -50,7 +50,7 @@ const SectionFour = () => {
                 },
             });
         } catch (err) {
-            console.error('ERROR: ', err);
+            console.error('SCROLLTRIGGER ERROR: ', err);
         }
         return () => {
             physicsBoxesRef.current?.forEach((item) => item.destroy());

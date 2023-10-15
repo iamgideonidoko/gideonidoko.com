@@ -17,8 +17,6 @@ import { AppProps } from 'next/app';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { useRouter } from 'next/router';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
 import { loadFirebase } from '../helper';
 import 'prismjs/themes/prism-tomorrow.css';
 // import Image from 'next/image';
@@ -28,6 +26,7 @@ import ButtonCtrl from '../classes/ButtonCtrl';
 import Canvas from '../classes/Canvas';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import gsap from 'gsap';
+import PageLoader from '../classes/PageLoader';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -60,14 +59,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     // REFS
     const cursorRef = useRef<Cursor | null>(null);
     const canvasRef = useRef<Canvas | null>(null);
+    const pageLoaderRef = useRef<PageLoader | null>(null);
 
     // HANDLERS
     const handleRouteChangeStart = () => {
+        pageLoaderRef.current?.animateIn();
         const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
         if (canvasElement) {
             canvasElement.style.visibility = 'hidden';
         }
-        NProgress.start();
     };
 
     const handleRouteChangeComplete = () => {
@@ -77,8 +77,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 canvasElement.style.visibility = 'visible';
             }, 1000);
         }
-        NProgress.done();
-        console.log('routing done!');
+        setTimeout(() => pageLoaderRef.current?.animateOut(), 1000);
     };
 
     const handleRouteChangeError = () => {
@@ -88,7 +87,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 canvasElement.style.visibility = 'visible';
             }, 1000);
         }
-        NProgress.done();
+        setTimeout(() => pageLoaderRef.current?.animateOut(), 1000);
     };
 
     // EFFECTS
@@ -103,9 +102,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, [isNavOpen]);
 
     useEffect(() => {
+        // Page loader
+        pageLoaderRef.current = new PageLoader();
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                pageLoaderRef.current?.animateOut();
+            }, 1000);
+        });
         // Enable Lenis scrolling
         const lenis = new Lenis({
-            lerp: 0.03,
+            lerp: 0.04,
             smoothTouch: true,
             smoothWheel: true,
             syncTouch: true,
@@ -151,8 +157,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         if (canvasElement) {
             canvasRef.current = new Canvas(canvasElement);
         }
-
-        NProgress.configure({ showSpinner: false });
 
         router.events.on('routeChangeStart', handleRouteChangeStart);
         router.events.on('routeChangeComplete', handleRouteChangeComplete);
@@ -287,6 +291,17 @@ function MyApp({ Component, pageProps }: AppProps) {
                 )}
                 <Component {...pageProps} />
                 {shouldHaveFooter && <Footer />}
+                <div className="page--overlay">
+                    <div className="page--overlay__loader">
+                        <img
+                            src="/assets/img/GideonIdokoDevLogo.png"
+                            width={50}
+                            height={50}
+                            className="site-logo"
+                            alt="Gideon Idoko"
+                        />
+                    </div>
+                </div>
             </div>
         </Fragment>
     );
