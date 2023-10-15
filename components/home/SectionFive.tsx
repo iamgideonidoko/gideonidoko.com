@@ -12,11 +12,16 @@ const SectionFive = ({}) => {
 
     useEffect(() => {
         (async () => {
+            const customEvent = new CustomEvent('sectionFiveDone', {
+                detail: { message: 'This is a custom event from section five!' },
+            });
             try {
                 const res = await authGet(`/posts?per_page=3`);
                 setPosts(res?.data?.posts?.docs || []);
             } catch (err) {
                 console.error('Err => ', err);
+            } finally {
+                window.document.dispatchEvent(customEvent);
             }
         })();
     }, []);

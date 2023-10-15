@@ -14,70 +14,83 @@ const Footer = () => {
     const router = useRouter();
 
     const timeLineRefs = useRef<gsap.core.Timeline[]>([]);
+    const docHeightRef = useRef<number | null>(0);
+
+    if (typeof window !== 'undefined') {
+        docHeightRef.current = Math.floor(window.document.documentElement.getBoundingClientRect().height);
+    }
+
+    const addTrigger = () => {
+        [...document.querySelectorAll('.footer-main-heading')].forEach((elem) => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    markers: false,
+                    start: 'clamp(top bottom-=0%)',
+                    end: 'center center',
+                    trigger: elem,
+                    scrub: true,
+                },
+            });
+            tl.fromTo(
+                elem,
+                {
+                    letterSpacing: '0.5em',
+                    opacity: 0,
+                },
+                {
+                    letterSpacing: '0em',
+                    opacity: 1,
+                },
+            );
+            timeLineRefs.current.push(tl);
+        });
+        [...document.querySelectorAll('.footer-bg')].forEach((elem) => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    markers: false,
+                    start: 'clamp(top bottom-=50%)',
+                    end: 'top top',
+                    trigger: elem,
+                    scrub: true,
+                },
+            });
+            tl.fromTo(
+                elem,
+                {
+                    width: '100%',
+                    height: '100%',
+                    xPercent: 0,
+                    yPercent: 0,
+                    opacity: -1,
+                },
+                {
+                    width: '90%',
+                    height: '80%',
+                    xPercent: 5,
+                    yPercent: 12.5,
+                    opacity: 0.8,
+                },
+            );
+            timeLineRefs.current.push(tl);
+        });
+    };
 
     useEffect(() => {
         const articleSectionAvailable = document.querySelector('.section-five');
-        setTimeout(
-            () => {
-                [...document.querySelectorAll('.footer-main-heading')].forEach((elem) => {
-                    const tl = gsap.timeline({
-                        scrollTrigger: {
-                            markers: false,
-                            start: 'clamp(top bottom-=0%)',
-                            end: 'center center',
-                            trigger: elem,
-                            scrub: true,
-                        },
-                    });
-                    tl.fromTo(
-                        elem,
-                        {
-                            letterSpacing: '0.5em',
-                            opacity: 0,
-                        },
-                        {
-                            letterSpacing: '0em',
-                            opacity: 1,
-                        },
-                    );
-                    timeLineRefs.current.push(tl);
-                });
-                [...document.querySelectorAll('.footer-bg')].forEach((elem) => {
-                    const tl = gsap.timeline({
-                        scrollTrigger: {
-                            markers: false,
-                            start: 'clamp(top bottom-=50%)',
-                            end: 'top top',
-                            trigger: elem,
-                            scrub: true,
-                        },
-                    });
-                    tl.fromTo(
-                        elem,
-                        {
-                            width: '100%',
-                            height: '100%',
-                            xPercent: 0,
-                            yPercent: 0,
-                            opacity: -1,
-                        },
-                        {
-                            width: '90%',
-                            height: '80%',
-                            xPercent: 5,
-                            yPercent: 12.5,
-                            opacity: 0.8,
-                        },
-                    );
-                    timeLineRefs.current.push(tl);
-                });
-            },
-            articleSectionAvailable ? 3000 : 0,
-        );
+        const eventListenerFunc = () => {
+            setTimeout(addTrigger, 1000);
+        };
+        if (articleSectionAvailable) {
+            window.document.addEventListener('sectionFiveDone', eventListenerFunc);
+        } else {
+            setTimeout(addTrigger, 0);
+        }
         return () => {
             // eslint-disable-next-line react-hooks/exhaustive-deps
             timeLineRefs.current.forEach((tl) => tl.kill());
+            window.document.removeEventListener('sectionFiveDone', eventListenerFunc);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router]);
 
     return (

@@ -104,11 +104,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     useEffect(() => {
         // Page loader
         pageLoaderRef.current = new PageLoader();
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                pageLoaderRef.current?.animateOut();
-            }, 1000);
-        });
+        setTimeout(() => {
+            pageLoaderRef.current?.animateOut();
+        }, 1000);
         // Enable Lenis scrolling
         const lenis = new Lenis({
             lerp: 0.04,
