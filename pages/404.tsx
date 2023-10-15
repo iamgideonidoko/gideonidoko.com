@@ -8,7 +8,7 @@ import { NextSeo } from 'next-seo';
 const Custom404 = () => {
     return (
         <Fragment>
-            <NextSeo title="Page Not Found 😔" noindex={true} nofollow={true} />
+            <NextSeo title="Page Not Found 🥲" noindex={true} nofollow={true} />
             {/* <Head>
                 <title>Page Not Found : ( </title>
             </Head> */}
@@ -19,16 +19,25 @@ const Custom404 = () => {
                             <div className={styles.custom404ImageWrap}>
                                 <img src="/assets/img/404.svg" alt="404" style={{ maxWidth: '100%' }} width={300} />
                             </div>
-                            {/* <h1>Page Not Found😢</h1> */}
                             <p>
                                 <small>Well, this is awkward, the page you were trying to view does not exist.</small>
                             </p>
                             <div className={styles.custom404ExitLinks}>
                                 <span>
-                                    <Link href="/">Go Home</Link>
+                                    <Link
+                                        href="/"
+                                        className={`animated-button animated-button--pallene__outline ${styles.aboutSeeMore}`}
+                                    >
+                                        Home
+                                    </Link>
                                 </span>
                                 <span>
-                                    <Link href="/blog">Go to Blog</Link>
+                                    <Link
+                                        href="/blog"
+                                        className={`animated-button animated-button--pallene__outlineless ${styles.aboutSeeMore}`}
+                                    >
+                                        Blog
+                                    </Link>
                                 </span>
                             </div>
                         </div>

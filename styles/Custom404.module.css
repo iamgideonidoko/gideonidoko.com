@@ -17,21 +17,23 @@
 }
 
 .custom404Container p {
-	opacity: 0.75;
 	font-weight: 600;
 	word-wrap: break-word;
-	margin-top: 2rem;
-	font-size: 1.8rem;
+	margin: 2em 0 1em;
+	font-size: 2.5rem;
+	text-align: center;
 }
 
 .custom404ImageWrap {
-	width: 60rem;
+	width: 80rem;
 	max-width: 100%;
 	overflow: hidden;
+	margin: 4em auto 0;
 }
 
 .custom404ImageWrap img {
 	max-width: 100%;
+	width: 100%;
 	/* margin: -5rem; */
 	height: auto;
 	transform: rotateY(0deg);
@@ -49,8 +51,7 @@
 }
 
 .custom404ExitLinks a {
-	/*border: 2px solid var(--pri-blue-normal);
-	*/width: 13rem;
+	width: 13rem;
 	padding: 1rem 1.5rem;
 	margin: 0 0 1rem;
 	display: inline-block;
@@ -65,24 +66,6 @@
 	-ms-transition: all 0.2s ease-in;
 	-o-transition: all 0.2s ease-in;
 	font-weight: bold;
-}
-
-.custom404ExitLinks span:nth-child(1) a {
-	background: var(--pri-blue-normal);
-	background-image: linear-gradient(to right, rgb(34, 193, 195), rgb(253, 187, 45));
-	color:  black;
-}
-
-.custom404ExitLinks span:nth-child(1) a:hover {
-	opacity: 0.8;
-}
-
-.custom404ExitLinks span:nth-child(2) a {
-	/* color: var(--pri-blue-normal); */
-}
-
-.custom404ExitLinks span:nth-child(2) a:hover {
-	/* background: var(--pri-blue-light-02); */
 }
 
 /* >>>>>>>>>>MEDIA QUERIES<<<<<<<<< */
