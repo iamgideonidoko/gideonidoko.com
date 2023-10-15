@@ -54,13 +54,13 @@ const About = () => {
         <Fragment>
             <NextSeo
                 title="About me - Gideon Idoko"
-                description="Gideon Idoko is a solution-driven Software Engineer based in Nigeria. He's interested in learning, building positive solutions, developing unique experiences, sharing technical ideas, writing and community engagement."
+                description="Gideon Idoko is a solution-driven Software Engineer interested in learning, building solutions with unique experiences, sharing technical ideas, writing and community building."
                 canonical="https://gideonidoko.com/about"
                 openGraph={{
                     url: 'https://gideonidoko.com/about',
                     title: 'About me - Gideon Idoko',
                     description:
-                        "Gideon Idoko is a solution-driven Software Engineer based in Nigeria. He's interested in learning, building positive solutions, developing unique experiences, sharing technical ideas, writing and community engagement.",
+                        'Gideon Idoko is a solution-driven Software Engineer interested in learning, building solutions with unique experiences, sharing technical ideas, writing and community building.',
                     images: [
                         {
                             url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
