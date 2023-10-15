@@ -95,6 +95,7 @@ const SectionTwo = () => {
     );
 
     useEffect(() => {
+        const timelines: gsap.core.Timeline[] = [];
         [
             ...document.querySelectorAll('.project-section-item-left'),
             ...document.querySelectorAll('.project-section-item-right'),
@@ -125,7 +126,11 @@ const SectionTwo = () => {
                     opacity: 1,
                 },
             );
+            timelines.push(tl);
         });
+        return () => {
+            timelines.forEach((tl) => tl.kill());
+        };
     }, []);
 
     return (

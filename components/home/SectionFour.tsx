@@ -9,10 +9,11 @@ gsap.registerPlugin(ScrollTrigger);
 const SectionFour = () => {
     const physicsBoxesRef = useRef<PhysicsBox[] | null>(null);
     useEffect(() => {
+        let trigger: ScrollTrigger | null = null;
         try {
-            ScrollTrigger.create({
+            trigger = ScrollTrigger.create({
                 trigger: '.services-section',
-                start: 'clamp(top bottom-=70%)',
+                start: 'clamp(top bottom-=80%)',
                 end: 'top top',
                 markers: false,
                 once: true,
@@ -54,6 +55,7 @@ const SectionFour = () => {
         }
         return () => {
             physicsBoxesRef.current?.forEach((item) => item.destroy());
+            trigger?.kill();
         };
     }, []);
     return (
