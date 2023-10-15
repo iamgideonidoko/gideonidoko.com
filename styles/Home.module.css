@@ -212,22 +212,7 @@
 .projectSectionTwo div img {
 	max-width: 100%;
 	height: auto;
-	-webkit-filter: grayscale(100%);
-	filter: grayscale(100%);
-	transition: -webkit-filter 0.3s ease;
-	transition: filter 0.3s ease;
-	transition: filter 0.3s ease, -webkit-filter 0.3s ease;
-	-webkit-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
-	-moz-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
-	-ms-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
-	-o-transition: filter 0.3s ease, -webkit-filter 0.3s ease;
 	width: 100%;
-}
-
-.projectStyleOne:hover img,
-.projectStyleTwo:hover img {
-	-webkit-filter: grayscale(0%);
-	filter: grayscale(0%);
 }
 
 .projectStyleOne .projectSectionTwo .projectTech {
