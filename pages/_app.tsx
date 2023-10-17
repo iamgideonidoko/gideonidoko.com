@@ -256,7 +256,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     </ul>
                 </nav>
             </div>
-            <div style={{ position: 'absolute', top: 0, left: 0 }} suppressHydrationWarning>
+            <div style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }} suppressHydrationWarning>
                 <svg className="cursor" width="140" height="140" viewBox="0 0 140 140">
                     <defs>
                         <filter

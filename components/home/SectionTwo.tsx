@@ -101,7 +101,7 @@ const SectionTwo = () => {
         ].forEach((elem) => {
             const tl = gsap.timeline({
                 scrollTrigger: {
-                    markers: true,
+                    markers: false,
                     start: 'clamp(top bottom-=0%)',
                     end: 'bottom 100%',
                     trigger: elem,
