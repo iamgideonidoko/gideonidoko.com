@@ -5,8 +5,6 @@ import { firstLetter } from '../../helper';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import gsap from 'gsap';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const SectionTwo = () => {
     const projects = useMemo<
         (Record<'name' | 'about' | 'cover1' | 'cover2' | 'alt' | 'link1' | 'role', string> &
@@ -95,6 +93,7 @@ const SectionTwo = () => {
     );
 
     useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
         const timelines: gsap.core.Timeline[] = [];
         [
             ...document.querySelectorAll('.project-section-item-left'),
@@ -102,9 +101,9 @@ const SectionTwo = () => {
         ].forEach((elem) => {
             const tl = gsap.timeline({
                 scrollTrigger: {
-                    markers: false,
+                    markers: true,
                     start: 'clamp(top bottom-=0%)',
-                    end: 'bottom 90%',
+                    end: 'bottom 100%',
                     trigger: elem,
                     scrub: true,
                     once: false,

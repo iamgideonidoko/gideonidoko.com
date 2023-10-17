@@ -28,8 +28,6 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import gsap from 'gsap';
 import PageLoader from '../classes/PageLoader';
 
-gsap.registerPlugin(ScrollTrigger);
-
 store.subscribe(
     // we use debounce to save the state once each 800ms
     // for better performances in case multiple changes occur in a short time
@@ -102,6 +100,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, [isNavOpen]);
 
     useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
         // Page loader
         pageLoaderRef.current = new PageLoader();
         setTimeout(() => {

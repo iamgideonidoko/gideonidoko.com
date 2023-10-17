@@ -7,11 +7,11 @@ import PhysicsBox from '../classes/PhysicsBox';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
     const physicsBoxesRef = useRef<PhysicsBox[] | null>(null);
     useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
         let trigger: ScrollTrigger | null = null;
         try {
             trigger = ScrollTrigger.create({

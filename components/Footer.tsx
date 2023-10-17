@@ -5,8 +5,6 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import gsap from 'gsap';
 import { useRouter } from 'next/router';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Footer = () => {
     //get current year
     const date = new Date();
@@ -76,6 +74,7 @@ const Footer = () => {
     };
 
     useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
         const articleSectionAvailable = document.querySelector('.section-five');
         const eventListenerFunc = () => {
             setTimeout(addTrigger, 1000);
