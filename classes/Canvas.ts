@@ -40,7 +40,7 @@ export default class Canvas {
             alpha: true,
         });
         this.renderer.setSize(this.W, this.H);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         this.gooeyImages = Array.from(this.imageWrappers).map((item) => {
             return new GooeyImage(item, 0.5, (mesh) => {

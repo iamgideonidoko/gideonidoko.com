@@ -220,7 +220,7 @@ export default class GooeyImage {
             transparent: true,
             defines: {
                 PI: Math.PI,
-                PR: Math.min(window.devicePixelRatio, 1).toFixed(1),
+                PR: Math.min(window.devicePixelRatio, 2).toFixed(1),
             },
         });
 
