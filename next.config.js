@@ -17,5 +17,5 @@ module.exports = {
         });
 
         return config;
-    }
+    },
 };

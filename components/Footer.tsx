@@ -82,7 +82,7 @@ const Footer = () => {
         if (articleSectionAvailable) {
             window.document.addEventListener('sectionFiveDone', eventListenerFunc);
         } else {
-            setTimeout(addTrigger, 0);
+            setTimeout(addTrigger, 1000);
         }
         return () => {
             // eslint-disable-next-line react-hooks/exhaustive-deps

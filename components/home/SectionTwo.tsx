@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from '../../styles/Home.module.css';
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 import { firstLetter } from '../../helper';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import gsap from 'gsap';
+import { useRouter } from 'next/router';
 
 const SectionTwo = () => {
     const projects = useMemo<
@@ -92,9 +93,10 @@ const SectionTwo = () => {
         [],
     );
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-        const timelines: gsap.core.Timeline[] = [];
+    const router = useRouter();
+    const timelinesRef = useRef<gsap.core.Timeline[]>(null);
+
+    const addTrigger = () => {
         [
             ...document.querySelectorAll('.project-section-item-left'),
             ...document.querySelectorAll('.project-section-item-right'),
@@ -103,7 +105,7 @@ const SectionTwo = () => {
                 scrollTrigger: {
                     markers: false,
                     start: 'clamp(top bottom-=0%)',
-                    end: 'bottom 100%',
+                    end: 'bottom 95%',
                     trigger: elem,
                     scrub: true,
                     once: false,
@@ -125,12 +127,18 @@ const SectionTwo = () => {
                     opacity: 1,
                 },
             );
-            timelines.push(tl);
+            timelinesRef.current?.push(tl);
         });
+    };
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        setTimeout(addTrigger, 1000);
         return () => {
-            timelines.forEach((tl) => tl.kill());
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            timelinesRef.current?.forEach((tl) => tl.kill());
         };
-    }, []);
+    }, [router]);
 
     return (
         <div className={styles.sectionTwo}>
