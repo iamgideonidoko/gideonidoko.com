@@ -73,9 +73,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         if (window.lenis && !isBackOrForwardNav.current) {
             window.lenis.scrollTo(0, {
                 lock: true,
+                duration: 0,
+                immediate: true,
+                force: true,
             });
-            isBackOrForwardNav.current = false;
         }
+        isBackOrForwardNav.current = false;
         const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
         if (canvasElement) {
             setTimeout(() => {
