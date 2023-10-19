@@ -58,6 +58,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     const cursorRef = useRef<Cursor | null>(null);
     const canvasRef = useRef<Canvas | null>(null);
     const pageLoaderRef = useRef<PageLoader | null>(null);
+    const isBackOrForwardNav = useRef(false);
 
     // HANDLERS
     const handleRouteChangeStart = () => {
@@ -69,6 +70,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
 
     const handleRouteChangeComplete = () => {
+        if (window.lenis && !isBackOrForwardNav.current) {
+            window.lenis.scrollTo(0, {
+                lock: true,
+            });
+            isBackOrForwardNav.current = false;
+        }
         const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
         if (canvasElement) {
             setTimeout(() => {
@@ -105,7 +112,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         pageLoaderRef.current = new PageLoader();
         setTimeout(() => {
             pageLoaderRef.current?.animateOut();
-        }, 1000);
+        }, 2000);
         // Enable Lenis scrolling
         const lenis = new Lenis({
             lerp: 0.04,
@@ -155,6 +162,10 @@ function MyApp({ Component, pageProps }: AppProps) {
             canvasRef.current = new Canvas(canvasElement);
         }
 
+        router.beforePopState(() => {
+            isBackOrForwardNav.current = true;
+            return true;
+        });
         router.events.on('routeChangeStart', handleRouteChangeStart);
         router.events.on('routeChangeComplete', handleRouteChangeComplete);
         router.events.on('routeChangeError', handleRouteChangeError);
