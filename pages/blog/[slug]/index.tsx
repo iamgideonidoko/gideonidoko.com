@@ -347,7 +347,7 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
                     <main className={`padding-top-10rem ${styles.singlePostMain}`}>
                         <div className="container-max-1248px">
                             <Fragment>
-                                <div className={styles.singlePostPageWrapper} data-lenis-prevent>
+                                <div className={styles.singlePostPageWrapper}>
                                     <div className={styles.blogHeader}>
                                         <h5 className={styles.breadcrumb}>
                                             <small>

@@ -294,7 +294,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <circle className="cursor__inner" cx="70" cy="70" r="60" />
                 </svg>
             </div>
-            <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
+            <div
+                {...(router.pathname.startsWith('/blog/') ? { 'data-lenis-prevent': true } : {})}
+                className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}
+            >
                 <canvas id="canvas" />
                 <div className="noise-bg">backgroud</div>
                 {shouldHaveHeader && (
