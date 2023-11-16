@@ -65,6 +65,7 @@ const SectionFour = () => {
                     <h3 className={styles.servicesHead}>— Services —</h3>
                     <div className={styles.servicesWrapper}>
                         <ul className="physics--box">
+                            <span className="physics--box__text">{`>CLICK & DRAG<`}</span>
                             <li className="physics--box__item" data-lenis-prevent>
                                 <div>
                                     <h5>Product Development</h5>
@@ -96,8 +97,8 @@ const SectionFour = () => {
                                 <div>
                                     <h5>Ongoing Support</h5>
                                     <p>
-                                        I cater the technical maintenance (backup, code & tools upgrade) and supports
-                                        that deal with content editing and design reorganization.
+                                        I cater the technical maintenance and supports that deal with content editing
+                                        and design reorganization.
                                     </p>
                                 </div>
                             </li>

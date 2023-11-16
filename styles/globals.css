@@ -1626,6 +1626,20 @@ body::-webkit-scrollbar-track {
 	left: 0;
 }
 
+.physics--box__text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 3;
+	font-weight: 700;
+	font-size: clamp(2rem, 4vw, 3em);
+	transform: translate(-50%, -50%);
+	pointer-events: none;
+	opacity: 0.1;
+	text-align: center;
+	display: inline-block;
+}
+
 /* PAGE LOADING */
 .page--overlay {
 	position: fixed;

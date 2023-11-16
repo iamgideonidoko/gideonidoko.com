@@ -136,6 +136,7 @@ const About = () => {
                     <div className={`${styles.aboutStack} about-stack-section`}>
                         <h2>Stack {`<Tools / Languages / Frameworks / Libraries>`}</h2>
                         <ul className="physics--box">
+                            <span className="physics--box__text">{`>CLICK & DRAG<`}</span>
                             <li className="physics--box__item" data-lenis-prevent>
                                 SCSS
                             </li>
