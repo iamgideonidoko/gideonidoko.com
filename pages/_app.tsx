@@ -299,7 +299,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}
             >
                 <canvas id="canvas" />
-                <div className="noise-bg">backgroud</div>
+                <div className="noise-bg"></div>
                 {shouldHaveHeader && (
                     <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} contentScrollPos={contentScrollPos} />
                 )}
