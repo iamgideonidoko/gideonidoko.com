@@ -109,7 +109,7 @@
 
 .postBody code {
 	line-height: 2.24rem;
-	font-size: 1.55rem;
+	font-size: 1.65rem;
 	font-family: "Fira Code", monospace !important;
 	background: var(--code-elem-bg-color);
 	border-radius: 0.4rem;
