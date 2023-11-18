@@ -58,7 +58,7 @@
 	--neutral-color-1: #fff;
 	--neutral-color-2: rgba(255, 255, 255, 0.7);
 	--neutral-color-3: rgba(255, 255, 255, 0.5);
-	--neutral-color-4: rgba(255, 255, 255, 0.1);
+	--neutral-color-4: rgba(255, 255, 255, 0.2);
 	/* --bg-color: #252733; */
 	--bg-color: #000000;
 	/* --bg-color: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%); */
@@ -370,6 +370,8 @@ body::-webkit-scrollbar-track {
 	border-radius: 20px;
 	transition: all 0.3s;
 	transform: translateY(0.3rem);
+	/* outline: 1px solid red;
+	outline-offset: 1px; */
   }
   
   .switch:after {
@@ -389,7 +391,7 @@ body::-webkit-scrollbar-track {
   }
   
   input[type='checkbox']:checked + .switch {
-	background-color: var(--pri-blue-normal);
+	background-color: #e4e2e2;
   }
   
   .offscreen {
@@ -1638,6 +1640,7 @@ body::-webkit-scrollbar-track {
 	opacity: 0.1;
 	text-align: center;
 	display: inline-block;
+	user-select: none;
 }
 
 /* PAGE LOADING */

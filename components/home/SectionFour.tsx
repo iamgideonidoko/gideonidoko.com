@@ -68,7 +68,7 @@ const SectionFour = () => {
                             <span className="physics--box__text">{`>CLICK & DRAG<`}</span>
                             <li className="physics--box__item" data-lenis-prevent>
                                 <div>
-                                    <h5>Product Development</h5>
+                                    <h5>Product Engineering</h5>
                                     <p>
                                         I develop, integrate and maintain software solutions like websites, web apps,
                                         portals, PWAs, APIs etc.
@@ -89,7 +89,7 @@ const SectionFour = () => {
                                     <h5>Product Review</h5>
                                     <p>
                                         I ensure a product is in its best performance by reviewing for potential issues
-                                        and making improvements that could fix it.
+                                        and making improvements on it.
                                     </p>
                                 </div>
                             </li>

@@ -503,6 +503,7 @@
 
 /*>>>>>>>>>SECTION FIVE<<<<<<<<*/
 .sectionFive {
+	--post-width: clamp(30rem, 29vw, 29vw);
 	padding: 6vw 0 0;
 }
 
@@ -525,30 +526,44 @@
 	margin: 1vw 0;
 }
 
-.s5PostFlex {
+.s5PostHref {
 	margin: 2rem;
-	max-width: clamp(30rem, 30vw, 30vw);
+	max-width: var(--post-width);
+	height: 100%;
+	display: block;
+}
+
+.s5PostFlex {
+	height: 100%;
+	/* display: grid;
+	grid-template-rows: auto 1fr; */
 }
 
 .s5PostImg {
-	width: clamp(30rem, 30vw, 30vw);
+	width: var(--post-width);
+	max-width: 100%;
 }
 
 .s5PostImg img {
-	max-width: 100%;
 	transition: all 0.2s ease-in;
 	border-radius: 0.8rem;
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+	object-position: center center
 }
 
 .s5PostInfo {
 	width: 90%;
 	margin: -2em auto 0;
 	transition: all 0.2s ease-in;
-	background: var(--bg-color-dark);
+	background: var(--pri-neutral-inverse);
 	position: relative;
 	padding: 1.2vw;
 	border-radius: 0.8rem;
 	overflow-wrap: break-word;
+	/* border: 1px solid var(--font-color); */
+	border: 1px solid var(--neutral-color-4);
 }
 
 .s5PostInfo > h3 {
@@ -572,6 +587,10 @@
 	font-size: clamp(1.45rem, 1.3vw, 1.3vw) !important;
 	line-height: 1.7em;
 	margin: 0.5em 0 0;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 6;
 }
 
 .s5PostInfo div,
