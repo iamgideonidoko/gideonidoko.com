@@ -39,7 +39,7 @@ const getSitemap = (extraUrls: Array<{ url: string; date: string }> = []) => `<?
         <priority>1.00</priority>
     </url>
     ${extraUrls.map(
-        (url) => `<url>
+      (url) => `<url>
     <loc>${url.url}</loc>
     <lastmod>${url.date}</lastmod>
     <priority>1.00</priority>
@@ -50,33 +50,33 @@ const getSitemap = (extraUrls: Array<{ url: string; date: string }> = []) => `<?
 `;
 
 const getPosts = async (): Promise<Post[]> => {
-    try {
-        const res = await authGet(`/posts?page=1&per_page=45`);
-        return (res?.data?.posts?.docs as Post[]) || [];
-    } catch (err) {
-        return [];
-    }
+  try {
+    const res = await authGet(`/posts?page=1&per_page=45`);
+    return (res?.data?.posts?.docs as Post[]) || [];
+  } catch (err) {
+    return [];
+  }
 };
 
 // This gets called on every request
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-    // Fetch data from external API
-    const posts = await getPosts();
+  // Fetch data from external API
+  const posts = await getPosts();
 
-    const slugUrls = posts.map((item) => ({
-        url: `https://gideonidoko.com/blog/${item?.slug}`,
-        date: dayjs(item?.created_at).format(),
-    }));
+  const slugUrls = posts.map((item) => ({
+    url: `https://gideonidoko.com/blog/${item?.slug}`,
+    date: dayjs(item?.created_at).format(),
+  }));
 
-    const sitemap = getSitemap(slugUrls);
+  const sitemap = getSitemap(slugUrls);
 
-    res.setHeader('Content-Type', 'text/xml');
-    res.write(sitemap);
-    res.end();
+  res.setHeader('Content-Type', 'text/xml');
+  res.write(sitemap);
+  res.end();
 
-    return {
-        props: {},
-    };
+  return {
+    props: {},
+  };
 };
 
 export default Sitemap;

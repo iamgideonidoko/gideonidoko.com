@@ -16,63 +16,63 @@ import { loadLanguages } from '../pages/blog/[slug]';
 
 // Initialize a markdown parser
 const mdParser = new MarkdownIt({
-    //highlight is used to highlight the code syntax
-    highlight: function (str, lang) {
-        if (lang) {
-            loadLanguages([lang]);
-            try {
-                return `<pre class="postBodyPreCode language-${lang}"><code class="language-${lang}">${Prism.highlight(
-                    str,
-                    Prism.languages[lang],
-                    lang,
-                )}</code></pre>`;
-                // return Prism.highlight(str, Prism.languages[lang], lang);
-            } catch (__) {
-                return `<pre class="postBodyPreCode"><code class="language-${lang}">${str}</code></pre>`;
-            }
-        }
+  //highlight is used to highlight the code syntax
+  highlight: function (str, lang) {
+    if (lang) {
+      loadLanguages([lang]);
+      try {
+        return `<pre class="postBodyPreCode language-${lang}"><code class="language-${lang}">${Prism.highlight(
+          str,
+          Prism.languages[lang],
+          lang,
+        )}</code></pre>`;
+        // return Prism.highlight(str, Prism.languages[lang], lang);
+      } catch (__) {
+        return `<pre class="postBodyPreCode"><code class="language-${lang}">${str}</code></pre>`;
+      }
+    }
 
-        return str; //use external default escaping
-    },
-    html: true,
-    // linkify: true,
-    // breaks: true,
+    return str; //use external default escaping
+  },
+  html: true,
+  // linkify: true,
+  // breaks: true,
 });
 
 mdParser.use(markdownItAttrs, {
-    // optional, these are default options
-    leftDelimiter: '{',
-    rightDelimiter: '}',
-    allowedAttributes: ['id', 'class'], // empty array = all attributes are allowed
+  // optional, these are default options
+  leftDelimiter: '{',
+  rightDelimiter: '}',
+  allowedAttributes: ['id', 'class'], // empty array = all attributes are allowed
 });
 
 //dynamically fetch the `react-markdown-editor-lite` libary to avoid running on the server
 const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
-    ssr: false,
+  ssr: false,
 });
 
 const MarkdownEditor = ({
-    textValue,
-    handleMarkdownEditorChange,
+  textValue,
+  handleMarkdownEditorChange,
 }: {
-    textValue: string;
-    handleMarkdownEditorChange: ({ text }: { text: string }) => void;
+  textValue: string;
+  handleMarkdownEditorChange: ({ text }: { text: string }) => void;
 }) => {
-    return (
-        <>
-            <div>
-                <p>Cover Image suggested size: 1600 x 840 px.</p>
-            </div>
-            <br />
-            <br />
-            <MdEditor
-                style={{ height: '800px' }}
-                renderHTML={(text) => purifyHtml(mdParser.render(text))}
-                onChange={handleMarkdownEditorChange}
-                value={textValue}
-            />
-        </>
-    );
+  return (
+    <>
+      <div>
+        <p>Cover Image suggested size: 1600 x 840 px.</p>
+      </div>
+      <br />
+      <br />
+      <MdEditor
+        style={{ height: '800px' }}
+        renderHTML={(text) => purifyHtml(mdParser.render(text))}
+        onChange={handleMarkdownEditorChange}
+        value={textValue}
+      />
+    </>
+  );
 };
 
 /* 

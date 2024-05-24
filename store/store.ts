@@ -5,14 +5,14 @@ import authReducer from './slice/auth.slice';
 import { loadState } from '../helper';
 
 const rootReducer = combineReducers({
-    auth: authReducer,
+  auth: authReducer,
 });
 
 export const store = configureStore({
-    reducer: rootReducer,
-    devTools: process.env.NODE_ENV !== 'production',
-    middleware: [thunk],
-    preloadedState: loadState(),
+  reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: [thunk],
+  preloadedState: loadState(),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
