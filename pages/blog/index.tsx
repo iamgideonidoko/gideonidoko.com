@@ -51,14 +51,13 @@ export const getStaticProps = async () => {
         tags,
       };
     });
-  console.log('sortedPosts: ', JSON.stringify(sortedPosts, null, 2));
   const dummyPosts: typeof sortedPosts = new Array(12).fill(sortedPosts[0]);
   // return { props: { posts: sortedPosts } };
   return { props: { posts: dummyPosts } };
 };
 
 const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) => {
-  const postsPerPage = 3;
+  const postsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPosts, setCurrentPosts] = useState(posts);
   const [searchTerm, setSearchTerm] = useState(
@@ -69,17 +68,23 @@ const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) =>
     () => currentPosts.slice(0, postsPerPage * currentPage),
     [currentPage, currentPosts],
   );
+  const tags = useMemo(
+    () => Array.from(new Set(posts.reduce<string[]>((acc, curr) => [...acc, ...(curr.tags ?? [])], []))),
+    [posts],
+  );
 
   useEffect(() => {
     (() => {
       /* Handle post search */
       if (searchTerm) {
+        setCurrentPage(1);
         setCurrentPosts(
           new Fuse(posts, { keys: ['title', 'tags'] })
             .search(searchTerm.trim())
             .map((searchedPost) => searchedPost.item),
         );
       } else {
+        setCurrentPage(1);
         setCurrentPosts(posts);
       }
     })();
@@ -101,7 +106,7 @@ const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) =>
       <main className={`padding-top-10rem ${styles.blogMain}`}>
         <div className="container-max-1248px">
           <BlogIntro postCount={currentPosts.length} handleSearchTerm={handleSearchTerm} searchTerm={searchTerm} />
-          <BlogTags />
+          <BlogTags tags={tags} handleSearchTerm={handleSearchTerm} />
           <FeaturedPost post={featuredPost} />
           <RenderPosts posts={paginatedCurrentPosts} />
           {hasNextPage && (

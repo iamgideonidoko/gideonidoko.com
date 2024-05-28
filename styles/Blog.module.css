@@ -334,9 +334,11 @@
   display: inline-block;
   background: var(--neutral-color-5);
   margin-right: 1.4rem;
+  margin-top: 1.4rem;
   padding: 1rem 2rem;
   border-radius: 100rem;
   z-index: 2;
+  cursor: pointer;
 }
 /* >>>>>>>>>>>>END: BLOG TAGS<<<<<<<<<<<< */
 
