@@ -29,6 +29,7 @@ import { mdxScope, mdxComponents } from '../../../MDXInfo';
 import remarkGfm from 'remark-gfm';
 import rehypePrism from 'rehype-prism-plus';
 import remarkCodeTitles from 'remark-flexible-code-titles';
+import DisqusComments from '../../../components/blog/DisqusComments';
 
 export const getStaticProps = async ({ params }: { params: { slug?: string } }) => {
   const slug = params?.slug;
@@ -292,6 +293,7 @@ const SinglePost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ source
                         {next && next.slug && <Link href={`/blog/${next.slug}`}>{next.title} →</Link>}
                       </div>
                     </div>
+                    {post.title && post.slug && <DisqusComments title={post.title} slug={post.slug} />}
                   </div>
                 </div>
               </>
