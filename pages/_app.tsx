@@ -217,6 +217,11 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Link>
             </li>
             <li>
+              <Link href="/uses" onClick={closeNav}>
+                Uses
+              </Link>
+            </li>
+            <li>
               <Link href="/contact" onClick={closeNav}>
                 Contact
               </Link>
