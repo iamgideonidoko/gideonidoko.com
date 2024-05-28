@@ -60,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
       const { date } = frontmatter;
       return {
         slug: filename.split('.')[0],
-        date: date && dayjs(date).format('MMMM Do, YYYY'),
+        date: date && dayjs(date).toISOString(),
       };
     }),
   );
