@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { type FC, useMemo, useState, useEffect, useCallback } from 'react';
 import styles from '../../styles/Blog.module.css';
 import { serialize } from 'next-mdx-remote/serialize';
 import type { InferGetStaticPropsType } from 'next';
@@ -11,6 +11,8 @@ import BlogTags from '../../components/blog/BlogTags';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import BlogIntro from '../../components/blog/BlogIntro';
+import Fuse from 'fuse.js';
+
 dayjs.extend(advancedFormat);
 
 export const getStaticProps = async () => {
@@ -56,14 +58,62 @@ export const getStaticProps = async () => {
 };
 
 const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) => {
+  const postsPerPage = 3;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPosts, setCurrentPosts] = useState(posts);
+  const [searchTerm, setSearchTerm] = useState(
+    typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('q') ?? '' : '',
+  );
+  const featuredPost = useMemo(() => posts[Math.floor(Math.random() * posts.length)], [posts]);
+  const paginatedCurrentPosts = useMemo(
+    () => currentPosts.slice(0, postsPerPage * currentPage),
+    [currentPage, currentPosts],
+  );
+
+  useEffect(() => {
+    (() => {
+      /* Handle post search */
+      if (searchTerm) {
+        setCurrentPosts(
+          new Fuse(posts, { keys: ['title', 'tags'] })
+            .search(searchTerm.trim())
+            .map((searchedPost) => searchedPost.item),
+        );
+      } else {
+        setCurrentPosts(posts);
+      }
+    })();
+  }, [posts, searchTerm]);
+
+  const handleSearchTerm = useCallback((term: string) => {
+    setSearchTerm(term);
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const trimmedTerm = term.trim();
+    urlParams.set('q', trimmedTerm);
+    window.history.replaceState({}, '', `${window.location.pathname}${trimmedTerm ? `?${urlParams}` : ''}`);
+  }, []);
+
+  const hasNextPage = currentPosts.length / postsPerPage > currentPage;
+
   return (
     <>
       <main className={`padding-top-10rem ${styles.blogMain}`}>
         <div className="container-max-1248px">
-          <BlogIntro />
+          <BlogIntro postCount={currentPosts.length} handleSearchTerm={handleSearchTerm} searchTerm={searchTerm} />
           <BlogTags />
-          <FeaturedPost post={posts[Math.floor(Math.random() * posts.length)]} />
-          <RenderPosts posts={posts} />
+          <FeaturedPost post={featuredPost} />
+          <RenderPosts posts={paginatedCurrentPosts} />
+          {hasNextPage && (
+            <div className={styles.loadMore}>
+              <button
+                className={`animated-button animated-button--pallene__outline`}
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+              >
+                Load more articles <i className="neu-add-lg"></i>
+              </button>
+            </div>
+          )}
         </div>
       </main>
     </>

@@ -292,6 +292,7 @@
 .blogIntroSearch input {
   border-radius: 1000rem;
   padding: 2rem;
+  background: transparent;
   background: var(--pri-neutral-inverse);
   border: none;
   border-right: 2px solid var(--pri-neutral);
@@ -300,6 +301,19 @@
   font-size: 1.2em;
   width: 15em;
   color: var(--pri-neutral);
+  position: relative;
+  padding-right: 4ch;
+}
+
+.blogIntroSearch::after {
+  content: attr(data-post-count);
+  position: relative;
+  right: 5rem;
+  width: 4ch;
+  display: inline-block;
+  padding: 0.6rem 0.2rem;
+  /* top: 0; */
+  /*   left: 0; */
 }
 /* >>>>>>>>>>>>END: BLOG INTRO<<<<<<<<<<<< */
 
@@ -325,6 +339,20 @@
   z-index: 2;
 }
 /* >>>>>>>>>>>>END: BLOG TAGS<<<<<<<<<<<< */
+
+/* >>>>>>>>>>>>LOAD MORE<<<<<<<<<<<< */
+.loadMore {
+  margin-top: 14em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadMore button {
+  padding: 1.5rem 2.5rem;
+  font-size: 1.3em;
+}
+/* >>>>>>>>>>>>END: LOAD MORE<<<<<<<<<<<< */
 
 /* >>>>>>>>>>>>MEDIA QUERIES<<<<<<<<<<<< */
 @media screen and (max-width: 980px) {

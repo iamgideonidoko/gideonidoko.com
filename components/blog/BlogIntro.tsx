@@ -2,23 +2,32 @@ import type { FC } from 'react';
 import styles from '../../styles/Blog.module.css';
 import Image from 'next/image';
 
-const BlogIntro: FC = () => {
+const BlogIntro: FC<{ postCount: number; handleSearchTerm: (term: string) => void; searchTerm: string }> = ({
+  postCount,
+  handleSearchTerm,
+  searchTerm,
+}) => {
   return (
     <div className={styles.blogIntro}>
       <div className={styles.blogIntro1}>
         <div className={styles.blogIntro1Child}>
           <h2 className={styles.blogIntroMainText}>WRITING</h2>
-          <div className={styles.blogIntroSearch}>
-            <input type="text" placeholder="Search posts" />
+          <div className={styles.blogIntroSearch} data-post-count={postCount}>
+            <input
+              type="text"
+              placeholder="Search posts"
+              value={searchTerm}
+              onChange={(e) => handleSearchTerm(e.target.value)}
+            />
           </div>
         </div>
         <Image
           src="/assets/img/GI-Avatar.JPEG"
           className={styles.blogIntroCover}
           alt=""
-          loading="lazy"
           width={300}
           height={300}
+          priority
         />
       </div>
       <div className={styles.blogIntro2}>
