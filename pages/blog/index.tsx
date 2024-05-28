@@ -51,9 +51,7 @@ export const getStaticProps = async () => {
         tags,
       };
     });
-  const dummyPosts: typeof sortedPosts = new Array(12).fill(sortedPosts[0]);
-  // return { props: { posts: sortedPosts } };
-  return { props: { posts: dummyPosts } };
+  return { props: { posts: sortedPosts } };
 };
 
 const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) => {
