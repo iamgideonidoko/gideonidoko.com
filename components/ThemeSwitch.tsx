@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type FC } from 'react';
 
 const systemTheme = () => {
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -14,7 +14,7 @@ const getTheme = () => {
     : systemTheme();
 };
 
-const ThemeSwitch = (props) => {
+const ThemeSwitch: FC<Partial<Record<'isNavOpen' | 'allowForMobile', boolean>>> = (props) => {
   const [theme, setTheme] = useState(typeof window !== 'undefined' ? getTheme() : 'light');
 
   const isWindow = typeof window !== 'undefined';

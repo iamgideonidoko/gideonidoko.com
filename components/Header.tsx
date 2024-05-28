@@ -3,10 +3,6 @@ import Link from 'next/link';
 import ThemeSwitch from './ThemeSwitch';
 // import FullscreenSwitch from './FullscreenSwitch';
 import Nav from './Nav';
-import AdminMenu from './AdminMenu';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-// import Image from 'next/image';
 
 const Header = ({
   isNavOpen,
@@ -17,8 +13,6 @@ const Header = ({
   setIsNavOpen: React.Dispatch<React.SetStateAction<boolean>>;
   contentScrollPos: React.MutableRefObject<number>;
 }) => {
-  const auth = useSelector(({ auth }: RootState) => auth);
-
   const handleNavMenuBtnClick = () => {
     if (isNavOpen) {
       contentScrollPos.current = window.scrollY;
@@ -30,7 +24,7 @@ const Header = ({
     <header className={`header ${!isNavOpen ? 'force-sticky' : ''}`}>
       <div className="logo-wrap">
         <Link href="/">
-          <img src="/assets/img/GideonIdokoDevLogo.png" className="site-logo" alt="Gideon Idoko" />
+          <img src="/assets/img/GideonIdokoDevLogo.png" loading="lazy" className="site-logo" alt="Gideon Idoko" />
         </Link>
       </div>
       <div>
@@ -52,17 +46,6 @@ const Header = ({
             AVAILABLE FOR WORK
           </a>
         </div>
-
-        {
-          //if user is authenticated, show the admin menu
-          auth.isAuthenticated && (
-            <AdminMenu
-              adminUsername={auth.userInfo?.user?.username as string}
-              isNavOpen={isNavOpen}
-              allowForMobile={false}
-            />
-          )
-        }
       </div>
     </header>
   );

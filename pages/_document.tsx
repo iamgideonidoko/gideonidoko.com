@@ -25,26 +25,6 @@ class MyDocument extends Document {
           <NextScript />
           <script src="/assets/js/scrambling-text.js"></script>
 
-          {/*
-          Firebase App (the core Firebase SDK) is always required and must be listed first
-        */}
-
-          <script src="/assets/js/firebase-app.js"></script>
-
-          {/*
-          Firebase Cloud Storage SDK
-        */}
-          <script src="/assets/js/firebase-storage.js"></script>
-          {/*
-          
-          <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-          <script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-analytics.js"></script>
-          <!-- Add Firebase products that you want to use -->
-          <script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-auth.js"></script>
-          <script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-firestore.js"></script>
-          
-        */}
-
           {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ2RYXMK6E"></script>
         </body>

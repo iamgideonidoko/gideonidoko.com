@@ -3,22 +3,14 @@ import '../styles/globals.css';
 import '../styles/prism-night-owl.css';
 import 'splitting/dist/splitting.css';
 import 'splitting/dist/splitting-cells.css';
-import React, { Fragment, useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { createWrapper } from 'next-redux-wrapper';
-import makeStore, { store } from '../store/store';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ThemeSwitch from '../components/ThemeSwitch';
-import AdminMenu from '../components/AdminMenu';
 import Head from 'next/head';
-import { debounce } from 'debounce';
-import { saveState, refreshUserTokens } from '../helper';
-import { AppProps } from 'next/app';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import { loadFirebase } from '../helper';
 import Lenis from '@studio-freight/lenis';
 import Cursor from '../classes/Cursor';
 import ButtonCtrl from '../classes/ButtonCtrl';
@@ -27,20 +19,11 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import gsap from 'gsap';
 import PageLoader from '../classes/PageLoader';
 
-store.subscribe(
-  // we use debounce to save the state once each 800ms
-  // for better performances in case multiple changes occur in a short time
-  debounce(() => {
-    saveState(store.getState());
-  }, 800),
-);
-
-const pageWithoutHeader = ['/p/test'];
-const pageWithoutFooter = ['/p/test'];
+const pageWithoutHeader: string[] = ['/p/test'];
+const pageWithoutFooter: string[] = ['/p/test'];
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(true);
-  const auth = useSelector(({ auth }: RootState) => auth);
   const contentScrollPos = useRef<number>(0);
 
   const closeNav = () => {
@@ -134,11 +117,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
     requestAnimationFrame(scrollFn); // Start the animation frame loop
 
-    // check for token and refresh on page load
-    (async () => await refreshUserTokens())();
-    // load an initialize a firebase app
-    loadFirebase();
-
     const cursorElement = document.querySelector<SVGElement>('.cursor');
     if (cursorElement) {
       cursorRef.current = new Cursor(cursorElement);
@@ -202,23 +180,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router]);
 
   return (
-    <Fragment>
+    <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <div className={!isNavOpen ? 'mobileNavSection' : 'mobileNavSection addNegativeIndex'} suppressHydrationWarning>
-        {store.getState().auth.isAuthenticated && (
-          <div className="mobileNavAdminMenu">
-            <div>
-              <AdminMenu
-                isNavOpen={isNavOpen}
-                allowForMobile={true}
-                adminUsername={auth.isAuthenticated ? (auth.userInfo?.user?.username as string) : ''}
-              />
-            </div>
-          </div>
-        )}
-
         <div className="mobileNavActionBtn">
           <button onClick={() => setIsNavOpen(true)} className="closeMenuBtn">
             <i className="neu-close-lg"></i>Close Menu
@@ -301,10 +267,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 }
 
-const wrapper = createWrapper(makeStore);
-
-export default wrapper.withRedux(MyApp);
+export default MyApp;

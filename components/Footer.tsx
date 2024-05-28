@@ -96,7 +96,12 @@ const Footer = () => {
       <div className="footer-bg"></div>
       <div className=" footer-wrapper">
         <div>
-          <img src="/assets/img/GideonIdokoDevLogo.png" className="site-footer-logo" alt="Gideon Idoko" />
+          <img
+            src="/assets/img/GideonIdokoDevLogo.png"
+            loading="lazy"
+            className="site-footer-logo"
+            alt="Gideon Idoko"
+          />
         </div>
         <p className="footer-question">GOT A PROJECT IN MIND?</p>
         <h3 className="footer-main-heading">LET&apos;S CONNECT</h3>
