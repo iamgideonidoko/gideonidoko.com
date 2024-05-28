@@ -141,13 +141,7 @@ export const getReadTime = (string: string) => {
 
   const seconds = Math.round(remainder * 60);
 
-  return roundedMinutes < 1
-    ? seconds <= 1
-      ? seconds + ' sec read'
-      : seconds + ' secs read'
-    : roundedMinutes <= 1
-    ? roundedMinutes + ' min read'
-    : roundedMinutes + ' mins read';
+  return roundedMinutes < 1 ? seconds + ' sec read' : roundedMinutes + ' min read';
 };
 
 export const commaSeparatedStr = (tagArr: string[]) => {

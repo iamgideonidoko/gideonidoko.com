@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import '../styles/globals.css';
+import '../styles/prism-night-owl.css';
 import 'splitting/dist/splitting.css';
 import 'splitting/dist/splitting-cells.css';
 import React, { Fragment, useState, useEffect, useRef } from 'react';
@@ -18,8 +19,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { useRouter } from 'next/router';
 import { loadFirebase } from '../helper';
-import 'prismjs/themes/prism-tomorrow.css';
-// import Image from 'next/image';
 import Lenis from '@studio-freight/lenis';
 import Cursor from '../classes/Cursor';
 import ButtonCtrl from '../classes/ButtonCtrl';
@@ -119,7 +118,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     // Enable Lenis scrolling
     const lenis = new Lenis({
       lerp: 0.04,
-      smoothTouch: true,
+      // smoothTouch: true,
       smoothWheel: true,
       syncTouch: true,
       gestureOrientation: 'both',
@@ -282,6 +281,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         {...(router.pathname.startsWith('/blog/') ? { 'data-lenis-prevent': true } : {})}
         className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}
       >
+        <div className="fixed-line" />
         <canvas id="canvas" />
         <div className="noise-bg"></div>
         {shouldHaveHeader && (

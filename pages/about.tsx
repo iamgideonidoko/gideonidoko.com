@@ -81,7 +81,7 @@ const About = () => {
             <div>
               <h3>Hi there! 👋🏽</h3>
               <h1>
-                I&apos;m <strong>Gideon Idoko</strong>.
+                I&apos;m <strong style={{ fontFamily: 'Harmond', fontSize: '1.5em' }}>Gideon Idoko</strong>.
               </h1>
               <div className={styles.profileImgWrapper}>
                 <div className="gooey__image">
@@ -97,10 +97,10 @@ const About = () => {
             </div>
             <div>
               <p>
-                I&apos;m a Nigeria-based Software Engineer interested in learning, building solutions with unique
-                experiences, sharing technical ideas, writing and community building. I go a long way to ensure the
-                security, accessibility and usability of any product I work on and that they meet the business
-                requirements while focusing on providing the best experience for their end users.
+                a Software Engineer interested in learning, building solutions with unique experiences, sharing
+                technical ideas, writing and community building. I go a long way to ensure the security, accessibility
+                and usability of any product I work on and that they meet the business requirements while focusing on
+                providing the best experience for their end users.
               </p>
 
               <p>

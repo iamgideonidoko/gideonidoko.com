@@ -42,14 +42,13 @@
 	/* font-size: clamp(3.2rem, 8vw, 8vw); */
 	font-size: clamp(4rem, 8vw, 8vw);
 	text-align: center;
-	margin: 2rem 0;
-	/* font-family: var(--header-font) !important; */
-	font-family: 'Space Grotesk' !important;
+	font-family: Harmond;
 	position: relative;
 	text-transform: lowercase;
 	line-height: 80%;
 	font-weight: 900;
 	letter-spacing: 0.1em;
+	font-style: unset;
 }
 
 .welcomeLine > span {
@@ -64,7 +63,7 @@
 }
 
 .welcomeLine > span:nth-child(2) {
-	font-style: italic !important;
+	/* font-style: italic !important; */
 	transform: skew(-10deg)
 }
 
@@ -93,8 +92,8 @@
 .welcomeLine2 {
 	font-family: inherit;
 	position: relative;
-	font-family: 'Space Grotesk' !important;
-	font-weight: bold;
+	font-weight: normal;
+	transform: translateY(-3.5em);
 }
 
 .homeSeparator1 {

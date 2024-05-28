@@ -15,7 +15,7 @@ const SectionOne = () => {
   }, []);
 
   const handleScrollButtonClick = () => {
-    const sectionThreeWrapper = document.querySelector('#section-three-wrapper');
+    const sectionThreeWrapper = document.querySelector<HTMLElement>('#section-three-wrapper');
     if (sectionThreeWrapper && window.lenis) {
       window.lenis.scrollTo(sectionThreeWrapper, {
         easing: (x: number) => {

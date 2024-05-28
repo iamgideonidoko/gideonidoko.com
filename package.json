@@ -2,6 +2,7 @@
   "name": "gideonidoko.com",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -19,7 +20,7 @@
     "@szhsin/react-menu": "^2.3.4",
     "axios": "^0.26.0",
     "copy-to-clipboard": "^3.3.1",
-    "dayjs": "^1.10.8",
+    "dayjs": "^1.11.11",
     "debounce": "^1.2.1",
     "gsap": "^3.12.2",
     "html-entities": "^2.3.2",
@@ -32,6 +33,7 @@
     "matter-js": "^0.19.0",
     "moment": "^2.29.1",
     "next": "^13.5.3",
+    "next-mdx-remote": "^5.0.0",
     "next-pwa": "^5.4.4",
     "next-redux-wrapper": "^7.0.5",
     "next-seo": "^5.1.0",
@@ -45,6 +47,10 @@
     "react-share": "^4.4.0",
     "react-social-icons": "^5.11.0",
     "redux": "^4.1.2",
+    "rehype-code-titles": "^1.2.0",
+    "rehype-prism-plus": "^2.0.0",
+    "remark-flexible-code-titles": "^1.2.0",
+    "remark-gfm": "^4.0.0",
     "rodal": "^1.8.3",
     "simple-crypto-js": "^3.0.1",
     "simple-react-validator": "^1.6.1",
@@ -81,10 +87,5 @@
   },
   "engines": {
     "node": "20.x"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn run lint:configured"
-    }
   }
 }

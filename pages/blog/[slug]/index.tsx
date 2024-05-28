@@ -1,25 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, type FC, useState } from 'react';
 import Link from 'next/link';
-import moment from 'moment';
-import MarkdownIt from 'markdown-it';
-// import hljs from 'highlight.js';
-// import 'highlight.js/styles/monokai.css';
-import CommentModal from '../../../components/blog/CommentModal';
 import Custom404 from '../../404';
-import swal from 'sweetalert';
-// import { resetPostUpdated, updatePostComments } from '../../../store/actions/postActions';
-import { authGet, purifyHtml, getReadTime, noAuthPut } from '../../../helper';
+import { getReadTime } from '../../../helper';
 import copy from 'copy-to-clipboard';
 import styles from '../../../styles/SinglePost.module.css';
 import { NextSeo } from 'next-seo';
-import { GetServerSideProps } from 'next';
-import { PostComment, PostCommentReply, SingleFullPost } from '../../../interfaces/post.interface';
-import Head from 'next/head';
-import { decode } from 'html-entities';
-import { config } from '../../../config/keys';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
+import type { InferGetStaticPropsType } from 'next';
+import { IPrevNextPost, IPost } from '../../../interfaces/post.interface';
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -30,115 +18,115 @@ import {
   FacebookShareButton,
   FacebookIcon,
 } from 'react-share';
-import markdownItAttrs from 'markdown-it-attrs';
-import Prism from 'prismjs';
-import components from 'prismjs/components.json';
+import { readdir, readFile } from 'node:fs/promises';
+import { join } from 'path';
+import { serialize } from 'next-mdx-remote/serialize';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+dayjs.extend(advancedFormat);
+import { MDXRemote } from 'next-mdx-remote';
+import { mdxScope, mdxComponents } from '../../../MDXInfo';
+import remarkGfm from 'remark-gfm';
+import rehypePrism from 'rehype-prism-plus';
+import remarkCodeTitles from 'remark-flexible-code-titles';
 
-/**
- * The set of all languages which have been loaded using the below function.
- *
- * @type {Set<string>}
- */
-const loadedLanguages = new Set();
-
-/**
- * Loads the given languages and adds them to the current Prism instance.
- *
- * @param {string|string[]} [languages]
- * @returns {void}
- */
-export async function loadLanguages(languages: string[]) {
-  const [lang] = languages;
-
-  if (!lang) return;
-
-  const loaded = [...loadedLanguages, ...Object.keys(Prism.languages)];
-
-  if (loaded.indexOf(lang) !== -1) return;
-
-  if (components && components.languages) {
-    if (!(lang in components.languages)) {
-      console.warn('Language does not exist: ' + lang);
-      return;
+export const getStaticProps = async ({ params }: { params: { slug?: string } }) => {
+  const slug = params?.slug;
+  const blogPath = join(process.cwd(), 'blog');
+  const files = await readdir(blogPath);
+  const mdFiles = files.filter((file) => /\.md(x|)$/gi.test(file));
+  let postIdx: number | undefined = undefined;
+  const filename = mdFiles.find((file, idx) => {
+    if (file.split('.')[0] === slug) {
+      postIdx = idx;
+      return true;
     }
+    return false;
+  });
+  let post: IPost | null = null,
+    prev: IPrevNextPost | null = null,
+    next: IPrevNextPost | null = null;
+
+  if (!filename) return { props: { source: null, post, prev, next } };
+
+  const prevFilename = typeof postIdx === 'number' && postIdx > 0 ? mdFiles[postIdx - 1] : undefined;
+  const nextFilename = typeof postIdx === 'number' && postIdx >= 0 ? mdFiles[postIdx + 1] : undefined;
+
+  const blog = await readFile(join(blogPath, filename), 'utf-8');
+  const prevBlog = prevFilename && (await readFile(join(blogPath, filename), 'utf-8'));
+  const nextBlog = nextFilename && (await readFile(join(blogPath, filename), 'utf-8'));
+  const source = await serialize<
+    unknown,
+    Partial<Record<'title' | 'cover' | 'description' | 'date', string> & { tags: string[] }>
+  >(blog, {
+    parseFrontmatter: true,
+    scope: mdxScope,
+    mdxOptions: {
+      remarkPlugins: [[remarkGfm], [remarkCodeTitles]],
+      rehypePlugins: [[rehypePrism, { ignoreMissing: true, showLineNumbers: false }]],
+    },
+  });
+
+  post = {
+    title: source.frontmatter.title,
+    cover: source.frontmatter.cover,
+    slug: slug as string,
+    date: source.frontmatter.date && dayjs(source.frontmatter.date).format('MMMM Do, YYYY'),
+    readTime: getReadTime(blog),
+    tags: source.frontmatter.tags,
+  };
+  const prevSource =
+    prevBlog &&
+    (await serialize<unknown, Partial<Record<'title' | 'cover' | 'description' | 'date' | 'tags', string>>>(prevBlog, {
+      parseFrontmatter: true,
+    }));
+
+  if (prevSource) {
+    prev = {
+      title: prevSource.frontmatter.title,
+      slug: prevFilename?.split('.')[0],
+    };
   }
 
-  try {
-    require(`prismjs/components/prism-${lang}`);
-    loadedLanguages.add(lang);
-  } catch (err) {
-    console.error('Language could not be loaded');
+  const nextSource =
+    nextBlog &&
+    (await serialize<unknown, Partial<Record<'title' | 'cover' | 'description' | 'date' | 'tags', string>>>(nextBlog, {
+      parseFrontmatter: true,
+    }));
+
+  if (nextSource) {
+    next = {
+      title: nextSource.frontmatter.title,
+      slug: nextFilename?.split('.')[0],
+    };
   }
+  return { props: { source, post, prev, next } };
+};
+
+export async function getStaticPaths() {
+  const blogPath = join(process.cwd(), 'blog');
+  const files = await readdir(blogPath);
+  const mdFiles = files.filter((file) => /\.md(x|)$/gi.test(file));
+  // Get the paths we want to pre-render based on posts
+  const paths = mdFiles.map((filename) => ({
+    params: { slug: filename.split('.')[0] },
+  }));
+  // Pre-render only these paths at build time.
+  // { fallback: false } means other routes should 404.
+  return { paths, fallback: false };
 }
 
-const mdParser: MarkdownIt = new MarkdownIt({
-  highlight: function (str, lang) {
-    const decodedStr = str;
-    if (lang) {
-      loadLanguages([lang]);
-      try {
-        return `<pre class="postBodyPreCode language-${lang}"><code class="language-${lang}">${Prism.highlight(
-          `${decodedStr}`,
-          Prism.languages[lang],
-          lang,
-        )}</code></pre>`;
-      } catch (__) {
-        return `<pre class="postBodyPreCode language-${lang}"><code class="language-${lang}">${Prism.highlight(
-          decodedStr,
-          Prism.languages['text'],
-          'text',
-        )}</code></pre>`;
-      }
-    }
-
-    return `<pre class="postBodyPreCode"><code>${Prism.highlight(
-      decodedStr,
-      Prism.languages['text'],
-      'text',
-    )}</code></pre>`;
-  },
-  html: true,
-  // linkify: true,
-  // breaks: true,
-});
-
-mdParser.use(markdownItAttrs, {
-  // optional, these are default options
-  leftDelimiter: '{',
-  rightDelimiter: '}',
-  allowedAttributes: ['id', 'class'], // empty array = all attributes are allowed
-});
-
-const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
-  const exactPost = postInfo.post;
-  const nextPost = postInfo.nextPost;
-  const previousPost = postInfo.previousPost;
-
-  const auth = useSelector(({ auth }: RootState) => auth);
-
-  const [comments, setComments] = useState<Array<PostComment>>([]);
-  const [loaded, setLoaded] = useState<boolean>(false);
-
+const SinglePost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ source, post, prev, next }) => {
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    setComments(postInfo?.post?.comments);
+    (window as typeof window & { [key: string]: unknown }).customCopy = copy;
     setLoaded(true);
-  }, [postInfo]);
-
-  // //local state
-  const [showCommentModal, setShowCommentModal] = useState(false);
-  const [isCommenting, setIsCommenting] = useState(true);
-  const [currentCommentId, setCurrentCommentId] = useState('');
-
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).customCopy = copy;
-    Prism.highlightAll();
   }, []);
 
   useEffect(() => {
-    if (exactPost) {
+    if (post) {
       const allPostBodyAnchors = window.document.querySelectorAll('.truePostBody a');
-      const allPostBodyPreCode = window.document.querySelectorAll('.postBodyPreCode');
+      const allPostBodyPreCode = window.document.querySelectorAll('pre:has(> code.code-highlight)');
 
       const allPostBodyTable = window.document.querySelectorAll('.truePostBody table');
 
@@ -183,13 +171,8 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
 
         copyBtn.appendChild(i);
         copyBtn.appendChild(span);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (window as any)[`customCopyText${index}`] = pre.childNodes[0].textContent;
-        /*window[`customCopyAlert${index}`] = function() {
-					window.document.querySelector(`.codeCopyBtn${index} span`).style.display='inline';
-					setTimeout(function() { window.document.querySelector(`.codeCopyBtn${index} span`).style.display='none'; }, 3000);
-				};*/
-
+        (window as typeof window & { [key: string]: unknown })[`customCopyText${index}`] =
+          pre.childNodes[0].textContent;
         copyBtn.setAttribute(
           'onclick',
           `(function copySnippet(){ window.customCopy(window.customCopyText${index}); window.document.querySelector('.codeCopyBtn${index} span').style.display='inline'; setTimeout(function() { window.document.querySelector('.codeCopyBtn${index} span').style.display='none'; }, 3000) })()`,
@@ -197,137 +180,32 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
         pre.childNodes.length === 1 && pre.appendChild(copyBtn);
       });
     }
-  }, [exactPost]);
-
-  /*
-	function to return dangerous markup
-	*/
-  const createMarkup = (markup: string) => {
-    return { __html: markup };
-  };
-
-  const handleAddCommentBtnClick = () => {
-    setIsCommenting(true);
-    setShowCommentModal(true);
-  };
-
-  function handleAddReplyBtnClick(currentCommentId: string) {
-    setCurrentCommentId(currentCommentId);
-    setIsCommenting(false);
-    setShowCommentModal(true);
-  }
-
-  async function handleDeleteComment(
-    currentPostComments: PostComment[],
-    currentComment: PostComment,
-    currentPostId: string,
-  ) {
-    //create a deep copy of the currentPostComments
-    const newCurrentPostComments: PostComment[] = JSON.parse(JSON.stringify(currentPostComments));
-
-    //create an updated post object
-    const updatedPost = {
-      //add the new comment to the comments array of the current post
-      comments: newCurrentPostComments.filter((comment) => comment._id !== currentComment._id),
-      commentsUpdateAccessKey: config.commentsUpdateAccessKey,
-    };
-
-    try {
-      const willDelete = await swal({
-        title: '',
-        text: `Delete reply from "${currentComment.comment_author}"?`,
-        icon: 'warning',
-        buttons: {
-          cancel: true,
-          confirm: {
-            text: 'Yes, Delete',
-            className: 'deleteConfirmBtn',
-          },
-        },
-      });
-      if (willDelete) {
-        // update post comments
-        try {
-          const res = await noAuthPut(`/post/${currentPostId}/comments`, updatedPost);
-          setComments(res?.data?.post?.comments);
-        } catch (err) {
-          console.error('Comment post error => ', err);
-        }
-      }
-    } catch (err) {}
-  }
-
-  async function handleDeleteReply(
-    currentPostComments: PostComment[],
-    currentComment: PostComment,
-    currentPostId: string,
-    currentReply: PostCommentReply,
-  ) {
-    //get a new copy of the current post comments array (deep copy)
-    const newCurrentPostComments: PostComment[] = JSON.parse(JSON.stringify(currentPostComments));
-
-    const mappedCurrentPostComments: PostComment[] = newCurrentPostComments.map((comment) => {
-      if (comment._id === currentComment._id) {
-        comment.replies = comment.replies.filter((reply) => reply._id !== currentReply._id);
-        return comment;
-      }
-      return comment;
-    });
-
-    const updatedPost = {
-      comments: mappedCurrentPostComments,
-      commentsUpdateAccessKey: config.commentsUpdateAccessKey,
-    };
-
-    try {
-      const willDelete = await swal({
-        title: '',
-        text: `Delete ${currentReply.reply_author}'s reply to "${currentComment.comment_author}"?`,
-        icon: 'warning',
-        buttons: {
-          cancel: true,
-          confirm: {
-            text: 'Yes, Delete',
-            className: 'deleteConfirmBtn',
-          },
-        },
-      });
-      if (willDelete) {
-        // update post comments
-        try {
-          const res = await noAuthPut(`/post/${currentPostId}/comments`, updatedPost);
-          setComments(res?.data?.post?.comments);
-        } catch (err) {
-          console.error('Comment post error => ', err);
-        }
-      }
-    } catch (err) {}
-  }
+  }, [post]);
 
   return (
-    <Fragment>
-      {!postInfo.post ? (
+    <>
+      {!post ? (
         <Custom404 />
       ) : (
-        <Fragment>
+        <>
           <NextSeo
-            title={`${exactPost.title} - Gideon Idoko`}
-            description={exactPost.description}
-            canonical={`https://gideonidoko.com/blog/${exactPost.slug}`}
+            title={`${post.title} - Gideon Idoko`}
+            description={post.description}
+            canonical={`https://gideonidoko.com/blog/${post.slug}`}
             openGraph={{
-              url: `https://gideonidoko.com/blog/${exactPost.slug}`,
-              title: `${exactPost.title} - Gideon Idoko`,
-              description: exactPost.description,
+              url: `https://gideonidoko.com/blog/${post.slug}`,
+              title: `${post.title} - Gideon Idoko`,
+              description: post.description,
               type: 'article',
               article: {
-                // publishedTime: exactPost.created_at as string,
-                authors: [exactPost.author_name as string],
-                tags: exactPost.tags,
+                // publishedTime: post.created_at as string,
+                authors: ['Gideon Idoko'],
+                tags: post.tags,
               },
               images: [
                 {
-                  url: exactPost.cover_img,
-                  alt: `${exactPost.title}'s cover image`,
+                  url: post.cover ?? '',
+                  alt: `${post.title}'s cover image`,
                 },
               ],
               site_name: 'Gideon Idoko',
@@ -338,262 +216,91 @@ const SinglePost = ({ postInfo }: { postInfo: SingleFullPost }) => {
               cardType: 'summary_large_image',
             }}
           />
-
-          <Head>
-            <meta name="keywords" content={exactPost?.keywords?.join(',')}></meta>
-          </Head>
           <main className={`padding-top-10rem ${styles.singlePostMain}`}>
             <div className="container-max-1248px">
-              <Fragment>
+              <>
                 <div className={styles.singlePostPageWrapper}>
                   <div className={styles.blogHeader}>
-                    <h5 className={styles.breadcrumb}>
-                      <small>
-                        &gt;&gt;&nbsp; <Link href="/blog">Blog</Link>
-                        &nbsp; &gt;&gt; {exactPost.title}
-                      </small>
-                    </h5>
-                    <h1 className={styles.postTitle}>{exactPost.title}</h1>
+                    <h1 className={styles.postTitle}>{post.title}</h1>
                     <h5 className={styles.blogMeta}>
                       <span>
-                        <small>{moment(exactPost.created_at).format('MMM DD, YYYY')}</small>
+                        <small>{post.date}</small>
                       </span>{' '}
-                      &nbsp; |&nbsp;{' '}
+                      &nbsp; —&nbsp;{' '}
                       <span>
-                        <small>{getReadTime(exactPost.body)}</small>
+                        <small>{post.readTime}</small>
                       </span>{' '}
-                      &nbsp; |&nbsp;{' '}
+                      &nbsp; —&nbsp;{' '}
                       <span>
-                        <small>{exactPost.author_name}</small>
+                        <small>Gideon Idoko</small>
                       </span>
                     </h5>
                     <div className={styles.postCoverWrap}>
-                      <img className={styles.postCover} src={exactPost.cover_img} alt="Blog Cover" />
+                      <img className={styles.postCover} src={post.cover} alt="Blog Cover" />
                     </div>
                   </div>
 
                   <div className={styles.blogBody}>
-                    <div
-                      className={`${styles.postBody} truePostBody`}
-                      dangerouslySetInnerHTML={createMarkup(purifyHtml(mdParser.render(decode(exactPost.body))))}
-                    />
-
+                    <div className={`${styles.postBody} truePostBody`}>
+                      {source && <MDXRemote {...source} components={mdxComponents} />}
+                    </div>
                     <div className={styles.postTags}>
-                      {exactPost.tags?.map((tag, idx) => (
+                      {post.tags?.map((tag, idx) => (
                         <span key={idx}>
-                          <Link href={`/blog/tags/${tag}`}>#{tag}</Link>
+                          <Link href={`/blog?q=${tag}`}>#{tag}</Link>
                         </span>
                       ))}
                     </div>
-
-                    {typeof window !== 'undefined' && (
+                    {loaded && (
                       <div className={styles.postShare}>
                         <div className={styles.postShareBtns}>
                           <span>Share: </span>
                           <TwitterShareButton
-                            title={exactPost?.title}
-                            hashtags={exactPost.tags as string[]}
+                            title={post?.title}
+                            hashtags={post.tags as string[]}
                             url={window.document.URL}
                             via={'IamGideonIdoko'}
                           >
                             <TwitterIcon size={32} round={true} />
                           </TwitterShareButton>
                           <LinkedinShareButton
-                            title={exactPost?.title}
+                            title={post?.title}
                             url={window.document.URL}
-                            summary={exactPost?.description}
+                            summary={post?.description}
                             source={'Gideon Idoko'}
                           >
                             <LinkedinIcon size={32} round={true} />
                           </LinkedinShareButton>
                           <FacebookShareButton
                             url={window.document.URL}
-                            quote={exactPost?.description}
-                            hashtag={exactPost?.tags ? exactPost?.tags[0] : ''}
+                            quote={post?.description}
+                            hashtag={post?.tags ? post?.tags[0] : ''}
                           >
                             <FacebookIcon size={32} round={true} />
                           </FacebookShareButton>
-                          <WhatsappShareButton title={exactPost?.title} url={window.document.URL} separator={': '}>
+                          <WhatsappShareButton title={post?.title} url={window.document.URL} separator={': '}>
                             <WhatsappIcon size={32} round={true} />
                           </WhatsappShareButton>
                         </div>
                       </div>
                     )}
-
                     <div className={styles.postPagination}>
                       <div className={styles.ppLeft}>
-                        {previousPost?.length > 0 && (
-                          <Link href={`/blog/${previousPost[0].slug}`}>← {previousPost[0].title}</Link>
-                        )}
+                        {prev && prev.slug && <Link href={`/blog/${prev.slug}`}>← {prev.title}</Link>}
                       </div>
                       <div className={styles.ppRight}>
-                        {nextPost?.length > 0 && <Link href={`/blog/${nextPost[0].slug}`}>{nextPost[0].title} →</Link>}
+                        {next && next.slug && <Link href={`/blog/${next.slug}`}>{next.title} →</Link>}
                       </div>
                     </div>
                   </div>
-                  {/* BLOG FOOTER */}
-                  {loaded && (
-                    <div className={styles.blogFooter}>
-                      <div className={styles.commentSection}>
-                        <div className={styles.commentSectionHeader}>
-                          <div>
-                            <span>Comments ({comments.length})</span>
-                          </div>
-                          <div>
-                            {!exactPost.is_comment_disabled ? (
-                              <button className={styles.commentModalOpenBtn} onClick={handleAddCommentBtnClick}>
-                                <i className="neu-pencil-ui"></i> Add a comment
-                              </button>
-                            ) : (
-                              <p style={{ opacity: '0.7' }}>Comment disabled.</p>
-                            )}
-                          </div>
-                        </div>
-                        <CommentModal
-                          showCommentModal={showCommentModal}
-                          setShowCommentModal={setShowCommentModal}
-                          currentPostTitle={exactPost.title}
-                          isCommenting={isCommenting}
-                          currentPostComments={comments}
-                          currentPostId={exactPost._id}
-                          isAdmin={auth.isAuthenticated}
-                          isPostAuthor={
-                            auth.isAuthenticated ? exactPost.author_username === auth.userInfo?.user?.username : false
-                          }
-                          currentCommentId={currentCommentId}
-                          currentAdminName={auth.isAuthenticated ? auth.userInfo?.user?.name : null}
-                          setComments={setComments}
-                          exactPost={exactPost}
-                        />
-                        <div className={styles.commentSectionBody}>
-                          {comments.map((comment) => (
-                            <div key={comment._id} className={styles.singleComment}>
-                              <div className={styles.singleCommentMainContent}>
-                                <div className={styles.scLeft}>
-                                  {comment.isAdmin ? (
-                                    <span className={styles.scLeftAdminGravatar}>
-                                      <img src="/assets/img/GideonIdokoDevGravater.png" alt="" />
-                                    </span>
-                                  ) : (
-                                    <span className={styles.scLeftUserGravatar}>
-                                      <i className="neu-user-circle"></i>
-                                    </span>
-                                  )}
-                                </div>
-                                <div className={styles.scRight}>
-                                  <div className={styles.commentAuthor}>
-                                    <div>
-                                      <span>{comment.comment_author}</span>{' '}
-                                      {comment.isAdmin && comment.isPostAuthor && <i className="neu-tick-circle"></i>}
-                                    </div>
-                                    <div>
-                                      <span>{moment(comment.date).format('MMM DD')}</span>
-                                    </div>
-                                  </div>
-
-                                  <div
-                                    className={styles.commentBody}
-                                    dangerouslySetInnerHTML={createMarkup(comment.comment_body)}
-                                  />
-                                  <div className={styles.commentFooter}>
-                                    <div>
-                                      {!exactPost.is_comment_disabled && (
-                                        <button
-                                          onClick={() => handleAddReplyBtnClick(comment._id)}
-                                          className={styles.commentReplyBtn}
-                                        >
-                                          <i className="neu-turn-right"></i> <span>Reply</span>
-                                        </button>
-                                      )}
-
-                                      {auth.isAuthenticated ? (
-                                        <button
-                                          className={styles.commentDeleteBtn}
-                                          onClick={() => handleDeleteComment(comments, comment, exactPost._id)}
-                                        >
-                                          <i className="neu-trash"></i> <span>Delete</span>
-                                        </button>
-                                      ) : null}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              {comment.replies.map((reply, index) => (
-                                <div
-                                  key={reply._id}
-                                  className={`${styles.singleReply} ${index == 0 ? styles.firstSingleReply : null}`}
-                                >
-                                  <div className={styles.srLeft}>
-                                    {reply.isAdmin ? (
-                                      <span className={styles.srLeftAdminGravatar}>
-                                        <img src="/assets/img/GideonIdokoDevGravater.png" alt="" />
-                                      </span>
-                                    ) : (
-                                      <span className={styles.srLeftUserGravatar}>
-                                        <i className="neu-user-circle"></i>
-                                      </span>
-                                    )}
-                                  </div>
-                                  <div className={styles.srRight}>
-                                    <div className={styles.replyAuthor}>
-                                      <div>
-                                        <span>{reply.reply_author}</span>{' '}
-                                        {reply.isAdmin && reply.isPostAuthor && <i className="neu-tick-circle"></i>}
-                                      </div>
-                                      <div>
-                                        <span>{moment(reply.date).format('MMM DD')}</span>
-                                      </div>
-                                    </div>
-                                    <div
-                                      className={styles.replyBody}
-                                      dangerouslySetInnerHTML={createMarkup(reply.reply_body)}
-                                    />
-
-                                    <div className={styles.replyFooter}>
-                                      <div>
-                                        {auth.isAuthenticated ? (
-                                          <button
-                                            className={styles.replyDeleteBtn}
-                                            onClick={() => handleDeleteReply(comments, comment, exactPost._id, reply)}
-                                          >
-                                            <i className="neu-trash"></i> <span>Delete</span>
-                                          </button>
-                                        ) : null}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </div>
-              </Fragment>
+              </>
             </div>
           </main>
-        </Fragment>
+        </>
       )}
-    </Fragment>
+    </>
   );
 };
 
 export default SinglePost;
-
-// This gets called on every request
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const slug = context.params?.slug;
-
-  // Fetch data from external API
-  try {
-    const res = await authGet(`/post/${slug}`);
-    if (!res?.data?.post?.post) return { notFound: true };
-    return { props: { postInfo: res?.data?.post } };
-  } catch (err) {
-    // return { props: { postInfo: { post: null, nextPost: [], prevPost: [] } } };
-    return { notFound: true };
-  }
-};
