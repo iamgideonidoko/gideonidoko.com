@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
+import { useState, type FC } from 'react';
 
-const FullscreenSwitch = (props) => {
+const FullscreenSwitch: FC<Record<'isNavOpen' | 'allowForMobile', boolean>> = (props) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const getFullscreenElement = () => {
     if (typeof window !== 'undefined') {
-      return (
-        window.document.fullscreenElement ||
-        window.document.webkitFullscreenElemnt ||
-        window.document.mozFullscreenElement ||
-        window.document.msFullscreenElement
-      );
+      return window.document.fullscreenElement;
     } else {
       return null;
     }
