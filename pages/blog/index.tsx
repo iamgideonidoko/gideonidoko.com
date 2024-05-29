@@ -1,87 +1,134 @@
-import { Fragment } from 'react';
-import Link from 'next/link';
+import { type FC, useMemo, useState, useEffect, useCallback } from 'react';
 import styles from '../../styles/Blog.module.css';
-import AllPostsRender from '../../components/blog/AllPostsRender';
-import { NextSeo } from 'next-seo';
-import { PaginatedPosts } from '../../interfaces/post.interface';
-import { GetServerSideProps } from 'next';
-import { authGet } from '../../helper';
+import { serialize } from 'next-mdx-remote/serialize';
+import type { InferGetStaticPropsType } from 'next';
+import { getReadTime } from '../../helper';
+import { readdir, readFile } from 'node:fs/promises';
+import { join } from 'path';
+import RenderPosts from '../../components/blog/RenderPosts';
+import FeaturedPost from '../../components/blog/FeaturedPost';
+import BlogTags from '../../components/blog/BlogTags';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import BlogIntro from '../../components/blog/BlogIntro';
+import Fuse from 'fuse.js';
 
-const BlogHome = ({ posts }: { posts: PaginatedPosts }) => {
-    return (
-        <Fragment>
-            <NextSeo
-                title="Blog - Gideon Idoko"
-                description="Gideon Idoko writes about software engineering topics, tips, tricks, and tools on this blog."
-                canonical="https://gideonidoko.com/blog"
-                openGraph={{
-                    url: 'https://gideonidoko.com/blog',
-                    title: 'Blog - Gideon Idoko',
-                    description:
-                        'Gideon Idoko writes about software engineering topics, tips, tricks, and tools on this blog.',
-                    images: [
-                        {
-                            url: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
-                            width: 1500,
-                            height: 500,
-                            alt: "Gideon Idoko's card image",
-                        },
-                    ],
-                    site_name: 'Gideon Idoko',
-                }}
-                twitter={{
-                    handle: '@IamGideonIdoko',
-                    site: '@IamGideonIdoko',
-                    cardType: 'summary_large_image',
-                }}
-            />
-            <main className={`padding-top-10rem ${styles.blogMain}`}>
-                <div className="container-max-1248px">
-                    {
-                        <Fragment>
-                            <div className={styles.searchLinkWrapper}>
-                                <Link href="/blog/search">
-                                    <i className="neu-browse"></i> Search articles
-                                </Link>
-                            </div>
+dayjs.extend(advancedFormat);
 
-                            {/* PINNED POSTS
-                             {props.post.posts.filter((post) => post.is_pinned).length !== 0 ? (
-                                <div className={styles.pinnedPostWrapper}>
-                                    <h3>
-                                        <i className="neu-pin"></i> Pinned Posts.
-                                    </h3>
-                                    <AllPostsRender posts={props.post.posts.filter((post) => post.is_pinned)} />
-                                </div>
-                            ) : null} */}
-                            <AllPostsRender posts={posts?.docs} />
-
-                            {posts?.hasNextPage && (
-                                <div className={styles.paginationWrapper}>
-                                    <div className={`${styles.pagination} ${styles.pgnFlexEnd}`}>
-                                        <span>
-                                            <Link href={`/blog/page/${Number(posts?.page) + 1}`}>Next Page →</Link>
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
-                        </Fragment>
-                    }
-                </div>
-            </main>
-        </Fragment>
-    );
+export const getStaticProps = async () => {
+  const blogPath = join(process.cwd(), 'blog');
+  const files = await readdir(blogPath);
+  const mdFiles = files.filter((file) => /\.md(x|)$/gi.test(file));
+  const posts = await Promise.all(
+    mdFiles.map(async (filename) => {
+      const blog = await readFile(join(blogPath, filename), 'utf-8');
+      const { frontmatter } = await serialize<
+        unknown,
+        Partial<Record<'title' | 'cover' | 'description' | 'date', string> & { tags: string[] }>
+      >(blog, { parseFrontmatter: true });
+      return {
+        frontmatter,
+        slug: filename.split('.')[0],
+        readTime: getReadTime(blog),
+      };
+    }),
+  );
+  const sortedPosts = [...posts]
+    // Formatter date ought to be in the format: YYYY-MM-DD
+    .sort(
+      (a, b) =>
+        new Date(b.frontmatter.date ?? new Date()).getTime() - new Date(a.frontmatter.date ?? new Date()).getTime(),
+    )
+    .map((post) => {
+      const { frontmatter, slug, readTime } = post;
+      const { title, cover, date, tags } = frontmatter;
+      return {
+        title,
+        cover,
+        slug,
+        date: date && dayjs(date).format('MMMM Do, YYYY'),
+        readTime,
+        tags,
+      };
+    });
+  return { props: { posts: sortedPosts } };
 };
 
-// This gets called on every request
-export const getServerSideProps: GetServerSideProps = async () => {
-    // Fetch data from external API
-    try {
-        const res = await authGet(`/posts`);
-        return { props: { posts: res?.data?.posts } };
-    } catch (err) {
-        return { props: { posts: { docs: [] } } };
-    }
+const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) => {
+  const postsPerPage = 12;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPosts, setCurrentPosts] = useState(posts);
+  const [searchTerm, setSearchTerm] = useState(
+    typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('q') ?? '' : '',
+  );
+  const [loaded, setLoaded] = useState(false);
+  const featuredPost = useMemo(() => {
+    const randIdx = Math.floor(Math.random() * posts.length);
+    return posts[randIdx];
+  }, [posts]);
+  const paginatedCurrentPosts = useMemo(
+    () => currentPosts.slice(0, postsPerPage * currentPage),
+    [currentPage, currentPosts],
+  );
+  const tags = useMemo(
+    () => Array.from(new Set(posts.reduce<string[]>((acc, curr) => [...acc, ...(curr.tags ?? [])], []))),
+    [posts],
+  );
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    (() => {
+      /* Handle post search */
+      if (searchTerm) {
+        setCurrentPage(1);
+        setCurrentPosts(
+          new Fuse(posts, { keys: ['title', 'tags'] })
+            .search(searchTerm.trim())
+            .map((searchedPost) => searchedPost.item),
+        );
+      } else {
+        setCurrentPage(1);
+        setCurrentPosts(posts);
+      }
+    })();
+  }, [posts, searchTerm]);
+
+  const handleSearchTerm = useCallback((term: string) => {
+    setSearchTerm(term);
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const trimmedTerm = term.trim();
+    urlParams.set('q', trimmedTerm);
+    window.history.replaceState({}, '', `${window.location.pathname}${trimmedTerm ? `?${urlParams}` : ''}`);
+  }, []);
+
+  const hasNextPage = currentPosts.length / postsPerPage > currentPage;
+
+  return (
+    <>
+      <main className={`padding-top-10rem ${styles.blogMain}`}>
+        <div className="container-max-1248px">
+          <BlogIntro postCount={currentPosts.length} handleSearchTerm={handleSearchTerm} searchTerm={searchTerm} />
+          <BlogTags tags={tags} handleSearchTerm={handleSearchTerm} />
+          {loaded && <FeaturedPost post={featuredPost} />}
+          <RenderPosts posts={paginatedCurrentPosts} />
+          {hasNextPage && (
+            <div className={styles.loadMore}>
+              <button
+                className={`animated-button animated-button--pallene__outline`}
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+              >
+                Load more articles <i className="neu-add-lg"></i>
+              </button>
+            </div>
+          )}
+        </div>
+      </main>
+    </>
+  );
 };
 
-export default BlogHome;
+export default Posts;
