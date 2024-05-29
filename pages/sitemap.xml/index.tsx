@@ -29,6 +29,16 @@ const getSitemap = (extraUrls: ISitemapPost[]) => `<?xml version="1.0" encoding=
         <priority>2.00</priority>
     </url>
     <url>
+        <loc>https://gideonidoko.com/uses</loc>
+        <lastmod>${staticDate}</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://gideonidoko.com/stats</loc>
+        <lastmod>${staticDate}</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
         <loc>https://gideonidoko.com/contact</loc>
         <lastmod>${staticDate}</lastmod>
         <priority>1.00</priority>

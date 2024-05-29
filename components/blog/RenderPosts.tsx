@@ -1,7 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import styles from '../../styles/Blog.module.css';
 import { IPost } from '../../interfaces/post.interface';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 const blogCoverDefault = '/assets/img/BlogCoverDefault.jpg';
 
@@ -15,7 +16,7 @@ const RenderPosts = ({ posts }: { posts: Array<IPost> }) => {
           <Link className={styles.blogBoxAnchor} href={`/blog/${post.slug}`} key={idx}>
             <article className={styles.blogBox}>
               <div className={styles.blogBoxLeft}>
-                <Image
+                <img
                   src={post.cover || blogCoverDefault}
                   className={`${styles.postCover}`}
                   title={post.title}

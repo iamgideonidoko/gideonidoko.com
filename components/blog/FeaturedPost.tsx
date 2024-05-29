@@ -1,7 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import type { FC } from 'react';
 import styles from '../../styles/Blog.module.css';
 import { IPost } from '../../interfaces/post.interface';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 
 const blogCoverDefault = '/assets/img/BlogCoverDefault.jpg';
@@ -30,14 +31,14 @@ const FeaturedPost: FC<{ post: IPost }> = ({ post }) => {
               <div>
                 <i className={`neu-arrow ${styles.featPostArrow}`}></i>
                 <svg height="56" width="56">
-                  <circle className={styles.featPostCircle} cx="28" cy="28" r="22" stroke-width="3" fill-opacity="0" />
+                  <circle className={styles.featPostCircle} cx="28" cy="28" r="22" strokeWidth="3" fillOpacity="0" />
                 </svg>
               </div>
             </div>
           </div>
         </div>
         <div className={styles.featPostRight}>
-          <Image
+          <img
             src={post.cover || blogCoverDefault}
             className={styles.featPostCover}
             title={post.title}
