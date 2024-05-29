@@ -61,7 +61,11 @@ const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) =>
   const [searchTerm, setSearchTerm] = useState(
     typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('q') ?? '' : '',
   );
-  const featuredPost = useMemo(() => posts[Math.floor(Math.random() * posts.length)], [posts]);
+  const [loaded, setLoaded] = useState(false);
+  const featuredPost = useMemo(() => {
+    const randIdx = Math.floor(Math.random() * posts.length);
+    return posts[randIdx];
+  }, [posts]);
   const paginatedCurrentPosts = useMemo(
     () => currentPosts.slice(0, postsPerPage * currentPage),
     [currentPage, currentPosts],
@@ -70,6 +74,10 @@ const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) =>
     () => Array.from(new Set(posts.reduce<string[]>((acc, curr) => [...acc, ...(curr.tags ?? [])], []))),
     [posts],
   );
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   useEffect(() => {
     (() => {
@@ -105,7 +113,7 @@ const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) =>
         <div className="container-max-1248px">
           <BlogIntro postCount={currentPosts.length} handleSearchTerm={handleSearchTerm} searchTerm={searchTerm} />
           <BlogTags tags={tags} handleSearchTerm={handleSearchTerm} />
-          <FeaturedPost post={featuredPost} />
+          {loaded && <FeaturedPost post={featuredPost} />}
           <RenderPosts posts={paginatedCurrentPosts} />
           {hasNextPage && (
             <div className={styles.loadMore}>

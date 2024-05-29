@@ -1,8 +1,8 @@
 .singlePostPageWrapper {
   max-width: 77rem;
   margin: 0 auto;
-	z-index: 2;
-	position: relative;
+  z-index: 2;
+  position: relative;
 }
 
 .blogHeader {
@@ -55,12 +55,12 @@
 
 .postBody pre {
   font-family: 'Roboto Mono', srif !important;
-	border-radius: 0.8rem;
+  border-radius: 0.8rem;
 }
 
 .postBody pre code {
-	background: transparent;
-	border: none;
+  background: transparent;
+  border: none;
 }
 
 .postBody h1 {
@@ -100,7 +100,7 @@
   list-style-position: inside;
   margin: 0.4rem 0;
   overflow-wrap: break-word;
-	font-size: 1.8rem;
+  font-size: 1.8rem;
 }
 
 .postBody li > h1:first-child,
@@ -146,6 +146,10 @@
   border-collapse: collapse;
   opacity: 0.9;
   overflow-x: scroll;
+}
+
+.postBody table * {
+  font-size: 1.4rem;
 }
 
 .postBody table thead tr {
@@ -223,8 +227,8 @@
 
 .postShareBtns span {
   margin-right: 1.5rem;
-	display: inline-block;
-	transform: translateY(-0.41rem);
+  display: inline-block;
+  transform: translateY(-0.41rem);
 }
 
 .shareToTwitterBtn {
@@ -302,4 +306,3 @@
     font-size: 3.2rem;
   }
 }
-

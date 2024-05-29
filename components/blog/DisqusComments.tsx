@@ -14,7 +14,7 @@ const DisqusComments: FC<{ title: string; slug: string }> = ({ title, slug }) =>
     [title, slug],
   );
   return (
-    <div>
+    <div style={{ marginTop: '5em' }}>
       <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
     </div>
   );

@@ -7,7 +7,7 @@ import copy from 'copy-to-clipboard';
 import styles from '../../../styles/SinglePost.module.css';
 import { NextSeo } from 'next-seo';
 import type { InferGetStaticPropsType } from 'next';
-import { IPrevNextPost, IPost } from '../../../interfaces/post.interface';
+import { IPost } from '../../../interfaces/post.interface';
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -36,26 +36,11 @@ export const getStaticProps = async ({ params }: { params: { slug?: string } }) 
   const blogPath = join(process.cwd(), 'blog');
   const files = await readdir(blogPath);
   const mdFiles = files.filter((file) => /\.md(x|)$/gi.test(file));
-  let postIdx: number | undefined = undefined;
-  const filename = mdFiles.find((file, idx) => {
-    if (file.split('.')[0] === slug) {
-      postIdx = idx;
-      return true;
-    }
-    return false;
-  });
-  let post: IPost | null = null,
-    prev: IPrevNextPost | null = null,
-    next: IPrevNextPost | null = null;
-
-  if (!filename) return { props: { source: null, post, prev, next } };
-
-  const prevFilename = typeof postIdx === 'number' && postIdx > 0 ? mdFiles[postIdx - 1] : undefined;
-  const nextFilename = typeof postIdx === 'number' && postIdx >= 0 ? mdFiles[postIdx + 1] : undefined;
+  const filename = mdFiles.find((file) => file.split('.')[0] === slug);
+  let post: IPost | null = null;
+  if (!filename) return { props: { source: null, post } };
 
   const blog = await readFile(join(blogPath, filename), 'utf-8');
-  const prevBlog = prevFilename && (await readFile(join(blogPath, filename), 'utf-8'));
-  const nextBlog = nextFilename && (await readFile(join(blogPath, filename), 'utf-8'));
   const source = await serialize<
     unknown,
     Partial<Record<'title' | 'cover' | 'description' | 'date', string> & { tags: string[] }>
@@ -76,32 +61,8 @@ export const getStaticProps = async ({ params }: { params: { slug?: string } }) 
     readTime: getReadTime(blog),
     tags: source.frontmatter.tags,
   };
-  const prevSource =
-    prevBlog &&
-    (await serialize<unknown, Partial<Record<'title' | 'cover' | 'description' | 'date' | 'tags', string>>>(prevBlog, {
-      parseFrontmatter: true,
-    }));
 
-  if (prevSource) {
-    prev = {
-      title: prevSource.frontmatter.title,
-      slug: prevFilename?.split('.')[0],
-    };
-  }
-
-  const nextSource =
-    nextBlog &&
-    (await serialize<unknown, Partial<Record<'title' | 'cover' | 'description' | 'date' | 'tags', string>>>(nextBlog, {
-      parseFrontmatter: true,
-    }));
-
-  if (nextSource) {
-    next = {
-      title: nextSource.frontmatter.title,
-      slug: nextFilename?.split('.')[0],
-    };
-  }
-  return { props: { source, post, prev, next } };
+  return { props: { source, post } };
 };
 
 export async function getStaticPaths() {
@@ -117,7 +78,7 @@ export async function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-const SinglePost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ source, post, prev, next }) => {
+const SinglePost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ source, post }) => {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     (window as typeof window & { [key: string]: unknown }).customCopy = copy;
@@ -130,18 +91,17 @@ const SinglePost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ source
       const allPostBodyPreCode = window.document.querySelectorAll('pre:has(> code.code-highlight)');
 
       const allPostBodyTable = window.document.querySelectorAll('.truePostBody table');
-
-      const truePostBody = window.document.querySelector('.truePostBody');
-
       if (!window.document.querySelector('.postBodyTable')) {
         allPostBodyTable.forEach((table) => {
-          const tableDiv = window.document.createElement('div');
-          !tableDiv.classList.contains('postBodyTable') && tableDiv.classList.add('postBodyTable');
-          const clonedTable = table.cloneNode(true);
-          tableDiv.appendChild(clonedTable);
-
-          truePostBody?.insertBefore(tableDiv, table);
-          truePostBody?.removeChild(table);
+          try {
+            const tableDiv = window.document.createElement('div');
+            tableDiv.classList.add('postBodyTable');
+            const clonedTable = table.cloneNode(true);
+            tableDiv.appendChild(clonedTable);
+            table.replaceWith(tableDiv);
+          } catch (e) {
+            console.error(e);
+          }
         });
       }
 
@@ -285,7 +245,8 @@ const SinglePost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ source
                         </div>
                       </div>
                     )}
-                    <div className={styles.postPagination}>
+                    {/*
+                     <div className={styles.postPagination}>
                       <div className={styles.ppLeft}>
                         {prev && prev.slug && <Link href={`/blog/${prev.slug}`}>← {prev.title}</Link>}
                       </div>
@@ -293,6 +254,7 @@ const SinglePost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ source
                         {next && next.slug && <Link href={`/blog/${next.slug}`}>{next.title} →</Link>}
                       </div>
                     </div>
+                    */}
                     {post.title && post.slug && <DisqusComments title={post.title} slug={post.slug} />}
                   </div>
                 </div>
