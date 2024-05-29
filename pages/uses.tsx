@@ -3,13 +3,13 @@ import { Fragment } from 'react';
 import styles from '../styles/Uses.module.css';
 import { NextSeo } from 'next-seo';
 
-const Uses = () => {
+const Stats = () => {
   return (
     <Fragment>
       <NextSeo
         title="Uses - Gideon Idoko"
         description="Here are some of the stuff I use in my day-to-day workflow."
-        canonical="https://gideonidoko.com/about"
+        canonical="https://gideonidoko.com/uses"
         openGraph={{
           url: 'https://gideonidoko.com/uses',
           title: 'Uses - Gideon Idoko',
@@ -30,11 +30,11 @@ const Uses = () => {
           cardType: 'summary_large_image',
         }}
       />
-      <main className={`padding-top-10rem ${styles.usesMain}`}>
+      <main className={`padding-top-10rem ${styles.main}`}>
         <div className="container-full">
-          <div className={styles.usesIntro}>
+          <div className={styles.intro}>
             <h1>Uses</h1>
-            <div className={styles.profileImgWrapper}>
+            <div className={styles.workspace}>
               <div className="gooey__image">
                 <img
                   src="/assets/img/workspace.jpeg"
@@ -46,14 +46,14 @@ const Uses = () => {
               </div>
             </div>
           </div>
-          <div className={styles.usesLists}>
+          <div className={styles.lists}>
             <div>
               <h2>Hardware</h2>
               <ul>
                 <li>Mi Curved Gaming Monitor 34&quot;</li>
                 <li>16&quot; MBP</li>
-                <li>Logitech MX Master 3s (Mouse)</li>
-                <li>Logitech Mx Keys (Keys)</li>
+                <li>Logitech MX Master 3s</li>
+                <li>Logitech Mx Keys</li>
                 <li>Sit-stand Desk SSDE-06</li>
                 <li>Desk Clock/Lamp</li>
               </ul>
@@ -104,4 +104,4 @@ const Uses = () => {
   );
 };
 
-export default Uses;
+export default Stats;

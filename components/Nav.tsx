@@ -19,6 +19,11 @@ const Nav = () => {
             Uses
           </Link>
         </li>
+        <li>
+          <Link href="/stats" className="animated-button animated-button--pallene__outlineless">
+            Stats
+          </Link>
+        </li>
       </ul>
     </nav>
   );

@@ -222,6 +222,11 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Link>
             </li>
             <li>
+              <Link href="/stats" onClick={closeNav}>
+                Stats
+              </Link>
+            </li>
+            <li>
               <Link href="/contact" onClick={closeNav}>
                 Contact
               </Link>
@@ -252,7 +257,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         {...(router.pathname.startsWith('/blog/') ? { 'data-lenis-prevent': true } : {})}
         className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}
       >
-        <div className="fixed-line" />
+        <div className="fixed-line" style={router.pathname.startsWith('/blog/') ? { background: 'none' } : {}} />
         <canvas id="canvas" />
         <div className="noise-bg"></div>
         {shouldHaveHeader && (

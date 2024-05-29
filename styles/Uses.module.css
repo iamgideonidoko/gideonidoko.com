@@ -1,48 +1,46 @@
-.usesMain {
+.main {
   text-align: center;
 }
 
-.profileImgWrapper {
+.workspace {
   display: flex;
   justify-content: center;
   max-width: 100%;
 }
 
-.profileImgWrapper > div:first-child {
+.workspace > div:first-child {
   width: clamp(50rem, 30vw, 100rem);
   max-width: 100%;
 }
 
-.profileImgWrapper > div:first-child > img {
-  /* border: 3px solid orange !important;
-	opacity: 1 !important; */
+.workspace > div:first-child > img {
   width: 100%;
 }
 
-.usesIntro {
-	position: relative;
-	margin-top: 10rem;
+.intro {
+  position: relative;
+  margin-top: 10rem;
 }
 
-.usesIntro > h1 {
+.intro > h1 {
   font-family: Harmond;
   transform: translate(calc(-1 * 30vw), -7.5rem);
   font-size: clamp(5em, 10vw, 10vw);
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	z-index: 3;
-	user-select: none;
-	pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  user-select: none;
+  pointer-events: none;
 }
 
-.usesMain h2 {
+.main h2 {
   font-size: clamp(1.8rem, 2.5vw, 2.5vw);
   margin: 3.2rem 0 1.6rem;
   text-decoration: underline;
 }
 
-.usesMain li {
+.main li {
   font-size: clamp(1.8rem, 1.8vw, 1.8vw);
   max-width: 100%;
   line-height: 1.6em;
@@ -50,16 +48,16 @@
   list-style: none;
 }
 
-.usesLists {
-	margin-top: 8em;
+.lists {
+  margin-top: 8em;
 }
 
-.usesLists > * + * {
+.lists > * + * {
   margin-top: 6em;
 }
 
 @media screen and (max-width: 1024px) {
-	.usesIntro > h1 {
-		transform: translate(-50%, -7.5rem) !important;
-	}
+  .intro > h1 {
+    transform: translate(-50%, -7.5rem) !important;
+  }
 }
