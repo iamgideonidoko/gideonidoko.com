@@ -1,9 +1,9 @@
 ---
 title: Singleton, Prototype & Builder Design Patterns in TypeScript
-date: 2024-02-20
-cover: /assets/img/BlogCoverDefault.jpg
-description: Explore the advantages of TheScanr in the world of real estate QR code platforms. Discover its unique features that address common challenges faced by alternative solutions.
-tags: [TheScanr, real estate QR codes, QR code platforms, real estate technology, QR code benefits, javascript, javascript]
+date: 2022-07-12
+cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/Singleton%2C%20Prototype%20%26%20Builder%20Design%20Patterns%20in%20TypeScript_gideonidoko.com_90cb93beeb.jpg?alt=media&token=791d71d2-8e77-44b7-a099-30a0985d1f42
+description: Design Patterns as a set of tried and tested high-level solutions define a common language for efficient communication amongst engineering teammates.
+tags: [designpatterns, typescript]
 ---
 
 There are some problems that have become common in the software engineering space because they've been solved x number of times by engineers in different projects. The solutions to these common problems were summed up as _Design Patterns_ in a 1994 published book titled **Design Patterns: Elements of Reusable Object-Oriented Software**. This book, after patterns became popular was tagged as "the Gang of Four (GoF) book" since it was authored by four (4) engineers namely: Erich Gamma, John Vlissides, Ralph Johnson, and Richard Helm.
@@ -24,7 +24,7 @@ A Singleton is a class that only allows a single instance of it to be created. T
 
 Below is a simple TypeScript implementation of a Singleton:
 
-```typescript:title=adsf
+```typescript :filename
 // Database Singleton
 class Database {
     /**
