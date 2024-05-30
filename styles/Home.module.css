@@ -40,7 +40,7 @@
 .welcomeLine {
 	/* font-size: clamp(3.2rem, 8vw, 22rem); */
 	/* font-size: clamp(3.2rem, 8vw, 8vw); */
-	font-size: clamp(4rem, 8vw, 8vw);
+	font-size: clamp(3rem, 8vw, 8vw);
 	text-align: center;
 	font-family: Harmond;
 	position: relative;

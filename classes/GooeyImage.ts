@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { gsap, Power2 } from 'gsap';
 import vertexShader from '../glsl/vertex.glsl';
 import gooeyFragmentShader from '../glsl/gooey-fragment.glsl';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 
 import { getRatio } from '../helper';
 
@@ -107,16 +108,18 @@ export default class GooeyImage {
     //     this.onClick(e);
     // });
 
+    // window.alert(`isTouch: ${ScrollTrigger.isTouch}`);
+
     if (window.lenis) {
       window.lenis.on('scroll', (e: LenisScrollEvent) => {
         this.onScroll({
           offset: {
             x: window.scrollX,
-            y: e.animatedScroll,
+            y: ScrollTrigger.isTouch ? window.scrollY : e.animatedScroll,
           },
           limit: {
-            x: e.dimensions.scrollWidth,
-            y: e.dimensions.scrollHeight,
+            x: ScrollTrigger.isTouch ? window.document.documentElement.scrollWidth : e.dimensions.scrollWidth,
+            y: ScrollTrigger.isTouch ? window.document.documentElement.scrollHeight : e.dimensions.scrollHeight,
           },
         });
       });

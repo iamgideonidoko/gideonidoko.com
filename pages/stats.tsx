@@ -55,7 +55,7 @@ const Uses = () => {
             </div>
           </div>
           <div className={styles.github}>
-            <div data-lenis-prevent className={styles.github_child}>
+            <div data-lenis-prevent className={`lenis-scroll-fix ${styles.github_child}`}>
               <GitHubCalendar username="IamGideonIdoko" />
             </div>
           </div>

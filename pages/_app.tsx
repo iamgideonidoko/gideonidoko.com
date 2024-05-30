@@ -103,8 +103,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       lerp: 0.04,
       // smoothTouch: true,
       smoothWheel: true,
-      syncTouch: true,
-      gestureOrientation: 'both',
+      syncTouch: false,
+      // gestureOrientation: 'both',
     });
 
     window.lenis = lenis;
@@ -113,6 +113,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const scrollFn = (time: number) => {
       lenis.raf(time); // Runs lenis' requestAnimationFrame method
+      ScrollTrigger.update();
       requestAnimationFrame(scrollFn);
     };
     requestAnimationFrame(scrollFn); // Start the animation frame loop
@@ -138,7 +139,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
-    if (canvasElement) {
+    if (canvasElement && !ScrollTrigger.isTouch) {
       canvasRef.current = new Canvas(canvasElement);
     }
 
@@ -253,10 +254,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           <circle className="cursor__inner" cx="70" cy="70" r="60" />
         </svg>
       </div>
-      <div
-        {...(router.pathname.startsWith('/blog/') ? { 'data-lenis-prevent': true } : {})}
-        className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}
-      >
+      {/*...(router.pathname.startsWith('/blog/') ? { 'data-lenis-prevent': true } : {}) */}
+      <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
         <div className="fixed-line" style={router.pathname.startsWith('/blog/') ? { background: 'none' } : {}} />
         <canvas id="canvas" />
         <div className="noise-bg"></div>

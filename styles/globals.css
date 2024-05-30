@@ -211,22 +211,24 @@ body {
 html.lenis {
   height: auto;
 }
-/* 
+
 .lenis.lenis-smooth {
   scroll-behavior: auto;
-} */
+}
 
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
 
-/* .lenis.lenis-stopped {
+.lenis.lenis-stopped {
   overflow: hidden;
 }
 
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-} */
+.lenis.lenis-scrolling .lenis-scroll-fix,
+.lenis.lenis-scrolling iframe,
+.lenis.lenis-scrolling figure {
+  pointer-events: none !important;
+}
 
 p:not(.project-abt) {
   line-height: 24px;
@@ -1635,6 +1637,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   transition: opacity 0.3s;
   user-select: none;
   max-width: 100%;
+  border-radius: 0.8rem;
 }
 
 .gooey__image > img.is-loaded {
@@ -1644,6 +1647,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 /* PHYSICS BOX */
 .physics--box {
   position: relative;
+  pointer-events: none;
 }
 
 .physics--box__item {
@@ -1652,6 +1656,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   position: absolute;
   top: 0;
   left: 0;
+  pointer-events: all;
 }
 
 .physics--box__text {
@@ -1756,8 +1761,9 @@ pre {
 .remark-code-title {
   margin-bottom: -2.7rem;
   padding: 0.2em 1em 0.5em;
-  font-family: 'Roboto Mono', Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
-    'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
+  font-family: 'Roboto Mono', Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter',
+    'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier,
+    monospace;
   background-color: var(--neutral-color-1);
   color: var(--pri-neutral-inverse);
   z-index: 0;
@@ -1766,3 +1772,8 @@ pre {
   width: max-content;
   font-size: 1.4rem;
 }
+
+.pointer-events-none {
+  pointer-events: none;
+}
+

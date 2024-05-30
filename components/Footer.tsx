@@ -75,19 +75,10 @@ const Footer = () => {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const articleSectionAvailable = document.querySelector('.section-five');
-    const eventListenerFunc = () => {
-      setTimeout(addTrigger, 1000);
-    };
-    if (articleSectionAvailable) {
-      window.document.addEventListener('sectionFiveDone', eventListenerFunc);
-    } else {
-      setTimeout(addTrigger, 1000);
-    }
+    setTimeout(addTrigger, 1000);
     return () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       timeLineRefs.current.forEach((tl) => tl.kill());
-      window.document.removeEventListener('sectionFiveDone', eventListenerFunc);
     };
   }, [router]);
 
