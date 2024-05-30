@@ -1,5 +1,5 @@
 {
-  "src/**/*.(js|mjs|jsx|ts|tsx)": [
+  "./**/*.(js|mjs|jsx|ts|tsx)": [
     "yarn lint"
   ]
 }
