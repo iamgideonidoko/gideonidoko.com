@@ -59,10 +59,11 @@ const Stats = () => {
               </ul>
             </div>
             <div>
-              <h2>Terminal Shit*</h2>
+              <h2>Terminal Sh*t</h2>
               <ul>
-                <li>iTerm 2 (Terminal)</li>
+                <li>iTerm2 (Terminal)</li>
                 <li>Neovim (Editor)</li>
+                <li>Tokyo Night (Theme)</li>
                 <li>Comic Mono (Font)</li>
                 <li>tmux (Terminal Multiplexer)</li>
                 <li>zsh (Unix Shell)</li>
@@ -73,7 +74,7 @@ const Stats = () => {
               <ul>
                 <li>Vimium (Browser Vim Control)</li>
                 <li>SketchyVim (Vim-like Text Inputs)</li>
-                <li>Scoot (Cursor Acuator)</li>
+                <li>Scoot (Cursor Actuator)</li>
                 <li>Rectangle (Window Resizer)</li>
                 <li>Lulu (Firewall)</li>
                 <li>TunnelBear (VPN)</li>
