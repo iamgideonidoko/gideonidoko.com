@@ -64,7 +64,7 @@ const Stats = () => {
                 <li>iTerm2 (Terminal)</li>
                 <li>Neovim (Editor)</li>
                 <li>Tokyo Night (Theme)</li>
-                <li>Comic Mono (Font)</li>
+                <li>Comic Code (Font)</li>
                 <li>tmux (Terminal Multiplexer)</li>
                 <li>zsh (Unix Shell)</li>
               </ul>
