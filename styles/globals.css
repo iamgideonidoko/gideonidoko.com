@@ -1301,7 +1301,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 
 .wl-word .char {
   display: inline-block;
-  -webkit-text-stroke: 0.04em var(--font-color);
+  -webkit-text-stroke: 0.02em var(--font-color);
   -webkit-text-fill-color: transparent;
 }
 
@@ -1594,14 +1594,14 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   white-space: nowrap;
   font-size: var(--item-font-size);
   padding: 0;
-  font-weight: 900;
+  font-weight: 500;
   line-height: 1.15;
   text-transform: uppercase;
   color: inherit;
 }
 
 .marquee span {
-  font-style: italic;
+  /* font-style: italic; */
 }
 
 @keyframes marquee {
