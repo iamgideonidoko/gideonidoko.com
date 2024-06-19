@@ -1647,7 +1647,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 /* PHYSICS BOX */
 .physics--box {
   position: relative;
-  pointer-events: none;
+  /* pointer-events: none; */ /* -- while this is ok for touch users, it affects mouse users */
 }
 
 .physics--box__item {
@@ -1656,7 +1656,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   position: absolute;
   top: 0;
   left: 0;
-  pointer-events: all;
+  /* pointer-events: all; */ /* -- while this is ok for touch users, it affects mouse users */
 }
 
 .physics--box__text {
@@ -1777,3 +1777,6 @@ pre {
   pointer-events: none;
 }
 
+.pointer-events-all {
+  pointer-events: all;
+}
