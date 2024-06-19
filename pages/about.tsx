@@ -81,7 +81,7 @@ const About = () => {
             <div>
               <h3>Hi there! 👋🏽</h3>
               <h1>
-                I&apos;m <strong style={{ fontFamily: 'Harmond', fontSize: '1.5em' }}>Gideon Idoko</strong>.
+                I&apos;m <strong style={{ fontFamily: 'Harmond', fontSize: '1.5em' }}>GIDEON IDOKO</strong>.
               </h1>
               <div className={styles.profileImgWrapper}>
                 <div className="gooey__image">

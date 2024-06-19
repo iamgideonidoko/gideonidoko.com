@@ -40,7 +40,7 @@ const Uses = () => {
             </div>
             <div>
               <div>
-                <h1 className={styles.title}>Stats</h1>
+                <h1 className={styles.title}>STATS</h1>
               </div>
               <div>
                 <figure>

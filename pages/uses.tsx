@@ -33,7 +33,7 @@ const Stats = () => {
       <main className={`padding-top-10rem ${styles.main}`}>
         <div className="container-full">
           <div className={styles.intro}>
-            <h1>Uses</h1>
+            <h1>USES</h1>
             <div className={styles.workspace}>
               <div className="gooey__image">
                 <img
