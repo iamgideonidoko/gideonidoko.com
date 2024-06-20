@@ -135,97 +135,103 @@ const About = () => {
             <ul className={`physics--box ${ScrollTrigger.isTouch ? 'pointer-events-none' : ''}`}>
               <span className="physics--box__text">{`>CLICK & DRAG<`}</span>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 SCSS
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 JavaScript
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 TypeScript
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 GraphQL
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 React
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 React Native
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 RTK
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 NextJS
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 NodeJS
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 ExpressJS
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 NoSQL
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 Redis
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 Firebase
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                data-lenis-prevent
+              >
+                Supabase
+              </li>
+              <li
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 PHP
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 SQL
               </li>
               <li
-                className={`'physics--box__item' ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
+                className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
                 data-lenis-prevent
               >
                 Wordpress
