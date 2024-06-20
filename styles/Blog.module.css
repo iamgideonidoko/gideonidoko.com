@@ -272,6 +272,7 @@
   font-family: Harmond;
   transform: translate(calc(-1 * (var(--fs) / 2)), -7.5rem);
   font-size: clamp(3em, 10vw, var(--fs));
+  text-shadow: 0px 0px 0.02em var(--pri-neutral-inverse);
 }
 
 .blogIntroAbout {
