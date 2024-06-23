@@ -62,7 +62,7 @@ The entry point to the plugin is the `simple-scroll-progress.php` file as it has
 
 Open the `simple-scroll-progress.php` and edit the description in the header comment to look like so:
 
-```text
+```php
 
 /**
  * @wordpress-plugin
@@ -91,7 +91,7 @@ Now, let's go to the fun part of writing code.
 
 Since we're developing for WordPress and working in a development environment, it is advisable to turn on debugging mode. This will enable WordPress to display errors as they happen. To enable debugging mode, go to the `wp-config.php` file in the root directory of the WordPress installation. Search for the constant `WP_DEBUG` and set its value to `true` as below:
 
-```text
+```php
 define( 'WP_DEBUG', true );
 ```
 
@@ -103,7 +103,7 @@ Let's define some properties that will hold the plugin's unique ID, actual name,
 
 Locate the `simple-scroll-progress/includes/class-simple-scroll-progress.php` file and add the following protected properties to the `Simple_Scroll_Progress` class.
 
-```text
+```php
 // class-simple-scroll-progress.php
 
 /**
@@ -129,7 +129,7 @@ protected $plugin_options_default;
 
 Update the constructor of the `Simple_Scroll_Progress` class to update the above properties upon class instantiation.
 
-```text
+```php
 public function __construct() {
     if ( defined( 'SIMPLE_SCROLL_PROGRESS_VERSION' ) ) {
         $this->version = SIMPLE_SCROLL_PROGRESS_VERSION;
@@ -162,7 +162,7 @@ public function __construct() {
 
 Add the following methods to the class `Simple_Scroll_Progress` to return the protected helper properties:
 
-```text
+```php
 public function get_plugin_name() {
     return $this->plugin_name;
 }
@@ -182,7 +182,7 @@ public function get_options_default() {
 
 Now, pass the above properties in the instantiation of the `Simple_Scroll_Progress_Public` & `Simple_Scroll_Progress_Admin` classes in the `define_public_hooks` & `define_admin_hooks` respectively like so:
 
-```text
+```php
 private function define_public_hooks() {
     $plugin_public = new Simple_Scroll_Progress_Public( $this->get_plugin_name(), $this->get_version(), $this->get_plugin_prefix(), $this->get_options_default() );
     $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
@@ -207,7 +207,7 @@ A WordPress hook enables developers to manipulate a procedure without editing an
 
 Locate the `simple-scroll-progress/admin/class-simple-scroll-progress-admin.php` file and add the below methods to the class, `Simple_Scroll_Progress_Admin`.
 
-```text
+```php
 public function add_sublevel_menu() {
     add_submenu_page(
         'options-general.php', /* parent page file name */
@@ -228,7 +228,7 @@ You can look up the full description of the `add_submenu_page` function [here](h
 
 Let's create similar helper properties in the `Simple_Scroll_Progress_Admin` class and update the class' constructor.
 
-```text
+```php
 private $plugin_name;
 
 private $version; // version of the plugin
@@ -250,7 +250,7 @@ public function __construct( $plugin_name, $version, $plugin_prefix, $plugin_opt
 
 Finally, bind the `add_sublevel_menu` in the `Simple_Scroll_Progress_Admin` to the `admin_menu` admin hook in the `Simple_Scroll_Progress` class. Update the `define_admin_hooks` method like so:
 
-```text
+```php
 private function define_admin_hooks() {
     $plugin_admin = new Simple_Scroll_Progress_Admin( $this->get_plugin_name(), $this->get_version(), $this->get_plugin_prefix(), $this->get_options_default(), $this->get_actual_name() );
 
@@ -285,7 +285,7 @@ To create the settings page, we firstly, add a `register_settings` method that r
 
 In the `Simple_Scroll_Progress_Admin` class, add a `register_settings` method like so:
 
-```text
+```php
 public function register_settings() {
     
     /**
@@ -369,7 +369,7 @@ public function register_settings() {
 
 Now, add the callbacks as methods of the `Simple_Scroll_Progress_Admin` class.
 
-```text
+```php
 /**
  * called when adding the default section
  */
@@ -513,7 +513,7 @@ NB: Data (plugin options) is fetched from the WordPress database using the `get_
 
 Now, update the `display_settings_page` method (the callback of the `add_sublevel_menu ` function)
 
-```text
+```php
 /**
  * Display settings on plugin setting page
  */
@@ -546,7 +546,7 @@ public function display_settings_page() {
 
 Finally, update the `define_admin_hooks` method of the `Simple_Scroll_Progress` class to bind the `register_settings` method like below:
 
-```text
+```php
 private function define_admin_hooks() {
 	/**
 	 * instantiate the Simple_Scroll_Progress_Admin class
@@ -664,7 +664,7 @@ To pass data from the database to the plugin's JavaScript code, we fetch the dat
 
 Go to the `class-simple-scroll-progress-public.php` file and in the `Simple_Scroll_Progress_Public` class, update the `enqueue_scripts` method like so:
 
-```text
+```php
 public function enqueue_scripts() {
     // the get_option function retrieves the plugin data from the database
     /**
@@ -712,7 +712,7 @@ Let's first define a method that will remove plugin's options.
 
 Add the below method to the `Simple_Scroll_Progress` class.
 
-```text
+```php
 public function delete_plugin_options() {
     // delete the plugin options
     delete_option( $this->plugin_prefix.'_options' );
@@ -721,7 +721,7 @@ public function delete_plugin_options() {
 
 Update the `uninstall.php` file to look like below:
 
-```text
+```php
 // If uninstall is not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;

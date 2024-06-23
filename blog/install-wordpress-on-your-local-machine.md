@@ -1,6 +1,6 @@
 ---
 title: Install WordPress on Your Local Machine
-date: 2022-08-05
+date: 2022-05-05
 cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/Install%20wordpress%20on%20your%20local%20machine_gideonidoko.com_d2686cb48a.jpg?alt=media&token=92717e96-be14-486a-8826-1007c0ee1f8b
 description: In this article, you will learn how to install and configure WordPress on your machine for local development purposes. This WordPress installation will mirror the live server environment.
 tags: [wordpress, php, setup]
