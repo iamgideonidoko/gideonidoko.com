@@ -1301,7 +1301,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 
 .wl-word .char {
   display: inline-block;
-  -webkit-text-stroke: 0.02em var(--font-color);
+  -webkit-text-stroke: 0.01em var(--font-color);
   -webkit-text-fill-color: transparent;
 }
 
