@@ -69,6 +69,7 @@
 }
 
 :root {
+  --vh: 1vh; /* Fallback */
   --font-color: #fff8f8;
   --light-font-color: #fff8f8;
   --neutral-color-1: #fff;
@@ -140,6 +141,12 @@
   /* FOOTER BG COLOR */
   --c1: rgba(255, 255, 255, 1);
   --c2: rgba(255, 255, 255, 0.1);
+}
+
+@supports (height: 1dvh) {
+  :root {
+    --vh: 1dvh; /* Use dvh if supported */
+  }
 }
 
 [data-theme='light'] {
@@ -478,8 +485,8 @@ input[type='checkbox']:checked + .switch {
   content: '';
   position: fixed;
   width: 1px;
-  /* height: 37.5vh; */
-  height: 50vh;
+  /* height: calc(var(--vh, 1vh) * 37.5); */
+  height: calc(var(--vh, 1vh) * 50);
   isolation: isolate;
   opacity: 0.5;
 }
@@ -909,7 +916,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 .footer {
   padding: 6rem 0 4rem;
   /* border: 1px solid red; */
-  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   position: relative;
   display: flex;
   justify-content: center;
@@ -1135,8 +1142,8 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   }
 
   .mobile-nav-view {
-    max-height: 85vh;
-    margin-top: 7.5vh;
+    max-height: calc(var(--vh, 1vh) * 85);
+    margin-top: calc(var(--vh, 1vh) * 7.5);
     overflow-y: scroll;
     overflow-x: hidden;
     width: 100vw;
@@ -1621,7 +1628,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   left: 0;
   z-index: 3;
   width: 100%;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   pointer-events: none;
 }
 
