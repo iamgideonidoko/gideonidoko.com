@@ -34,7 +34,7 @@
   pointer-events: none;
   /* -webkit-text-stroke: 0.008em var(--pri-neutral-inverse); */
   /* -webkit-text-fill-color: transparent; */
-  text-shadow: 0px 0px 0.02em var(--pri-neutral-inverse);
+  text-shadow: 0px 0px 0.01em var(--pri-neutral-inverse);
 }
 
 .main h2 {

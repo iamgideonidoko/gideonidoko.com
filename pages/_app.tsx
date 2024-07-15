@@ -222,11 +222,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                 Uses
               </Link>
             </li>
-            <li>
-              <Link href="/stats" onClick={closeNav}>
-                Stats
-              </Link>
-            </li>
+            {false && (
+              <li>
+                <Link href="/stats" onClick={closeNav}>
+                  Stats
+                </Link>
+              </li>
+            )}
             <li>
               <Link href="/contact" onClick={closeNav}>
                 Contact
