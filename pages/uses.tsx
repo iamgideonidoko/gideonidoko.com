@@ -89,12 +89,9 @@ const Stats = () => {
                 <li>DBeaver</li>
                 <li>Figma</li>
                 <li>Blender</li>
-                <li>Flipper</li>
                 <li>Android Studio</li>
                 <li>Xcode</li>
-                <li>Slack</li>
-                <li>Discord</li>
-                <li>OBS</li>
+                <li>Expo Orbit</li>
                 <li>MAMP</li>
               </ul>
             </div>
