@@ -22,9 +22,9 @@
   margin-top: 10rem;
 }
 
-.intro > h1 {
+.introText {
   font-family: Harmond;
-  transform: translate(calc(-1 * 30vw), -7.5rem);
+  transform: translate(-50%, -7.5rem);
   font-size: clamp(5em, 10vw, 10vw);
   position: absolute;
   top: 50%;
@@ -32,9 +32,18 @@
   z-index: 3;
   user-select: none;
   pointer-events: none;
-  /* -webkit-text-stroke: 0.008em var(--pri-neutral-inverse); */
-  /* -webkit-text-fill-color: transparent; */
-  text-shadow: 0px 0px 0.01em var(--pri-neutral-inverse);
+  /* text-shadow: 0px 0px 0.01em var(--pri-neutral-inverse); */
+  width: 75rem;
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.2);
+  line-height: 90%;
+}
+
+.introText > span {
+  display: inline-block;
+  transform: translateY(2rem);
 }
 
 .main h2 {
@@ -60,7 +69,11 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .intro > h1 {
+  .introText {
     transform: translate(-50%, -7.5rem) !important;
+  }
+
+  .introText > span {
+    transform: translateY(1rem);
   }
 }
