@@ -139,6 +139,7 @@ const Stats = () => {
                 <li>Discord</li>
                 <li>Postman</li>
                 <li>Zoom</li>
+                <li>Notion</li>
                 <li>WhatsApp</li>
                 <li>CapCut</li>
                 <li>OBS</li>
