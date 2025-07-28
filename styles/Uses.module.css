@@ -69,6 +69,13 @@
   margin-top: 6em;
 }
 
+.dotfiles {
+  border: 1px solid white;
+  padding: 0.4em 0.8em 0.4em 1em;
+  display: inline-block;
+  margin-top: 0.5em;
+}
+
 @media screen and (max-width: 1365px) {
   .introText > span {
     transform: translateY(1.5rem);
