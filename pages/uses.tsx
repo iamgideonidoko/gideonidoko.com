@@ -66,6 +66,7 @@ const Stats = () => {
                 <li>Wowssyo RGB Mouse Pad</li>
                 <li>Zealot S61 Speaker</li>
                 <li>Sit-stand Desk SSDE-06</li>
+                <li>Furgle Gaming Chair</li>
                 <li>Desk Clock/Lamp</li>
                 <li>9&quot; Square Fill Light</li>
               </ul>
