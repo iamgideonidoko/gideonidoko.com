@@ -38,11 +38,9 @@
 }
 
 .welcomeLine {
-	/* font-size: clamp(3.2rem, 8vw, 22rem); */
-	/* font-size: clamp(3.2rem, 8vw, 8vw); */
-	font-size: clamp(3rem, 8vw, 8vw);
+	font-size: clamp(3rem, 7vw, 7vw);
 	text-align: center;
-	font-family: Harmond;
+	font-family: Audiowide;
 	position: relative;
 	text-transform: uppercase;
 	line-height: 80%;
@@ -51,8 +49,11 @@
 	font-style: unset;
 }
 
+.welcomeLine > span:nth-child(2) > span {
+	font-size: clamp(3rem, 8vw, 8vw);
+}
+
 .welcomeLine > span {
-	/* border: 1px solid red; */
 	display: block;
 }
 
@@ -63,29 +64,24 @@
 }
 
 .welcomeLine > span:nth-child(2) {
-	/* font-style: italic !important; */
-	transform: skew(-10deg)
+	letter-spacing: 0.2em;
+	background: rgba(123, 123, 123, 0.1);
+	border-top-left-radius: 0.5em;
+
 }
 
 .welcomeLine > span:nth-child(1):before {
 	position: absolute;
-	left: 0;
+	left: 0.4em;
 	content: '<';
 	transform: translateX(50%);
 }
 
-.welcomeLine > span:nth-child(2):after {
-	position: absolute;
-	content: '•';
-	transform: translateY(-12%);
-}
-
-
 .welcomeLine > span:nth-child(3):after {
 	position: absolute;
 	content: '/>';
-	transform: translateX(-8%);
-	letter-spacing: -0.2em;
+	transform: translateX(-0.04em);
+	letter-spacing: -0.1em;
 }
 
 

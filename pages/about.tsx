@@ -81,7 +81,7 @@ const About = () => {
             <div>
               <h3>Hi there! 👋🏽</h3>
               <h1>
-                I&apos;m <strong style={{ fontFamily: 'Harmond', fontSize: '1.5em' }}>GIDEON IDOKO</strong>.
+                I&apos;m <strong style={{ fontFamily: 'Audiowide', fontSize: '1.5em' }}>GIDEON IDOKO</strong>.
               </h1>
               <div className={styles.profileImgWrapper}>
                 <div className="gooey__image">
@@ -98,14 +98,14 @@ const About = () => {
             <div>
               <p>
                 a Software Engineer interested in learning, building solutions with unique experiences, sharing
-                technical ideas, writing and community building. I go a long way to ensure the security, accessibility
-                and usability of any product I work on and that they meet the business requirements while focusing on
+                technical ideas and community building. I go a long way to ensure the security, accessibility and
+                usability of any product I work on and that they meet the business requirements while focusing on
                 providing the best experience for their end users.
               </p>
 
               <p>
                 I write about Software Engineering topics and tools on my <Link href="/blog">blog</Link> and other
-                platforms. When I am not in front of my IDE, I&apos;ll prolly be engaging in surfing or sports like play
+                platforms. When I am not in front of my IDE, I&apos;ll prolly be engaged in surfing or sports like play
                 tennis and badminton.
               </p>
 
@@ -255,8 +255,8 @@ const About = () => {
             </p>
 
             <p>
-              <b>Need more hands in your team?</b> I&apos;ve got pliability and I can work with any team, even if
-              they&apos;re part way through a project. Just hit me up when you need me.
+              <b>Need more hands in your team?</b> I can work with any team, even if they&apos;re part way through a
+              project. Just hit me up when you need me.
             </p>
           </div>
         </div>

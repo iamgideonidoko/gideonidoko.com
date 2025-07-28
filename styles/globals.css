@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
-
-@font-face {
-  font-family: 'Harmond';
-  src: url('/assets/font/Harmond-ExtraBoldExpanded.woff2') format('woff2'),
-    url('/assets/font/Harmond-ExtraBoldExpanded.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 
 @font-face {
   font-family: 'Hanken Grotesk';
@@ -1308,7 +1300,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 
 .wl-word .char {
   display: inline-block;
-  -webkit-text-stroke: 0.01em var(--font-color);
+  -webkit-text-stroke: 0.03em var(--font-color);
   -webkit-text-fill-color: transparent;
 }
 
