@@ -35,7 +35,7 @@ const SectionTwo = () => {
           cover2: '/assets/img/kanta-cover-hover.png',
           alt: 'Kanta cover',
           role: 'Full-stack Engineer',
-          link1: 'https://kantalivescore.com',
+          link1: 'https://kantaball.com',
           link1Text: 'View App',
           stack: ['TypeScript', 'Next.js', 'tRPC', 'Ably'],
         },
