@@ -60,21 +60,3 @@
   display: inline-block;
   margin-top: 0.5em;
 }
-
-@media screen and (max-width: 1365px) {
-  .introText > span {
-    transform: translateY(1.5rem);
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .introText {
-    transform: translate(-50%, -7.5rem) !important;
-  }
-}
-
-@media screen and (min-width: 1765px) {
-  .introText > span {
-    transform: translateY(calc(0rem + 1.25vw));
-  }
-}

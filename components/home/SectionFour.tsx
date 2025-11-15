@@ -61,7 +61,7 @@ const SectionFour = () => {
         <div className={styles.sectionFourWrapper}>
           <h3 className={styles.servicesHead}>— Services —</h3>
           <div className={styles.servicesWrapper}>
-            <ul className="physics--box">
+            <ul className={`physics--box ${ScrollTrigger.isTouch ? 'pointer-events-none' : ''}`}>
               <span className="physics--box__text">{`>CLICK & DRAG<`}</span>
               <li className="physics--box__item" data-lenis-prevent>
                 <div>
