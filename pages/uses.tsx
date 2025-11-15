@@ -52,14 +52,14 @@ const Stats = () => {
               <h2>Hardware</h2>
               <ul>
                 <li>Mi Curved Gaming Monitor 34&quot;</li>
-                <li>16&quot; MBP</li>
+                <li>13&quot; MBP</li>
+                <li>Dell Latitude 7480</li>
                 <li>Logitech MX Master 3s</li>
                 <li>Logitech Mx Keys</li>
                 <li>ASUS ANC Headphone</li>
                 <li>Logitech Brio 101</li>
                 <li>ZealSound USB Microphone</li>
                 <li>Wowssyo RGB Mouse Pad</li>
-                <li>Zealot S61 Speaker</li>
                 <li>Sit-stand Desk SSDE-06</li>
                 <li>Furgle Gaming Chair</li>
                 <li>Desk Clock/Lamp</li>
@@ -72,7 +72,7 @@ const Stats = () => {
                 <li>Ghostty (Terminal)</li>
                 <li>Neo(vim) (Editor)</li>
                 <li>Tokyo Night (Theme)</li>
-                <li>Comic Code (Font)</li>
+                <li>JetBrains Mono (Font)</li>
                 <li>tmux (Terminal Multiplexer)</li>
                 <li>zsh (Unix Shell)</li>
                 <li>Starship (Shell Prompt)</li>
@@ -92,8 +92,10 @@ const Stats = () => {
                 <li>Homebrew (OS Package Manager)</li>
                 <li>Vimium (Browser Vim Control)</li>
                 <li>SketchyVim (Vim-like Text Inputs)</li>
+                <li>SketchyBar (Status Bar Replacement)</li>
                 <li>Scoot (Cursor Actuator)</li>
-                <li>Rectangle (Window Resizer)</li>
+                <li>JankyBorders (Window Borders)</li>
+                <li>Aerospace (Window Manager)</li>
                 <li>Lulu (Firewall)</li>
                 <li>TunnelBear (VPN)</li>
                 <li>Maccy (Clipboard Manager)</li>
