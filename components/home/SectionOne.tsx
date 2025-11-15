@@ -55,10 +55,10 @@ const SectionOne = () => {
           <span className="wl-word">Crafting</span>
         </span>
         <span>
-          <span className="wl-word">Awesome</span>
+          <span className="wl-word">Interactive</span>
         </span>
         <span>
-          <span className="wl-word">Experiences</span>
+          <span className="wl-word">Mag!c</span>
         </span>
       </h1>
     </div>

@@ -9,7 +9,7 @@
 }
 
 .workspace > div:first-child {
-  width: clamp(50rem, 30vw, 100rem);
+  width: clamp(40rem, 20vw, 80rem);
   max-width: 100%;
 }
 
@@ -23,34 +23,19 @@
 }
 
 .introText {
-  font-family: Audiowide;
-  transform: translate(-50%, -7.5rem);
-  font-size: clamp(5em, 10vw, 10vw);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 3;
-  user-select: none;
-  pointer-events: none;
-  /* text-shadow: 0px 0px 0.01em var(--pri-neutral-inverse); */
-  /* width: 75rem; */
-  width: clamp(75rem, 45vw, 45vw);
-  max-width: 100%;
-  display: flex;
-  justify-content: space-between;
-  background: rgba(128, 128, 128, 0.5);
-  line-height: 90%;
-  border-radius: 4px;
-}
-
-.introText > span {
-  display: inline-block;
+  --fs: 5em;
+  font-family: AkiraExpanded;
+  font-size: clamp(3em, 10vw, var(--fs));
+  text-shadow: 0px 0px 0.01em var(--pri-neutral-inverse);
+  text-align: center;
+  margin: 4rem 0 3rem;
 }
 
 .main h2 {
   font-size: clamp(1.8rem, 2.5vw, 2.5vw);
   margin: 3.2rem 0 1.6rem;
   text-decoration: underline;
+  font-family: AkiraExpanded;
 }
 
 .main li {

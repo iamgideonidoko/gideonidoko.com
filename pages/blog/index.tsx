@@ -6,7 +6,7 @@ import { getReadTime } from '../../helper';
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'path';
 import RenderPosts from '../../components/blog/RenderPosts';
-import FeaturedPost from '../../components/blog/FeaturedPost';
+// import FeaturedPost from '../../components/blog/FeaturedPost';
 import BlogTags from '../../components/blog/BlogTags';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
@@ -61,11 +61,11 @@ const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) =>
   const [searchTerm, setSearchTerm] = useState(
     typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('q') ?? '' : '',
   );
-  const [loaded, setLoaded] = useState(false);
-  const featuredPost = useMemo(() => {
-    const randIdx = Math.floor(Math.random() * posts.length);
-    return posts[randIdx];
-  }, [posts]);
+  // const [loaded, setLoaded] = useState(false);
+  // const featuredPost = useMemo(() => {
+  //   const randIdx = Math.floor(Math.random() * posts.length);
+  //   return posts[randIdx];
+  // }, [posts]);
   const paginatedCurrentPosts = useMemo(
     () => currentPosts.slice(0, postsPerPage * currentPage),
     [currentPage, currentPosts],
@@ -75,9 +75,9 @@ const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) =>
     [posts],
   );
 
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
+  // useEffect(() => {
+  //   setLoaded(true);
+  // }, []);
 
   useEffect(() => {
     (() => {
@@ -113,7 +113,7 @@ const Posts: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts }) =>
         <div className="container-max-1248px">
           <BlogIntro postCount={currentPosts.length} handleSearchTerm={handleSearchTerm} searchTerm={searchTerm} />
           <BlogTags tags={tags} handleSearchTerm={handleSearchTerm} />
-          {loaded && <FeaturedPost post={featuredPost} />}
+          {/* loaded && <FeaturedPost post={featuredPost} />*/}
           <RenderPosts posts={paginatedCurrentPosts} />
           {hasNextPage && (
             <div className={styles.loadMore}>

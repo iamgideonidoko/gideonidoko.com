@@ -118,17 +118,17 @@ const Footer = () => {
         <div>
           <span>
             <a
-              href="https://twitter.com/IamGideonIdoko"
+              href="https://x.com/iamgideonidoko"
               target="_blank"
               rel="noopener noreferrer"
               className="animated-button animated-button--pallene__outlineless"
             >
-              TWITTER
+              X
             </a>
           </span>
           <span>
             <a
-              href="https://linkedin.com/in/IamGideonIdoko"
+              href="https://linkedin.com/in/iamgideonidoko"
               target="_blank"
               rel="noopener noreferrer"
               className="animated-button animated-button--pallene__outlineless"
@@ -138,7 +138,7 @@ const Footer = () => {
           </span>
           <span>
             <a
-              href="https://instagram.com/IamGideonIdoko"
+              href="https://instagram.com/iamgideonidoko"
               target="_blank"
               rel="noopener noreferrer"
               className="animated-button animated-button--pallene__outlineless"

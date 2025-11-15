@@ -239,7 +239,7 @@
 
 /* >>>>>>>>>>>>BLOG INTRO<<<<<<<<<<<< */
 .blogIntro {
-  padding: 7.5rem 0 4rem;
+  padding: 0 4rem 7.5rem;
   border-radius: 2rem;
 }
 
@@ -269,10 +269,11 @@
 
 .blogIntroMainText {
   --fs: 5em;
-  font-family: Audiowide;
-  transform: translate(calc(-1 * (var(--fs) / 2)), -7.5rem);
+  font-family: AkiraExpanded;
   font-size: clamp(3em, 10vw, var(--fs));
   text-shadow: 0px 0px 0.01em var(--pri-neutral-inverse);
+  text-align: center;
+  margin: 4rem 0 3rem;
 }
 
 .blogIntroAbout {
@@ -390,10 +391,6 @@
 @media screen and (max-width: 600px) {
   .blogPostsList {
     grid-template-columns: 1fr;
-  }
-
-  .blogIntroMainText {
-    transform: translate(0, -7.5rem);
   }
 
   .blogIntroSearch {

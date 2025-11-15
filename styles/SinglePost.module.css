@@ -54,7 +54,7 @@
 }
 
 .postBody pre {
-  font-family: 'Roboto Mono', srif !important;
+  font-family: 'JetBrains Mono', srif !important;
   border-radius: 0.8rem;
 }
 
@@ -119,7 +119,7 @@
 .postBody code {
   line-height: 2.24rem;
   font-size: 1.65rem;
-  font-family: 'Roboto Mono', monospace !important;
+  font-family: 'JetBrains Mono', monospace !important;
   background: var(--code-elem-bg-color);
   border-radius: 0.4rem;
   padding: 0.15rem 0.2rem;

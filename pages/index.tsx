@@ -49,22 +49,22 @@ function Home({}) {
               <span className={styles.hmMobile}>EM</span>
             </a>
             &nbsp;/&nbsp;
-            <a href="https://github.com/IamGideonIdoko" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/iamgideonidoko" target="_blank" rel="noopener noreferrer">
               <span className={styles.hmDesktop}>GITHUB</span>
               <span className={styles.hmMobile}>GH</span>
             </a>
             &nbsp;/&nbsp;
-            <a href="https://linkedin.com/in/IamGideonIdoko" target="_blank" rel="noopener noreferrer">
+            <a href="https://linkedin.com/in/iamgideonidoko" target="_blank" rel="noopener noreferrer">
               <span className={styles.hmDesktop}>LINKEDIN</span>
               <span className={styles.hmMobile}>LI</span>
             </a>
             &nbsp;/&nbsp;
-            <a href="https://twitter.com/IamGideonIdoko" target="_blank" rel="noopener noreferrer">
-              <span className={styles.hmDesktop}>TWITTER</span>
-              <span className={styles.hmMobile}>TW</span>
+            <a href="https://x.com/iamgideonidoko" target="_blank" rel="noopener noreferrer">
+              <span className={styles.hmDesktop}>X</span>
+              <span className={styles.hmMobile}>X</span>
             </a>
             &nbsp;/&nbsp;
-            <a href="https://instagram.com/IamGideonIdoko" target="_blank" rel="noopener noreferrer">
+            <a href="https://instagram.com/iamgideonidoko" target="_blank" rel="noopener noreferrer">
               <span className={styles.hmDesktop}>INSTAGRAM</span>
               <span className={styles.hmMobile}>IG</span>
             </a>
