@@ -33,10 +33,6 @@ const RenderPosts = ({ posts }: { posts: Array<IPost> }) => {
                 <h3>{post.title}</h3>
                 {post.description ? <p>{post.description}</p> : null}
               </div>
-              <div className={styles.blogBoxFooter}>
-                <span className={styles.blogBoxReadMore}>Read piece</span>
-                <i className="neu-arrow"></i>
-              </div>
             </article>
           </Link>
         ))}

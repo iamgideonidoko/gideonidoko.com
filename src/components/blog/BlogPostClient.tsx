@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
 import { type ReactNode, useEffect } from 'react';
 import Link from 'next/link';
 import copyToClipboard from 'copy-to-clipboard';
@@ -130,9 +129,6 @@ export default function BlogPostClient({ children, post }: { children: ReactNode
                 <small>Gideon Idoko</small>
               </span>
             </h5>
-            <div className={styles.postCoverWrap}>
-              <img className={styles.postCover} src={post.cover} alt="Article cover" />
-            </div>
           </div>
 
           <div className={styles.blogBody}>
@@ -148,12 +144,7 @@ export default function BlogPostClient({ children, post }: { children: ReactNode
               <div className={styles.postShare}>
                 <div className={styles.postShareBtns}>
                   <span>Share: </span>
-                  <TwitterShareButton
-                    title={post.title}
-                    hashtags={post.tags ?? []}
-                    url={shareUrl}
-                    via="IamGideonIdoko"
-                  >
+                  <TwitterShareButton title={post.title} hashtags={post.tags ?? []} url={shareUrl} via="IamGideonIdoko">
                     <TwitterIcon size={32} round={true} />
                   </TwitterShareButton>
                   <LinkedinShareButton

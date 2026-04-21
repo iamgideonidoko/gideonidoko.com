@@ -95,19 +95,6 @@
   opacity: 0.8;
 }
 
-.blogBoxFooter {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: var(--pri-link-color);
-  font-weight: 600;
-  font-size: 1.6rem;
-}
-
-.blogBoxReadMore {
-  display: inline-block;
-}
-
 /* >>>>>>>>>>>>FEATURED POST<<<<<<<<<<<< */
 .featPostAnchor {
   display: block;
@@ -295,6 +282,7 @@
   max-width: 56rem;
   margin-left: auto;
   margin-right: auto;
+  font-style: italic;
 }
 
 .blogIntroSearch {
@@ -365,11 +353,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 7.2rem;
 }
 
-.loadMore button {
-  padding: 1.5rem 2.5rem;
-  font-size: 1.3em;
+.loadMore span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.4rem 2rem;
+  border: 1px solid var(--neutral-color-4);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--neutral-color-5) 70%, transparent);
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.75;
 }
 
 @media screen and (max-width: 700px) {

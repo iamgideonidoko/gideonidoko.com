@@ -3,7 +3,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import ThemeSwitch from './ThemeSwitch';
-// import FullscreenSwitch from './FullscreenSwitch';
 import Nav from './Nav';
 
 const Header = ({
@@ -39,7 +38,6 @@ const Header = ({
             <i className={!isNavOpen ? 'neu-close-lg' : 'neu-hamburger-menu'}></i>
           </button>
         </div>
-        {/* <FullscreenSwitch isNavOpen={isNavOpen} /> */}
         <div className="get-in-touch-desktop">
           <a
             href="mailto:iamgideonidoko@gmail.com?subject=I%20want%20to%20connect%20with%20you&body=Hello%2C%20I%27m%20..."

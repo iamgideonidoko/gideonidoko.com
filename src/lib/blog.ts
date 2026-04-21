@@ -92,7 +92,7 @@ export const getAllPosts = async () => {
     }),
   );
 
-  return posts.sort((a, b) => new Date(b.date ?? new Date()).getTime() - new Date(a.date ?? new Date()).getTime());
+  return posts.sort((a, b) => new Date(b.publishedAt ?? 0).getTime() - new Date(a.publishedAt ?? 0).getTime());
 };
 
 export const getPostBySlug = async (slug: string): Promise<BlogPostDetail | null> => {
