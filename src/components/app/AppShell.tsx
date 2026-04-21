@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Lenis from 'lenis';
@@ -21,14 +21,24 @@ const pageWithoutFooter: string[] = ['/p/test'];
 export default function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname() ?? '/';
   const routeKey = pathname;
+  const isWritingRoute = useMemo(() => /^\/(?:writing|blog)(?:\/|$)/.test(pathname), [pathname]);
 
   const [isNavOpen, setIsNavOpen] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
   const contentScrollPos = useRef(0);
   const cursorRef = useRef<Cursor | null>(null);
   const canvasRef = useRef<Canvas | null>(null);
   const pageLoaderRef = useRef<PageLoader | null>(null);
   const isBackOrForwardNav = useRef(false);
   const initialRouteRender = useRef(true);
+  const mobileNavRef = useRef<HTMLDivElement | null>(null);
+  const mobileNavCloseButtonRef = useRef<HTMLButtonElement | null>(null);
+  const lastFocusedElementRef = useRef<HTMLElement | null>(null);
+
+  const mobileMenuOpen = !isNavOpen;
+  const shouldEnableMotionShell = !prefersReducedMotion && !isWritingRoute;
 
   const closeNav = () => {
     contentScrollPos.current = 0;
@@ -37,6 +47,19 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
   const shouldHaveHeader = !pageWithoutHeader.includes(pathname);
   const shouldHaveFooter = !pageWithoutFooter.includes(pathname);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleReducedMotionChange = (event: MediaQueryListEvent) => {
+      setPrefersReducedMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleReducedMotionChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleReducedMotionChange);
+    };
+  }, []);
 
   useEffect(() => {
     const mainWrapper = window.document.querySelector<HTMLDivElement>('.main-wrapper');
@@ -49,12 +72,74 @@ export default function AppShell({ children }: { children: ReactNode }) {
   }, [isNavOpen]);
 
   useEffect(() => {
+    if (!mobileMenuOpen) {
+      return;
+    }
+
+    lastFocusedElementRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    document.body.style.overflow = 'hidden';
+
+    const mobileNav = mobileNavRef.current;
+    const selector =
+      'a[href], button:not([disabled]), textarea, input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    mobileNavCloseButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsNavOpen(true);
+        return;
+      }
+
+      if (event.key !== 'Tab' || !mobileNav) {
+        return;
+      }
+
+      const focusableElements = [...mobileNav.querySelectorAll<HTMLElement>(selector)].filter(
+        (element) => !element.hasAttribute('hidden'),
+      );
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements.at(-1);
+
+      if (!firstElement || !lastElement) {
+        return;
+      }
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    mobileNav?.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.removeProperty('overflow');
+      mobileNav?.removeEventListener('keydown', handleKeyDown);
+      lastFocusedElementRef.current?.focus();
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    if (!shouldEnableMotionShell) {
+      cursorRef.current?.destroy();
+      cursorRef.current = null;
+      canvasRef.current?.cleanUp();
+      canvasRef.current = null;
+      pageLoaderRef.current = null;
+      delete window.appLenis;
+      return;
+    }
+
     pageLoaderRef.current = new PageLoader();
-    const initialLoaderTimeout = window.setTimeout(() => {
+    const initialLoaderFrameId = window.requestAnimationFrame(() => {
       pageLoaderRef.current?.animateOut();
-    }, 2000);
+    });
 
     const lenis = new Lenis({
       lerp: 0.04,
@@ -79,15 +164,23 @@ export default function AppShell({ children }: { children: ReactNode }) {
     }
 
     return () => {
-      window.clearTimeout(initialLoaderTimeout);
+      window.cancelAnimationFrame(initialLoaderFrameId);
       window.cancelAnimationFrame(animationFrameId);
+      cursorRef.current?.destroy();
+      cursorRef.current = null;
       lenis.destroy();
       delete window.appLenis;
       canvasRef.current?.cleanUp();
+      canvasRef.current = null;
+      pageLoaderRef.current = null;
     };
-  }, []);
+  }, [shouldEnableMotionShell]);
 
   useEffect(() => {
+    if (!shouldEnableMotionShell) {
+      return;
+    }
+
     const handleRouteChangeStart = () => {
       pageLoaderRef.current?.animateIn();
       const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
@@ -149,9 +242,15 @@ export default function AppShell({ children }: { children: ReactNode }) {
       document.removeEventListener('click', handleDocumentClick, true);
       window.removeEventListener('popstate', handlePopState);
     };
-  }, []);
+  }, [shouldEnableMotionShell]);
 
   useEffect(() => {
+    if (!shouldEnableMotionShell) {
+      canvasRef.current?.cleanUp();
+      canvasRef.current = null;
+      return;
+    }
+
     const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
     if (canvasElement && !ScrollTrigger.isTouch) {
       canvasRef.current?.cleanUp();
@@ -177,9 +276,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
     bindCursorTargets(document.querySelectorAll('a'));
     bindCursorTargets(document.querySelectorAll('.wl-word .char'));
 
-    const delayedBind = window.setTimeout(() => {
+    const delayedBindFrameId = window.requestAnimationFrame(() => {
       bindCursorTargets(document.querySelectorAll('.wl-word .char'));
-    }, 1000);
+    });
 
     const buttonControllers = [...document.querySelectorAll<HTMLElement>('.scroll-button')].map((el) => {
       const button = new ButtonCtrl(el);
@@ -192,6 +291,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
       cleanups.push(() => {
         button.removeListener('enter', handleEnter);
         button.removeListener('leave', handleLeave);
+        button.destroy();
       });
 
       return button;
@@ -200,7 +300,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
     if (initialRouteRender.current) {
       initialRouteRender.current = false;
       return () => {
-        window.clearTimeout(delayedBind);
+        window.cancelAnimationFrame(delayedBindFrameId);
         cleanups.forEach((cleanup) => cleanup());
         buttonControllers.length = 0;
         canvasRef.current?.cleanUp();
@@ -218,30 +318,44 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
     isBackOrForwardNav.current = false;
 
-    const showCanvasTimeout = window.setTimeout(() => {
+    const showCanvasFrameId = window.requestAnimationFrame(() => {
       if (canvasElement) {
         canvasElement.style.visibility = 'visible';
       }
-    }, 1000);
-    const loaderTimeout = window.setTimeout(() => {
+    });
+    const loaderFrameId = window.requestAnimationFrame(() => {
       pageLoaderRef.current?.animateOut();
-    }, 1000);
+    });
 
     return () => {
-      window.clearTimeout(delayedBind);
-      window.clearTimeout(showCanvasTimeout);
-      window.clearTimeout(loaderTimeout);
+      window.cancelAnimationFrame(delayedBindFrameId);
+      window.cancelAnimationFrame(showCanvasFrameId);
+      window.cancelAnimationFrame(loaderFrameId);
       cleanups.forEach((cleanup) => cleanup());
       buttonControllers.length = 0;
       canvasRef.current?.cleanUp();
     };
-  }, [routeKey]);
+  }, [routeKey, shouldEnableMotionShell]);
 
   return (
     <>
-      <div className={!isNavOpen ? 'mobileNavSection' : 'mobileNavSection addNegativeIndex'} suppressHydrationWarning>
+      <div
+        ref={mobileNavRef}
+        id="mobile-site-navigation"
+        className={mobileMenuOpen ? 'mobileNavSection' : 'mobileNavSection addNegativeIndex'}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+        hidden={!mobileMenuOpen}
+        suppressHydrationWarning
+      >
         <div className="mobileNavActionBtn">
-          <button onClick={() => setIsNavOpen(true)} className="closeMenuBtn">
+          <button
+            ref={mobileNavCloseButtonRef}
+            type="button"
+            onClick={() => setIsNavOpen(true)}
+            className="closeMenuBtn"
+          >
             <i className="neu-close-lg"></i>Close Menu
           </button>
           <ThemeSwitch allowForMobile={true} />
@@ -259,7 +373,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </Link>
           <span>Gideon Idoko</span>
         </div>
-        <nav>
+        <nav aria-label="Mobile">
           <ul>
             <li>
               <Link href="/" onClick={closeNav}>
@@ -294,37 +408,41 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </ul>
         </nav>
       </div>
-      <div style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }} suppressHydrationWarning>
-        <svg className="cursor" width="140" height="140" viewBox="0 0 140 140">
-          <defs>
-            <filter id="filter-1" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
-              <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="10" result="warp" />
-              <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="60" in="SourceGraphic" in2="warp" />
-            </filter>
-          </defs>
-          <circle className="cursor__inner" cx="70" cy="70" r="60" />
-        </svg>
-      </div>
-      <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
+      {shouldEnableMotionShell && (
+        <div style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }} suppressHydrationWarning>
+          <svg className="cursor" width="140" height="140" viewBox="0 0 140 140">
+            <defs>
+              <filter id="filter-1" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
+                <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="10" result="warp" />
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="60" in="SourceGraphic" in2="warp" />
+              </filter>
+            </defs>
+            <circle className="cursor__inner" cx="70" cy="70" r="60" />
+          </svg>
+        </div>
+      )}
+      <div className={mobileMenuOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
         <div className="fixed-line" style={pathname.startsWith('/writing/') ? { background: 'none' } : {}} />
-        <canvas id="canvas" />
+        {shouldEnableMotionShell && <canvas id="canvas" />}
         <div className="noise-bg"></div>
         {shouldHaveHeader && (
           <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} contentScrollPos={contentScrollPos} />
         )}
         {children}
         {shouldHaveFooter && <Footer />}
-        <div className="page--overlay">
-          <div className="page--overlay__loader">
-            <Image
-              src="/assets/img/GideonIdokoDevLogo.png"
-              className="site-logo"
-              alt="Gideon Idoko"
-              width={50}
-              height={50}
-            />
+        {shouldEnableMotionShell && (
+          <div className="page--overlay">
+            <div className="page--overlay__loader">
+              <Image
+                src="/assets/img/GideonIdokoDevLogo.png"
+                className="site-logo"
+                alt="Gideon Idoko"
+                width={50}
+                height={50}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

@@ -6,30 +6,28 @@ export default class ButtonCtrl extends EventEmitter {
     el: HTMLElement;
   } & Partial<Record<'text' | 'textinner' | 'decoTop' | 'decoBottom', HTMLElement>>;
   private strength: number;
+  private handleMouseMove: (event: MouseEvent) => void;
+  private handleMouseLeave: () => void;
+  private handleMouseEnter: () => void;
 
   constructor(el: HTMLElement) {
     super();
-    // DOM elements
-    this.DOM = { el: el };
+
+    this.DOM = { el };
     this.DOM.text = this.DOM.el.querySelector<HTMLElement>('.button__text')!;
     this.DOM.textinner = this.DOM.el.querySelector<HTMLElement>('.button__text-inner')!;
     this.DOM.decoTop = this.DOM.el.querySelector<HTMLElement>('.button__deco--1')!;
     this.DOM.decoBottom = this.DOM.el.querySelector<HTMLElement>('.button__deco--2')!;
-    // Magnetic strength
     this.strength = 18;
-    // init events
-    this.initEvents();
-  }
-  private initEvents() {
-    this.DOM.el.addEventListener('mousemove', (e) => {
+
+    this.handleMouseMove = (event) => {
       const buttonBounds = this.DOM.el.getBoundingClientRect();
       const buttonCenterX = buttonBounds.left + buttonBounds.width / 2;
       const buttonCenterY = buttonBounds.top + buttonBounds.height / 2;
 
-      const deltaX = buttonCenterX - e.clientX;
-      const deltaY = buttonCenterY - e.clientY;
-
-      const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
+      const deltaX = buttonCenterX - event.clientX;
+      const deltaY = buttonCenterY - event.clientY;
+      const distance = Math.max(Math.sqrt(deltaX ** 2 + deltaY ** 2), 1);
       const force = this.strength / distance;
 
       const translateX = deltaX * force;
@@ -39,8 +37,8 @@ export default class ButtonCtrl extends EventEmitter {
         gsap.to(this.DOM.decoBottom, {
           x: -translateX,
           y: -translateY,
-          ease: 'power2.out', // Adjust the easing function
-          duration: 0.3, // Adjust the duration
+          ease: 'power2.out',
+          duration: 0.3,
         });
       }
 
@@ -48,46 +46,55 @@ export default class ButtonCtrl extends EventEmitter {
         gsap.to(this.DOM.decoTop, {
           x: -translateX * 0.7,
           y: -translateY * 0.6,
-          ease: 'power2.out', // Adjust the easing function
-          duration: 0.3, // Adjust the duration
+          ease: 'power2.out',
+          duration: 0.3,
         });
       }
-    });
+    };
 
-    this.DOM.el.addEventListener('mouseleave', () => {
+    this.handleMouseLeave = () => {
       this.leave();
+
       if (this.DOM.decoBottom) {
         gsap.to(this.DOM.decoBottom, {
           x: 0,
           y: 0,
-          ease: 'power2.out', // Adjust the easing function
-          duration: 0.3, // Adjust the duration
+          ease: 'power2.out',
+          duration: 0.3,
         });
       }
+
       if (this.DOM.decoTop) {
         gsap.to(this.DOM.decoTop, {
           x: 0,
           y: 0,
-          ease: 'power2.out', // Adjust the easing function
-          duration: 0.3, // Adjust the duration
+          ease: 'power2.out',
+          duration: 0.3,
         });
       }
-    });
+    };
 
-    this.DOM.el.addEventListener('mouseenter', () => {
+    this.handleMouseEnter = () => {
       this.enter();
-    });
+    };
+
+    this.initEvents();
+  }
+
+  private initEvents() {
+    this.DOM.el.addEventListener('mousemove', this.handleMouseMove);
+    this.DOM.el.addEventListener('mouseleave', this.handleMouseLeave);
+    this.DOM.el.addEventListener('mouseenter', this.handleMouseEnter);
   }
 
   private enter() {
     this.emit('enter');
 
-    this.DOM.el.classList.add('button--hover');
+    this.DOM.el.classList.add('scroll-button--hover');
     gsap.killTweensOf(this.DOM.textinner!);
 
     gsap
       .timeline()
-      // .to(document.body, 0.2, { backgroundColor: '#000' })
       .to(
         this.DOM.textinner!,
         {
@@ -106,10 +113,11 @@ export default class ButtonCtrl extends EventEmitter {
         y: '0%',
       });
   }
+
   private leave() {
     this.emit('leave');
 
-    this.DOM.el.classList.remove('button--hover');
+    this.DOM.el.classList.remove('scroll-button--hover');
     gsap.killTweensOf(this.DOM.textinner!);
 
     gsap
@@ -131,5 +139,12 @@ export default class ButtonCtrl extends EventEmitter {
         startAt: { y: '-20%' },
         y: '0%',
       });
+  }
+
+  public destroy() {
+    this.DOM.el.removeEventListener('mousemove', this.handleMouseMove);
+    this.DOM.el.removeEventListener('mouseleave', this.handleMouseLeave);
+    this.DOM.el.removeEventListener('mouseenter', this.handleMouseEnter);
+    this.removeAllListeners();
   }
 }

@@ -10,55 +10,38 @@ const SectionFour = () => {
   const physicsBoxesRef = useRef<PhysicsBox[] | null>(null);
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    let trigger: ScrollTrigger | null = null;
-    try {
-      trigger = ScrollTrigger.create({
-        trigger: '.services-section',
-        start: 'clamp(top bottom-=80%)',
-        end: 'top top',
-        markers: false,
-        once: true,
-        onEnter: () => {
-          physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
-            return new PhysicsBox(elem, {
-              radius: {
-                unit: 'vw',
-                value: 8,
-              },
-              minRadius: {
-                unit: 'px',
-                value: 100,
-              },
-              maxRadius: {
-                unit: 'vw',
-                value: 8,
-              },
-              // radius: {
-              //     unit: 'vw',
-              //     value: 2,
-              // },
-              // minRadius: {
-              //     unit: 'px',
-              //     value: 50,
-              // },
-              // maxRadius: {
-              //     unit: 'vw',
-              //     value: 2,
-              // },
-            });
+    const trigger = ScrollTrigger.create({
+      trigger: '.services-section',
+      start: 'clamp(top bottom-=80%)',
+      end: 'top top',
+      markers: false,
+      once: true,
+      onEnter: () => {
+        physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
+          return new PhysicsBox(elem, {
+            radius: {
+              unit: 'vw',
+              value: 8,
+            },
+            minRadius: {
+              unit: 'px',
+              value: 100,
+            },
+            maxRadius: {
+              unit: 'vw',
+              value: 8,
+            },
           });
-        },
-      });
-    } catch (err) {
-      console.error('SCROLLTRIGGER ERROR: ', err);
-    }
+        });
+      },
+    });
     return () => {
       physicsBoxesRef.current?.forEach((item) => item.destroy());
       trigger?.kill();
     };
   }, []);
   return (
-    <div className={`${styles.sectionFour} services-section`} id="#services">
+    <div className={`${styles.sectionFour} services-section`} id="services">
       <div className="container-full">
         <div className={styles.sectionFourWrapper}>
           <h3 className={styles.servicesHead}>— Services —</h3>

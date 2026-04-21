@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 
 type Theme = 'light' | 'dark';
 
@@ -39,10 +39,16 @@ const ThemeSwitch: FC<Partial<Record<'isNavOpen' | 'allowForMobile', boolean>>> 
 
   return (
     <div className={!props.isNavOpen && props.allowForMobile ? 'themeswitch-wrapper' : 'themeswitch-wrapper navOpen'}>
-      <div>
-        <input type="checkbox" id="toggle" checked={theme === 'dark'} className="offscreen" readOnly />
-        <label htmlFor="toggle" className="switch" onClick={handleSwitch}></label>
-      </div>
+      <button
+        type="button"
+        className="switch"
+        role="switch"
+        aria-checked={theme === 'dark'}
+        aria-label={`Activate ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        onClick={handleSwitch}
+      >
+        <span className="offscreen">{theme === 'dark' ? 'Dark mode enabled' : 'Light mode enabled'}</span>
+      </button>
     </div>
   );
 };

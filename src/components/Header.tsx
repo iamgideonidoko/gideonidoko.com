@@ -1,5 +1,6 @@
 'use client';
 
+import type { Dispatch, MutableRefObject, SetStateAction } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ThemeSwitch from './ThemeSwitch';
@@ -11,8 +12,8 @@ const Header = ({
   contentScrollPos: contentScrollPosRef,
 }: {
   isNavOpen: boolean;
-  setIsNavOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  contentScrollPos: React.MutableRefObject<number>;
+  setIsNavOpen: Dispatch<SetStateAction<boolean>>;
+  contentScrollPos: MutableRefObject<number>;
 }) => {
   const handleNavMenuBtnClick = () => {
     if (isNavOpen) {
@@ -40,7 +41,15 @@ const Header = ({
       </div>
       <div className="nav-adminmenu-wrap">
         <div>
-          <button onClick={handleNavMenuBtnClick} className="nav-menu-btn">
+          <button
+            type="button"
+            onClick={handleNavMenuBtnClick}
+            className="nav-menu-btn"
+            aria-haspopup="dialog"
+            aria-controls="mobile-site-navigation"
+            aria-expanded={!isNavOpen}
+            aria-label={isNavOpen ? 'Open site navigation' : 'Close site navigation'}
+          >
             <i className={!isNavOpen ? 'neu-close-lg' : 'neu-hamburger-menu'}></i>
           </button>
         </div>

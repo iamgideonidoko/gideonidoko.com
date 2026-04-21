@@ -335,7 +335,7 @@
   margin-top: 2rem;
 }
 
-.blogTags > span {
+.blogTagButton {
   display: inline-block;
   background: var(--neutral-color-5);
   margin-right: 1.4rem;
@@ -344,6 +344,21 @@
   border-radius: 100rem;
   z-index: 2;
   cursor: pointer;
+  border: 1px solid transparent;
+  color: inherit;
+  font: inherit;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.blogTagButton:hover,
+.blogTagButton:focus-visible,
+.blogTagButton[aria-pressed='true'] {
+  border-color: var(--pri-neutral);
+  background: color-mix(in srgb, var(--pri-neutral) 10%, var(--neutral-color-5));
+  transform: translateY(-0.1rem);
 }
 /* >>>>>>>>>>>>END: BLOG TAGS<<<<<<<<<<<< */
 

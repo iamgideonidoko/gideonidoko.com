@@ -16,6 +16,9 @@ const Footer = () => {
   const timeLineRefs = useRef<gsap.core.Timeline[]>([]);
 
   const addTrigger = () => {
+    timeLineRefs.current.forEach((tl) => tl.kill());
+    timeLineRefs.current = [];
+
     [...document.querySelectorAll('.footer-main-heading')].forEach((elem) => {
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -72,10 +75,17 @@ const Footer = () => {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    setTimeout(addTrigger, 1000);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const frameId = window.requestAnimationFrame(addTrigger);
+
     return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      window.cancelAnimationFrame(frameId);
       timeLineRefs.current.forEach((tl) => tl.kill());
+      timeLineRefs.current = [];
     };
   }, [pathname]);
 

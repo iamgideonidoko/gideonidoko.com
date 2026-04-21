@@ -403,6 +403,8 @@ body::-webkit-scrollbar-track {
   border-radius: 20px;
   transition: all 0.3s;
   transform: translateY(0.3rem);
+  border: 0;
+  cursor: pointer;
   /* outline: 1px solid red;
 	outline-offset: 1px; */
 }
@@ -419,12 +421,17 @@ body::-webkit-scrollbar-track {
   transition: all 0.3s;
 }
 
-input[type='checkbox']:checked + .switch:after {
+.switch[aria-checked='true']:after {
   transform: translateX(20px);
 }
 
-input[type='checkbox']:checked + .switch {
+.switch[aria-checked='true'] {
   background-color: #e4e2e2;
+}
+
+.switch:focus-visible {
+  outline: 2px solid var(--pri-neutral);
+  outline-offset: 4px;
 }
 
 .offscreen {

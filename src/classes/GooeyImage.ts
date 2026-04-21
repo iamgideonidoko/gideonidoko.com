@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 import { gsap, Power2 } from 'gsap';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import vertexShader from '../glsl/vertex.glsl';
 import gooeyFragmentShader from '../glsl/gooey-fragment.glsl';
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
-
 import { getRatio } from '../helper';
 
 type UniformType = 'f' | 'i' | 'v2' | 'v3' | 'v4' | 'm3' | 'm4' | 't' | 'sampler2D' | 'sampleCube';
@@ -48,6 +47,13 @@ export default class GooeyImage {
   private scroll: number;
   private prevScroll: number;
   private delta = 0;
+  private resizeHandler: () => void;
+  private mouseMoveHandler: (event: MouseEvent) => void;
+  private pointerEnterHandler: () => void;
+  private pointerLeaveHandler: () => void;
+  private scrollHandler?: (event: LenisScrollEvent) => void;
+  private destroyed = false;
+
   constructor(element: HTMLElement, duration: number, onInitImageSuccess: (mesh: THREE.Mesh) => void) {
     this.elements = {
       body: document.body,
@@ -57,26 +63,37 @@ export default class GooeyImage {
     this.duration = duration;
     const image = this.elements.el.querySelector('img');
 
-    if (!image) throw new Error('No image element found');
+    if (!image) {
+      throw new Error('No image element found');
+    }
 
     this.img = image;
     this.images = [];
     this.sizes = new THREE.Vector2(0, 0);
     this.offset = new THREE.Vector2(0, 0);
-
     this.vertexShader = vertexShader;
     this.fragmentShader = gooeyFragmentShader;
-
     this.clock = new THREE.Clock();
-
     this.mouse = new THREE.Vector2(0, 0);
-
     this.hasClicked = false;
-
-    // this.isMobile = window.matchMedia('(max-width: 767px)').matches;
     this.isMobile = false;
-
     this.loader = new THREE.TextureLoader();
+    this.onInitImageSuccess = onInitImageSuccess;
+    this.scroll = 0;
+    this.prevScroll = 0;
+    this.resizeHandler = () => {
+      this.onResize();
+    };
+    this.mouseMoveHandler = (event) => {
+      this.onMouseMove(event);
+    };
+    this.pointerEnterHandler = () => {
+      this.onPointerEnter();
+    };
+    this.pointerLeaveHandler = () => {
+      this.onPointerLeave();
+    };
+
     if (this.img.src && this.img.dataset.hover) {
       this.preload([this.img.src, this.img.dataset.hover], () => {
         this.initImage();
@@ -84,67 +101,48 @@ export default class GooeyImage {
     }
 
     this.bindEvent();
-    this.onInitImageSuccess = onInitImageSuccess;
-
-    this.scroll = 0;
-    this.prevScroll = 0;
   }
 
   private bindEvent() {
-    window.addEventListener('resize', () => {
-      this.onResize();
-    });
-    window.addEventListener('mousemove', (e) => {
-      this.onMouseMove(e);
-    });
-
-    this.img.addEventListener('mouseenter', () => {
-      this.onPointerEnter();
-    });
-    this.img.addEventListener('mouseleave', () => {
-      this.onPointerLeave();
-    });
-    // this.elements.link.addEventListener('click', (e) => {
-    //     this.onClick(e);
-    // });
-
-    // window.alert(`isTouch: ${ScrollTrigger.isTouch}`);
+    window.addEventListener('resize', this.resizeHandler);
+    window.addEventListener('mousemove', this.mouseMoveHandler);
+    this.img.addEventListener('mouseenter', this.pointerEnterHandler);
+    this.img.addEventListener('mouseleave', this.pointerLeaveHandler);
 
     if (window.appLenis) {
-      window.appLenis.on('scroll', (e: LenisScrollEvent) => {
+      this.scrollHandler = (event: LenisScrollEvent) => {
         this.onScroll({
           offset: {
             x: window.scrollX,
-            y: ScrollTrigger.isTouch ? window.scrollY : e.animatedScroll,
+            y: ScrollTrigger.isTouch ? window.scrollY : event.animatedScroll,
           },
           limit: {
-            x: ScrollTrigger.isTouch ? window.document.documentElement.scrollWidth : e.dimensions.scrollWidth,
-            y: ScrollTrigger.isTouch ? window.document.documentElement.scrollHeight : e.dimensions.scrollHeight,
+            x: ScrollTrigger.isTouch ? window.document.documentElement.scrollWidth : event.dimensions.scrollWidth,
+            y: ScrollTrigger.isTouch ? window.document.documentElement.scrollHeight : event.dimensions.scrollHeight,
           },
         });
-      });
+      };
+
+      window.appLenis.on('scroll', this.scrollHandler);
     }
   }
 
-  /* Handlers
-    --------------------------------------------------------- */
+  onClick(event: MouseEvent) {
+    event.preventDefault();
 
-  onClick(e: MouseEvent) {
-    e.preventDefault();
-
-    if (this.isMobile) return;
-
-    if (!this.mesh) return;
+    if (this.isMobile || !this.mesh) {
+      return;
+    }
 
     this.hasClicked = true;
   }
 
-  onPointerEnter() {
+  private onPointerEnter() {
     this.isHovering = true;
 
-    if (this.hasClicked || this.isMobile) return;
-
-    if (!this.mesh || !this.uniforms) return;
+    if (this.hasClicked || this.isMobile || !this.mesh || !this.uniforms) {
+      return;
+    }
 
     gsap.to(this.uniforms.u_progressHover, {
       duration: this.duration,
@@ -153,8 +151,10 @@ export default class GooeyImage {
     });
   }
 
-  onPointerLeave() {
-    if (!this.mesh || this.hasClicked || this.isMobile || !this.uniforms) return;
+  private onPointerLeave() {
+    if (!this.mesh || this.hasClicked || this.isMobile || !this.uniforms) {
+      return;
+    }
 
     gsap.to(this.uniforms.u_progressHover, {
       duration: this.duration,
@@ -167,7 +167,10 @@ export default class GooeyImage {
   }
 
   private onResize() {
-    if (!this.mesh || !this.uniforms) return;
+    if (!this.mesh || !this.uniforms) {
+      return;
+    }
+
     this.getBounds();
     this.mesh.position.x = this.offset.x;
     this.mesh.position.y = this.offset.y;
@@ -176,12 +179,13 @@ export default class GooeyImage {
   }
 
   private onScroll({ offset, limit }: Record<'offset' | 'limit', Record<'x' | 'y', number>>) {
-    // this.scroll = offset.x / limit.x;
-    this.scroll = offset.y / limit.y;
+    this.scroll = limit.y === 0 ? 0 : offset.y / limit.y;
   }
 
   private onMouseMove(event: MouseEvent) {
-    if (this.hasClicked || this.isMobile) return;
+    if (this.hasClicked || this.isMobile) {
+      return;
+    }
 
     gsap.to(this.mouse, {
       duration: 0.5,
@@ -190,10 +194,11 @@ export default class GooeyImage {
     });
   }
 
-  /* Actions
-    --------------------------------------------------------- */
-
   private initImage() {
+    if (this.destroyed) {
+      return;
+    }
+
     const texture = this.images[0];
     const hoverTexture = this.images[1];
     const textureImage = texture.image;
@@ -238,9 +243,7 @@ export default class GooeyImage {
     };
 
     this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
-
     this.material = new THREE.ShaderMaterial({
-      // wireframe: true,
       uniforms: this.uniforms,
       vertexShader: this.vertexShader,
       fragmentShader: this.fragmentShader,
@@ -252,18 +255,19 @@ export default class GooeyImage {
     });
 
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-
     this.mesh.position.x = this.offset.x;
     this.mesh.position.y = this.offset.y;
-
     this.mesh.scale.set(this.sizes.x, this.sizes.y, 1);
 
     this.img.classList.add('is-loaded');
-    if (this.onInitImageSuccess) this.onInitImageSuccess(this.mesh);
+    this.onInitImageSuccess?.(this.mesh);
   }
 
   private move() {
-    if (!this.mesh || this.hasClicked) return;
+    if (!this.mesh || this.hasClicked) {
+      return;
+    }
+
     this.getBounds();
 
     gsap.set(this.mesh.position, {
@@ -273,8 +277,6 @@ export default class GooeyImage {
 
     gsap.to(this.mesh.scale, {
       duration: 0.3,
-      // x: this.sizes.x - this.delta,
-      // y: this.sizes.y - this.delta,
       x: this.sizes.x,
       y: this.sizes.y,
       z: 1,
@@ -282,33 +284,34 @@ export default class GooeyImage {
   }
 
   public update() {
-    if (!this.mesh) return;
+    if (!this.mesh) {
+      return;
+    }
 
     this.delta = Math.abs((this.scroll - this.prevScroll) * 2000);
-
     this.move();
-
     this.prevScroll = this.scroll;
 
-    if (!this.isHovering || !this.uniforms) return;
+    if (!this.isHovering || !this.uniforms) {
+      return;
+    }
+
     this.uniforms.u_time.value += this.clock.getDelta();
   }
 
-  /* Values
-    --------------------------------------------------------- */
-
   private getBounds() {
     const { width, height, left, top } = this.img.getBoundingClientRect();
+
     if (!this.sizes.equals(new THREE.Vector2(width, height))) {
       this.sizes.set(width, height);
     }
 
-    if (
-      !this.offset.equals(
-        new THREE.Vector2(left - window.innerWidth / 2 + width / 2, -top + window.innerHeight / 2 - height / 2),
-      )
-    ) {
-      this.offset.set(left - window.innerWidth / 2 + width / 2, -top + window.innerHeight / 2 - height / 2);
+    const nextOffset = new THREE.Vector2(
+      left - window.innerWidth / 2 + width / 2,
+      -top + window.innerHeight / 2 - height / 2,
+    );
+    if (!this.offset.equals(nextOffset)) {
+      this.offset.copy(nextOffset);
     }
   }
 
@@ -323,11 +326,36 @@ export default class GooeyImage {
 
     imageUrls.forEach((url) => {
       preloadImage(url, () => {
+        if (this.destroyed) {
+          return;
+        }
+
         loadedCounter += 1;
         if (loadedCounter === toBeLoadedNumber) {
           allImagesLoadedCallback();
         }
       });
     });
+  }
+
+  public destroy() {
+    this.destroyed = true;
+    window.removeEventListener('resize', this.resizeHandler);
+    window.removeEventListener('mousemove', this.mouseMoveHandler);
+    this.img.removeEventListener('mouseenter', this.pointerEnterHandler);
+    this.img.removeEventListener('mouseleave', this.pointerLeaveHandler);
+
+    if (this.scrollHandler && window.appLenis) {
+      window.appLenis.off('scroll', this.scrollHandler);
+    }
+
+    gsap.killTweensOf(this.mouse);
+    if (this.uniforms) {
+      gsap.killTweensOf(this.uniforms.u_progressHover);
+    }
+
+    this.images.forEach((image) => image.dispose());
+    this.material?.dispose();
+    this.geometry?.dispose();
   }
 }

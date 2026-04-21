@@ -79,9 +79,12 @@ const SectionTwo = () => {
   );
 
   const pathname = usePathname();
-  const timelinesRef = useRef<gsap.core.Timeline[]>(null);
+  const timelinesRef = useRef<gsap.core.Timeline[]>([]);
 
   const addTrigger = () => {
+    timelinesRef.current.forEach((tl) => tl.kill());
+    timelinesRef.current = [];
+
     [
       ...document.querySelectorAll('.project-section-item-left'),
       ...document.querySelectorAll('.project-section-item-right'),
@@ -112,16 +115,23 @@ const SectionTwo = () => {
           opacity: 1,
         },
       );
-      timelinesRef.current?.push(tl);
+      timelinesRef.current.push(tl);
     });
   };
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    setTimeout(addTrigger, 1000);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const frameId = window.requestAnimationFrame(addTrigger);
+
     return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      timelinesRef.current?.forEach((tl) => tl.kill());
+      window.cancelAnimationFrame(frameId);
+      timelinesRef.current.forEach((tl) => tl.kill());
+      timelinesRef.current = [];
     };
   }, [pathname]);
 

@@ -1,11 +1,12 @@
 import { gsap } from 'gsap';
-import { lerp, getMousePos } from '../helper';
 import { EventEmitter } from 'events';
+import { lerp, getMousePos } from '../helper';
 
-// Track the mouse position
 let mouse = { x: 0, y: 0 };
 if (typeof window !== 'undefined') {
-  window.addEventListener('mousemove', (ev) => (mouse = getMousePos(ev)));
+  window.addEventListener('mousemove', (event) => {
+    mouse = getMousePos(event);
+  });
 }
 
 export default class Cursor extends EventEmitter {
@@ -19,22 +20,23 @@ export default class Cursor extends EventEmitter {
     el: SVGElement;
   } & Partial<Record<'circleInner' | 'feTurbulence', SVGElement>>;
   private onMouseMoveEv: () => void;
+  private handleEnter: () => void;
+  private handleLeave: () => void;
   private tl?: gsap.core.Timeline;
+  private frameId = 0;
+  private destroyed = false;
+
   constructor(el: SVGElement) {
     super();
-    this.DOM = { el: el };
+
+    this.DOM = { el };
     this.DOM.el.style.opacity = '0';
     this.DOM.circleInner = this.DOM.el.querySelector('.cursor__inner') as SVGElement;
-
     this.DOM.circleInner.style.fill = 'none';
 
     this.filterId = '#filter-1';
     this.DOM.feTurbulence = document.querySelector(`${this.filterId} > feTurbulence`) as SVGElement;
-
     this.primitiveValues = { turbulence: 0 };
-
-    this.createTimeline();
-
     this.bounds = this.DOM.el.getBoundingClientRect();
 
     this.renderedStyles = {
@@ -44,20 +46,29 @@ export default class Cursor extends EventEmitter {
       stroke: { previous: 1, current: 1, amt: 0.2 },
     };
 
-    this.listen();
-
+    this.handleEnter = () => this.enter();
+    this.handleLeave = () => this.leave();
     this.onMouseMoveEv = () => {
       this.renderedStyles.tx.previous = this.renderedStyles.tx.current = mouse.x - this.bounds.width / 2;
       this.renderedStyles.ty.previous = this.renderedStyles.ty.current = mouse.y - this.bounds.height / 2;
       gsap.to(this.DOM.el, { duration: 0.9, ease: 'Power3.easeOut', opacity: 1 });
-      requestAnimationFrame(() => this.render());
+      this.frameId = requestAnimationFrame(() => this.render());
       window.removeEventListener('mousemove', this.onMouseMoveEv);
     };
+
+    this.createTimeline();
+    this.listen();
+
     window.addEventListener('mousemove', this.onMouseMoveEv);
   }
+
   private render() {
-    this.renderedStyles['tx'].current = mouse.x - this.bounds.width / 2;
-    this.renderedStyles['ty'].current = mouse.y - this.bounds.height / 2;
+    if (this.destroyed) {
+      return;
+    }
+
+    this.renderedStyles.tx.current = mouse.x - this.bounds.width / 2;
+    this.renderedStyles.ty.current = mouse.y - this.bounds.height / 2;
 
     for (const key in this.renderedStyles) {
       const newKey = key as keyof typeof this.renderedStyles;
@@ -68,14 +79,14 @@ export default class Cursor extends EventEmitter {
       );
     }
 
-    this.DOM.el.style.transform = `translateX(${this.renderedStyles['tx'].previous}px) translateY(${this.renderedStyles['ty'].previous}px)`;
-    this.DOM.circleInner!.setAttribute('r', this.renderedStyles['radius'].previous.toString());
-    this.DOM.circleInner!.style.strokeWidth = `${this.renderedStyles['stroke'].previous}px`;
+    this.DOM.el.style.transform = `translateX(${this.renderedStyles.tx.previous}px) translateY(${this.renderedStyles.ty.previous}px)`;
+    this.DOM.circleInner!.setAttribute('r', this.renderedStyles.radius.previous.toString());
+    this.DOM.circleInner!.style.strokeWidth = `${this.renderedStyles.stroke.previous}px`;
 
-    requestAnimationFrame(() => this.render());
+    this.frameId = requestAnimationFrame(() => this.render());
   }
+
   private createTimeline() {
-    // init timeline
     this.tl = gsap
       .timeline({
         paused: true,
@@ -96,22 +107,32 @@ export default class Cursor extends EventEmitter {
         turbulence: 0,
       });
   }
+
   private enter() {
-    this.renderedStyles['radius'].current = 40;
-    this.renderedStyles['stroke'].current = 3;
-    if (this.tl) {
-      this.tl.restart();
-    }
+    this.renderedStyles.radius.current = 40;
+    this.renderedStyles.stroke.current = 3;
+    this.tl?.restart();
   }
+
   private leave() {
-    this.renderedStyles['radius'].current = 60;
-    this.renderedStyles['stroke'].current = 1;
-    if (this.tl) {
-      this.tl.progress(1).kill();
-    }
+    this.renderedStyles.radius.current = 60;
+    this.renderedStyles.stroke.current = 1;
+    this.tl?.progress(1).kill();
   }
+
   private listen() {
-    this.on('enter', () => this.enter());
-    this.on('leave', () => this.leave());
+    this.on('enter', this.handleEnter);
+    this.on('leave', this.handleLeave);
+  }
+
+  public destroy() {
+    this.destroyed = true;
+    cancelAnimationFrame(this.frameId);
+    window.removeEventListener('mousemove', this.onMouseMoveEv);
+    this.off('enter', this.handleEnter);
+    this.off('leave', this.handleLeave);
+    this.tl?.kill();
+    gsap.killTweensOf(this.DOM.el);
+    this.removeAllListeners();
   }
 }

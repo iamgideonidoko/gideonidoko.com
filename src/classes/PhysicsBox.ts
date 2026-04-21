@@ -1,5 +1,5 @@
-import { Engine, Composite, Runner, Body, Bodies, MouseConstraint, Mouse, Render, World } from 'matter-js';
-import { vwToPx, clamp } from '../helper';
+import { Body, Bodies, Composite, Engine, Mouse, MouseConstraint, Render, Runner, World } from 'matter-js';
+import { clamp, vwToPx } from '../helper';
 
 export default class PhysicsBox {
   private debugMode = false;
@@ -17,6 +17,10 @@ export default class PhysicsBox {
   private walls: Body[];
   private dragBody?: Body;
   private itemOptions: Record<'minRadius' | 'radius' | 'maxRadius', { value: number; unit: 'px' | 'vw' }>;
+  private resizeHandler: () => void;
+  private renderFrameId = 0;
+  private itemPointerHandlers = new Map<HTMLElement, Record<'mousedown' | 'mouseup', () => void>>();
+
   constructor(
     target: HTMLElement,
     itemOptions: Record<'minRadius' | 'radius' | 'maxRadius', { value: number; unit: 'px' | 'vw' }>,
@@ -36,49 +40,45 @@ export default class PhysicsBox {
     );
 
     this.defaultBoxRect = this.box.getBoundingClientRect();
-
     this.calculateBoxHeight();
-
     this.boxRect = this.box.getBoundingClientRect();
-
     this.engine = Engine.create();
-
-    this.itemBodies = [];
+    this.resizeHandler = () => {
+      this.onResize();
+    };
 
     this.itemBodies = [...this.items].map((item) => {
       item.style.visibility = 'visible';
-      item.addEventListener('mousedown', () => {
+
+      const handleMouseDown = () => {
         item.style.cursor = 'grabbing';
-      });
-      item.addEventListener('mouseup', () => {
+      };
+      const handleMouseUp = () => {
         item.style.cursor = 'grab';
+      };
+
+      item.addEventListener('mousedown', handleMouseDown);
+      item.addEventListener('mouseup', handleMouseUp);
+      this.itemPointerHandlers.set(item, {
+        mousedown: handleMouseDown,
+        mouseup: handleMouseUp,
       });
+
       return Bodies.circle(
         Math.random() * (this.boxRect.width * 0.8 - this.boxRect.width * 0.2) + this.boxRect.width * 0.2,
-        // this.boxRect.width * 0.5,
         this.boxRect.height * 0.5,
         this.itemRadius,
       );
     });
 
     this.walls = [
-      // TOP
       Bodies.rectangle(this.boxRect.width / 2, 0, this.boxRect.width, 50, { isStatic: true }),
-      // DOWN
       Bodies.rectangle(this.boxRect.width / 2, this.boxRect.height, this.boxRect.width, 50, { isStatic: true }),
-      // RIGHT
       Bodies.rectangle(this.boxRect.width, this.boxRect.height / 2, 50, this.boxRect.height, { isStatic: true }),
-      // LEFT
       Bodies.rectangle(0, this.boxRect.height / 2, 50, this.boxRect.height, { isStatic: true }),
     ];
 
-    Composite.add(this.engine.world, [
-      // Walls
-      ...this.walls,
-      ...this.itemBodies,
-    ]);
-
-    // bind events
+    Composite.add(this.engine.world, [...this.walls, ...this.itemBodies]);
     this.bindEvent();
 
     if (this.debugMode) {
@@ -98,18 +98,7 @@ export default class PhysicsBox {
   }
 
   private bindEvent() {
-    window.addEventListener('resize', () => {
-      this.onResize();
-    });
-
-    // Events.on(this.engine, 'collisionStart', (event) => {
-    //     const pairs = event.pairs;
-    //     for (const pair of pairs) {
-    //         // Check if bodyA is bodyA and bodyB is bodyB, or vice versa
-    //         Body.setVelocity(pair.bodyA, { x: -pair.bodyA.velocity.x, y: pair.bodyA.velocity.y });
-    //         Body.setVelocity(pair.bodyB, { x: -pair.bodyB.velocity.x, y: pair.bodyB.velocity.y });
-    //     }
-    // });
+    window.addEventListener('resize', this.resizeHandler);
   }
 
   private onResize() {
@@ -125,31 +114,31 @@ export default class PhysicsBox {
         : vwToPx(this.itemOptions.maxRadius.value),
     );
 
-    // Update wall position
     this.walls.forEach((wall, idx) => {
       switch (idx) {
-        case 0: // TOP
+        case 0:
           Body.setPosition(wall, { x: this.boxRect.width / 2, y: 0 });
           this.resizeWall(wall, 0, this.boxRect.width, 50);
           break;
-        case 1: // DOWN
+        case 1:
           Body.setPosition(wall, { x: this.boxRect.width / 2, y: this.boxRect.height });
           this.resizeWall(wall, 1, this.boxRect.width, 50);
           break;
-        case 2: // RIGHT
+        case 2:
           Body.setPosition(wall, { x: this.boxRect.width, y: this.boxRect.height / 2 });
           break;
-        case 3: // LEFT
+        case 3:
           Body.setPosition(wall, { x: 0, y: this.boxRect.height / 2 });
           break;
         default:
       }
     });
+
     this.itemBodies.forEach((body, idx) => {
       Body.setPosition(body, { x: this.boxRect.width / 2, y: this.boxRect.height * 0.1 });
       this.resizeItemBody(body, idx);
     });
-    // Do something upon resize
+
     if (this.render) {
       this.render.bounds.max.x = this.boxRect.width;
       this.render.bounds.max.y = this.boxRect.height;
@@ -161,19 +150,10 @@ export default class PhysicsBox {
     }
   }
 
-  /* Actions
-    --------------------------------------------------------- */
-
   private initOperation() {
     this.mouse = Mouse.create(this.box);
     this.mouseConstraint = MouseConstraint.create(this.engine, {
       mouse: this.mouse,
-      // constraint: {
-      //     stiffness: 0.2,
-      //     render: {
-      //         visible: false,
-      //     },
-      // },
     });
     Composite.add(this.engine.world, this.mouseConstraint);
     this.initRenderer();
@@ -188,14 +168,16 @@ export default class PhysicsBox {
         item.style.left = `${body.position.x - item.getBoundingClientRect().width * 0.5}px`;
       }
     });
+
     Engine.update(this.engine);
-    window.requestAnimationFrame(this.initRenderer.bind(this));
+    this.renderFrameId = window.requestAnimationFrame(() => this.initRenderer());
   }
 
   private initDebugOperation() {
     this.items.forEach((item) => {
       item.style.display = 'none';
     });
+
     this.render = Render.create({
       element: this.box,
       engine: this.engine,
@@ -206,8 +188,8 @@ export default class PhysicsBox {
         pixelRatio: Math.min(window.devicePixelRatio, 2),
       },
     });
+
     Render.run(this.render);
-    // Create runner;
     this.runner = Runner.create();
     Runner.run(this.runner, this.engine);
     this.mouse = Mouse.create(this.render.canvas);
@@ -222,10 +204,8 @@ export default class PhysicsBox {
     });
 
     Composite.add(this.engine.world, this.mouseConstraint);
-
-    // Keep the mouse in sync with rendering
     this.render.mouse = this.mouse;
-    // fit the render viewport to the scene
+
     Render.lookAt(this.render, {
       min: { x: 0, y: 0 },
       max: { x: this.boxRect.width, y: this.boxRect.height },
@@ -233,43 +213,57 @@ export default class PhysicsBox {
   }
 
   public destroy() {
+    cancelAnimationFrame(this.renderFrameId);
+    window.removeEventListener('resize', this.resizeHandler);
+
+    this.itemPointerHandlers.forEach((handlers, item) => {
+      item.removeEventListener('mousedown', handlers.mousedown);
+      item.removeEventListener('mouseup', handlers.mouseup);
+    });
+    this.itemPointerHandlers.clear();
+
+    if (this.mouseConstraint) {
+      World.remove(this.engine.world, this.mouseConstraint);
+    }
+
+    if (this.runner) {
+      Runner.stop(this.runner);
+    }
+
     if (this.render) {
+      Render.stop(this.render);
       const canvas = document.createElement('canvas');
       this.render.canvas.remove();
       this.render.canvas = canvas;
       this.render.context = canvas.getContext('2d')!;
       this.render.textures = {};
     }
+
+    World.clear(this.engine.world, false);
+    Engine.clear(this.engine);
   }
 
   private resizeWall(wall: Body, wallIndex: number, newWidth: number, newHeight: number) {
-    // Remove the old body from the world
     World.remove(this.engine.world, wall);
 
-    // Create a new body with the desired dimensions
     this.walls[wallIndex] = Bodies.rectangle(wall.position.x, wall.position.y, newWidth, newHeight, {
       isStatic: true,
     });
 
-    // Add the new body to the world
     World.add(this.engine.world, this.walls[wallIndex]);
 
     return this.walls[wallIndex];
   }
 
   private resizeItemBody(itemBody: Body, itemBodyIndex: number) {
-    // Remove the old body from the world
     World.remove(this.engine.world, itemBody);
 
-    // Create a new body with the desired dimensions
-    // this.itemBodies[itemBodyIndex] = Bodies.circle(itemBody.position.x, itemBody.position.y, this.itemRadius);
     this.itemBodies[itemBodyIndex] = Bodies.circle(
       Math.random() * (this.boxRect.width * 0.8 - this.boxRect.width * 0.2) + this.boxRect.width * 0.2,
       this.boxRect.height * 0.5,
       this.itemRadius,
     );
 
-    // Add the new body to the world
     World.add(this.engine.world, this.itemBodies[itemBodyIndex]);
 
     return this.itemBodies[itemBodyIndex];

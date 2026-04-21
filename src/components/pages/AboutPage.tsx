@@ -14,37 +14,31 @@ export default function AboutPage() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    let trigger: ScrollTrigger | null = null;
-
-    try {
-      trigger = ScrollTrigger.create({
-        trigger: '.about-stack-section',
-        start: 'clamp(top bottom-=90%)',
-        end: 'top top',
-        markers: false,
-        once: true,
-        onEnter: () => {
-          physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
-            return new PhysicsBox(elem, {
-              radius: {
-                unit: 'vw',
-                value: 3,
-              },
-              minRadius: {
-                unit: 'px',
-                value: 50,
-              },
-              maxRadius: {
-                unit: 'vw',
-                value: 3,
-              },
-            });
+    const trigger = ScrollTrigger.create({
+      trigger: '.about-stack-section',
+      start: 'clamp(top bottom-=90%)',
+      end: 'top top',
+      markers: false,
+      once: true,
+      onEnter: () => {
+        physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
+          return new PhysicsBox(elem, {
+            radius: {
+              unit: 'vw',
+              value: 3,
+            },
+            minRadius: {
+              unit: 'px',
+              value: 50,
+            },
+            maxRadius: {
+              unit: 'vw',
+              value: 3,
+            },
           });
-        },
-      });
-    } catch (error) {
-      console.error('ERROR: ', error);
-    }
+        });
+      },
+    });
 
     return () => {
       physicsBoxesRef.current?.forEach((item) => item.destroy());

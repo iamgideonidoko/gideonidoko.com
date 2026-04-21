@@ -87,10 +87,10 @@ const BlogIndexPage: FC<{ posts: IPost[] }> = ({ posts }) => {
     <main className={`padding-top-10rem ${styles.blogMain}`}>
       <div className="container-max-1248px">
         <BlogIntro postCount={filteredPosts.length} handleSearchTerm={handleSearchTerm} searchTerm={searchTerm} />
-        <BlogTags tags={tags} handleSearchTerm={handleSearchTerm} />
+        <BlogTags tags={tags} handleSearchTerm={handleSearchTerm} searchTerm={searchTerm} />
         <RenderPosts posts={paginatedCurrentPosts} />
         {hasNextPage && (
-          <div ref={loadMoreRef} className={styles.loadMore} aria-hidden="true">
+          <div ref={loadMoreRef} className={styles.loadMore} role="status" aria-live="polite">
             <span>Loading more writing...</span>
           </div>
         )}

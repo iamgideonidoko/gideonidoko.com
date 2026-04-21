@@ -12,22 +12,25 @@ export default class Canvas {
   private renderer?: THREE.WebGLRenderer;
   private gooeyImages?: GooeyImage[];
   private camera?: THREE.PerspectiveCamera;
+  private frameId = 0;
+  private destroyed = false;
+  private resizeHandler: () => void;
+
   constructor(canvasElement: HTMLCanvasElement) {
     this.canvas = canvasElement;
     this.imageWrappers = document.querySelectorAll<HTMLElement>('.gooey__image');
-
     this.W = window.innerWidth;
     this.H = window.innerHeight;
+    this.resizeHandler = () => {
+      this.onResize();
+    };
 
     this.start();
-
     this.bindEvent();
   }
 
   private bindEvent() {
-    window.addEventListener('resize', () => {
-      this.onResize();
-    });
+    window.addEventListener('resize', this.resizeHandler);
   }
 
   private start() {
@@ -44,9 +47,7 @@ export default class Canvas {
 
     this.gooeyImages = Array.from(this.imageWrappers).map((item) => {
       return new GooeyImage(item, 0.5, (mesh) => {
-        if (this.scene) {
-          this.scene.add(mesh);
-        }
+        this.scene?.add(mesh);
       });
     });
 
@@ -63,50 +64,56 @@ export default class Canvas {
 
   private initLights() {
     const ambientlight = new THREE.AmbientLight(0xffffff, 2);
-    if (this.scene) this.scene.add(ambientlight);
+    this.scene?.add(ambientlight);
   }
-
-  /* Handlers
-    --------------------------------------------------------- */
 
   private onResize() {
     this.W = window.innerWidth;
     this.H = window.innerHeight;
+
     if (this.camera) {
-      // this.camera.aspect = this.W / this.H;
-      // this.camera.updateProjectionMatrix();
-      // Updating the projection matrix deosn't work for now (for some weird reasons)
       this.scene?.remove(this.camera);
       this.initCamera();
     }
+
     if (this.renderer) {
       this.renderer.setSize(this.W, this.H);
-      // this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
     }
   }
 
-  /* Actions
-    --------------------------------------------------------- */
-
   private update() {
-    requestAnimationFrame(this.update.bind(this));
-    if (this.gooeyImages)
-      this.gooeyImages.forEach((gooeyImage) => {
-        gooeyImage.update();
-      });
-    if (this.renderer && this.scene && this.camera) this.renderer.render(this.scene, this.camera);
+    if (this.destroyed) {
+      return;
+    }
+
+    this.frameId = requestAnimationFrame(() => this.update());
+
+    this.gooeyImages?.forEach((gooeyImage) => {
+      gooeyImage.update();
+    });
+
+    if (this.renderer && this.scene && this.camera) {
+      this.renderer.render(this.scene, this.camera);
+    }
   }
 
-  // clean up the canvas
   public cleanUp() {
-    if (this.gooeyImages)
-      this.gooeyImages.forEach((gooeyImage) => {
-        gooeyImage.material?.dispose();
-        gooeyImage.geometry?.dispose();
-        if (gooeyImage.mesh) {
-          this.scene?.remove(gooeyImage.mesh);
-        }
-      });
+    this.destroyed = true;
+    window.removeEventListener('resize', this.resizeHandler);
+    cancelAnimationFrame(this.frameId);
+
+    this.gooeyImages?.forEach((gooeyImage) => {
+      gooeyImage.destroy();
+      if (gooeyImage.mesh) {
+        this.scene?.remove(gooeyImage.mesh);
+      }
+    });
+
+    this.gooeyImages = [];
     this.renderer?.dispose();
+    this.scene?.clear();
+    this.camera = undefined;
+    this.scene = undefined;
+    this.renderer = undefined;
   }
 }

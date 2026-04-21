@@ -38,16 +38,14 @@ const SectionThree = () => {
           </p>
 
           <div className={styles.learnMoreAboutBtn}>
-            <Link href="/about">
-              <button className="scroll-button">
-                <div className="button__deco button__deco--2"></div>
-                <div className="button__deco button__deco--1"></div>
-                <span className="button__text button__text__sectionone">
-                  <span className="button__text-inner">
-                    LEARN <br /> MORE
-                  </span>
+            <Link href="/about" className="scroll-button">
+              <div className="button__deco button__deco--2"></div>
+              <div className="button__deco button__deco--1"></div>
+              <span className="button__text button__text__sectionone">
+                <span className="button__text-inner">
+                  LEARN <br /> MORE
                 </span>
-              </button>
+              </span>
             </Link>
           </div>
         </div>
