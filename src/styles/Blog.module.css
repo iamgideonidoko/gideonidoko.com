@@ -35,7 +35,10 @@
   border: 1px solid var(--neutral-color-4);
   border-radius: 1.6rem;
   background: color-mix(in srgb, var(--neutral-color-5) 65%, transparent);
-  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
 }
 
 .blogBoxMeta {
@@ -335,8 +338,9 @@
   margin: 0 auto 4em;
 }
 
-.blogTagsWrapper > h5 {
+.blogTagsWrapper h5 {
   font-size: 1.2em;
+  display: inline-block;
 }
 
 .blogTags {

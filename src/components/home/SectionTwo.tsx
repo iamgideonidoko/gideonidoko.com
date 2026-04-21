@@ -74,17 +74,6 @@ const SectionTwo = () => {
           link2: 'https://github.com/IamGideonIdoko/linassess',
           stack: ['React', 'Node.js', 'Zustand', '...'],
         },
-        // {
-        //   name: 'Cyprobar',
-        //   about: 'Lightweight JS libary for creating circular progress bars.',
-        //   cover1: '/assets/img/cyprobar-cover.png',
-        //   cover2: '/assets/img/cyprobar-cover-hover.png',
-        //   alt: 'Cyprobar cover',
-        //   role: 'Frontend Developer',
-        //   link1: 'https://IamGideonIdoko.github.io/cyprobar',
-        //   link2: 'https://github.com/IamGideonIdoko/cyprobar',
-        //   stack: ['JavaScript', 'Parcel', 'TailwindCSS'],
-        // },
       ].map((item, idx) => ({ ...item, id: idx + 1 })),
     [],
   );
@@ -114,8 +103,8 @@ const SectionTwo = () => {
           xPercent: elem.classList.contains('project-section-item-left')
             ? -100
             : elem.classList.contains('project-section-item-right')
-            ? 100
-            : 0,
+              ? 100
+              : 0,
           opacity: 0,
         },
         {

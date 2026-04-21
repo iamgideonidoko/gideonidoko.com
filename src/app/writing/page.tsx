@@ -5,7 +5,7 @@ import { createPageMetadata } from '../../lib/site';
 
 export const metadata: Metadata = createPageMetadata({
   title: 'Writing - Gideon Idoko',
-  description: 'Essays, notes, and technical writing on software engineering, tools, and the web.',
+  description: "Another part of the internet where I share stuff I think I (don't) know...",
   path: '/writing',
 });
 

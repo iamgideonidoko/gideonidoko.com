@@ -25,7 +25,7 @@ const BlogIntro: FC<{ postCount: number; handleSearchTerm: (term: string) => voi
       </div>
       <div className={styles.blogIntro2}>
         <p className={styles.blogIntroAbout}>
-          Essays, notes, and technical writing on software engineering, tools, and the web.
+          Another part of the internet where I share stuff I think I (don&apos;t) know...
         </p>
       </div>
     </div>

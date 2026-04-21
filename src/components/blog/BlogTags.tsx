@@ -3,8 +3,10 @@ import styles from '../../styles/Blog.module.css';
 
 const BlogTags: FC<{ tags: string[]; handleSearchTerm: (term: string) => void }> = ({ tags, handleSearchTerm }) => {
   return (
-    <div className={styles.blogTagsWrapper}>
-      <h5>Browse writing by tag</h5>
+    <details className={styles.blogTagsWrapper}>
+      <summary>
+        <h5>Browse writing by tag</h5>
+      </summary>
       <div className={styles.blogTags}>
         {tags.map((tag, idx) => (
           <span key={idx} onClick={() => handleSearchTerm(tag)}>
@@ -12,7 +14,7 @@ const BlogTags: FC<{ tags: string[]; handleSearchTerm: (term: string) => void }>
           </span>
         ))}
       </div>
-    </div>
+    </details>
   );
 };
 
