@@ -1,70 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
 import styles from '../../styles/Home.module.css';
-import type { Result as SplittingResult } from 'splitting';
 
 const SectionOne = () => {
-  useEffect(() => {
-    (async () => {
-      const Splitting = await import('splitting');
-      try {
-        Splitting.default({
-          target: '.wl-word',
-        }) as unknown as SplittingResult[];
-      } catch {}
-    })();
-  }, []);
-
-  const handleScrollButtonClick = () => {
-    const sectionThreeWrapper = document.querySelector<HTMLElement>('#section-three-wrapper');
-    if (sectionThreeWrapper && window.appLenis) {
-      window.appLenis.scrollTo(sectionThreeWrapper, {
-        easing: (x: number) => {
-          return x === 0
-            ? 0
-            : x === 1
-            ? 1
-            : x < 0.5
-            ? Math.pow(2, 20 * x - 10) / 2
-            : (2 - Math.pow(2, -20 * x + 10)) / 2;
-        },
-      });
-    }
-  };
-  return (
-    <div className={`${styles.sectionOne} container-full`}>
-      <div className={styles.sectionScrollButtonWrapper}>
-        <button className="scroll-button" onClick={handleScrollButtonClick}>
-          <div className="button__deco button__deco--2"></div>
-          <div className="button__deco button__deco--1"></div>
-          <span className="button__text button__text__sectionone">
-            <span className="button__text-inner">
-              <i className="neu-down-lg"></i>
-            </span>
-          </span>
-        </button>
-      </div>
-      <div className={`${styles.scrollText}`}>
-        01//05 — SCROLL <i className="neu-down-lg"></i>
-      </div>
-
-      <div>
-        <h4 className={styles.welcomeLine2}>Gideon Idoko - Software Engineer</h4>
-      </div>
-      <h1 className={`${styles.welcomeLine} mainWelcomeLine`}>
-        <span>
-          <span className="wl-word">Crafting</span>
-        </span>
-        <span>
-          <span className="wl-word">Interactive</span>
-        </span>
-        <span>
-          <span className="wl-word">Mag!c</span>
-        </span>
-      </h1>
-    </div>
-  );
+  return <div className={`${styles.sectionOne} container-full`} />;
 };
 
 export default SectionOne;
