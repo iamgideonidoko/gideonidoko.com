@@ -8,8 +8,8 @@ import {
   FacebookShareButton,
   LinkedinIcon,
   LinkedinShareButton,
-  TwitterIcon,
-  TwitterShareButton,
+  XIcon,
+  XShareButton,
   WhatsappIcon,
   WhatsappShareButton,
 } from 'react-share';
@@ -144,9 +144,9 @@ export default function BlogPostClient({ children, post }: { children: ReactNode
               <div className={styles.postShare}>
                 <div className={styles.postShareBtns}>
                   <span>Share: </span>
-                  <TwitterShareButton title={post.title} hashtags={post.tags ?? []} url={shareUrl} via="IamGideonIdoko">
-                    <TwitterIcon size={32} round={true} />
-                  </TwitterShareButton>
+                  <XShareButton title={post.title} hashtags={post.tags ?? []} url={shareUrl} via="IamGideonIdoko">
+                    <XIcon size={32} round={true} />
+                  </XShareButton>
                   <LinkedinShareButton
                     title={post.title}
                     url={shareUrl}
