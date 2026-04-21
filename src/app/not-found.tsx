@@ -17,13 +17,7 @@ export default function NotFound() {
         <div className={styles.custom404Container}>
           <div className={styles.custom404ContainerChild}>
             <div className={styles.custom404ImageWrap}>
-              <Image
-                src="/assets/img/404.svg"
-                alt="404"
-                width={403}
-                height={338}
-                style={{ maxWidth: '100%', width: '100%', height: 'auto' }}
-              />
+              <Image src="/assets/img/404.svg" alt="404" width={400} height={200} />
             </div>
             <p>
               <small>Well, this is awkward, the page you were trying to view does not exist.</small>

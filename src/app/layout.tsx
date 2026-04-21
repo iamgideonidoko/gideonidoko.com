@@ -55,7 +55,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body suppressHydrationWarning>
         <AppShell>{children}</AppShell>
-        <Script src="/assets/js/scrambling-text.js" strategy="afterInteractive" />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-QJ2RYXMK6E" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`

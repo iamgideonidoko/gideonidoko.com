@@ -1,93 +1,92 @@
 .custom404Container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
 }
 
 .custom404ContainerChild {
-	max-width: 100%;
-	padding: 5rem 1rem 0;
+  max-width: 100%;
+  padding: 5rem 1rem 0;
 }
 
 .custom404Container h1 {
-	color: var(--pri-neutral);
-	text-align: center;
+  color: var(--pri-neutral);
+  text-align: center;
 }
 
 .custom404Container p {
-	font-weight: 600;
-	word-wrap: break-word;
-	margin: 2em 0 1em;
-	font-size: 2.5rem;
-	text-align: center;
+  font-weight: 600;
+  word-wrap: break-word;
+  margin: 2em 0 1em;
+  font-size: 2.5rem;
+  text-align: center;
 }
 
 .custom404ImageWrap {
-	width: 80rem;
-	max-width: 100%;
-	overflow: hidden;
-	margin: 4em auto 0;
+  width: 80rem;
+  max-width: 100%;
+  overflow: hidden;
+  margin: 4em auto 0;
 }
 
 .custom404ImageWrap img {
-	max-width: 100%;
-	width: 100%;
-	/* margin: -5rem; */
-	height: auto;
-	transform: rotateY(0deg);
-	/*animation: flip 5s linear 15s infinite alternate-reverse;
-	*/display: inline-block;
-	-webkit-transform: rotateY(0deg);
-	-moz-transform: rotateY(0deg);
-	-ms-transform: rotateY(0deg);
-	-o-transform: rotateY(0deg);
+  max-width: 100%;
+  width: 500px;
+  height: auto;
+  transform: rotateY(0deg);
+  display: inline-block;
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
+  -o-transform: rotateY(0deg);
 }
 
 .custom404ExitLinks span {
-	display: inline-block;
-	margin: 4rem 2rem 0 0;
+  display: inline-block;
+  margin: 4rem 2rem 0 0;
 }
 
 .custom404ExitLinks a {
-	width: 13rem;
-	padding: 1rem 1.5rem;
-	margin: 0 0 1rem;
-	display: inline-block;
-	border-radius: 10rem;
-	transition: all 0.2s ease-in;
-	-webkit-border-radius: 10rem;
-	-moz-border-radius: 10rem;
-	-ms-border-radius: 10rem;
-	-o-border-radius: 10rem;
-	-webkit-transition: all 0.2s ease-in;
-	-moz-transition: all 0.2s ease-in;
-	-ms-transition: all 0.2s ease-in;
-	-o-transition: all 0.2s ease-in;
-	font-weight: bold;
+  width: 13rem;
+  padding: 1rem 1.5rem;
+  margin: 0 0 1rem;
+  display: inline-block;
+  border-radius: 10rem;
+  transition: all 0.2s ease-in;
+  -webkit-border-radius: 10rem;
+  -moz-border-radius: 10rem;
+  -ms-border-radius: 10rem;
+  -o-border-radius: 10rem;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  font-weight: bold;
 }
 
 /* >>>>>>>>>>MEDIA QUERIES<<<<<<<<< */
 
 @media screen and (max-width: 545px) {
-	.custom404Container h1 {
-		font-size: 2.8rem;
-	}
+  .custom404Container h1 {
+    font-size: 2.8rem;
+  }
 }
 
 @media screen and (max-width: 447px) {
-	.custom404Container h1 {
-		margin: 1rem 0;
-	}
+  .custom404Container h1 {
+    margin: 1rem 0;
+  }
 
-	.custom404ImageWrap img {
-		margin: 0 -1rem;
-	}
+  .custom404ImageWrap img {
+    margin: 0 -1rem;
+  }
 }
 
 @media screen and (max-width: 379px) {
-	.custom404ExitLinks a {
-		margin: -1rem 0;
-	}
+  .custom404ExitLinks a {
+    margin: -1rem 0;
+  }
 }
+
