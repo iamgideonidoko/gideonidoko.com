@@ -1,5 +1,5 @@
 {
   "./**/*.(js|mjs|jsx|ts|tsx)": [
-    "yarn lint"
+    "pnpm lint:base"
   ]
 }
