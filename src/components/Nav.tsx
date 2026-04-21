@@ -19,13 +19,15 @@ const Nav = () => {
             Uses
           </Link>
         </li>
-        {false && (
-          <li>
-            <Link href="/stats" className="animated-button animated-button--pallene__outlineless">
-              Stats
-            </Link>
-          </li>
-        )}
+        <li>
+          <Link
+            href="https://lab.gideonidoko.com"
+            target="_blank"
+            className="animated-button animated-button--pallene__outlineless"
+          >
+            Lab
+          </Link>
+        </li>
       </ul>
     </nav>
   );

@@ -396,6 +396,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
               </Link>
             </li>
             <li>
+              <Link href="https://lab.gideonidoko.com" target="_blank" onClick={closeNav}>
+                Lab
+              </Link>
+            </li>
+            <li>
               <Link href="/contact" onClick={closeNav}>
                 Contact
               </Link>
