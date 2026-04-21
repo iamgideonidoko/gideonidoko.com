@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import SectionFive from '../components/home/SectionFive';
 import SectionFour from '../components/home/SectionFour';
 import SectionOne from '../components/home/SectionOne';
 import SectionThree from '../components/home/SectionThree';
@@ -66,7 +65,6 @@ export default function HomePage() {
         <SectionFour />
       </div>
       <div className={styles.waveBottom}></div>
-      <SectionFive />
     </main>
   );
 }
