@@ -1,0 +1,50 @@
+'use client';
+
+import { useState, useEffect, type FC } from 'react';
+
+type Theme = 'light' | 'dark';
+
+const THEME_STORAGE_KEY = 'gideonidoko.com-theme';
+
+const systemTheme = (): Theme => {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark';
+  }
+  return 'light';
+};
+
+const getTheme = (): Theme => {
+  const currentTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  return currentTheme === 'light' || currentTheme === 'dark' ? currentTheme : systemTheme();
+};
+
+const applyTheme = (theme: Theme) => {
+  document.body.classList.toggle('light', theme === 'light');
+  document.body.classList.toggle('dark', theme === 'dark');
+  document.documentElement.setAttribute('data-theme', theme);
+};
+
+const ThemeSwitch: FC<Partial<Record<'isNavOpen' | 'allowForMobile', boolean>>> = (props) => {
+  const [theme, setTheme] = useState<Theme>(() => (typeof window === 'undefined' ? 'light' : getTheme()));
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
+
+  const handleSwitch = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+  };
+
+  return (
+    <div className={!props.isNavOpen && props.allowForMobile ? 'themeswitch-wrapper' : 'themeswitch-wrapper navOpen'}>
+      <div>
+        <input type="checkbox" id="toggle" checked={theme === 'dark'} className="offscreen" readOnly />
+        <label htmlFor="toggle" className="switch" onClick={handleSwitch}></label>
+      </div>
+    </div>
+  );
+};
+
+export default ThemeSwitch;
