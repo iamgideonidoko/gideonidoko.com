@@ -16,12 +16,29 @@ const nextConfig = {
     ],
   },
   typescript: {},
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.(glsl|vs|fs|vert|frag)$/,
-      use: ['raw-loader', 'glslify-loader'],
-    });
-    return config;
+  turbopack: {
+    rules: {
+      '*.glsl': {
+        loaders: ['raw-loader', 'glslify-loader'],
+        as: '*.js',
+      },
+      '*.vs': {
+        loaders: ['raw-loader', 'glslify-loader'],
+        as: '*.js',
+      },
+      '*.fs': {
+        loaders: ['raw-loader', 'glslify-loader'],
+        as: '*.js',
+      },
+      '*.vert': {
+        loaders: ['raw-loader', 'glslify-loader'],
+        as: '*.js',
+      },
+      '*.frag': {
+        loaders: ['raw-loader', 'glslify-loader'],
+        as: '*.js',
+      },
+    },
   },
 };
 

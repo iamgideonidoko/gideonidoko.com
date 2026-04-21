@@ -39,6 +39,7 @@ pnpm-debug.log*
 
 # MISC
 .vscode
+.playwright*
 
 # pnpm
 .pnpm-store

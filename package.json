@@ -5,8 +5,8 @@
   "packageManager": "pnpm@10.28.1",
   "type": "module",
   "scripts": {
-    "dev": "next dev --webpack -p 4040",
-    "build": "next build --webpack",
+    "dev": "next dev -p 4040",
+    "build": "next build",
     "start": "next start",
     "lint:base": "eslint --max-warnings=0 --cache --report-unused-disable-directives",
     "lint:check": "pnpm lint:base ./",
