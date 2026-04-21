@@ -21,7 +21,14 @@ const BlogIntro: FC<{ postCount: number; handleSearchTerm: (term: string) => voi
             />
           </div>
         </div>
-        <Image src="/assets/img/GI-Avatar.JPEG" className={styles.blogIntroCover} alt="" width={300} height={300} />
+        <Image
+          src="/assets/img/GI-Avatar.JPEG"
+          loading="eager"
+          className={styles.blogIntroCover}
+          alt=""
+          width={300}
+          height={300}
+        />
       </div>
       <div className={styles.blogIntro2}>
         <p className={styles.blogIntroAbout}>
