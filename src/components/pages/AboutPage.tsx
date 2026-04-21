@@ -76,10 +76,10 @@ export default function AboutPage() {
           </div>
           <div>
             <p>
-              a Software Engineer interested in learning, building solutions with unique experiences, sharing technical
-              ideas and community building. I go a long way to ensure the security, accessibility and usability of any
-              product I work on and that they meet the business requirements while focusing on providing the best
-              experience for their end users.
+              a software engineer interested in creative technology, design, AI, research, and building impactful
+              solutions. I go a long way to ensure the security, accessibility and usability of any product/solution I
+              work on and that they meet the business requirements while focusing on providing the best experience for
+              their end users.
             </p>
 
             <p>

@@ -4,10 +4,10 @@ export const siteConfig = {
   name: 'Gideon Idoko',
   title: 'Gideon Idoko - Software Engineer',
   description:
-    'Gideon Idoko is a solution-driven Software Engineer interested in learning, building solutions with unique experiences, sharing technical ideas, writing and community building.',
+    'Gideon Idoko is a software engineer interested in creative technology, design, AI, research, and building impactful solutions.',
   url: 'https://gideonidoko.com',
   ogImage: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
-  xHandle: '@IamGideonIdoko',
+  xHandle: '@iamgideonidoko',
 };
 
 type MetadataOptions = {

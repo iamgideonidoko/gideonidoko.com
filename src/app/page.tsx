@@ -9,7 +9,7 @@ import styles from '../styles/Home.module.css';
 export const metadata: Metadata = createPageMetadata({
   title: 'Gideon Idoko - Software Engineer',
   description:
-    'Gideon Idoko is a solution-driven Software Engineer interested in learning, building solutions with unique experiences, sharing technical ideas, writing and community building.',
+    'Gideon Idoko is a software engineer interested in creative technology, design, AI, research, and building impactful solutions.',
   path: '/',
 });
 
