@@ -30,10 +30,10 @@ export default function NotFound() {
               </span>
               <span>
                 <Link
-                  href="/blog"
+                  href="/writing"
                   className={`animated-button animated-button--pallene__outlineless ${styles.aboutSeeMore}`}
                 >
-                  Blog
+                  Writing
                 </Link>
               </span>
             </div>

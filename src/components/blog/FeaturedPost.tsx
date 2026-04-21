@@ -9,7 +9,7 @@ const blogCoverDefault = '/assets/img/BlogCoverDefault.jpg';
 
 const FeaturedPost: FC<{ post: IPost }> = ({ post }) => {
   return (
-    <Link className={styles.featPostAnchor} href={`/blog/${post.slug}`}>
+    <Link className={styles.featPostAnchor} href={`/writing/${post.slug}`}>
       <div className={styles.featPost}>
         <div className={styles.featPostLeft}>
           <div>

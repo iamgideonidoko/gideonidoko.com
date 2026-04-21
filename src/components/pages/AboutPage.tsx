@@ -82,7 +82,7 @@ export default function AboutPage() {
             </p>
 
             <p>
-              I write about Software Engineering topics and tools on my <Link href="/blog">blog</Link> and other
+              I write about Software Engineering topics and tools in <Link href="/writing">Writing</Link> and on other
               platforms. When I am not in front of my IDE, I&apos;ll prolly be engaged in surfing or sports like play
               tennis and badminton.
             </p>

@@ -26,7 +26,7 @@ We won't be reinventing the wheel in this article so, we'll use a well built tem
 
 ## Installing WordPress
 
-I wrote about [installing WordPress on your local machine here](https://gideonidoko.com/blog/install-wordpress-on-your-local-machine). Quickly go through the article to install WordPress on your machine if you haven't already and come back here when you're done. 
+I wrote about [installing WordPress on your local machine here](https://gideonidoko.com/writing/install-wordpress-on-your-local-machine). Quickly go through the article to install WordPress on your machine if you haven't already and come back here when you're done. 
 
 If you already have WordPress installed then continue.
 
@@ -67,7 +67,7 @@ Open the `simple-scroll-progress.php` and edit the description in the header com
 /**
  * @wordpress-plugin
  * Plugin Name:       Simple Scroll Progress
- * Plugin URI:        https://gideonidoko.com/blog/build-a-customizable-scroll-progress-wordpress-plugin
+ * Plugin URI:        https://gideonidoko.com/writing/build-a-customizable-scroll-progress-wordpress-plugin
  * Description:       Simple Scroll Progress adds a highly customizable scroll progress plugin to your WordPress site.
  * Version:           1.0.0
  * Author:            Gideon Idoko

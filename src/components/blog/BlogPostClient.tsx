@@ -109,7 +109,7 @@ export default function BlogPostClient({ children, post }: { children: ReactNode
     };
   }, [post.slug]);
 
-  const shareUrl = typeof window !== 'undefined' ? window.document.URL : `https://gideonidoko.com/blog/${post.slug}`;
+  const shareUrl = typeof window !== 'undefined' ? window.document.URL : `https://gideonidoko.com/writing/${post.slug}`;
 
   return (
     <main className={`padding-top-10rem ${styles.singlePostMain}`}>
@@ -131,7 +131,7 @@ export default function BlogPostClient({ children, post }: { children: ReactNode
               </span>
             </h5>
             <div className={styles.postCoverWrap}>
-              <img className={styles.postCover} src={post.cover} alt="Blog Cover" />
+              <img className={styles.postCover} src={post.cover} alt="Article cover" />
             </div>
           </div>
 
@@ -140,7 +140,7 @@ export default function BlogPostClient({ children, post }: { children: ReactNode
             <div className={styles.postTags}>
               {post.tags?.map((tag, idx) => (
                 <span key={idx}>
-                  <Link href={`/blog?q=${tag}`}>#{tag}</Link>
+                  <Link href={`/writing?q=${tag}`}>#{tag}</Link>
                 </span>
               ))}
             </div>

@@ -5,8 +5,8 @@ const Nav = () => {
     <nav className={'main-nav navOpen'}>
       <ul>
         <li>
-          <Link href="/blog" className="animated-button animated-button--pallene__outlineless">
-            Blog
+          <Link href="/writing" className="animated-button animated-button--pallene__outlineless">
+            Writing
           </Link>
         </li>
         <li>

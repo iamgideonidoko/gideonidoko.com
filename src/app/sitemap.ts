@@ -14,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
-      url: `${siteConfig.url}/blog`,
+      url: `${siteConfig.url}/writing`,
       lastModified: staticDate,
       priority: 1,
     },
@@ -34,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     ...posts.map((post) => ({
-      url: `${siteConfig.url}/blog/${post.slug}`,
+      url: `${siteConfig.url}/writing/${post.slug}`,
       lastModified: post.publishedAt ?? staticDate,
       priority: 1,
     })),

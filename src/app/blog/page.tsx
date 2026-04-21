@@ -1,16 +1,5 @@
-import type { Metadata } from 'next';
-import BlogIndexPage from '../../components/blog/BlogIndexPage';
-import { getAllPosts } from '../../lib/blog';
-import { createPageMetadata } from '../../lib/site';
+import { permanentRedirect } from 'next/navigation';
 
-export const metadata: Metadata = createPageMetadata({
-  title: 'Blog - Gideon Idoko',
-  description: "Another part of the internet where I share stuff I think I (don't) know...",
-  path: '/blog',
-});
-
-export default async function BlogPage() {
-  const posts = await getAllPosts();
-
-  return <BlogIndexPage posts={posts} />;
+export default function BlogPage() {
+  permanentRedirect('/writing');
 }

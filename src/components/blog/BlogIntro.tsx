@@ -9,13 +9,13 @@ const BlogIntro: FC<{ postCount: number; handleSearchTerm: (term: string) => voi
 }) => {
   return (
     <div className={styles.blogIntro}>
-      <h2 className={styles.blogIntroMainText}>BLOG</h2>
+      <h2 className={styles.blogIntroMainText}>WRITING</h2>
       <div className={styles.blogIntro1}>
         <div className={styles.blogIntro1Child}>
           <div className={styles.blogIntroSearch} data-post-count={postCount}>
             <input
               type="text"
-              placeholder="Search posts"
+              placeholder="Search writing"
               value={searchTerm}
               onChange={(e) => handleSearchTerm(e.target.value)}
             />
@@ -25,7 +25,7 @@ const BlogIntro: FC<{ postCount: number; handleSearchTerm: (term: string) => voi
       </div>
       <div className={styles.blogIntro2}>
         <p className={styles.blogIntroAbout}>
-          Another part of the internet where I share stuff I think I (don&apos;t) know...
+          Essays, notes, and technical writing on software engineering, tools, and the web.
         </p>
       </div>
     </div>

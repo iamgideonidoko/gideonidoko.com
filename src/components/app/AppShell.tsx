@@ -261,8 +261,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
               </Link>
             </li>
             <li>
-              <Link href="/blog" onClick={closeNav}>
-                Blog
+              <Link href="/writing" onClick={closeNav}>
+                Writing
               </Link>
             </li>
             <li>
@@ -300,7 +300,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         </svg>
       </div>
       <div className={!isNavOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
-        <div className="fixed-line" style={pathname.startsWith('/blog/') ? { background: 'none' } : {}} />
+        <div className="fixed-line" style={pathname.startsWith('/writing/') ? { background: 'none' } : {}} />
         <canvas id="canvas" />
         <div className="noise-bg"></div>
         {shouldHaveHeader && (

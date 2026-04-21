@@ -9,7 +9,7 @@ const DisqusComments: FC<{ title: string; slug: string }> = ({ title, slug }) =>
   const disqusShortname = 'gideon-idoko-blog';
   const disqusConfig: DiscussionEmbedProps['config'] = useMemo(
     () => ({
-      url: `${typeof window !== 'undefined' ? window.location.origin : 'https://gideonidoko.com'}/blog/${slug}`,
+      url: `${typeof window !== 'undefined' ? window.location.origin : 'https://gideonidoko.com'}/writing/${slug}`,
       identifier: slug,
       title,
     }),

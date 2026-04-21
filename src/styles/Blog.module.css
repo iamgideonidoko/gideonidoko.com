@@ -1,5 +1,5 @@
 .blogMain {
-  max-width: 128rem;
+  max-width: 96rem;
   margin: 0 auto;
 }
 
@@ -11,95 +11,98 @@
 }
 
 .blogPostsList {
-  max-width: 128rem;
-  margin: 0 auto -6rem;
+  max-width: 88rem;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.4rem;
 }
 
 .blogBoxAnchor {
   display: block;
-  margin: 2rem 0 6rem;
+  margin: 0;
 }
 
-.blogBoxAnchor:hover .blogBoxLeft::before {
-  transform: scale(1.03);
-  opacity: 1;
-  /* left: -0.4rem; */
-  /* top: -0.2rem; */
+.blogBoxAnchor:hover .blogBox {
+  border-color: var(--pri-neutral);
+  transform: translateY(-0.3rem);
 }
 
 .blogBox {
   display: grid;
-  grid-column-gap: 2rem;
+  gap: 1.6rem;
+  padding: 3rem 3.2rem;
+  border: 1px solid var(--neutral-color-4);
+  border-radius: 1.6rem;
+  background: color-mix(in srgb, var(--neutral-color-5) 65%, transparent);
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
-.blogBoxLeft {
-  width: 100%;
-  height: 48.4rem;
-  position: relative;
-}
-
-.blogBoxLeft::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 1.5px solid var(--pri-neutral);
-  transform: scale(1);
-  opacity: 0;
-  border-radius: 0.8rem;
-  top: 0;
-  left: 0;
-  transition: all 0.3s ease-in-out;
-}
-
-.blogBoxLeft > img {
-  width: 100%;
-  height: 100%;
-  transition: all 0.3s ease-in-out;
-  border: none;
-}
-
-.postCover {
-  max-width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 1 !important;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 0.8rem;
+.blogBoxMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .blogBoxRight {
-  padding: 1.5rem 0 0;
-  position: relative;
-  max-width: 100%;
+  max-width: 72rem;
 }
 
 .blogBoxRight h3 {
-  padding: 1.5rem 0 1rem;
-  box-shadow: none;
-  z-index: 4;
-  position: relative;
-  border-radius: 1rem;
-  font-size: clamp(2.7rem, 3.5vw, 3rem);
-  font-weight: 600;
+  padding: 0;
+  font-size: clamp(3rem, 3.5vw, 3.8rem);
+  font-weight: 650;
   font-family: 'Hanken Grotesk';
+  line-height: 1.15;
 }
 
 .blogBoxRight p {
-  opacity: 0.85;
+  margin-top: 1.2rem;
+  font-size: 1.8rem;
+  line-height: 1.7;
+  opacity: 0.82;
   overflow-wrap: break-word !important;
   max-width: 100%;
   word-break: break-word;
 }
 
 .bbrSmallMetaOne {
-  opacity: 0.7;
-  font-size: clamp(1.7rem, 2.5vw, 2rem);
-  padding: 0 0 0.5rem;
+  opacity: 0.72;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.blogBoxTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.blogBoxTags span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  background: var(--neutral-color-5);
+  border: 1px solid var(--neutral-color-4);
+  font-size: 1.3rem;
+  opacity: 0.8;
+}
+
+.blogBoxFooter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--pri-link-color);
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+
+.blogBoxReadMore {
+  display: inline-block;
 }
 
 /* >>>>>>>>>>>>FEATURED POST<<<<<<<<<<<< */
@@ -239,7 +242,9 @@
 
 /* >>>>>>>>>>>>BLOG INTRO<<<<<<<<<<<< */
 .blogIntro {
-  padding: 0 4rem 7.5rem;
+  max-width: 88rem;
+  margin: 0 auto;
+  padding: 0 0 7.5rem;
   border-radius: 2rem;
 }
 
@@ -280,10 +285,13 @@
   text-align: center;
   margin-top: 3em;
   font-size: 1.3em;
-  transform: skew(-15deg);
-  letter-spacing: 0.2em;
-  word-spacing: 0.8em;
-  line-height: 2em !important;
+  transform: none;
+  letter-spacing: 0.04em;
+  word-spacing: normal;
+  line-height: 1.8em !important;
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .blogIntroSearch {
@@ -323,7 +331,8 @@
 
 /* >>>>>>>>>>>>BLOG TAGS<<<<<<<<<<<< */
 .blogTagsWrapper {
-  margin-bottom: 4em;
+  max-width: 88rem;
+  margin: 0 auto 4em;
 }
 
 .blogTagsWrapper > h5 {
@@ -348,7 +357,7 @@
 
 /* >>>>>>>>>>>>LOAD MORE<<<<<<<<<<<< */
 .loadMore {
-  margin-top: 14em;
+  margin-top: 8em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -357,6 +366,20 @@
 .loadMore button {
   padding: 1.5rem 2.5rem;
   font-size: 1.3em;
+}
+
+@media screen and (max-width: 700px) {
+  .blogBox {
+    padding: 2.4rem 2rem;
+  }
+
+  .blogBoxRight h3 {
+    font-size: 2.7rem;
+  }
+
+  .blogIntro {
+    padding-bottom: 6rem;
+  }
 }
 /* >>>>>>>>>>>>END: LOAD MORE<<<<<<<<<<<< */
 
