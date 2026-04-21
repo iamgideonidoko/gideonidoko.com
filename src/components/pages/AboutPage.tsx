@@ -1,6 +1,6 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
@@ -63,12 +63,13 @@ export default function AboutPage() {
             </h1>
             <div className={styles.profileImgWrapper}>
               <div className="gooey__image">
-                <img
+                <Image
                   src="/assets/img/gideon.jpeg"
                   data-hover="/assets/img/gideon-hover.jpeg"
                   alt="Gideon Idoko"
-                  style={{ maxWidth: '100%' }}
-                  width={330}
+                  width={1242}
+                  height={1652}
+                  style={{ maxWidth: '100%', width: '100%', height: 'auto' }}
                 />
               </div>
             </div>

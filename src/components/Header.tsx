@@ -1,6 +1,6 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import Link from 'next/link';
 import ThemeSwitch from './ThemeSwitch';
 import Nav from './Nav';
@@ -25,7 +25,13 @@ const Header = ({
     <header className={`header ${!isNavOpen ? 'force-sticky' : ''}`}>
       <div className="logo-wrap">
         <Link href="/">
-          <img src="/assets/img/GideonIdokoDevLogo.png" loading="lazy" className="site-logo" alt="Gideon Idoko" />
+          <Image
+            src="/assets/img/GideonIdokoDevLogo.png"
+            className="site-logo"
+            alt="Gideon Idoko"
+            width={50}
+            height={50}
+          />
         </Link>
       </div>
       <div>

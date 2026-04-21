@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { createPageMetadata } from '../lib/site';
 import styles from '../styles/Custom404.module.css';
@@ -17,7 +17,13 @@ export default function NotFound() {
         <div className={styles.custom404Container}>
           <div className={styles.custom404ContainerChild}>
             <div className={styles.custom404ImageWrap}>
-              <img src="/assets/img/404.svg" alt="404" style={{ maxWidth: '100%' }} width={300} />
+              <Image
+                src="/assets/img/404.svg"
+                alt="404"
+                width={403}
+                height={338}
+                style={{ maxWidth: '100%', width: '100%', height: 'auto' }}
+              />
             </div>
             <p>
               <small>Well, this is awkward, the page you were trying to view does not exist.</small>

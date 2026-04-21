@@ -1,8 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import type { FC } from 'react';
+import Image from 'next/image';
 import styles from '../../styles/Blog.module.css';
 import { IPost } from '../../interfaces/post.interface';
-// import Image from 'next/image';
 import Link from 'next/link';
 
 const blogCoverDefault = '/assets/img/BlogCoverDefault.jpg';
@@ -38,12 +37,11 @@ const FeaturedPost: FC<{ post: IPost }> = ({ post }) => {
           </div>
         </div>
         <div className={styles.featPostRight}>
-          <img
+          <Image
             src={post.cover || blogCoverDefault}
             className={styles.featPostCover}
             title={post.title}
             alt={`${post.title ?? 'Featured Post'} cover image`}
-            loading="lazy"
             width={383}
             height={484}
           />

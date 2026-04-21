@@ -1640,7 +1640,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   width: max-content;
 }
 
-.gooey__image > img {
+.gooey__image img {
   object-fit: cover;
   object-position: center;
   transition: opacity 0.3s;
@@ -1649,7 +1649,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   border-radius: 0.8rem;
 }
 
-.gooey__image > img.is-loaded {
+.gooey__image img.is-loaded {
   opacity: 0;
 }
 

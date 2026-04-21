@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { createPageMetadata } from '../../lib/site';
 import styles from '../../styles/Uses.module.css';
 
@@ -17,12 +17,13 @@ export default function UsesPage() {
           <h1 className={styles.introText}>USES</h1>
           <div className={styles.workspace}>
             <div className="gooey__image">
-              <img
+              <Image
                 src="/assets/img/workspace.jpeg"
                 data-hover="/assets/img/workspace-hover.jpeg"
                 alt="Workspace"
-                style={{ maxWidth: '100%' }}
-                width={330}
+                width={960}
+                height={1280}
+                style={{ maxWidth: '100%', width: '100%', height: 'auto' }}
               />
             </div>
           </div>

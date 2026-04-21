@@ -1,6 +1,6 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -249,7 +249,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
         <div className="mobileAdminName">
           <Link href="/" onClick={closeNav}>
-            <img src="/assets/img/GideonIdokoDevLogo.png" className="site-footer-logo" alt="Gideon Idoko" />
+            <Image
+              src="/assets/img/GideonIdokoDevLogo.png"
+              className="site-footer-logo"
+              alt="Gideon Idoko"
+              width={25}
+              height={25}
+            />
           </Link>
           <span>Gideon Idoko</span>
         </div>
@@ -310,12 +316,12 @@ export default function AppShell({ children }: { children: ReactNode }) {
         {shouldHaveFooter && <Footer />}
         <div className="page--overlay">
           <div className="page--overlay__loader">
-            <img
+            <Image
               src="/assets/img/GideonIdokoDevLogo.png"
-              width={50}
-              height={50}
               className="site-logo"
               alt="Gideon Idoko"
+              width={50}
+              height={50}
             />
           </div>
         </div>

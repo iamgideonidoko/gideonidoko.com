@@ -1,6 +1,6 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -84,11 +84,12 @@ const Footer = () => {
       <div className="footer-bg"></div>
       <div className=" footer-wrapper">
         <div>
-          <img
+          <Image
             src="/assets/img/GideonIdokoDevLogo.png"
-            loading="lazy"
             className="site-footer-logo"
             alt="Gideon Idoko"
+            width={25}
+            height={25}
           />
         </div>
         <p className="footer-question">GOT A PROJECT IN MIND?</p>

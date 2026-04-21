@@ -1,6 +1,6 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import styles from '../../styles/Home.module.css';
 import { useMemo, useEffect, useRef } from 'react';
 import { firstLetter } from '../../helper';
@@ -208,15 +208,15 @@ const SectionTwo = () => {
                                             <span key={idx}>{x}</span>
                                         ))}
                                     </div> */}
-                  {/* <img src={project.cover1} alt={project.alt} /> */}
                   <div className={styles.projectImgWrapper}>
                     <div className="gooey__image">
-                      <img
+                      <Image
                         src={project.cover2}
                         data-hover={project.cover1}
                         alt={project.alt}
-                        style={{ maxWidth: '100%' }}
-                        // width={330}
+                        width={1920}
+                        height={1080}
+                        style={{ maxWidth: '100%', width: '100%', height: 'auto' }}
                       />
                     </div>
                   </div>

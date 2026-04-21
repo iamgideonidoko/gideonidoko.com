@@ -319,7 +319,7 @@
   max-width: 100%;
 }
 
-.profileImgWrapper > div:first-child > img {
+.profileImgWrapper > div:first-child img {
   /* border: 3px solid orange !important;
 	opacity: 1 !important; */
   width: 100%;
