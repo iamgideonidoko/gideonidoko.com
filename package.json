@@ -12,7 +12,8 @@
     "lint:check": "pnpm lint:base ./",
     "lint:staged": "lint-staged",
     "lint": "pnpm run lint:base --fix ./",
-    "prepare": "husky install"
+    "prepare": "husky",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "copy-to-clipboard": "^3.3.3",
