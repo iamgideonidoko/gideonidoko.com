@@ -21,7 +21,7 @@ export default function HomePage() {
       </div>
       <div className="wobble-divider" />
       <div className={styles.homeMeta}>
-        <div>02/</div>
+        <div>01/</div>
         <div>ABOUT</div>
         <div>
           <a href="mailto:iamgideonidoko@gmail.com?subject=I%20want%20to%20connect%20with%20you&body=Hello%2C%20I%27m%20...">
@@ -49,15 +49,15 @@ export default function HomePage() {
             <span className={styles.hmMobile}>IG</span>
           </a>
         </div>
-        <div>05/</div>
+        <div>03/</div>
       </div>
       <SectionThree />
       <div className="wobble-divider" />
       <div className={styles.homeMeta}>
-        <div>03/</div>
+        <div>02/</div>
         <div>PROJECTS</div>
         <div></div>
-        <div>05/</div>
+        <div>03/</div>
       </div>
       <SectionTwo />
       <div className={styles.waveTop}></div>

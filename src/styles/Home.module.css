@@ -6,7 +6,7 @@
 
 .sectionOne {
   width: 100%;
-  min-height: 20rem;
+  height: min(20vh, 20rem);
   display: flex;
   justify-content: center;
   align-items: center;
