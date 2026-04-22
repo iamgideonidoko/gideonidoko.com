@@ -46,6 +46,7 @@ const ThemeSwitch: FC<Partial<Record<'isNavOpen' | 'allowForMobile', boolean>>> 
         aria-checked={theme === 'dark'}
         aria-label={`Activate ${theme === 'dark' ? 'light' : 'dark'} mode`}
         onClick={handleSwitch}
+        suppressHydrationWarning
       >
         <span className="switch__track" aria-hidden="true">
           <span className="switch__stars">
@@ -63,7 +64,9 @@ const ThemeSwitch: FC<Partial<Record<'isNavOpen' | 'allowForMobile', boolean>>> 
             <span className="switch__moon-crater switch__moon-crater--2"></span>
           </span>
         </span>
-        <span className="offscreen">{theme === 'dark' ? 'Dark mode enabled' : 'Light mode enabled'}</span>
+        <span className="offscreen" suppressHydrationWarning>
+          {theme === 'dark' ? 'Dark mode enabled' : 'Light mode enabled'}
+        </span>
       </button>
     </div>
   );
