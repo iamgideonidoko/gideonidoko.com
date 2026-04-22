@@ -7,7 +7,7 @@ const RenderPosts = ({ posts }: { posts: Array<IPost> }) => {
     return <b>No writing yet.</b>;
   } else {
     return (
-      <div className={styles.blogPostsList}>
+      <div className={styles.blogPostsList} suppressHydrationWarning>
         {posts.map((post, idx) => (
           <Link className={styles.blogBoxAnchor} href={`/writing/${post.slug}`} key={idx}>
             <article className={styles.blogBox}>

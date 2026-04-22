@@ -22,7 +22,7 @@ const BlogIndexPage: FC<{ posts: IPost[] }> = ({ posts }) => {
       return posts;
     }
 
-    return new Fuse(posts, { keys: ['title', 'tags'] })
+    return new Fuse(posts, { keys: ['title', 'tags'], threshold: 0.3 })
       .search(searchTerm.trim())
       .map((searchedPost) => searchedPost.item);
   }, [posts, searchTerm]);
