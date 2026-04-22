@@ -52,6 +52,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="language" content="English" />
         <meta name="revisit-after" content="1 days" />
         <meta name="theme-color" content="#ffffff" />
+        <noscript>
+          <style>{`.page--overlay{display:none !important;}`}</style>
+        </noscript>
       </head>
       <body suppressHydrationWarning>
         <AppShell>{children}</AppShell>

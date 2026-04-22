@@ -1,47 +1,76 @@
-import gsap, { Power2, Power4 } from 'gsap';
+const PAGE_LOADER_ENTER_DURATION_MS = 420;
+const PAGE_LOADER_EXIT_DURATION_MS = 700;
+
+const waitForNextFrame = () =>
+  new Promise<void>((resolve) => {
+    window.requestAnimationFrame(() => resolve());
+  });
 
 export default class PageLoader {
   private overlay: HTMLElement | null;
-  private loader: HTMLElement | null;
+  private settleTimeoutId: number | null;
+  private prefersReducedMotion: boolean;
   public animatedIn: boolean;
 
-  constructor() {
-    this.overlay = document.querySelector<HTMLElement>('.page--overlay');
-    this.loader = this.overlay?.querySelector<HTMLElement>('.page--overlay__loader') ?? null;
+  constructor(overlayElement?: HTMLElement | null) {
+    this.overlay = overlayElement ?? document.querySelector<HTMLElement>('.page--overlay');
+    this.settleTimeoutId = null;
+    this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.animatedIn = true;
+    this.overlay?.setAttribute('data-state', 'covering');
   }
 
-  public animateOut() {
-    if (this.overlay) {
-      this.animatedIn = false;
-      gsap.to(this.overlay, { bottom: '100%', ease: Power4.easeInOut, delay: 0.25, duration: 0.6 });
-    }
-    if (this.loader) {
-      gsap.to(this.loader, { y: '-40', opacity: 0, duration: 0.5 });
-    }
-  }
-
-  public animateOut2() {
-    if (this.overlay) {
-      this.animatedIn = false;
-      gsap.to(this.overlay, { top: '100%', ease: Power4.easeInOut, delay: 0.25, duration: 0.6 });
-    }
-    if (this.loader) {
-      gsap.to(this.loader, { y: '40', opacity: 0, duration: 0.5 });
+  private clearSettleTimeout() {
+    if (this.settleTimeoutId !== null) {
+      window.clearTimeout(this.settleTimeoutId);
+      this.settleTimeoutId = null;
     }
   }
 
-  public animateIn() {
-    if (this.overlay) {
-      this.animatedIn = true;
-      gsap.fromTo(this.overlay, { top: '100%', bottom: 0 }, { top: 0, ease: Power4.easeInOut, duration: 0 });
+  private wait(duration: number) {
+    return new Promise<void>((resolve) => {
+      this.settleTimeoutId = window.setTimeout(() => {
+        this.settleTimeoutId = null;
+        resolve();
+      }, duration);
+    });
+  }
+
+  public async animateIn() {
+    if (!this.overlay) {
+      return;
     }
-    if (this.loader) {
-      gsap.fromTo(
-        this.loader,
-        { y: '40', opacity: 0, delay: 0.3 },
-        { y: 0, opacity: 1, delay: 0.6, ease: Power2.easeOut, duration: 0 },
-      );
+
+    this.clearSettleTimeout();
+    this.animatedIn = true;
+    this.overlay.setAttribute('data-state', 'pre-enter');
+    await waitForNextFrame();
+
+    if (!this.overlay) {
+      return;
     }
+
+    this.overlay.setAttribute('data-state', 'covering');
+    await this.wait(this.prefersReducedMotion ? 0 : PAGE_LOADER_ENTER_DURATION_MS);
+  }
+
+  public async animateOut() {
+    if (!this.overlay) {
+      return;
+    }
+
+    this.clearSettleTimeout();
+    this.animatedIn = false;
+    this.overlay.setAttribute('data-state', 'revealing');
+    await this.wait(this.prefersReducedMotion ? 0 : PAGE_LOADER_EXIT_DURATION_MS);
+
+    if (this.overlay?.getAttribute('data-state') === 'revealing') {
+      this.overlay.setAttribute('data-state', 'hidden');
+    }
+  }
+
+  public destroy() {
+    this.clearSettleTimeout();
+    this.overlay = null;
   }
 }

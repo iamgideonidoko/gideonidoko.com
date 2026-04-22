@@ -1888,8 +1888,9 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 
 /* PAGE LOADING */
 .page--overlay {
+  --page-loader-enter-duration: 420ms;
+  --page-loader-exit-duration: 700ms;
   position: fixed;
-  /* background: var(--pri-neutral-inverse); */
   background: #000;
   top: 0;
   right: 0;
@@ -1900,13 +1901,70 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, visibility;
+  transition: transform var(--page-loader-enter-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page--overlay[data-state='pre-enter'] {
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0, 100%, 0);
+  transition: none;
+}
+
+.page--overlay[data-state='covering'] {
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0);
+  transition-duration: var(--page-loader-enter-duration);
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page--overlay[data-state='revealing'] {
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0, -100%, 0);
+  transition-duration: var(--page-loader-exit-duration);
+  transition-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+.page--overlay[data-state='hidden'] {
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(0, -100%, 0);
+  transition: none;
 }
 
 .page--overlay__loader {
   width: 50px;
   height: 50px;
-  /* background-color: #bada55; */
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
   animation: loader-loading 1.5s infinite ease-in;
+  transition:
+    opacity 220ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page--overlay[data-state='pre-enter'] .page--overlay__loader {
+  opacity: 0;
+  transform: translate3d(0, 2.4rem, 0);
+}
+
+.page--overlay[data-state='covering'] .page--overlay__loader {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 140ms;
+}
+
+.page--overlay[data-state='revealing'] .page--overlay__loader,
+.page--overlay[data-state='hidden'] .page--overlay__loader {
+  opacity: 0;
+  transform: translate3d(0, -2.4rem, 0);
+  transition-delay: 0ms;
 }
 
 @keyframes loader-loading {

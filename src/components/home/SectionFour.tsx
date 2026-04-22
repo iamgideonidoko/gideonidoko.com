@@ -69,7 +69,7 @@ const SectionFour = () => {
         <div className={styles.sectionFourWrapper}>
           <h3 className={styles.servicesHead}>— Services —</h3>
           <div className={styles.servicesWrapper}>
-            <ul className={`physics--box ${isTouchDevice ? 'pointer-events-none' : ''}`}>
+            <ul className={`physics--box ${isTouchDevice ? 'pointer-events-none' : ''}`} suppressHydrationWarning>
               <li className="physics--box__text" aria-hidden="true">
                 {`>CLICK & DRAG<`}
               </li>

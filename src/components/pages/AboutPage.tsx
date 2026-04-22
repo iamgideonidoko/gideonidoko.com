@@ -127,7 +127,7 @@ export default function AboutPage() {
 
         <div className={`${styles.aboutStack} about-stack-section`}>
           <h2>Stack {`<Tools / Languages / Frameworks / Libraries>`}</h2>
-          <ul className={`physics--box ${isTouchDevice ? 'pointer-events-none' : ''}`}>
+          <ul className={`physics--box ${isTouchDevice ? 'pointer-events-none' : ''}`} suppressHydrationWarning>
             <li className="physics--box__text" aria-hidden="true">
               {`>CLICK & DRAG<`}
             </li>

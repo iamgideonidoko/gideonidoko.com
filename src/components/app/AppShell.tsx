@@ -3,10 +3,11 @@
 import Image from 'next/image';
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Header from '../Header';
 import Footer from '../Footer';
 import ThemeSwitch from '../ThemeSwitch';
+import PageLoader from '../../classes/PageLoader';
 
 const pageWithoutHeader: string[] = ['/p/test'];
 const pageWithoutFooter: string[] = ['/p/test'];
@@ -21,12 +22,8 @@ type CanvasController = {
   cleanUp: () => void;
 };
 
-type PageLoaderController = {
-  animateIn: () => void;
-  animateOut: () => void;
-};
-
 export default function AppShell({ children }: { children: ReactNode }) {
+  const router = useRouter();
   const pathname = usePathname() ?? '/';
   const routeKey = pathname;
   const isWritingRoute = useMemo(() => /^\/(?:writing|blog)(?:\/|$)/.test(pathname), [pathname]);
@@ -41,7 +38,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const contentScrollPos = useRef(0);
   const cursorRef = useRef<CursorController | null>(null);
   const canvasRef = useRef<CanvasController | null>(null);
-  const pageLoaderRef = useRef<PageLoaderController | null>(null);
+  const pageLoaderRef = useRef<PageLoader | null>(null);
+  const pageLoaderElementRef = useRef<HTMLDivElement | null>(null);
+  const pendingNavigationRef = useRef<string | null>(null);
   const isBackOrForwardNav = useRef(false);
   const initialRouteRender = useRef(true);
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
@@ -58,6 +57,15 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
   const shouldHaveHeader = !pageWithoutHeader.includes(pathname);
   const shouldHaveFooter = !pageWithoutFooter.includes(pathname);
+
+  useEffect(() => {
+    pageLoaderRef.current = new PageLoader(pageLoaderElementRef.current);
+
+    return () => {
+      pageLoaderRef.current?.destroy();
+      pageLoaderRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -148,27 +156,29 @@ export default function AppShell({ children }: { children: ReactNode }) {
   }, [mobileMenuOpen]);
 
   useEffect(() => {
+    void pageLoaderRef.current?.animateOut();
+    pendingNavigationRef.current = null;
+  }, [routeKey]);
+
+  useEffect(() => {
     if (!shouldEnableMotionShell) {
       cursorRef.current?.destroy();
       cursorRef.current = null;
       canvasRef.current?.cleanUp();
       canvasRef.current = null;
-      pageLoaderRef.current = null;
       delete window.appLenis;
       return;
     }
 
     let cancelled = false;
     let animationFrameId = 0;
-    let initialLoaderFrameId = 0;
     let lenisCleanup: (() => void) | null = null;
 
     const initMotionShell = async () => {
-      const [lenisModule, gsapModule, scrollTriggerModule, pageLoaderModule, cursorModule] = await Promise.all([
+      const [lenisModule, gsapModule, scrollTriggerModule, cursorModule] = await Promise.all([
         import('lenis'),
         import('gsap'),
         import('gsap/dist/ScrollTrigger'),
-        import('../../classes/PageLoader'),
         import('../../classes/Cursor'),
       ]);
 
@@ -179,15 +189,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
       const Lenis = lenisModule.default;
       const gsap = gsapModule.default;
       const ScrollTrigger = scrollTriggerModule.default;
-      const PageLoader = pageLoaderModule.default;
       const Cursor = cursorModule.default;
 
       gsap.registerPlugin(ScrollTrigger);
-
-      pageLoaderRef.current = new PageLoader();
-      initialLoaderFrameId = window.requestAnimationFrame(() => {
-        pageLoaderRef.current?.animateOut();
-      });
 
       const lenis = new Lenis({
         lerp: 0.04,
@@ -211,7 +215,6 @@ export default function AppShell({ children }: { children: ReactNode }) {
       }
 
       lenisCleanup = () => {
-        window.cancelAnimationFrame(initialLoaderFrameId);
         window.cancelAnimationFrame(animationFrameId);
         cursorRef.current?.destroy();
         cursorRef.current = null;
@@ -232,15 +235,24 @@ export default function AppShell({ children }: { children: ReactNode }) {
   }, [shouldEnableMotionShell]);
 
   useEffect(() => {
-    if (!shouldEnableMotionShell) {
-      return;
-    }
-
-    const handleRouteChangeStart = () => {
-      pageLoaderRef.current?.animateIn();
+    const hideCanvasForTransition = () => {
       const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
-      if (canvasElement) {
+      if (canvasElement && shouldEnableMotionShell) {
         canvasElement.style.visibility = 'hidden';
+      }
+    };
+
+    const handleRouteChangeStart = async (nextHref: string) => {
+      if (pendingNavigationRef.current) {
+        return;
+      }
+
+      pendingNavigationRef.current = nextHref;
+      hideCanvasForTransition();
+      await pageLoaderRef.current?.animateIn();
+
+      if (pendingNavigationRef.current === nextHref) {
+        router.push(nextHref);
       }
     };
 
@@ -276,18 +288,21 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
       if (
         nextUrl.origin !== currentUrl.origin ||
+        `${nextUrl.pathname}${nextUrl.search}` === `${currentUrl.pathname}${currentUrl.search}` ||
         `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}` ===
           `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`
       ) {
         return;
       }
 
-      handleRouteChangeStart();
+      event.preventDefault();
+      void handleRouteChangeStart(`${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
     };
 
     const handlePopState = () => {
       isBackOrForwardNav.current = true;
-      handleRouteChangeStart();
+      hideCanvasForTransition();
+      void pageLoaderRef.current?.animateIn();
     };
 
     document.addEventListener('click', handleDocumentClick, true);
@@ -297,7 +312,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
       document.removeEventListener('click', handleDocumentClick, true);
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [shouldEnableMotionShell]);
+  }, [router, shouldEnableMotionShell]);
 
   useEffect(() => {
     if (!shouldEnableMotionShell) {
@@ -309,7 +324,6 @@ export default function AppShell({ children }: { children: ReactNode }) {
     let cancelled = false;
     let delayedBindFrameId = 0;
     let showCanvasFrameId = 0;
-    let loaderFrameId = 0;
     const cleanups: Array<() => void> = [];
 
     const initInteractiveControls = async () => {
@@ -391,9 +405,6 @@ export default function AppShell({ children }: { children: ReactNode }) {
           canvasElement.style.visibility = 'visible';
         }
       });
-      loaderFrameId = window.requestAnimationFrame(() => {
-        pageLoaderRef.current?.animateOut();
-      });
     };
 
     void initInteractiveControls();
@@ -402,7 +413,6 @@ export default function AppShell({ children }: { children: ReactNode }) {
       cancelled = true;
       window.cancelAnimationFrame(delayedBindFrameId);
       window.cancelAnimationFrame(showCanvasFrameId);
-      window.cancelAnimationFrame(loaderFrameId);
       cleanups.forEach((cleanup) => cleanup());
       canvasRef.current?.cleanUp();
       canvasRef.current = null;
@@ -509,13 +519,17 @@ export default function AppShell({ children }: { children: ReactNode }) {
         )}
         {children}
         {shouldHaveFooter && <Footer />}
-        {shouldEnableMotionShell && (
-          <div className="page--overlay" aria-hidden="true">
-            <div className="page--overlay__loader">
-              <Image src="/logo.svg" className="site-logo" alt="Gideon Idoko" width={50} height={50} />
-            </div>
+        <div
+          ref={pageLoaderElementRef}
+          className="page--overlay"
+          data-state="covering"
+          aria-hidden="true"
+          suppressHydrationWarning
+        >
+          <div className="page--overlay__loader">
+            <Image src="/logo.svg" className="site-logo" alt="Gideon Idoko" width={50} height={50} />
           </div>
-        )}
+        </div>
       </div>
     </>
   );
