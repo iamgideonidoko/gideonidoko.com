@@ -5,15 +5,11 @@ export const decode = (string: string) => {
   const output = [];
   let counter = 0;
   const length = string.length;
-
   while (counter < length) {
     const value = string.charCodeAt(counter++);
-
     if (value >= 0xd800 && value <= 0xdbff && counter < length) {
       // It's a high surrogate, and there is a next character.
-
       const extra = string.charCodeAt(counter++);
-
       if ((extra & 0xfc00) == 0xdc00) {
         // Low surrogate.
         output.push(((value & 0x3ff) << 10) + (extra & 0x3ff) + 0x10000);
@@ -55,17 +51,10 @@ export const count = (target: string, options?: CountOptions) => {
 
 export const getReadTime = (string: string) => {
   const WPM = 200;
-
   const estimatedReadTime = count(string).words / WPM;
-
   const remainder = estimatedReadTime % 1;
-
-  // const minutes = estimatedReadTime - remainder;
-
   const roundedMinutes = Math.round(estimatedReadTime);
-
   const seconds = Math.round(remainder * 60);
-
   return roundedMinutes < 1 ? seconds + ' sec read' : roundedMinutes + ' min read';
 };
 
@@ -87,16 +76,10 @@ export const wrapElements = (elems: HTMLElement[], wrapType: keyof HTMLElementTa
   elems.forEach((word) => {
     const wrapEl = document.createElement(wrapType);
     (wrapEl.classList as unknown) = wrapClass;
-
-    // Get a reference to the parent
     const parent = word.parentNode;
-
-    // Insert the wrapper before the word in the DOM tree
     if (parent) {
       parent.insertBefore(wrapEl, word);
     }
-
-    // Move the word inside the wrapper
     wrapEl.appendChild(word);
   });
 };
@@ -187,9 +170,7 @@ export const firstLetter = (str: string) => {
 export const calculateScale = (size: number, newSize: number) => newSize / size;
 
 export const vwToPx = (valueInVw: number) => {
-  // Get the viewport width
   const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-  // Calculate the equivalent value in pixels
   const valueInPx = (valueInVw * viewportWidth) / 100;
   return valueInPx;
 };
