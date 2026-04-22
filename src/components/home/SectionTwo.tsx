@@ -4,8 +4,6 @@ import Image from 'next/image';
 import styles from '../../styles/Home.module.css';
 import { useMemo, useEffect, useRef } from 'react';
 import { firstLetter } from '../../helper';
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
-import gsap from 'gsap';
 import { usePathname } from 'next/navigation';
 
 const SectionTwo = () => {
@@ -79,56 +77,73 @@ const SectionTwo = () => {
   );
 
   const pathname = usePathname();
-  const timelinesRef = useRef<gsap.core.Timeline[]>([]);
-
-  const addTrigger = () => {
-    timelinesRef.current.forEach((tl) => tl.kill());
-    timelinesRef.current = [];
-
-    [
-      ...document.querySelectorAll('.project-section-item-left'),
-      ...document.querySelectorAll('.project-section-item-right'),
-    ].forEach((elem) => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          markers: false,
-          start: 'clamp(top bottom-=0%)',
-          end: 'bottom 95%',
-          trigger: elem,
-          scrub: true,
-          once: false,
-        },
-      });
-
-      tl.fromTo(
-        elem,
-        {
-          xPercent: elem.classList.contains('project-section-item-left')
-            ? -100
-            : elem.classList.contains('project-section-item-right')
-              ? 100
-              : 0,
-          opacity: 0,
-        },
-        {
-          xPercent: 0,
-          opacity: 1,
-        },
-      );
-      timelinesRef.current.push(tl);
-    });
-  };
+  const timelinesRef = useRef<Array<{ kill: () => void }>>([]);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
 
-    const frameId = window.requestAnimationFrame(addTrigger);
+    let cancelled = false;
+    let frameId = 0;
+
+    const initProjectAnimations = async () => {
+      const [gsapModule, scrollTriggerModule] = await Promise.all([import('gsap'), import('gsap/dist/ScrollTrigger')]);
+
+      if (cancelled) {
+        return;
+      }
+
+      const gsap = gsapModule.default;
+      const ScrollTrigger = scrollTriggerModule.default;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const addTrigger = () => {
+        timelinesRef.current.forEach((timeline) => timeline.kill());
+        timelinesRef.current = [];
+
+        [
+          ...document.querySelectorAll('.project-section-item-left'),
+          ...document.querySelectorAll('.project-section-item-right'),
+        ].forEach((elem) => {
+          const timeline = gsap.timeline({
+            scrollTrigger: {
+              markers: false,
+              start: 'clamp(top bottom-=0%)',
+              end: 'bottom 95%',
+              trigger: elem,
+              scrub: true,
+              once: false,
+            },
+          });
+
+          timeline.fromTo(
+            elem,
+            {
+              xPercent: elem.classList.contains('project-section-item-left')
+                ? -100
+                : elem.classList.contains('project-section-item-right')
+                  ? 100
+                  : 0,
+              opacity: 0,
+            },
+            {
+              xPercent: 0,
+              opacity: 1,
+            },
+          );
+          timelinesRef.current.push(timeline);
+        });
+      };
+
+      frameId = window.requestAnimationFrame(addTrigger);
+    };
+
+    void initProjectAnimations();
 
     return () => {
+      cancelled = true;
       window.cancelAnimationFrame(frameId);
       timelinesRef.current.forEach((tl) => tl.kill());
       timelinesRef.current = [];
@@ -145,6 +160,7 @@ const SectionTwo = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="scroll-button"
+              aria-label="View Gideon Idoko on GitHub"
             >
               <div className="button__deco button__deco--2"></div>
               <div className="button__deco button__deco--1"></div>
@@ -241,6 +257,7 @@ const SectionTwo = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="scroll-button"
+            aria-label="See more projects on Gideon Idoko's GitHub"
           >
             <div className="button__deco button__deco--2"></div>
             <div className="button__deco button__deco--1"></div>

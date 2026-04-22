@@ -1,41 +1,64 @@
 'use client';
 
 import styles from '../../styles/Home.module.css';
-import PhysicsBox from '../../classes/PhysicsBox';
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 
 const SectionFour = () => {
-  const physicsBoxesRef = useRef<PhysicsBox[] | null>(null);
+  const physicsBoxesRef = useRef<Array<{ destroy: () => void }> | null>(null);
+  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const trigger = ScrollTrigger.create({
-      trigger: '.services-section',
-      start: 'clamp(top bottom-=80%)',
-      end: 'top top',
-      markers: false,
-      once: true,
-      onEnter: () => {
-        physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
-          return new PhysicsBox(elem, {
-            radius: {
-              unit: 'vw',
-              value: 8,
-            },
-            minRadius: {
-              unit: 'px',
-              value: 100,
-            },
-            maxRadius: {
-              unit: 'vw',
-              value: 8,
-            },
+    let cancelled = false;
+    let trigger: { kill: () => void } | null = null;
+
+    const initServiceAnimations = async () => {
+      const [gsapModule, scrollTriggerModule, physicsBoxModule] = await Promise.all([
+        import('gsap'),
+        import('gsap/dist/ScrollTrigger'),
+        import('../../classes/PhysicsBox'),
+      ]);
+
+      if (cancelled) {
+        return;
+      }
+
+      const gsap = gsapModule.default;
+      const ScrollTrigger = scrollTriggerModule.default;
+      const PhysicsBox = physicsBoxModule.default;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      trigger = ScrollTrigger.create({
+        trigger: '.services-section',
+        start: 'clamp(top bottom-=80%)',
+        end: 'top top',
+        markers: false,
+        once: true,
+        onEnter: () => {
+          physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
+            return new PhysicsBox(elem, {
+              radius: {
+                unit: 'vw',
+                value: 8,
+              },
+              minRadius: {
+                unit: 'px',
+                value: 100,
+              },
+              maxRadius: {
+                unit: 'vw',
+                value: 8,
+              },
+            });
           });
-        });
-      },
-    });
+        },
+      });
+    };
+
+    void initServiceAnimations();
+
     return () => {
+      cancelled = true;
       physicsBoxesRef.current?.forEach((item) => item.destroy());
       trigger?.kill();
     };
@@ -46,8 +69,10 @@ const SectionFour = () => {
         <div className={styles.sectionFourWrapper}>
           <h3 className={styles.servicesHead}>— Services —</h3>
           <div className={styles.servicesWrapper}>
-            <ul className={`physics--box ${ScrollTrigger.isTouch ? 'pointer-events-none' : ''}`}>
-              <span className="physics--box__text">{`>CLICK & DRAG<`}</span>
+            <ul className={`physics--box ${isTouchDevice ? 'pointer-events-none' : ''}`}>
+              <li className="physics--box__text" aria-hidden="true">
+                {`>CLICK & DRAG<`}
+              </li>
               <li className="physics--box__item" data-lenis-prevent>
                 <div>
                   <h5>Product Engineering</h5>

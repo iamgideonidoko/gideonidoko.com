@@ -4,19 +4,27 @@ import Image from 'next/image';
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Lenis from 'lenis';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import Header from '../Header';
 import Footer from '../Footer';
 import ThemeSwitch from '../ThemeSwitch';
-import ButtonCtrl from '../../classes/ButtonCtrl';
-import Canvas from '../../classes/Canvas';
-import Cursor from '../../classes/Cursor';
-import PageLoader from '../../classes/PageLoader';
 
 const pageWithoutHeader: string[] = ['/p/test'];
 const pageWithoutFooter: string[] = ['/p/test'];
+const MOTION_SHELL_MEDIA_QUERY = '(min-width: 768px) and (pointer: fine)';
+
+type CursorController = {
+  emit: (event: 'enter' | 'leave') => void;
+  destroy: () => void;
+};
+
+type CanvasController = {
+  cleanUp: () => void;
+};
+
+type PageLoaderController = {
+  animateIn: () => void;
+  animateOut: () => void;
+};
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname() ?? '/';
@@ -27,10 +35,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
+  const [supportsMotionShell, setSupportsMotionShell] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(MOTION_SHELL_MEDIA_QUERY).matches,
+  );
   const contentScrollPos = useRef(0);
-  const cursorRef = useRef<Cursor | null>(null);
-  const canvasRef = useRef<Canvas | null>(null);
-  const pageLoaderRef = useRef<PageLoader | null>(null);
+  const cursorRef = useRef<CursorController | null>(null);
+  const canvasRef = useRef<CanvasController | null>(null);
+  const pageLoaderRef = useRef<PageLoaderController | null>(null);
   const isBackOrForwardNav = useRef(false);
   const initialRouteRender = useRef(true);
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
@@ -38,7 +49,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const lastFocusedElementRef = useRef<HTMLElement | null>(null);
 
   const mobileMenuOpen = !isNavOpen;
-  const shouldEnableMotionShell = !prefersReducedMotion && !isWritingRoute;
+  const shouldEnableMotionShell = supportsMotionShell && !prefersReducedMotion && !isWritingRoute;
 
   const closeNav = () => {
     contentScrollPos.current = 0;
@@ -58,6 +69,19 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
     return () => {
       mediaQuery.removeEventListener('change', handleReducedMotionChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(MOTION_SHELL_MEDIA_QUERY);
+    const handleMotionShellChange = (event: MediaQueryListEvent) => {
+      setSupportsMotionShell(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleMotionShellChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleMotionShellChange);
     };
   }, []);
 
@@ -124,8 +148,6 @@ export default function AppShell({ children }: { children: ReactNode }) {
   }, [mobileMenuOpen]);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
     if (!shouldEnableMotionShell) {
       cursorRef.current?.destroy();
       cursorRef.current = null;
@@ -136,43 +158,76 @@ export default function AppShell({ children }: { children: ReactNode }) {
       return;
     }
 
-    pageLoaderRef.current = new PageLoader();
-    const initialLoaderFrameId = window.requestAnimationFrame(() => {
-      pageLoaderRef.current?.animateOut();
-    });
-
-    const lenis = new Lenis({
-      lerp: 0.04,
-      smoothWheel: true,
-      syncTouch: false,
-    });
-
-    window.appLenis = lenis;
-    lenis.on('scroll', ScrollTrigger.update);
-
+    let cancelled = false;
     let animationFrameId = 0;
-    const scrollFn = (time: number) => {
-      lenis.raf(time);
-      ScrollTrigger.update();
-      animationFrameId = window.requestAnimationFrame(scrollFn);
-    };
-    animationFrameId = window.requestAnimationFrame(scrollFn);
+    let initialLoaderFrameId = 0;
+    let lenisCleanup: (() => void) | null = null;
 
-    const cursorElement = document.querySelector<SVGElement>('.cursor');
-    if (cursorElement) {
-      cursorRef.current = new Cursor(cursorElement);
-    }
+    const initMotionShell = async () => {
+      const [lenisModule, gsapModule, scrollTriggerModule, pageLoaderModule, cursorModule] = await Promise.all([
+        import('lenis'),
+        import('gsap'),
+        import('gsap/dist/ScrollTrigger'),
+        import('../../classes/PageLoader'),
+        import('../../classes/Cursor'),
+      ]);
+
+      if (cancelled) {
+        return;
+      }
+
+      const Lenis = lenisModule.default;
+      const gsap = gsapModule.default;
+      const ScrollTrigger = scrollTriggerModule.default;
+      const PageLoader = pageLoaderModule.default;
+      const Cursor = cursorModule.default;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      pageLoaderRef.current = new PageLoader();
+      initialLoaderFrameId = window.requestAnimationFrame(() => {
+        pageLoaderRef.current?.animateOut();
+      });
+
+      const lenis = new Lenis({
+        lerp: 0.04,
+        smoothWheel: true,
+        syncTouch: false,
+      });
+
+      window.appLenis = lenis;
+      lenis.on('scroll', ScrollTrigger.update);
+
+      const scrollFn = (time: number) => {
+        lenis.raf(time);
+        ScrollTrigger.update();
+        animationFrameId = window.requestAnimationFrame(scrollFn);
+      };
+      animationFrameId = window.requestAnimationFrame(scrollFn);
+
+      const cursorElement = document.querySelector<SVGElement>('.cursor');
+      if (cursorElement) {
+        cursorRef.current = new Cursor(cursorElement);
+      }
+
+      lenisCleanup = () => {
+        window.cancelAnimationFrame(initialLoaderFrameId);
+        window.cancelAnimationFrame(animationFrameId);
+        cursorRef.current?.destroy();
+        cursorRef.current = null;
+        lenis.destroy();
+        delete window.appLenis;
+        canvasRef.current?.cleanUp();
+        canvasRef.current = null;
+        pageLoaderRef.current = null;
+      };
+    };
+
+    void initMotionShell();
 
     return () => {
-      window.cancelAnimationFrame(initialLoaderFrameId);
-      window.cancelAnimationFrame(animationFrameId);
-      cursorRef.current?.destroy();
-      cursorRef.current = null;
-      lenis.destroy();
-      delete window.appLenis;
-      canvasRef.current?.cleanUp();
-      canvasRef.current = null;
-      pageLoaderRef.current = null;
+      cancelled = true;
+      lenisCleanup?.();
     };
   }, [shouldEnableMotionShell]);
 
@@ -251,89 +306,106 @@ export default function AppShell({ children }: { children: ReactNode }) {
       return;
     }
 
-    const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
-    if (canvasElement && !ScrollTrigger.isTouch) {
-      canvasRef.current?.cleanUp();
-      canvasRef.current = new Canvas(canvasElement);
-    }
-
+    let cancelled = false;
+    let delayedBindFrameId = 0;
+    let showCanvasFrameId = 0;
+    let loaderFrameId = 0;
     const cleanups: Array<() => void> = [];
-    const bindCursorTargets = (elements: Iterable<Element>) => {
-      for (const element of elements) {
+
+    const initInteractiveControls = async () => {
+      const [scrollTriggerModule, buttonCtrlModule, canvasModule] = await Promise.all([
+        import('gsap/dist/ScrollTrigger'),
+        import('../../classes/ButtonCtrl'),
+        import('../../classes/Canvas'),
+      ]);
+
+      if (cancelled) {
+        return;
+      }
+
+      const ScrollTrigger = scrollTriggerModule.default;
+      const ButtonCtrl = buttonCtrlModule.default;
+      const Canvas = canvasModule.default;
+
+      const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
+      if (canvasElement && !ScrollTrigger.isTouch) {
+        canvasRef.current?.cleanUp();
+        canvasRef.current = new Canvas(canvasElement);
+      }
+
+      const bindCursorTargets = (elements: Iterable<Element>) => {
+        for (const element of elements) {
+          const handleEnter = () => cursorRef.current?.emit('enter');
+          const handleLeave = () => cursorRef.current?.emit('leave');
+
+          element.addEventListener('mouseenter', handleEnter);
+          element.addEventListener('mouseleave', handleLeave);
+
+          cleanups.push(() => {
+            element.removeEventListener('mouseenter', handleEnter);
+            element.removeEventListener('mouseleave', handleLeave);
+          });
+        }
+      };
+
+      bindCursorTargets(document.querySelectorAll('a'));
+      bindCursorTargets(document.querySelectorAll('.wl-word .char'));
+
+      delayedBindFrameId = window.requestAnimationFrame(() => {
+        bindCursorTargets(document.querySelectorAll('.wl-word .char'));
+      });
+
+      [...document.querySelectorAll<HTMLElement>('.scroll-button')].forEach((element) => {
+        const button = new ButtonCtrl(element);
         const handleEnter = () => cursorRef.current?.emit('enter');
         const handleLeave = () => cursorRef.current?.emit('leave');
 
-        element.addEventListener('mouseenter', handleEnter);
-        element.addEventListener('mouseleave', handleLeave);
+        button.on('enter', handleEnter);
+        button.on('leave', handleLeave);
 
         cleanups.push(() => {
-          element.removeEventListener('mouseenter', handleEnter);
-          element.removeEventListener('mouseleave', handleLeave);
+          button.removeListener('enter', handleEnter);
+          button.removeListener('leave', handleLeave);
+          button.destroy();
+        });
+      });
+
+      if (initialRouteRender.current) {
+        initialRouteRender.current = false;
+        return;
+      }
+
+      if (window.appLenis && !isBackOrForwardNav.current) {
+        window.appLenis.scrollTo(0, {
+          lock: true,
+          duration: 0,
+          immediate: true,
+          force: true,
         });
       }
+
+      isBackOrForwardNav.current = false;
+
+      showCanvasFrameId = window.requestAnimationFrame(() => {
+        if (canvasElement) {
+          canvasElement.style.visibility = 'visible';
+        }
+      });
+      loaderFrameId = window.requestAnimationFrame(() => {
+        pageLoaderRef.current?.animateOut();
+      });
     };
 
-    bindCursorTargets(document.querySelectorAll('a'));
-    bindCursorTargets(document.querySelectorAll('.wl-word .char'));
-
-    const delayedBindFrameId = window.requestAnimationFrame(() => {
-      bindCursorTargets(document.querySelectorAll('.wl-word .char'));
-    });
-
-    const buttonControllers = [...document.querySelectorAll<HTMLElement>('.scroll-button')].map((el) => {
-      const button = new ButtonCtrl(el);
-      const handleEnter = () => cursorRef.current?.emit('enter');
-      const handleLeave = () => cursorRef.current?.emit('leave');
-
-      button.on('enter', handleEnter);
-      button.on('leave', handleLeave);
-
-      cleanups.push(() => {
-        button.removeListener('enter', handleEnter);
-        button.removeListener('leave', handleLeave);
-        button.destroy();
-      });
-
-      return button;
-    });
-
-    if (initialRouteRender.current) {
-      initialRouteRender.current = false;
-      return () => {
-        window.cancelAnimationFrame(delayedBindFrameId);
-        cleanups.forEach((cleanup) => cleanup());
-        buttonControllers.length = 0;
-        canvasRef.current?.cleanUp();
-      };
-    }
-
-    if (window.appLenis && !isBackOrForwardNav.current) {
-      window.appLenis.scrollTo(0, {
-        lock: true,
-        duration: 0,
-        immediate: true,
-        force: true,
-      });
-    }
-
-    isBackOrForwardNav.current = false;
-
-    const showCanvasFrameId = window.requestAnimationFrame(() => {
-      if (canvasElement) {
-        canvasElement.style.visibility = 'visible';
-      }
-    });
-    const loaderFrameId = window.requestAnimationFrame(() => {
-      pageLoaderRef.current?.animateOut();
-    });
+    void initInteractiveControls();
 
     return () => {
+      cancelled = true;
       window.cancelAnimationFrame(delayedBindFrameId);
       window.cancelAnimationFrame(showCanvasFrameId);
       window.cancelAnimationFrame(loaderFrameId);
       cleanups.forEach((cleanup) => cleanup());
-      buttonControllers.length = 0;
       canvasRef.current?.cleanUp();
+      canvasRef.current = null;
     };
   }, [routeKey, shouldEnableMotionShell]);
 
@@ -408,7 +480,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
         </nav>
       </div>
       {shouldEnableMotionShell && (
-        <div style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }} suppressHydrationWarning>
+        <div
+          style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}
+          aria-hidden="true"
+          suppressHydrationWarning
+        >
           <svg className="cursor" width="140" height="140" viewBox="0 0 140 140">
             <defs>
               <filter id="filter-1" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
@@ -421,16 +497,20 @@ export default function AppShell({ children }: { children: ReactNode }) {
         </div>
       )}
       <div className={mobileMenuOpen ? 'main-wrapper mobile-nav-view' : 'main-wrapper'}>
-        <div className="fixed-line" style={pathname.startsWith('/writing/') ? { background: 'none' } : {}} />
-        {shouldEnableMotionShell && <canvas id="canvas" />}
-        <div className="noise-bg"></div>
+        <div
+          className="fixed-line"
+          aria-hidden="true"
+          style={pathname.startsWith('/writing/') ? { background: 'none' } : {}}
+        />
+        {shouldEnableMotionShell && <canvas id="canvas" aria-hidden="true" />}
+        <div className="noise-bg" aria-hidden="true"></div>
         {shouldHaveHeader && (
           <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} contentScrollPos={contentScrollPos} />
         )}
         {children}
         {shouldHaveFooter && <Footer />}
         {shouldEnableMotionShell && (
-          <div className="page--overlay">
+          <div className="page--overlay" aria-hidden="true">
             <div className="page--overlay__loader">
               <Image src="/logo.svg" className="site-logo" alt="Gideon Idoko" width={50} height={50} />
             </div>

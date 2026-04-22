@@ -16,6 +16,8 @@ export const metadata: Metadata = createPageMetadata({
 export default function HomePage() {
   return (
     <main>
+      <h1 className="offscreen">Gideon Idoko - Software Engineer</h1>
+      <h2 className="offscreen">Featured work and services</h2>
       <div className={styles.section1Wrapper}>
         <SectionOne />
       </div>

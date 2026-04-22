@@ -1879,7 +1879,8 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   font-size: clamp(2rem, 4vw, 3em);
   transform: translate(-50%, -50%);
   pointer-events: none;
-  opacity: 0.1;
+  color: color-mix(in srgb, var(--font-color) 50%, transparent);
+  opacity: 1;
   text-align: center;
   display: inline-block;
   user-select: none;

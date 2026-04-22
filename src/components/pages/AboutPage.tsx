@@ -3,44 +3,64 @@
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
-import PhysicsBox from '../../classes/PhysicsBox';
 import styles from '../../styles/About.module.css';
 
 export default function AboutPage() {
-  const physicsBoxesRef = useRef<PhysicsBox[] | null>(null);
+  const physicsBoxesRef = useRef<Array<{ destroy: () => void }> | null>(null);
+  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    let cancelled = false;
+    let trigger: { kill: () => void } | null = null;
 
-    const trigger = ScrollTrigger.create({
-      trigger: '.about-stack-section',
-      start: 'clamp(top bottom-=90%)',
-      end: 'top top',
-      markers: false,
-      once: true,
-      onEnter: () => {
-        physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
-          return new PhysicsBox(elem, {
-            radius: {
-              unit: 'vw',
-              value: 3,
-            },
-            minRadius: {
-              unit: 'px',
-              value: 50,
-            },
-            maxRadius: {
-              unit: 'vw',
-              value: 3,
-            },
+    const initAboutAnimations = async () => {
+      const [gsapModule, scrollTriggerModule, physicsBoxModule] = await Promise.all([
+        import('gsap'),
+        import('gsap/dist/ScrollTrigger'),
+        import('../../classes/PhysicsBox'),
+      ]);
+
+      if (cancelled) {
+        return;
+      }
+
+      const gsap = gsapModule.default;
+      const ScrollTrigger = scrollTriggerModule.default;
+      const PhysicsBox = physicsBoxModule.default;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      trigger = ScrollTrigger.create({
+        trigger: '.about-stack-section',
+        start: 'clamp(top bottom-=90%)',
+        end: 'top top',
+        markers: false,
+        once: true,
+        onEnter: () => {
+          physicsBoxesRef.current = [...document.querySelectorAll<HTMLElement>('.physics--box')].map((elem) => {
+            return new PhysicsBox(elem, {
+              radius: {
+                unit: 'vw',
+                value: 3,
+              },
+              minRadius: {
+                unit: 'px',
+                value: 50,
+              },
+              maxRadius: {
+                unit: 'vw',
+                value: 3,
+              },
+            });
           });
-        });
-      },
-    });
+        },
+      });
+    };
+
+    void initAboutAnimations();
 
     return () => {
+      cancelled = true;
       physicsBoxesRef.current?.forEach((item) => item.destroy());
       trigger?.kill();
     };
@@ -58,11 +78,13 @@ export default function AboutPage() {
             <div className={styles.profileImgWrapper}>
               <div className="gooey__image">
                 <Image
-                  src="/assets/img/gideon.jpeg"
+                  src="/assets/img/gideon.jpg"
                   data-hover="/assets/img/gideon-hover.jpg"
                   alt="Gideon Idoko"
                   width={1242}
                   height={1652}
+                  priority
+                  sizes="(max-width: 768px) 92vw, 42vw"
                   style={{ maxWidth: '100%', width: '100%', height: 'auto' }}
                 />
               </div>
@@ -105,108 +127,59 @@ export default function AboutPage() {
 
         <div className={`${styles.aboutStack} about-stack-section`}>
           <h2>Stack {`<Tools / Languages / Frameworks / Libraries>`}</h2>
-          <ul className={`physics--box ${ScrollTrigger.isTouch ? 'pointer-events-none' : ''}`}>
-            <span className="physics--box__text">{`>CLICK & DRAG<`}</span>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+          <ul className={`physics--box ${isTouchDevice ? 'pointer-events-none' : ''}`}>
+            <li className="physics--box__text" aria-hidden="true">
+              {`>CLICK & DRAG<`}
+            </li>
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               SCSS
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               JavaScript
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               TypeScript
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               GraphQL
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               React
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               React Native
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               RTK
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               NextJS
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               NodeJS
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               ExpressJS
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               NoSQL
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               Redis
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               Firebase
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               Supabase
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               PHP
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               SQL
             </li>
-            <li
-              className={`physics--box__item ${ScrollTrigger.isTouch ? 'pointer-events-all' : ''}`}
-              data-lenis-prevent
-            >
+            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               Wordpress
             </li>
           </ul>

@@ -4,120 +4,145 @@ import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
-import gsap from 'gsap';
+
+type KillableTimeline = {
+  kill: () => void;
+};
 
 const Footer = () => {
-  const date = new Date();
-  const currentYear = date.getFullYear();
+  const currentYear = new Date().getFullYear();
   const pathname = usePathname();
 
   const footerRef = useRef<HTMLElement | null>(null);
-  const timeLineRefs = useRef<gsap.core.Timeline[]>([]);
+  const timeLineRefs = useRef<KillableTimeline[]>([]);
   const refreshFrameRef = useRef<number | null>(null);
 
-  const addTrigger = () => {
-    timeLineRefs.current.forEach((tl) => tl.kill());
-    timeLineRefs.current = [];
-
-    const footerElement = footerRef.current;
-    if (!footerElement) {
-      return;
-    }
-
-    [...footerElement.querySelectorAll('.footer-main-heading')].forEach((elem) => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          markers: false,
-          start: 'clamp(top bottom-=0%)',
-          end: 'center center',
-          trigger: elem,
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      });
-      tl.fromTo(
-        elem,
-        {
-          letterSpacing: '0.5em',
-          opacity: 0,
-        },
-        {
-          letterSpacing: '0em',
-          opacity: 1,
-        },
-      );
-      timeLineRefs.current.push(tl);
-    });
-    [...footerElement.querySelectorAll('.footer-bg')].forEach((elem) => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          markers: false,
-          start: 'clamp(top bottom-=50%)',
-          end: 'top top',
-          trigger: elem,
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      });
-      tl.fromTo(
-        elem,
-        {
-          width: '100%',
-          height: '100%',
-          xPercent: 0,
-          yPercent: 0,
-          opacity: -1,
-        },
-        {
-          width: '90%',
-          height: '80%',
-          xPercent: 5,
-          yPercent: 12.5,
-          opacity: 0.8,
-        },
-      );
-      timeLineRefs.current.push(tl);
-    });
-  };
-
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
 
-    const refreshTriggers = () => {
-      if (refreshFrameRef.current) {
-        window.cancelAnimationFrame(refreshFrameRef.current);
+    let cancelled = false;
+    let initFrameId = 0;
+    let resizeObserver: ResizeObserver | null = null;
+
+    const initFooterAnimations = async () => {
+      const [gsapModule, scrollTriggerModule] = await Promise.all([import('gsap'), import('gsap/dist/ScrollTrigger')]);
+
+      if (cancelled) {
+        return;
       }
 
-      refreshFrameRef.current = window.requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
+      const gsap = gsapModule.default;
+      const ScrollTrigger = scrollTriggerModule.default;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const addTrigger = () => {
+        timeLineRefs.current.forEach((timeline) => timeline.kill());
+        timeLineRefs.current = [];
+
+        const footerElement = footerRef.current;
+        if (!footerElement) {
+          return;
+        }
+
+        [...footerElement.querySelectorAll('.footer-main-heading')].forEach((element) => {
+          const timeline = gsap.timeline({
+            scrollTrigger: {
+              markers: false,
+              start: 'clamp(top bottom-=0%)',
+              end: 'center center',
+              trigger: element,
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          timeline.fromTo(
+            element,
+            {
+              letterSpacing: '0.5em',
+              opacity: 0,
+            },
+            {
+              letterSpacing: '0em',
+              opacity: 1,
+            },
+          );
+
+          timeLineRefs.current.push(timeline);
+        });
+
+        [...footerElement.querySelectorAll('.footer-bg')].forEach((element) => {
+          const timeline = gsap.timeline({
+            scrollTrigger: {
+              markers: false,
+              start: 'clamp(top bottom-=50%)',
+              end: 'top top',
+              trigger: element,
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          timeline.fromTo(
+            element,
+            {
+              width: '100%',
+              height: '100%',
+              xPercent: 0,
+              yPercent: 0,
+              opacity: -1,
+            },
+            {
+              width: '90%',
+              height: '80%',
+              xPercent: 5,
+              yPercent: 12.5,
+              opacity: 0.8,
+            },
+          );
+
+          timeLineRefs.current.push(timeline);
+        });
+      };
+
+      const refreshTriggers = () => {
+        if (refreshFrameRef.current) {
+          window.cancelAnimationFrame(refreshFrameRef.current);
+        }
+
+        refreshFrameRef.current = window.requestAnimationFrame(() => {
+          ScrollTrigger.refresh();
+        });
+      };
+
+      initFrameId = window.requestAnimationFrame(() => {
+        addTrigger();
+        refreshTriggers();
       });
+
+      resizeObserver = new ResizeObserver(() => {
+        refreshTriggers();
+      });
+
+      if (footerRef.current) {
+        resizeObserver.observe(footerRef.current);
+      }
+      resizeObserver.observe(document.documentElement);
     };
 
-    const frameId = window.requestAnimationFrame(() => {
-      addTrigger();
-      refreshTriggers();
-    });
-    const resizeObserver = new ResizeObserver(() => {
-      refreshTriggers();
-    });
-
-    if (footerRef.current) {
-      resizeObserver.observe(footerRef.current);
-    }
-    resizeObserver.observe(document.documentElement);
+    void initFooterAnimations();
 
     return () => {
-      window.cancelAnimationFrame(frameId);
+      cancelled = true;
+      window.cancelAnimationFrame(initFrameId);
       if (refreshFrameRef.current) {
         window.cancelAnimationFrame(refreshFrameRef.current);
       }
-      resizeObserver.disconnect();
-      timeLineRefs.current.forEach((tl) => tl.kill());
+      resizeObserver?.disconnect();
+      timeLineRefs.current.forEach((timeline) => timeline.kill());
       timeLineRefs.current = [];
     };
   }, [pathname]);

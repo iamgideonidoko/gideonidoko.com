@@ -21,11 +21,13 @@ const SectionThree = () => {
         <div className={styles.profileImgWrapper}>
           <div className="gooey__image">
             <Image
-              src="/assets/img/gideon.jpeg"
+              src="/assets/img/gideon.jpg"
               data-hover="/assets/img/gideon-hover.jpg"
               alt="Gideon Idoko"
               width={1242}
               height={1652}
+              priority
+              sizes="(max-width: 768px) 92vw, 40vw"
               style={{ maxWidth: '100%', width: '100%', height: 'auto' }}
             />
           </div>
