@@ -16,7 +16,7 @@ Before going through this article, having a little background knowledge of React
 
 > _In computing, memoization or memoisation is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again._ ~ Wikipedia
 
-Memoization is used to store the result of prior executed computations so that they can be reused later. This is the **traditional** memoization. 
+Memoization is used to store the result of prior executed computations so that they can be reused later. This is the **traditional** memoization.
 
 ## Traditional Memoization
 
@@ -25,9 +25,9 @@ To understand how traditional memoization works, firstly, let's take a look at a
 ```javascript
 const increment = (num) => num + 1;
 
-console.log(increment(1)) // 2
-console.log(increment(1)) // 2
-console.log(increment(2)) // 3
+console.log(increment(1)); // 2
+console.log(increment(1)); // 2
+console.log(increment(2)); // 3
 ```
 
 The increment function above gets recomputed upon every call even if we are incrementing the same number.
@@ -36,20 +36,21 @@ Let's look at a simple function that takes a function as an argument and memoize
 
 ```javascript
 const memoize = (func) => {
-    const cache = {}; // cache for computed results
-    // return memoized function
-    return (...args) => { // args is an array of all the argument that will be passed to the memoized function
-        let n = args[0];  // get the first argument
-        if (n in cache) {
-            console.log('Fetching from cache');
-            return cache[n]; // returns the cached result & terminates
-        }
-        console.log('Computing result');
-        let result = func(n);
-        cache[n] = result; // cache the result using the first argument as key
-        return result;
+  const cache = {}; // cache for computed results
+  // return memoized function
+  return (...args) => {
+    // args is an array of all the argument that will be passed to the memoized function
+    let n = args[0]; // get the first argument
+    if (n in cache) {
+      console.log('Fetching from cache');
+      return cache[n]; // returns the cached result & terminates
     }
-}
+    console.log('Computing result');
+    let result = func(n);
+    cache[n] = result; // cache the result using the first argument as key
+    return result;
+  };
+};
 ```
 
 The `memoize` function has a cache object where it stores the first argument and result of the passed-in function computations as key-value pairs.
@@ -59,11 +60,11 @@ Now, let's wrap out the `increment` function with the `memoize` function to get 
 ```javascript
 const memoizedIncrement = memoize(increment);
 
-console.log(memoizedIncrement(1)) // Computing result 2
-console.log(memoizedIncrement(1)) // Fetching from cache  2
-console.log(memoizedIncrement(2)) // Computing result  3
-console.log(memoizedIncrement(2)) // Fetching from cache 3
-console.log(memoizedIncrement(1)) // Fetching from cache 2
+console.log(memoizedIncrement(1)); // Computing result 2
+console.log(memoizedIncrement(1)); // Fetching from cache  2
+console.log(memoizedIncrement(2)); // Computing result  3
+console.log(memoizedIncrement(2)); // Fetching from cache 3
+console.log(memoizedIncrement(1)); // Fetching from cache 2
 ```
 
 Our new memoized function, `memoizedIncrement`, is only recomputed if a new argument that is not in the cache as a key is passed. This, in turn, makes our code more efficient. Memoization isn't actually needed for a simple function as the one above but it's a lot helpful for functions with expensive computations where computation time is more critical than space.
@@ -86,28 +87,28 @@ Let's rewrite our `memoize` to look like how memoization of React components wor
 
 ```javascript
 const memoize = (func) => {
-    let cache = {}; 
-    // return memoized function
-    return (...args) => {
-        let n = args[0];  // get the first argument
-        if (n in cache) {
-            console.log('Fetching from cache');
-            return cache[n]; // returns the cached version & terminate
-        }
-        console.log('Computing result');
-        let result = func(n);
-        cache = { [n]: result }; // overwrite cache
-        return result;
+  let cache = {};
+  // return memoized function
+  return (...args) => {
+    let n = args[0]; // get the first argument
+    if (n in cache) {
+      console.log('Fetching from cache');
+      return cache[n]; // returns the cached version & terminate
     }
-}
+    console.log('Computing result');
+    let result = func(n);
+    cache = { [n]: result }; // overwrite cache
+    return result;
+  };
+};
 
 const memoizedIncrement = memoize(increment);
 
-console.log(memoizedIncrement(1)) // Computing result 2
-console.log(memoizedIncrement(2)) // Computing result 3
-console.log(memoizedIncrement(1)) // Computing result 2
-console.log(memoizedIncrement(1)) // Fetching from cache 2
-console.log(memoizedIncrement(2)) // Computing result 3
+console.log(memoizedIncrement(1)); // Computing result 2
+console.log(memoizedIncrement(2)); // Computing result 3
+console.log(memoizedIncrement(1)); // Computing result 2
+console.log(memoizedIncrement(1)); // Fetching from cache 2
+console.log(memoizedIncrement(2)); // Computing result 3
 ```
 
 Here we can see that the result is only fetched from the cache if the argument stays the same otherwise the function is recomputed. Also, if the props passed to a component that is memoized with `React.memo()` remain the same, a rerender of that component is not triggered.
@@ -165,13 +166,13 @@ import { memo } from 'react';
 
 const Greeter = memo(({ name }) => {
   console.log('Greeter is rendered');
-  return <div>Hello { name }</div>
+  return <div>Hello {name}</div>;
 });
 ```
 
 Now, as long as the `name` prop of the `Greeter` component remains the same, the component will only render once (initial render). Hurray, we now have for ourselves, an optimized app👏. But wait, there is a caveat, shallow comparison.
 
-`React.memo` does a shallow comparison and so, it only compares prop values with primitive data types like numbers, string, booleans etc and not prop values with referential integrity like objects, array, functions and so on. This is because values with referential integrity have different references every time they are used.  No two non-primitive values are exactly the same unless they have the same reference.
+`React.memo` does a shallow comparison and so, it only compares prop values with primitive data types like numbers, string, booleans etc and not prop values with referential integrity like objects, array, functions and so on. This is because values with referential integrity have different references every time they are used. No two non-primitive values are exactly the same unless they have the same reference.
 
 ```javascript
 const arr1 = [1, 2, 3];
@@ -181,7 +182,7 @@ const obj2 = { one: 1 };
 const func1 = () => 1;
 const func2 = () => 1;
 const arr3 = arr1;
- 
+
 console.log(arr1 === arr2); // false
 console.log(obj1 === obj2); // false
 console.log(func1 === func2); // false
@@ -195,7 +196,7 @@ Let's rewrite our `Greeter` component to take in a non-primitive object value as
 ```jsx
 const Greeter = memo(({ name }) => {
   console.log('Greeter is rendered');
-  return <div>Hello { name.first + ' ' + name.last }</div>
+  return <div>Hello {name.first + ' ' + name.last}</div>;
 });
 
 const App = () => {
@@ -204,31 +205,38 @@ const App = () => {
   return (
     <div style={{ textAlign: 'center', fontFamily: 'monospace' }}>
       <h1>Memoization App</h1>
-      <h1>{ num }</h1>
-      <button style={btn} onClick={() => setNum(num + 1)}>Increment</button>
-      <button style={btn} onClick={() => setNum(num - 1)}>Decrement</button>
+      <h1>{num}</h1>
+      <button style={btn} onClick={() => setNum(num + 1)}>
+        Increment
+      </button>
+      <button style={btn} onClick={() => setNum(num - 1)}>
+        Decrement
+      </button>
       <Greeter name={name} />
     </div>
   );
-}
+};
 ```
 
 The `Greeter` will be called every time the state of the `App` component changes. How do we fix this problem?😢 How can we memoize our component even when we want to pass a prop with an object value? Wear a smile, `React.memo` takes in a second argument which is a callback that enables us to take control over the comparison. This callback is passed the previous and next props as the first and second argument respectively and it should return a boolean. We can take advantage of this and use the values of the properties of the object props to tell if the component should be rerendered or not.
 
 ```javascript
-const Greeter = memo(({ name }) => {
-  console.log('Greeter is rendered');
-  return <div>Hello { name.first + ' ' + name.last }</div>
-}, (prevProps, nextProps) => {
-  return prevProps.name.first === nextProps.name.first && prevProps.name.last === nextProps.name.last; // true
-});
+const Greeter = memo(
+  ({ name }) => {
+    console.log('Greeter is rendered');
+    return <div>Hello {name.first + ' ' + name.last}</div>;
+  },
+  (prevProps, nextProps) => {
+    return prevProps.name.first === nextProps.name.first && prevProps.name.last === nextProps.name.last; // true
+  },
+);
 ```
 
 Here, the `Greeter` component will be rerendered if the above callback evaluates to false which will only happen if the `first` & `last` properties of the `name` object change.
 
 ### 2. useMemo
 
-`useMemo` is a [ React hook](https://reactjs.org/docs/hooks-intro.html) that memoizes the result of a computation and always returns the memoized result. useMemo takes in as an argument a function that returns the computation result and an array of dependencies Another computation is done only when any of the dependencies change. 
+`useMemo` is a [ React hook](https://reactjs.org/docs/hooks-intro.html) that memoizes the result of a computation and always returns the memoized result. useMemo takes in as an argument a function that returns the computation result and an array of dependencies Another computation is done only when any of the dependencies change.
 
 In our `App` component, we could memoize the result of the `name` object. In that case, we wouldn't need the second argument of the `React.memo` HOC. Here's how:
 
@@ -237,7 +245,7 @@ import { useState, useMemo } from 'react';
 
 const Greeter = memo(({ name }) => {
   console.log('Greeter is rendered');
-  return <div>Hello { name.first + ' ' + name.last }</div>
+  return <div>Hello {name.first + ' ' + name.last}</div>;
 });
 
 const App = () => {
@@ -247,27 +255,31 @@ const App = () => {
   return (
     <div style={{ textAlign: 'center', fontFamily: 'monospace' }}>
       <h1>Memoization App</h1>
-      <h1>{ num }</h1>
-      <button style={btn} onClick={() => setNum(num + 1)}>Increment</button>
-      <button style={btn} onClick={() => setNum(num - 1)}>Decrement</button>
+      <h1>{num}</h1>
+      <button style={btn} onClick={() => setNum(num + 1)}>
+        Increment
+      </button>
+      <button style={btn} onClick={() => setNum(num - 1)}>
+        Decrement
+      </button>
       <Greeter name={memoizedName} />
     </div>
   );
-}
+};
 ```
 
 Here, the Greeter component would only be rendered initially and rerendered if the `first` & `last` properties of the `name` object change just like when we used the second argument of `React.memo`.
 
 ### 3. useCallback
 
- `useCallback` like `useMemo` is also a [ React hook](https://reactjs.org/docs/hooks-intro.html) but unlike useMemo, it memoizes a callback and always returns the memoized callback. It takes as an argument a function (callback) and an array of dependencies. A new version of the callback is only returned when any of the dependencies change.
+`useCallback` like `useMemo` is also a [ React hook](https://reactjs.org/docs/hooks-intro.html) but unlike useMemo, it memoizes a callback and always returns the memoized callback. It takes as an argument a function (callback) and an array of dependencies. A new version of the callback is only returned when any of the dependencies change.
 
 Let's rewrite our app to alert a greeting text when the user clicks on the greeting text of the Greeter component.
 
 ```jsx
 const Greeter = memo(({ name, onClick }) => {
   console.log('Greeter is rendered');
-  return <div onClick={onClick}>Hello { name.first + ' ' + name.last }</div>
+  return <div onClick={onClick}>Hello {name.first + ' ' + name.last}</div>;
 });
 
 const App = () => {
@@ -278,13 +290,17 @@ const App = () => {
   return (
     <div style={{ textAlign: 'center', fontFamily: 'monospace' }}>
       <h1>Memoization App</h1>
-      <h1>{ num }</h1>
-      <button style={btn} onClick={() => setNum(num + 1)}>Increment</button>
-      <button style={btn} onClick={() => setNum(num - 1)}>Decrement</button>
+      <h1>{num}</h1>
+      <button style={btn} onClick={() => setNum(num + 1)}>
+        Increment
+      </button>
+      <button style={btn} onClick={() => setNum(num - 1)}>
+        Decrement
+      </button>
       <Greeter name={memoizedName} onClick={handleClick} />
     </div>
   );
-}
+};
 ```
 
 The memoization is broken after adding the click event to our Greeter component making it rerender every time the state of `App` changes. This is because we are passing `handleClick` which is a function (a non-primitive value) as the value of our `onClick` props. Remember that `React.memo` only does a shallow comparison hence, the rerender. Here, we can use the `useCallback` hook to memoize the `handleClick` function as below:
@@ -300,13 +316,17 @@ const App = () => {
   return (
     <div style={{ textAlign: 'center', fontFamily: 'monospace' }}>
       <h1>Memoization App</h1>
-      <h1>{ num }</h1>
-      <button style={btn} onClick={() => setNum(num + 1)}>Increment</button>
-      <button style={btn} onClick={() => setNum(num - 1)}>Decrement</button>
+      <h1>{num}</h1>
+      <button style={btn} onClick={() => setNum(num + 1)}>
+        Increment
+      </button>
+      <button style={btn} onClick={() => setNum(num - 1)}>
+        Decrement
+      </button>
       <Greeter name={memoizedName} onClick={handleClick} />
     </div>
   );
-}
+};
 ```
 
 We've successfully restored memoization to our Greeter component by using the `useCallback` hook.
@@ -322,7 +342,7 @@ Although memoization is a pretty fascinating technique and performance boost, do
 
 ## Conclusion
 
-We have seen how the performance of our application can be improved with memoization. We also discussed the 3 tools that React provides for memoization and their respective use cases. We also discussed how memoization in React slightly differs from the traditional one. 
+We have seen how the performance of our application can be improved with memoization. We also discussed the 3 tools that React provides for memoization and their respective use cases. We also discussed how memoization in React slightly differs from the traditional one.
 
 I hope the information in this article helps you create better and more performant applications in the future.
 

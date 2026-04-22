@@ -1,5 +1,3 @@
 {
-  "./**/*.(js|mjs|jsx|ts|tsx)": [
-    "pnpm lint:base"
-  ]
+  "./**/*.(js|mjs|jsx|ts|tsx)": ["pnpm lint:base"]
 }

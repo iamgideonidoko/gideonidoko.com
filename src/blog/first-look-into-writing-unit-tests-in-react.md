@@ -10,7 +10,7 @@ Software testing is a concept that is almost as old as software itself. The term
 
 Unit and integration testing are the most basic and popular types of software testing. While unit testing asserts that the functionality of a small part or individual components of an application is working fine, integration testing ensures that the unique pieces still work fine when integrated together.
 
-In this article, we’ll briefly look at the classification of software testing. Using tools like Jest and the React Testing Library, you’ll learn how to write unit tests for React applications. 
+In this article, we’ll briefly look at the classification of software testing. Using tools like Jest and the React Testing Library, you’ll learn how to write unit tests for React applications.
 
 ## Prerequisite
 
@@ -36,7 +36,7 @@ Unit and integration tests in React are done with the same tools. Below are some
 
 ### Basic Setup
 
-[Create React App](https://create-react-app.dev/) (CRA) ships with a configured Jest and React Testing Library setup. If your project is bootstrapped with CRA, you’re all set to start writing tests. 
+[Create React App](https://create-react-app.dev/) (CRA) ships with a configured Jest and React Testing Library setup. If your project is bootstrapped with CRA, you’re all set to start writing tests.
 
 Bootstrap a React app with CRA:
 
@@ -111,7 +111,7 @@ test('renders learn react link', () => {
 });
 ```
 
-The [render()](https://testing-library.com/docs/react-testing-library/api#render) method renders the component which it takes as the first into a container which is appended to `document.body`.  The [screen](https://testing-library.com/docs/queries/about/#screen) object has a list of queries for querying `document.body`.
+The [render()](https://testing-library.com/docs/react-testing-library/api#render) method renders the component which it takes as the first into a container which is appended to `document.body`. The [screen](https://testing-library.com/docs/queries/about/#screen) object has a list of queries for querying `document.body`.
 
 `render()` renders the `App` component in the test code above and fails the test if the rendering was not successful. `screen.getByText(/learn react/i)` fetches the element with a text node that has its `textContent` matching the text “learn react” and fails the test if more or less than one element is found. `expect(linkElement).toBeInTheDocument()` asserts whether the element found is in the DOM or not.
 
@@ -152,7 +152,7 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
 ```
 
 On the initial render of the `App` component, the `h1` element should have a text of “Toggle OFF” that should change to “Toggle ON” when the toggle button is clicked. An automated test can be written to verify the aforementioned behaviour.
@@ -167,31 +167,31 @@ describe('Toggle Test', () => {
   test('h1 flags ON toggle is clicked', () => {
     // ARRANGE
     render(<App />);
-  
+
     // ACT
     // get the element which textContent matches 'Toggle' i.e the toggle button
     const toggleButton = screen.getByText('Toggle');
     // click on the toggle button
     fireEvent.click(toggleButton);
-  
+
     // ASSERT
     // get the h1 element in the DOM. h1 has a role of 'heading'
     const h1Element = screen.getByRole('heading');
-    // assert the textContent of the h1 element to be 
+    // assert the textContent of the h1 element to be
     expect(h1Element).toHaveTextContent('Toggle ON');
   });
-  
+
   test('h1 flags OFF toggle is clicked twice', () => {
     // ARRANGE
     render(<App />);
-  
+
     // ACT
     const h1Element = screen.getByRole('heading');
     const toggleButton = screen.getByText('Toggle');
     fireEvent.click(toggleButton);
     // click on the toggle button the second time
     fireEvent.click(toggleButton);
-  
+
     // ASSERT
     expect(h1Element).toHaveTextContent('Toggle OFF');
   });
@@ -212,7 +212,7 @@ import { useState, useEffect } from 'react';
 interface User {
   id: number;
   name: string;
-  [key: string]: unknown; 
+  [key: string]: unknown;
 }
 
 function App() {
@@ -239,7 +239,7 @@ function App() {
 export default App;
 ```
 
-You may want to verify that the list items were rendered after the call was made. This behaviour can also be verified via an automated test. The fetch request should be mocked in the test to prevent the test from hitting the endpoint, as this can cause unwanted data in the case of a POST request and so on. The `jest` global object provides a `spyOn` that tracks calls to defined methods, for example, the `fetch` method that is available globally. 
+You may want to verify that the list items were rendered after the call was made. This behaviour can also be verified via an automated test. The fetch request should be mocked in the test to prevent the test from hitting the endpoint, as this can cause unwanted data in the case of a POST request and so on. The `jest` global object provides a `spyOn` that tracks calls to defined methods, for example, the `fetch` method that is available globally.
 
 Update the `src/App.test.tsx` with the test code below:
 
@@ -248,8 +248,8 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 
 const fakeUsers = [
-  { 
-    id: 1, 
+  {
+    id: 1,
     name: 'Leanne Graham',
   },
   {
@@ -266,7 +266,7 @@ afterEach(() => {
 it('renders user data eventually', async () => {
   // ARRANGE
   // override global fetch with a mock implementation
-  jest.spyOn(global, 'fetch').mockImplementation(() => 
+  jest.spyOn(global, 'fetch').mockImplementation(() =>
     Promise.resolve({
       json: () => Promise.resolve(fakeUsers),
     }) as Promise<Response>
@@ -278,7 +278,7 @@ it('renders user data eventually', async () => {
   // ASSERT
   // get all list items in the DOM
   const listItemElements = await screen.findAllByRole('listitem');
-  // assert that there are only two list items in the DOM 
+  // assert that there are only two list items in the DOM
   expect(listItemElements).toHaveLength(2);
   // assert that the textContent of the first list item is same as the name first fake user
   expect(listItemElements[0].textContent).toBe(fakeUsers[0].name);
@@ -306,7 +306,7 @@ import axios from 'axios';
 interface User {
   id: number;
   name: string;
-  [key: string]: unknown; 
+  [key: string]: unknown;
 }
 
 function App() {
@@ -342,8 +342,8 @@ import axios from 'axios';
 import App from './App';
 
 const fakeUsers = [
-  { 
-    id: 1, 
+  {
+    id: 1,
     name: 'Leanne Graham',
   },
   {
@@ -357,7 +357,7 @@ jest.mock('axios');
 it('renders user data eventually', async () => {
   // ARRANGE
   // override the axios get method with a mock implementation
-  (axios as jest.Mocked<typeof axios>).get.mockImplementation(() => 
+  (axios as jest.Mocked<typeof axios>).get.mockImplementation(() =>
     Promise.resolve({
       data: fakeUsers,
     })
@@ -369,7 +369,7 @@ it('renders user data eventually', async () => {
   // ASSERT
   // get the h1 element in the DOM
   const listItemElements = await screen.findAllByRole('listitem');
-  // assert that there are only two list item in the DOM 
+  // assert that there are only two list item in the DOM
   expect(listItemElements).toHaveLength(2);
   // assert that the textContent of the first list item is same as the first fake user name
   expect(listItemElements[0].textContent).toBe(fakeUsers[0].name);
@@ -419,7 +419,7 @@ import LoadBtn from './LoadBtn';
 interface User {
   id: number;
   name: string;
-  [key: string]: unknown; 
+  [key: string]: unknown;
 }
 
 function App() {
@@ -466,8 +466,8 @@ import App from './App';
 import LoadBtn from './LoadBtn';
 
 const fakeUsers = [
-  { 
-    id: 1, 
+  {
+    id: 1,
     name: 'Leanne Graham',
   },
   {
@@ -481,7 +481,7 @@ jest.mock('axios');
 it('loads user data successfully on btn click', async () => {
   // ARRANGE
   // override the axios get method with a mock implementation
-  (axios as jest.Mocked<typeof axios>).get.mockImplementation(() => 
+  (axios as jest.Mocked<typeof axios>).get.mockImplementation(() =>
     Promise.resolve({
       data: fakeUsers,
     })
@@ -489,22 +489,22 @@ it('loads user data successfully on btn click', async () => {
   render(<App />);
   const loadUsersBtnComponent = renderer.create(<LoadBtn>Load  Users</LoadBtn>);
   let loadUsersBtnTree = loadUsersBtnComponent.toJSON();
-  
+
   // ACT
   const loadUsersBtn = screen.getByText(/load users/i, { exact: true });
-  
+
   // ASSERT
   expect(loadUsersBtn).not.toBeDisabled();
 
   // ACT
   fireEvent.click(loadUsersBtn);
-  
+
   // ASSERT
   // snapshot test to ensure that the load btn UI doesn't change unexpectedly
   expect(loadUsersBtnTree).toMatchSnapshot();
   // get the h1 element in the DOM
   const listItemElements = await screen.findAllByRole('listitem');
-  // assert that there are only two list item in the DOM 
+  // assert that there are only two list item in the DOM
   expect(listItemElements).toHaveLength(2);
   // assert that the textContent of the first list item is same as the first fake user name
   expect(listItemElements[0].textContent).toBe(fakeUsers[0].name);
@@ -521,7 +521,7 @@ Pressing `u`, in this case, will update the reference snapshot with the current 
 
 ## Wrap Up
 
-Unit tests are undisputedly important in every software workflow, but it doesn’t end there, especially for React apps. Integration and end-to-end tests are two other types of tests to take into consideration to make you more confident in your code. 
+Unit tests are undisputedly important in every software workflow, but it doesn’t end there, especially for React apps. Integration and end-to-end tests are two other types of tests to take into consideration to make you more confident in your code.
 
 I hope this article has given you the needed insight into writing unit tests for your application. Kindly share if you found it helpful.
 

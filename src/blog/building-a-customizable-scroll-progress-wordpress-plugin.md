@@ -6,18 +6,17 @@ description: This article will take you through the steps of building a simple b
 tags: [wordpress, plugin, oop, php]
 ---
 
-Plugins are used to extend the functionality of WordPress -- a popular Content Management System -- by adding new features or modifying the existing behavior. Building a WordPress plugin is most helpful in situations where you need a feature that cannot be provided by an existing plugin on your website. 
+Plugins are used to extend the functionality of WordPress -- a popular Content Management System -- by adding new features or modifying the existing behavior. Building a WordPress plugin is most helpful in situations where you need a feature that cannot be provided by an existing plugin on your website.
 
 This article will take you through the steps of building a simple but highly customizable scroll progress WordPress plugin right on your local machine. This scroll progress plugin will add a progress bar at the top of a web page indicating the user's current scroll level. You'll understand how WordPress plugins work and how to write code that interacts with WordPress by the end of this article.
 
 ## Prerequisites
 
-Familiarity with WordPress & Basic knowledge of  JavaScript and Object-Oriented PHP.
-
+Familiarity with WordPress & Basic knowledge of JavaScript and Object-Oriented PHP.
 
 ## Getting Started
 
-There are two main ways to create WordPress plugins: 
+There are two main ways to create WordPress plugins:
 
 1. By creating a plugin from scratch.
 2. By using a plugin development framework or template.
@@ -26,7 +25,7 @@ We won't be reinventing the wheel in this article so, we'll use a well built tem
 
 ## Installing WordPress
 
-I wrote about [installing WordPress on your local machine here](https://gideonidoko.com/writing/install-wordpress-on-your-local-machine). Quickly go through the article to install WordPress on your machine if you haven't already and come back here when you're done. 
+I wrote about [installing WordPress on your local machine here](https://gideonidoko.com/writing/install-wordpress-on-your-local-machine). Quickly go through the article to install WordPress on your machine if you haven't already and come back here when you're done.
 
 If you already have WordPress installed then continue.
 
@@ -36,13 +35,13 @@ Open your WordPress installation folder with your favorite code editor. The fold
 
 ![WordPress Folder Structure](https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/wordpress-folder-structure_gideonidoko.com_92d7399c3e.PNG?alt=media&token=3eb24db4-e3c2-462e-afc5-dc74be37fdde)
 
-The `wp-content/plugins` directory is the folder of focus in plugin development. This is where all our plugin code will go to. By default, a WordPress installation comes with two plugins, Akismet and Hello Dolly.  A peek into the `plugins` directory will reveal the `akismet` plugin folder for Akismet and the `hello.php` for Hello Dolly.
+The `wp-content/plugins` directory is the folder of focus in plugin development. This is where all our plugin code will go to. By default, a WordPress installation comes with two plugins, Akismet and Hello Dolly. A peek into the `plugins` directory will reveal the `akismet` plugin folder for Akismet and the `hello.php` for Hello Dolly.
 
 NB: One rule of thumb is, **Don’t touch WordPress core** so only edit files that pertain to your plugin. The simplest plugin is just a single PHP file like the Hello Dolly plugin.
 
 ## Generating a WordPress Plugin Boilerplate
 
-There are lots of boilerplate for plugin development. I recommend [wppb.me](https://wppb.me/) and easy to use generator. It's developed and actively maintained by [Tom McFarlin](https://twitter.com/tommcfarlin) and [Devin Vinson](https://twitter.com/DevinVinson). 
+There are lots of boilerplate for plugin development. I recommend [wppb.me](https://wppb.me/) and easy to use generator. It's developed and actively maintained by [Tom McFarlin](https://twitter.com/tommcfarlin) and [Devin Vinson](https://twitter.com/DevinVinson).
 
 1. Navigate to [wppb.me](https://wppb.me/) in your browser.
 2. Fill in the plugin's name, slug, URI, and the author's name, email, and URI as shown below:
@@ -95,8 +94,6 @@ Since we're developing for WordPress and working in a development environment, i
 define( 'WP_DEBUG', true );
 ```
 
-
-
 ## Plugin helper properties
 
 Let's define some properties that will hold the plugin's unique ID, actual name, prefix, and default options. The unique ID (slug form of the plugin name) is already defined by the boilerplate.
@@ -148,7 +145,7 @@ public function __construct() {
         'zindex' => 9999999,
         'cap' => 'curve'
     );
-    
+
     // Orchestrates actions  and filters
     $this->load_dependencies();
     // Define internationalization locale
@@ -197,8 +194,6 @@ private function define_admin_hooks() {
 }
 ```
 
-
-
 ## Plugin's Sub-level Settings Menu
 
 Settings Menus help to navigate to the different settings pages currently available. To add a sub-level menu for the plugin, we'd first create a method that calls the WordPress `add_submenu_page` function and then we bind the method to the WordPress `admin_menu` hook.
@@ -241,7 +236,7 @@ private $actual_name;
 
 public function __construct( $plugin_name, $version, $plugin_prefix, $plugin_options_default, $actual_name ) {
     $this->plugin_name = $plugin_name;
-    $this->version = $version; 
+    $this->version = $version;
     $this->plugin_prefix = $plugin_prefix;
     $this->plugin_options_default = $plugin_options_default;
     $this->actual_name = $actual_name;
@@ -268,8 +263,6 @@ Your Settings should have the plugin's name listed as one of the menus.
 
 ![Plugin menu](https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/plugin-menu_gideonidoko.com_664423139a.PNG?alt=media&token=c1adc5c0-eb09-4525-9f2c-bd1bf15de2cd)
 
-
-
 ## Creating the Plugin Settings
 
 The plugin settings page going to enable the scroll progress bar's customization of the following:
@@ -287,12 +280,12 @@ In the `Simple_Scroll_Progress_Admin` class, add a `register_settings` method li
 
 ```php
 public function register_settings() {
-    
+
     /**
-     register_setting( 
-     	string $option_group, 
-     	string $option_name, 
-     	array $args = array() 
+     register_setting(
+     	string $option_group,
+     	string $option_name,
+     	array $args = array()
      )
     */
     register_setting(
@@ -300,32 +293,32 @@ public function register_settings() {
         $this->plugin_prefix.'_options',
         array(
             'sanitize_callback' => array( $this, 'validate_options' ) // validate_option callback
-        )			 
+        )
     );
-    
+
     /**
-    add_settings_section( 
-    	string $id, 
-    	string $title, 
-    	callable $callback, 
-    	string $page 
+    add_settings_section(
+    	string $id,
+    	string $title,
+    	callable $callback,
+    	string $page
     )
     */
     add_settings_section(
         'default',
         'Customize Scroll Progress Bar', // default_section_callback
-        array($this, ' '), 
+        array($this, ' '),
         $this->plugin_name
     );
 
     /**
-    add_settings_field( 
-    	string $id, 
-    	string $title, 
-    	callable $callback, 
-    	string $page, 
-    	string $section = 'default', 
-    	array $args = array() 
+    add_settings_field(
+    	string $id,
+    	string $title,
+    	callable $callback,
+    	string $page,
+    	string $section = 'default',
+    	array $args = array()
     )
     */
     add_settings_field(
@@ -445,7 +438,7 @@ public function cap_callback($args) {
 
     $id    = isset( $args['id'] )    ? $args['id']    : '';
     $label = isset( $args['label'] ) ? $args['label'] : '';
-    
+
     /**
      * get plugin options from the database
      */
@@ -499,7 +492,7 @@ public function validate_options($input) {
     if ( isset($input['cap']) ) {
         if ( ! array_key_exists( $input['cap'], $this->cap_list() ) ) {
             $input['cap'] = $this->plugin_options_default['cap'];
-        } 
+        }
     } else {
         $input['cap'] = $this->plugin_options_default['cap'];
     }
@@ -542,8 +535,6 @@ public function display_settings_page() {
 }
 ```
 
-
-
 Finally, update the `define_admin_hooks` method of the `Simple_Scroll_Progress` class to bind the `register_settings` method like below:
 
 ```php
@@ -563,7 +554,7 @@ private function define_admin_hooks() {
 
 ![Plugin settings page](https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/plugin-settings-page_gideonidoko.com_8a9090c0e7.PNG?alt=media&token=63b506fe-5f80-4c25-9975-7ad01149c680)
 
-Now, whenever the Save Changes button is clicked, WordPress stores our values (options) using the group name we register the settings with, in this case, `$this->plugin_prefix.'_options'` (simple_scroll_progress_options). The plugin's options are stored in the `wp_options` table 
+Now, whenever the Save Changes button is clicked, WordPress stores our values (options) using the group name we register the settings with, in this case, `$this->plugin_prefix.'_options'` (simple_scroll_progress_options). The plugin's options are stored in the `wp_options` table
 
 ## Including the Plugin's JavaScript
 
@@ -573,30 +564,37 @@ Locate the `simple-scroll-progress/plugin/js/simple-scroll-progress-public.js` a
 
 ```javascript
 function _075a97e0_5a16_4b1f_9288_a4aa951951bfce_(payload) {
-	// payload will come from the database
+  // payload will come from the database
 
-	// check if payload is a valid one 
-    // i.e it has all options as key (color, height, zindex, cap)
-	if (!typeof payload === 'object' || !payload.hasOwnProperty('color') || !payload.hasOwnProperty('height') || !payload.hasOwnProperty('zindex') || !payload.hasOwnProperty('cap')) return;
+  // check if payload is a valid one
+  // i.e it has all options as key (color, height, zindex, cap)
+  if (
+    !typeof payload === 'object' ||
+    !payload.hasOwnProperty('color') ||
+    !payload.hasOwnProperty('height') ||
+    !payload.hasOwnProperty('zindex') ||
+    !payload.hasOwnProperty('cap')
+  )
+    return;
 
-	const { color, height, zindex, cap } = payload;
-    
-   	// check if this function has been called before and cancel execution
-    // if true
-	if (window._d60589dc_245b_4497_b8f6_a505a85568bf_) return;
+  const { color, height, zindex, cap } = payload;
 
-	/**
-	 * helper function to create a DOM node from an html string
-	 */
-	function createNodeFromHtmlString(htmlString) {
-		var div = document.createElement('div');
-		div.innerHTML = htmlString.trim();
-		// return first child node
-		return div.firstChild;
-	}
-    
-    // css
-	var simple_scroll_progress_css = `
+  // check if this function has been called before and cancel execution
+  // if true
+  if (window._d60589dc_245b_4497_b8f6_a505a85568bf_) return;
+
+  /**
+   * helper function to create a DOM node from an html string
+   */
+  function createNodeFromHtmlString(htmlString) {
+    var div = document.createElement('div');
+    div.innerHTML = htmlString.trim();
+    // return first child node
+    return div.firstChild;
+  }
+
+  // css
+  var simple_scroll_progress_css = `
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -607,54 +605,54 @@ function _075a97e0_5a16_4b1f_9288_a4aa951951bfce_(payload) {
 		border-top-right-radius: ${cap === 'curve' ? '100rem' : 0};
 		border-bottom-right-radius: ${cap === 'curve' ? '100rem' : 0};
 	`;
-	
-    /**
-	 * helper function to create a DOM node from an html string
-	 */
-	var scrollLine = createNodeFromHtmlString(`<div style="${simple_scroll_progress_css}"></div>`);
-    
-    /**
-	 * function to change the scroll progress bar with to the percentage scrolled
-	 */
-	function fillScrollLine() {
-		const windowHeight = window.innerHeight;
-		const fullHeight = document.body.clientHeight;
-		const scrolled = window.scrollY;
-		const percentScrolled = (scrolled / (fullHeight - windowHeight)) * 100;
 
-		scrollLine.style.width = `${percentScrolled}%`;
-	}
+  /**
+   * helper function to create a DOM node from an html string
+   */
+  var scrollLine = createNodeFromHtmlString(`<div style="${simple_scroll_progress_css}"></div>`);
 
-	/**
-	 * helper function to ensure that a certain option is not fired so often
-	 */
-	function debounce(func, wait = 8, immediate) {
-		var timeout;
-		return function () {
-			var context = this,
-				args = arguments;
-			var later = function () {
-				timeout = null;
-				if (!immediate) func.apply(context, args);
-			};
-			var callNow = immediate && !timeout;
-			clearTimeout(timeout);
-			timeout = setTimeout(later, wait);
-			if (callNow) func.apply(context, args);
-		};
-	}
-	/**
-	 * Listen to the scroll event
-	 */
-	window.addEventListener('scroll', debounce(fillScrollLine));
-	
-    /**
-	 * inject the scroll progress bar into the page.
-	 */
-	window.document.body.appendChild(scrollLine);
+  /**
+   * function to change the scroll progress bar with to the percentage scrolled
+   */
+  function fillScrollLine() {
+    const windowHeight = window.innerHeight;
+    const fullHeight = document.body.clientHeight;
+    const scrolled = window.scrollY;
+    const percentScrolled = (scrolled / (fullHeight - windowHeight)) * 100;
 
-	// so it doesn't get called twice
-	window._d60589dc_245b_4497_b8f6_a505a85568bf_ = true;
+    scrollLine.style.width = `${percentScrolled}%`;
+  }
+
+  /**
+   * helper function to ensure that a certain option is not fired so often
+   */
+  function debounce(func, wait = 8, immediate) {
+    var timeout;
+    return function () {
+      var context = this,
+        args = arguments;
+      var later = function () {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  }
+  /**
+   * Listen to the scroll event
+   */
+  window.addEventListener('scroll', debounce(fillScrollLine));
+
+  /**
+   * inject the scroll progress bar into the page.
+   */
+  window.document.body.appendChild(scrollLine);
+
+  // so it doesn't get called twice
+  window._d60589dc_245b_4497_b8f6_a505a85568bf_ = true;
 }
 ```
 
@@ -674,22 +672,22 @@ public function enqueue_scripts() {
 
     // inject data javascript file.
     /**
-    wp_enqueue_script( 
-        string $handle, 
-        string $src = '', string[] 
-        $deps = array(), 
-        string|bool|null 
-        $ver = false, 
-        bool $in_footer = false 
+    wp_enqueue_script(
+        string $handle,
+        string $src = '', string[]
+        $deps = array(),
+        string|bool|null
+        $ver = false,
+        bool $in_footer = false
     )
     */
     wp_enqueue_script($this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-scroll-progress-public.js', array(), $this->version, true );
     // inline script to call the js function and pass encoded options from the db
     /**
-    wp_add_inline_script( 
-        string $handle, 
-        string $data, 
-        string $position = 'after' 
+    wp_add_inline_script(
+        string $handle,
+        string $data,
+        string $position = 'after'
     )
     */
     wp_add_inline_script($this->plugin_name, "_075a97e0_5a16_4b1f_9288_a4aa951951bfce_(". json_encode($options) .")", 'after');

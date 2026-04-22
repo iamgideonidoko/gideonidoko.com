@@ -12,29 +12,29 @@ Consider the below `App` component:
 
 ```jsx
 export default function App() {
-    const [count, setCount] = React.useState(0);
-    const [toggle, setToggle] = React.useState(false);
-    const [text, setText] = React.useState('');
-    const [data, setData] = React.useState(null);
+  const [count, setCount] = React.useState(0);
+  const [toggle, setToggle] = React.useState(false);
+  const [text, setText] = React.useState('');
+  const [data, setData] = React.useState(null);
 
-    const handleClick = () => {
-        setCount(count + 1);
-        setToggle((prevState) => !prevState);
-        setText(`Rand: ${(Math.random() * 100).toFixed(0)}`);
-        setData({ one: 1, two: 2 });
-    }
+  const handleClick = () => {
+    setCount(count + 1);
+    setToggle((prevState) => !prevState);
+    setText(`Rand: ${(Math.random() * 100).toFixed(0)}`);
+    setData({ one: 1, two: 2 });
+  };
 
-    console.log('Component rendered');
+  console.log('Component rendered');
 
-    return (
-        <div>
-          <button onClick={() => handleClick()}>Click me</button>
-          <h2>Count: {count}</h2>
-          <h2>Toggle: {toggle ? 'Yes' : 'False'}</h2>
-          <h2>Text: {text}</h2>
-          <h2>Data: {JSON.stringify(data)}</h2>
-        </div>
-      );
+  return (
+    <div>
+      <button onClick={() => handleClick()}>Click me</button>
+      <h2>Count: {count}</h2>
+      <h2>Toggle: {toggle ? 'Yes' : 'False'}</h2>
+      <h2>Text: {text}</h2>
+      <h2>Data: {JSON.stringify(data)}</h2>
+    </div>
+  );
 }
 ```
 
@@ -55,7 +55,7 @@ State update batching is not required in some cases, such as when the next state
 `flushSync` is a method made available by the [react-dom](https://www.npmjs.com/package/react-dom) package that helps to bypass the default state update batching. It takes in a callback when invoked and flushes any updates contained within the provided callback, synchronously causing the DOM to be instantly updated.
 
 ```jsx
-flushSync(callback)
+flushSync(callback);
 ```
 
 To get started with using `flushSync`, import the `flushSync` method from `react-dom` and wrap your state updates with the callback passed to the method.
@@ -66,15 +66,15 @@ Let’s make the `setCount` state update synchronous.
 import { flushSync } from 'react-dom';
 
 // ...
-    const handleClick = () => {
-				// Component is re-rendered after this update
-        flushSync(() => setCount(count + 1))
-				// the DOM is updated at this point
-        setToggle((prevState) => !prevState);
-        setText(`Rand: ${(Math.random() * 100).toFixed(0)}`);
-        setData({ one: 1, two: 2 });
-				// the component is re-rendered and the DOM is updated again at this point
-    }
+const handleClick = () => {
+  // Component is re-rendered after this update
+  flushSync(() => setCount(count + 1));
+  // the DOM is updated at this point
+  setToggle((prevState) => !prevState);
+  setText(`Rand: ${(Math.random() * 100).toFixed(0)}`);
+  setData({ one: 1, two: 2 });
+  // the component is re-rendered and the DOM is updated again at this point
+};
 // ...
 ```
 
@@ -82,13 +82,13 @@ Below is the new state of the component:
 
 ![https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/flushsync-update-after_gideonidoko.com_5e5a98150b.PNG?alt=media&token=60d73ef5-4949-4feb-b829-a861aced2842](https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/flushsync-update-after_gideonidoko.com_5e5a98150b.PNG?alt=media&token=60d73ef5-4949-4feb-b829-a861aced2842)
 
-You can see that the 'Component rendered’ log message is displayed twice, indicating that the `App` was re-rendered twice *—* the first time after the `setCount` state update was invoked and the second time after the rest of the state updates.
+You can see that the 'Component rendered’ log message is displayed twice, indicating that the `App` was re-rendered twice _—_ the first time after the `setCount` state update was invoked and the second time after the rest of the state updates.
 
 ## Wrap up
 
 In this article, you learned about React’s state update batching feature that reduces performance loss. You also saw how to use the `flusySync` method of the `react-dom` package to bypass this feature.
 
-Yes, **immediately rendering components after every state update can cause performance loss. This is why you should use `flushSync` sparingly.
+Yes, \*\*immediately rendering components after every state update can cause performance loss. This is why you should use `flushSync` sparingly.
 
 ## Resources
 

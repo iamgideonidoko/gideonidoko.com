@@ -19,9 +19,9 @@ In this article, I will explain how I avoided styling conflicts by hiding the st
 
 ## The Shadow DOM API
 
-The Shadow DOM API is a new type of DOM API that enables the creation of custom elements with their own style, without affecting other elements on the page. The Shadow (hidden) DOM enables a hidden DOM tree to be attached to elements in the light or normal DOM tree. 
+The Shadow DOM API is a new type of DOM API that enables the creation of custom elements with their own style, without affecting other elements on the page. The Shadow (hidden) DOM enables a hidden DOM tree to be attached to elements in the light or normal DOM tree.
 
-Because this shadow DOM is hidden, just like `iframes`, the styles and behaviour within the shadow DOM won't affect the styles and behaviour outside of it and vice versa. 
+Because this shadow DOM is hidden, just like `iframes`, the styles and behaviour within the shadow DOM won't affect the styles and behaviour outside of it and vice versa.
 
 ![image](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM/shadowdom.svg)
 
@@ -31,7 +31,7 @@ The **shadow host** is the node that houses a Shadow DOM while the **shadow root
 
 ## Hiding the styles and behaviour of an element using the Shadow DOM
 
-To hide the styles and behaviour of an element, you have to attach a shadow root to the element. The Shadow DOM API provides a method, `Element.attachShadow()` to attach a shadow root to elements. The `attachShadow` method takes an options object as its only parameter. This options object has only one option — `mode` with a value that is either **open** or **closed**. 
+To hide the styles and behaviour of an element, you have to attach a shadow root to the element. The Shadow DOM API provides a method, `Element.attachShadow()` to attach a shadow root to elements. The `attachShadow` method takes an options object as its only parameter. This options object has only one option — `mode` with a value that is either **open** or **closed**.
 
 The shadow root will be accessible via `Element.shadowRoot` if the mode is open. In cases where the mode is close `Element.shadowRoot` will be `null`;
 
@@ -40,8 +40,8 @@ const elem1 = document.getElementbyId('elem1');
 const elem2 = document.getElementbyId('elem2');
 elem1.attachShadow({ mode: 'open' });
 elem2.attachShadow({ mode: 'closed' });
-console.log(elem1.shadowRoot) // #document-fragment
-console.log(elem2.shadowRoot) // null (a reference
+console.log(elem1.shadowRoot); // #document-fragment
+console.log(elem2.shadowRoot); // null (a reference
 // to the shadowroot should be used instead)
 ```
 
@@ -51,12 +51,12 @@ I used the `closed` value on the widget I worked on since I didn't want the widg
 <h1>SHADOW DOM</h1>
 <div id="widget"></div>
 <script>
-    const widget = document.getElementById('widget');;
-    const shadowRoot = widget.attachShadow({ mode: 'closed' });
-    // shadowRoot references the shadow root attached to widget
+  const widget = document.getElementById('widget');
+  const shadowRoot = widget.attachShadow({ mode: 'closed' });
+  // shadowRoot references the shadow root attached to widget
 
-    // css
-    const css = `
+  // css
+  const css = `
     h1 {
         color: red;
     }
@@ -65,15 +65,15 @@ I used the `closed` value on the widget I worked on since I didn't want the widg
     }
     `;
 
-    // html
-    const widgetHtml = `
+  // html
+  const widgetHtml = `
     <style>${css}</style>
 
     <div class="widget-component"><h1>Widget</h1></div>
     `;
 
-    // write the html to the shadow DOM
-    shadowRoot.innerHTML = widgetHtml;	
+  // write the html to the shadow DOM
+  shadowRoot.innerHTML = widgetHtml;
 </script>
 ```
 

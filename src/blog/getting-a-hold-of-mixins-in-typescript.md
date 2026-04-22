@@ -6,7 +6,7 @@ description: A mixin in TypeScript is a pattern that uses generics and inheritan
 tags: [typescript]
 ---
 
-Mixin is a generic term that has been in object-oriented programming for some time. The term is said to have been drawn from the noun "mix-in,” a trademarked term belonging to the owner of an ice cream shop a long time ago. At the time, mix-ins (not mixins) were extra items blended into ice cream, probably to change its taste. 
+Mixin is a generic term that has been in object-oriented programming for some time. The term is said to have been drawn from the noun "mix-in,” a trademarked term belonging to the owner of an ice cream shop a long time ago. At the time, mix-ins (not mixins) were extra items blended into ice cream, probably to change its taste.
 
 ![https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/a-little-mixin_gideonidoko.com_2787f1ade8.jpg?alt=media&token=b593bc9c-1224-4c8c-8b07-62e29992b306](https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/a-little-mixin_gideonidoko.com_2787f1ade8.jpg?alt=media&token=b593bc9c-1224-4c8c-8b07-62e29992b306)
 
@@ -16,32 +16,32 @@ In this article, you'll learn about mixins in TypeScript, how they work, and the
 
 ## What is a Mixin in TypeScript?
 
-A mixin in TypeScript is a pattern that uses [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) and inheritance to extend or add to the functionality of a class. In essence, mixins allow more functionality to be “mixed in" to a class. 
+A mixin in TypeScript is a pattern that uses [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) and inheritance to extend or add to the functionality of a class. In essence, mixins allow more functionality to be “mixed in" to a class.
 
 Though Mixins are not unique to TypeScript, they play a huge role in multiple inheritance in TypeScript. This is because TypeScript supports only single inheritance. Let’s start by looking at the following classes:
 
 ```typescript
 class GasolineCar {
-    constructor() {
-        console.log('Gasoline car constructor');
-    }
+  constructor() {
+    console.log('Gasoline car constructor');
+  }
 }
 
 class ElectricCar {
-    constructor() {
-        console.log('Electric car constructor');
-    }
+  constructor() {
+    console.log('Electric car constructor');
+  }
 }
 
 class HybridCar {
-    constructor() {
-        super();
-        console.log('Hybrid car constructor');
-    }
+  constructor() {
+    super();
+    console.log('Hybrid car constructor');
+  }
 }
 ```
 
-These classes represent three different types of cars: gasoline, electric, or hybrid (both). 
+These classes represent three different types of cars: gasoline, electric, or hybrid (both).
 
 ![https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/car%20types_gideonidoko.com_dabe1b4ac2.png?alt=media&token=09135d25-a443-477f-99c1-8d8c14627833](https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/car%20types_gideonidoko.com_dabe1b4ac2.png?alt=media&token=09135d25-a443-477f-99c1-8d8c14627833)
 
@@ -68,29 +68,29 @@ Putting this in code, you’d have:
 
 ```typescript
 class GasolineCar {
-    constructor() {}
-    public fuel() {
-        console.log('Car was fueled');
-    }
+  constructor() {}
+  public fuel() {
+    console.log('Car was fueled');
+  }
 }
 
 class ElectricCar extends GasolineCar {
-    constructor() {
-        super();
-    }
-    public charge() {
-        console.log('Car was charged');
-    }
+  constructor() {
+    super();
+  }
+  public charge() {
+    console.log('Car was charged');
+  }
 }
 
-class HybridCar extends ElectricCar{
-    constructor() {
-        super();
-    }
+class HybridCar extends ElectricCar {
+  constructor() {
+    super();
+  }
 }
 ```
 
-I have added the `fuel()` and `charge()` methods to the `GasolineCar` and `ElectricCar` classes, respectively, to represent distinct behaviour. 
+I have added the `fuel()` and `charge()` methods to the `GasolineCar` and `ElectricCar` classes, respectively, to represent distinct behaviour.
 
 Now, the `HybridCar` class has the properties and behaviours (methods) of both the `ElectricCar` and `GasolineCar` classes:
 
@@ -102,7 +102,7 @@ new HybridCar().fuel(); // LOG: Car was fueled
 Here’s the catch: due to this chain of inheritance, the `ElectricCar` class now has the behaviour of the `GasolineCar` class, which you’d agree with me is a terrible idea. I mean, an electric car should'nt be fueled, right?
 
 ```typescript
-new ElectricCar().charge() // LOG: Car was charged
+new ElectricCar().charge(); // LOG: Car was charged
 new ElectricCar().fuel(); // LOG Car was fueled
 ```
 
@@ -125,7 +125,7 @@ Let’s talk about both patterns outlined above.
 
 ### Applying Mixins by Copying Prototype Properties
 
-This pattern leverages [object prototypes](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes) by copying all properties from the prototype of multiple classes (say the `ElectricCar` and `Gasoline` classes) to another one (say the `HybridCar` class). The TypeScript docs provide us with the below function that copies prototypes’ properties using the `Object.getOwnPropertyNames()`, `Object.defineProperty()`, and  `Object.getOwnPropertyDescriptor()` methods:
+This pattern leverages [object prototypes](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes) by copying all properties from the prototype of multiple classes (say the `ElectricCar` and `Gasoline` classes) to another one (say the `HybridCar` class). The TypeScript docs provide us with the below function that copies prototypes’ properties using the `Object.getOwnPropertyNames()`, `Object.defineProperty()`, and `Object.getOwnPropertyDescriptor()` methods:
 
 ```typescript
 function applyMixins(derivedCtor: any, constructors: any[]) {
@@ -134,21 +134,20 @@ function applyMixins(derivedCtor: any, constructors: any[]) {
       Object.defineProperty(
         derivedCtor.prototype,
         name,
-        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
-          Object.create(null)
+        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) || Object.create(null),
       );
     });
   });
-}  
+}
 ```
 
-The `applyMixins` function takes the base class as its first argument and an array of classes that the base class should extend as the second argument. It will apply the properties and behaviour of all the classes in the array as mixins into the base class at runtime. Because the mixins are applied at runtime,  a static type error will be thrown. Hence, a separate interface (which exists at compile time) has to be created to [declaratively merge](https://www.typescriptlang.org/docs/handbook/declaration-merging.html) the type of all classes in the array argument.
+The `applyMixins` function takes the base class as its first argument and an array of classes that the base class should extend as the second argument. It will apply the properties and behaviour of all the classes in the array as mixins into the base class at runtime. Because the mixins are applied at runtime, a static type error will be thrown. Hence, a separate interface (which exists at compile time) has to be created to [declaratively merge](https://www.typescriptlang.org/docs/handbook/declaration-merging.html) the type of all classes in the array argument.
 
 Let’s utilize the `applyMixins` to apply the mixins (from `GasolineCar` and `ElectricCar`) on `HybridCar`:
 
 ```typescript
 class HybridCar {
-    constructor() {}
+  constructor() {}
 }
 
 applyMixins(HybridCar, [GasolineCar, ElectricCar]);
@@ -163,7 +162,7 @@ new HybridCar().charge(); // LOG: Car was charged
 
 Now, `HybridCar` will have all properties and methods of `GasolineCar` and `ElectricCar`.
 
-### Applying Mixins via  a Factory Method
+### Applying Mixins via a Factory Method
 
 This pattern makes use of a [factory method](http://javascripttutorial.net/javascript-factory-functions/) which returns a class expression that extends the base class. This factory method relies on generics to add proper static typing for the expected base class.
 
@@ -175,18 +174,18 @@ type Constructor<T = object> = new (...args: any[]) => T;
 function MakeGasoline<TBase extends Constructor>(Base: TBase) {
   return class extends Base implements GasolineCar {
     fuel() {
-        console.log('Car was fueled');
+      console.log('Car was fueled');
     }
   };
 }
 
 function MakeElectric<TBase extends Constructor>(Base: TBase) {
-    return class extends Base implements ElectricCar {
-      charge() {
-          console.log('Car was charged');
-      }
-    };
-  }
+  return class extends Base implements ElectricCar {
+    charge() {
+      console.log('Car was charged');
+    }
+  };
+}
 
 const NewHybridCar = MakeElectric(MakeGasoline(HybridCar));
 
@@ -194,7 +193,7 @@ new NewHybridCar().fuel(); // LOG: Car was fueled
 new NewHybridCar().charge(); // LOG: Car was charged
 ```
 
-Here, the generic type `Constructor` defines the expected type of the base class. The `MakeGasoline` and `MakeElectric` factory methods apply mixins for adding gasoline and electric car methods respectively to the base class (`HybridCar`). The class returned by the factory methods above implement the `GasolineCar` and `ElectricCar` classes separately to ensure appropriate behaviours are “mixed in”. 
+Here, the generic type `Constructor` defines the expected type of the base class. The `MakeGasoline` and `MakeElectric` factory methods apply mixins for adding gasoline and electric car methods respectively to the base class (`HybridCar`). The class returned by the factory methods above implement the `GasolineCar` and `ElectricCar` classes separately to ensure appropriate behaviours are “mixed in”.
 
 Now, `HybridCar` will have the properties and methods of `GasolineCar` and `ElectricCar`.
 

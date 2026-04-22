@@ -13,7 +13,8 @@
     "lint:staged": "lint-staged",
     "lint": "pnpm run lint:base --fix ./",
     "prepare": "husky",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "copy-to-clipboard": "^3.3.3",

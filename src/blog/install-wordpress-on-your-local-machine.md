@@ -22,9 +22,9 @@ Run the installation file once the download is complete. Open the control panel 
 
 ### Downloading WordPress
 
-Go to the [WordPress.org download page](https://wordpress.org/download/) and download WordPress. The WordPress version used in this article is v5.9.3. 
+Go to the [WordPress.org download page](https://wordpress.org/download/) and download WordPress. The WordPress version used in this article is v5.9.3.
 
-Extract the downloaded file and copy the `wordpress` folder into `[xamp installation directory]/htdocs`. The `htdocs` (Hypertext Documents) directory is the folder that the apache server searches for files and serves. Navigate to `http://localhost/wordpress` to assess the  WordPress.
+Extract the downloaded file and copy the `wordpress` folder into `[xamp installation directory]/htdocs`. The `htdocs` (Hypertext Documents) directory is the folder that the apache server searches for files and serves. Navigate to `http://localhost/wordpress` to assess the WordPress.
 
 ### Creating a Database for WordPress
 
@@ -55,7 +55,7 @@ To configure WordPress, we need the following information:
 - Database host: This is `localhost` by default.
 - Table Prefix: This is `wp_` by default.
 
-Navigate to `http://localhost/phpmyadmin` in your browser. 
+Navigate to `http://localhost/phpmyadmin` in your browser.
 
 1. Select your preferred language (Eg. English) and click continue.
 2. Click on **Let's go** on the next screen.

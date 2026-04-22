@@ -1,11 +1,10 @@
 .contactMain {
-	text-align: center;
+  text-align: center;
 }
 
 .contactMain h1 {
-	line-height: 1.1em;
-	margin: 0 0 2.4rem;
-	text-transform: uppercase;
-	font-size: clamp(1.8rem, 2.5vw, 2.5vw);
+  line-height: 1.1em;
+  margin: 0 0 2.4rem;
+  text-transform: uppercase;
+  font-size: clamp(1.8rem, 2.5vw, 2.5vw);
 }
-
