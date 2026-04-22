@@ -8,18 +8,24 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import gsap from 'gsap';
 
 const Footer = () => {
-  //get current year
   const date = new Date();
   const currentYear = date.getFullYear();
   const pathname = usePathname();
 
+  const footerRef = useRef<HTMLElement | null>(null);
   const timeLineRefs = useRef<gsap.core.Timeline[]>([]);
+  const refreshFrameRef = useRef<number | null>(null);
 
   const addTrigger = () => {
     timeLineRefs.current.forEach((tl) => tl.kill());
     timeLineRefs.current = [];
 
-    [...document.querySelectorAll('.footer-main-heading')].forEach((elem) => {
+    const footerElement = footerRef.current;
+    if (!footerElement) {
+      return;
+    }
+
+    [...footerElement.querySelectorAll('.footer-main-heading')].forEach((elem) => {
       const tl = gsap.timeline({
         scrollTrigger: {
           markers: false,
@@ -27,6 +33,7 @@ const Footer = () => {
           end: 'center center',
           trigger: elem,
           scrub: true,
+          invalidateOnRefresh: true,
         },
       });
       tl.fromTo(
@@ -42,7 +49,7 @@ const Footer = () => {
       );
       timeLineRefs.current.push(tl);
     });
-    [...document.querySelectorAll('.footer-bg')].forEach((elem) => {
+    [...footerElement.querySelectorAll('.footer-bg')].forEach((elem) => {
       const tl = gsap.timeline({
         scrollTrigger: {
           markers: false,
@@ -50,6 +57,7 @@ const Footer = () => {
           end: 'top top',
           trigger: elem,
           scrub: true,
+          invalidateOnRefresh: true,
         },
       });
       tl.fromTo(
@@ -80,17 +88,42 @@ const Footer = () => {
       return;
     }
 
-    const frameId = window.requestAnimationFrame(addTrigger);
+    const refreshTriggers = () => {
+      if (refreshFrameRef.current) {
+        window.cancelAnimationFrame(refreshFrameRef.current);
+      }
+
+      refreshFrameRef.current = window.requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    };
+
+    const frameId = window.requestAnimationFrame(() => {
+      addTrigger();
+      refreshTriggers();
+    });
+    const resizeObserver = new ResizeObserver(() => {
+      refreshTriggers();
+    });
+
+    if (footerRef.current) {
+      resizeObserver.observe(footerRef.current);
+    }
+    resizeObserver.observe(document.documentElement);
 
     return () => {
       window.cancelAnimationFrame(frameId);
+      if (refreshFrameRef.current) {
+        window.cancelAnimationFrame(refreshFrameRef.current);
+      }
+      resizeObserver.disconnect();
       timeLineRefs.current.forEach((tl) => tl.kill());
       timeLineRefs.current = [];
     };
   }, [pathname]);
 
   return (
-    <footer className="footer">
+    <footer ref={footerRef} className="footer">
       <div className="footer-bg"></div>
       <div className=" footer-wrapper">
         <div>
