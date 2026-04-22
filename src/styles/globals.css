@@ -2,7 +2,8 @@
 
 @font-face {
   font-family: 'AkiraExpanded';
-  src: url('/assets/font/AkiraExpanded-SuperBold.woff2') format('woff2'),
+  src:
+    url('/assets/font/AkiraExpanded-SuperBold.woff2') format('woff2'),
     url('/assets/font/AkiraExpanded-SuperBold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
@@ -11,7 +12,8 @@
 
 @font-face {
   font-family: 'Hanken Grotesk';
-  src: url('/assets/font/HankenGrotesk-Bold.woff2') format('woff2'),
+  src:
+    url('/assets/font/HankenGrotesk-Bold.woff2') format('woff2'),
     url('/assets/font/HankenGrotesk-Bold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
@@ -20,7 +22,8 @@
 
 @font-face {
   font-family: 'Hanken Grotesk';
-  src: url('/assets/font/HankenGrotesk-Medium.woff2') format('woff2'),
+  src:
+    url('/assets/font/HankenGrotesk-Medium.woff2') format('woff2'),
     url('/assets/font/HankenGrotesk-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
@@ -29,7 +32,8 @@
 
 @font-face {
   font-family: 'Hanken Grotesk';
-  src: url('/assets/font/HankenGrotesk-Light.woff2') format('woff2'),
+  src:
+    url('/assets/font/HankenGrotesk-Light.woff2') format('woff2'),
     url('/assets/font/HankenGrotesk-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
@@ -38,7 +42,8 @@
 
 @font-face {
   font-family: 'Hanken Grotesk';
-  src: url('/assets/font/HankenGrotesk-Regular.woff2') format('woff2'),
+  src:
+    url('/assets/font/HankenGrotesk-Regular.woff2') format('woff2'),
     url('/assets/font/HankenGrotesk-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
@@ -47,7 +52,8 @@
 
 @font-face {
   font-family: 'Hanken Grotesk';
-  src: url('/assets/font/HankenGrotesk-SemiBold.woff2') format('woff2'),
+  src:
+    url('/assets/font/HankenGrotesk-SemiBold.woff2') format('woff2'),
     url('/assets/font/HankenGrotesk-SemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
@@ -56,7 +62,8 @@
 
 @font-face {
   font-family: 'Hanken Grotesk';
-  src: url('/assets/font/HankenGrotesk-Italic.woff2') format('woff2'),
+  src:
+    url('/assets/font/HankenGrotesk-Italic.woff2') format('woff2'),
     url('/assets/font/HankenGrotesk-Italic.woff') format('woff');
   font-weight: normal;
   font-style: italic;
@@ -100,8 +107,9 @@
   --pri-delete-color-01: rgba(255, 77, 77, 0.1);
   --pri-delete-color-02: rgba(255, 77, 77, 0.2);
   /*--code-elem-bg-color: #24292e;*/
-  --default-font: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --default-font:
+    'Hanken Grotesk', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+    Droid Sans, Helvetica Neue, sans-serif;
   --header-font: 'Hanken Grotesk', var(--default-font);
   --code-elem-bg-color: #121314;
   --bg-from-sectionOne: #3a3d50;
@@ -116,7 +124,8 @@
   --blogrighth3-shadow: rgba(255, 255, 255, 0.1);
   --searchbox-bg: rgba(255, 255, 255, 0.1);
   --ps1first-color: rgba(255, 255, 255, 0.04);
-  --btn-grad-img: linear-gradient(rgb(13, 14, 33), rgb(13, 14, 33)),
+  --btn-grad-img:
+    linear-gradient(rgb(13, 14, 33), rgb(13, 14, 33)),
     radial-gradient(circle at left top, rgba(34, 193, 195), rgb(253, 187, 45));
   --code-bg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='7rem' width='500px'><text x='0' y='28' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"JetBrains Mono\", monospace'>100101010110011010100101010110100110110111</text><text x='0' y='56' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"JetBrains Mono\", monospace'>010010110101001010101001101010101010100100</text><text x='0' y='84' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"JetBrains Mono\", monospace'>011100011010110111010110101010100010101100</text><text x='0' y='112' fill='rgba(255,255,255,0.04)' font-size='1.5rem' font-family='\"JetBrains Mono\", monospace'>010010101101010110101110011010100101010110</text></svg>");
   --header-bg: rgba(3, 3, 3, 0.5);
@@ -178,7 +187,8 @@
   --blogrighth3-shadow: rgba(0, 0, 0, 0.2);
   --searchbox-bg: rgba(0, 0, 0, 0.1);
   --ps1first-color: rgba(0, 0, 0, 0.07);
-  --btn-grad-img: linear-gradient(rgb(242, 242, 250), rgb(240, 240, 250)),
+  --btn-grad-img:
+    linear-gradient(rgb(242, 242, 250), rgb(240, 240, 250)),
     radial-gradient(circle at left top, rgba(34, 193, 195), rgb(253, 187, 45));
   --code-bg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='7rem' width='500px'><text x='0' y='28' fill='%23f5f5f5' class='love' font-size='1.5rem' font-family='\"JetBrains Mono\", monospace'>100101010110011010100101010110100110110111</text><text x='0' y='56' fill='%23f6f6f6' font-size='1.5rem' font-family='\"JetBrains Mono\", monospace'>010010110101001010101001101010101010100100</text><text x='0' y='84' fill='%23f7f7f7' font-size='1.5rem' font-family='\"JetBrains Mono\", monospace'>011100011010110111010110101010100010101100</text><text x='0' y='112' fill='%23f6f6f6' font-size='1.5rem' font-family='\"JetBrains Mono\", monospace'>010010101101010110101110011010100101010110</text></svg>");
   --header-bg: rgba(252, 252, 252, 0.5);
@@ -358,12 +368,8 @@ body::-webkit-scrollbar-track {
   max-width: 100%;
   height: 12rem;
   display: block;
-  background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0.5) 50%,
-      rgba(255, 255, 255, 0) 80%
-    ),
+  background:
+    linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80%),
     #22c1c330;
   background-repeat: repeat-y;
   background-size: 50px 500px;
@@ -396,42 +402,219 @@ body::-webkit-scrollbar-track {
 
 .switch {
   position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 20px;
-  background-color: rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-  transition: all 0.3s;
-  transform: translateY(0.3rem);
+  display: inline-flex;
+  width: 4.8rem;
+  height: 2.8rem;
+  padding: 0.2rem;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(135deg, #73c6ff 0%, #f7d66b 100%);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 0.6rem 1.8rem rgba(0, 0, 0, 0.18);
+  transition:
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.25s ease;
+  transform: none;
   border: 0;
   cursor: pointer;
-  /* outline: 1px solid red;
-	outline-offset: 1px; */
+  overflow: hidden;
 }
 
-.switch:after {
+.switch__track {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.switch__stars,
+.switch__clouds {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.switch__star {
+  position: absolute;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.75);
+  opacity: 0;
+  transform: translateY(0.3rem) scale(0.6);
+  transition:
+    opacity 0.3s ease,
+    transform 0.35s ease;
+}
+
+.switch__star--1 {
+  top: 0.45rem;
+  left: 1.1rem;
+}
+
+.switch__star--2 {
+  top: 0.9rem;
+  left: 1.8rem;
+}
+
+.switch__star--3 {
+  top: 0.55rem;
+  left: 2.45rem;
+}
+
+.switch__cloud {
+  position: absolute;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  filter: blur(0.1rem);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.switch__cloud::before,
+.switch__cloud::after {
   content: '';
   position: absolute;
-  width: 18px;
-  height: 18px;
-  border-radius: 18px;
-  background-color: white;
-  top: 1px;
-  left: 1px;
-  transition: all 0.3s;
+  bottom: 0;
+  border-radius: 999px;
+  background: inherit;
 }
 
-.switch[aria-checked='true']:after {
-  transform: translateX(20px);
+.switch__cloud--1 {
+  width: 1.3rem;
+  bottom: 0.45rem;
+  left: 0.55rem;
+}
+
+.switch__cloud--1::before {
+  width: 0.65rem;
+  height: 0.65rem;
+  left: 0.1rem;
+}
+
+.switch__cloud--1::after {
+  width: 0.8rem;
+  height: 0.8rem;
+  right: 0.1rem;
+}
+
+.switch__cloud--2 {
+  width: 1rem;
+  top: 0.45rem;
+  left: 1.55rem;
+  opacity: 0.8;
+}
+
+.switch__cloud--2::before {
+  width: 0.5rem;
+  height: 0.5rem;
+  left: 0.08rem;
+}
+
+.switch__cloud--2::after {
+  width: 0.65rem;
+  height: 0.65rem;
+  right: 0.06rem;
+}
+
+.switch__thumb {
+  position: absolute;
+  top: 0.05rem;
+  left: 0.2rem;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff4c7 0%, #ffc84a 58%, #f0942f 100%);
+  box-shadow:
+    0 0 0 0.18rem rgba(255, 255, 255, 0.14),
+    0 0.5rem 1.2rem rgba(0, 0, 0, 0.22);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.switch__sun-core {
+  position: absolute;
+  inset: 0.45rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.92) 0%, rgba(255, 246, 196, 0.2) 70%, transparent 72%);
+}
+
+.switch__moon-crater {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(121, 137, 173, 0.22);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.switch__moon-crater--1 {
+  top: 0.6rem;
+  left: 0.62rem;
+  width: 0.42rem;
+  height: 0.42rem;
+}
+
+.switch__moon-crater--2 {
+  right: 0.55rem;
+  bottom: 0.58rem;
+  width: 0.56rem;
+  height: 0.56rem;
 }
 
 .switch[aria-checked='true'] {
-  background-color: #e4e2e2;
+  background: linear-gradient(135deg, #0d1833 0%, #0F0F0F 58%, #6246a6 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0.8rem 2rem rgba(13, 24, 51, 0.35);
+}
+
+.switch[aria-checked='true'] .switch__thumb {
+  transform: translateX(2rem);
+  background: radial-gradient(circle at 35% 30%, #f3f5ff 0%, #d9e0f2 55%, #a1afcf 100%);
+  box-shadow:
+    0 0 0 0.18rem rgba(255, 255, 255, 0.08),
+    0 0.5rem 1.2rem rgba(6, 12, 28, 0.35);
+}
+
+.switch[aria-checked='true'] .switch__star {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.switch[aria-checked='true'] .switch__cloud {
+  opacity: 0;
+  transform: translateY(0.2rem);
+}
+
+.switch[aria-checked='true'] .switch__moon-crater {
+  opacity: 1;
+}
+
+.switch:active {
+  transform: translateY(0);
 }
 
 .switch:focus-visible {
   outline: 2px solid var(--pri-neutral);
   outline-offset: 4px;
+}
+
+.themeswitch-wrapper .switch {
+  transform: none;
+  opacity: 1;
+}
+
+.themeswitch-wrapper .switch:hover {
+  transform: translateY(0);
 }
 
 .offscreen {
@@ -1460,7 +1643,11 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 .animated-button--pallene__solid {
   box-shadow: inset 0 0 0 calc(40px + 1vw) var(--pri-neutral);
   color: var(--pri-neutral-inverse);
-  transition: border-radius 0.3s, box-shadow 0.3s, color 0.3s, border-color 0.3s;
+  transition:
+    border-radius 0.3s,
+    box-shadow 0.3s,
+    color 0.3s,
+    border-color 0.3s;
   transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
   border: 1px solid transparent;
 }
@@ -1474,7 +1661,11 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 
 .animated-button--pallene__outline {
   box-shadow: inset 0 0 0 0px var(--pri-neutral);
-  transition: border-radius 0.3s, box-shadow 0.3s, color 0.3s, border-color 0.3s;
+  transition:
+    border-radius 0.3s,
+    box-shadow 0.3s,
+    color 0.3s,
+    border-color 0.3s;
   transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
   border: 1px solid var(--pri-neutral);
   color: var(--font-color);
@@ -1489,7 +1680,11 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 
 .animated-button--pallene__outlineless {
   box-shadow: inset 0 0 0 0px var(--pri-neutral);
-  transition: border-radius 0.3s, box-shadow 0.3s, color 0.3s, border-color 0.3s;
+  transition:
+    border-radius 0.3s,
+    box-shadow 0.3s,
+    color 0.3s,
+    border-color 0.3s;
   transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
   border: 0px solid var(--pri-neutral);
   color: var(--font-color);
@@ -1777,7 +1972,8 @@ pre {
 .remark-code-title {
   margin-bottom: -2.7rem;
   padding: 0.2em 1em 0.5em;
-  font-family: 'JetBrains Mono', Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter',
+  font-family:
+    'JetBrains Mono', Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter',
     'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier,
     monospace;
   background-color: var(--neutral-color-1);

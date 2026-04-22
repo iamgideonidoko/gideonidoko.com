@@ -47,6 +47,22 @@ const ThemeSwitch: FC<Partial<Record<'isNavOpen' | 'allowForMobile', boolean>>> 
         aria-label={`Activate ${theme === 'dark' ? 'light' : 'dark'} mode`}
         onClick={handleSwitch}
       >
+        <span className="switch__track" aria-hidden="true">
+          <span className="switch__stars">
+            <span className="switch__star switch__star--1"></span>
+            <span className="switch__star switch__star--2"></span>
+            <span className="switch__star switch__star--3"></span>
+          </span>
+          <span className="switch__clouds">
+            <span className="switch__cloud switch__cloud--1"></span>
+            <span className="switch__cloud switch__cloud--2"></span>
+          </span>
+          <span className="switch__thumb">
+            <span className="switch__sun-core"></span>
+            <span className="switch__moon-crater switch__moon-crater--1"></span>
+            <span className="switch__moon-crater switch__moon-crater--2"></span>
+          </span>
+        </span>
         <span className="offscreen">{theme === 'dark' ? 'Dark mode enabled' : 'Light mode enabled'}</span>
       </button>
     </div>
