@@ -11,7 +11,7 @@ const BlogTags: FC<{ tags: string[]; handleSearchTerm: (term: string) => void; s
   return (
     <details className={styles.blogTagsWrapper}>
       <summary>
-        <h5>Browse writing by tag</h5>
+        <span className={styles.blogTagsSummary}>Browse writing by tag</span>
       </summary>
       <div className={styles.blogTags}>
         {tags.map((tag) => (

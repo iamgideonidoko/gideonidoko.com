@@ -53,7 +53,7 @@
   max-width: 72rem;
 }
 
-.blogBoxRight h3 {
+.blogBoxRight h2 {
   padding: 0;
   font-size: clamp(3rem, 3.5vw, 3.8rem);
   font-weight: 650;
@@ -191,7 +191,7 @@
   margin: 0 auto 4em;
 }
 
-.blogTagsWrapper h5 {
+.blogTagsSummary {
   font-size: 1.2em;
   display: inline-block;
 }

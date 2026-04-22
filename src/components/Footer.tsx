@@ -155,7 +155,7 @@ const Footer = () => {
           <Image src="/logo.svg" className="site-footer-logo" alt="Gideon Idoko" width={25} height={25} />
         </div>
         <p className="footer-question">GOT A PROJECT IN MIND?</p>
-        <h3 className="footer-main-heading">LET&apos;S CONNECT</h3>
+        <h2 className="footer-main-heading">LET&apos;S CONNECT</h2>
         <div className="write-msg-btn">
           <a
             href="mailto:iamgideonidoko@gmail.com?subject=I%20want%20to%20connect%20with%20you&body=Hello%2C%20I%27m%20..."

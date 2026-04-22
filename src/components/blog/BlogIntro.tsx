@@ -9,7 +9,7 @@ const BlogIntro: FC<{ postCount: number; handleSearchTerm: (term: string) => voi
 }) => {
   return (
     <div className={styles.blogIntro}>
-      <h2 className={styles.blogIntroMainText}>WRITING</h2>
+      <h1 className={styles.blogIntroMainText}>WRITING</h1>
       <div className={styles.blogIntro1}>
         <div className={styles.blogIntro1Child}>
           <div className={styles.blogIntroSearch} data-post-count={postCount}>

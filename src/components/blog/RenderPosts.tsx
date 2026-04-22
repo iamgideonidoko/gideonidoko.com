@@ -30,7 +30,7 @@ const RenderPosts = ({ posts }: { posts: Array<IPost> }) => {
                 ) : null}
               </div>
               <div className={styles.blogBoxRight}>
-                <h3>{post.title}</h3>
+                <h2>{post.title}</h2>
                 {post.description ? <p>{post.description}</p> : null}
               </div>
             </article>
