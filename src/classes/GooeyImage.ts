@@ -21,7 +21,7 @@ export default class GooeyImage {
   private offset: THREE.Vector2;
   private vertexShader: string;
   private fragmentShader: string;
-  private clock: THREE.Clock;
+  private timer: THREE.Timer;
   private mouse: THREE.Vector2;
   private hasClicked: boolean;
   private loader: THREE.TextureLoader;
@@ -73,7 +73,8 @@ export default class GooeyImage {
     this.offset = new THREE.Vector2(0, 0);
     this.vertexShader = vertexShader;
     this.fragmentShader = gooeyFragmentShader;
-    this.clock = new THREE.Clock();
+    this.timer = new THREE.Timer();
+    this.timer.connect(document);
     this.mouse = new THREE.Vector2(0, 0);
     this.hasClicked = false;
     this.isMobile = false;
@@ -238,7 +239,7 @@ export default class GooeyImage {
       u_mouse: { value: this.mouse },
       u_progressHover: { value: 0 },
       u_progressClick: { value: 0 },
-      u_time: { value: this.clock.getElapsedTime() },
+      u_time: { value: 0 },
       u_res: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
     };
 
@@ -284,6 +285,8 @@ export default class GooeyImage {
   }
 
   public update() {
+    this.timer.update();
+
     if (!this.mesh) {
       return;
     }
@@ -296,7 +299,7 @@ export default class GooeyImage {
       return;
     }
 
-    this.uniforms.u_time.value += this.clock.getDelta();
+    this.uniforms.u_time.value += this.timer.getDelta();
   }
 
   private getBounds() {
@@ -357,5 +360,6 @@ export default class GooeyImage {
     this.images.forEach((image) => image.dispose());
     this.material?.dispose();
     this.geometry?.dispose();
+    this.timer.dispose();
   }
 }
