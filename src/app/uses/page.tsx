@@ -35,7 +35,7 @@ export default function UsesPage() {
             <ul>
               <li>Mi Curved Gaming Monitor 34&quot;</li>
               <li>13&quot; MBP</li>
-              <li>Dell Latitude 7480</li>
+              <li>Dell Latitude 7480 + Omarchy</li>
               <li>Logitech MX Master 3s</li>
               <li>Logitech Mx Keys</li>
               <li>ASUS ANC Headphone</li>
@@ -53,7 +53,7 @@ export default function UsesPage() {
             <ul>
               <li>Ghostty (Terminal)</li>
               <li>Neo(vim) (Editor)</li>
-              <li>Tokyo Night (Theme)</li>
+              <li>Rosé Pine (Theme)</li>
               <li>JetBrains Mono (Font)</li>
               <li>tmux (Terminal Multiplexer)</li>
               <li>zsh (Unix Shell)</li>
