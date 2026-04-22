@@ -26,13 +26,7 @@ const Header = ({
     <header className={`header ${!isNavOpen ? 'force-sticky' : ''}`}>
       <div className="logo-wrap">
         <Link href="/">
-          <Image
-            src="/assets/img/GideonIdokoDevLogo.png"
-            className="site-logo"
-            alt="Gideon Idoko"
-            width={50}
-            height={50}
-          />
+          <Image src="/logo.svg" className="site-logo" alt="Gideon Idoko" width={50} height={50} />
         </Link>
       </div>
       <div>

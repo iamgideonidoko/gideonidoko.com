@@ -6,7 +6,7 @@ export const siteConfig = {
   description:
     'Gideon Idoko is a software engineer interested in creative technology, design, AI, research, and building impactful solutions.',
   url: 'https://gideonidoko.com',
-  ogImage: 'https://gideonidoko.com/assets/img/GideonIdokoCardImage.png',
+  ogImage: 'https://gideonidoko.com/assets/img/gi-card-image.jpg',
   xHandle: '@iamgideonidoko',
 };
 

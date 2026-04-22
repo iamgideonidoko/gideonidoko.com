@@ -363,13 +363,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
         <div className="mobileAdminName">
           <Link href="/" onClick={closeNav}>
-            <Image
-              src="/assets/img/GideonIdokoDevLogo.png"
-              className="site-footer-logo"
-              alt="Gideon Idoko"
-              width={25}
-              height={25}
-            />
+            <Image src="/logo.svg" className="site-footer-logo" alt="Gideon Idoko" width={25} height={25} />
           </Link>
           <span>Gideon Idoko</span>
         </div>
@@ -438,13 +432,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         {shouldEnableMotionShell && (
           <div className="page--overlay">
             <div className="page--overlay__loader">
-              <Image
-                src="/assets/img/GideonIdokoDevLogo.png"
-                className="site-logo"
-                alt="Gideon Idoko"
-                width={50}
-                height={50}
-              />
+              <Image src="/logo.svg" className="site-logo" alt="Gideon Idoko" width={50} height={50} />
             </div>
           </div>
         )}

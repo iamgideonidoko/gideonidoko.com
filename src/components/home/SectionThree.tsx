@@ -22,7 +22,7 @@ const SectionThree = () => {
           <div className="gooey__image">
             <Image
               src="/assets/img/gideon.jpeg"
-              data-hover="/assets/img/gideon-hover.jpeg"
+              data-hover="/assets/img/gideon-hover.jpg"
               alt="Gideon Idoko"
               width={1242}
               height={1652}
