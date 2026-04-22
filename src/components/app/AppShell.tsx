@@ -12,6 +12,22 @@ import PageLoader from '../../classes/PageLoader';
 const pageWithoutHeader: string[] = ['/p/test'];
 const pageWithoutFooter: string[] = ['/p/test'];
 const MOTION_SHELL_MEDIA_QUERY = '(min-width: 768px) and (pointer: fine)';
+const HISTORY_NAV_REVEAL_DELAY_MS = 420;
+const HISTORY_STATE_KEY = '__gideonLoaderHistoryIndex';
+
+const getHistoryStateIndex = (state: unknown) => {
+  if (typeof state !== 'object' || state === null) {
+    return null;
+  }
+
+  const value = (state as Record<string, unknown>)[HISTORY_STATE_KEY];
+  return typeof value === 'number' ? value : null;
+};
+
+const withHistoryStateIndex = (state: unknown, index: number) => ({
+  ...(typeof state === 'object' && state !== null ? state : {}),
+  [HISTORY_STATE_KEY]: index,
+});
 
 type CursorController = {
   emit: (event: 'enter' | 'leave') => void;
@@ -25,7 +41,11 @@ type CanvasController = {
 export default function AppShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname() ?? '/';
-  const routeKey = pathname;
+  const [locationSearch, setLocationSearch] = useState(() =>
+    typeof window === 'undefined' ? '' : window.location.search,
+  );
+  const routeSearch = typeof window === 'undefined' ? locationSearch : window.location.search;
+  const routeKey = routeSearch ? `${pathname}${routeSearch}` : pathname;
   const isWritingRoute = useMemo(() => /^\/(?:writing|blog)(?:\/|$)/.test(pathname), [pathname]);
 
   const [isNavOpen, setIsNavOpen] = useState(true);
@@ -41,7 +61,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const pageLoaderRef = useRef<PageLoader | null>(null);
   const pageLoaderElementRef = useRef<HTMLDivElement | null>(null);
   const pendingNavigationRef = useRef<string | null>(null);
+  const shouldEnableMotionShellRef = useRef(false);
   const isBackOrForwardNav = useRef(false);
+  const historyIndexRef = useRef(0);
+  const historyRevertingRef = useRef(false);
+  const historyReplayingRef = useRef(false);
   const initialRouteRender = useRef(true);
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
   const mobileNavCloseButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -49,6 +73,10 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
   const mobileMenuOpen = !isNavOpen;
   const shouldEnableMotionShell = supportsMotionShell && !prefersReducedMotion && !isWritingRoute;
+
+  useEffect(() => {
+    shouldEnableMotionShellRef.current = shouldEnableMotionShell;
+  }, [shouldEnableMotionShell]);
 
   const closeNav = () => {
     contentScrollPos.current = 0;
@@ -64,6 +92,32 @@ export default function AppShell({ children }: { children: ReactNode }) {
     return () => {
       pageLoaderRef.current?.destroy();
       pageLoaderRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const currentIndex = getHistoryStateIndex(window.history.state) ?? 0;
+    historyIndexRef.current = currentIndex;
+    window.history.replaceState(withHistoryStateIndex(window.history.state, currentIndex), '', window.location.href);
+
+    const originalPushState = window.history.pushState.bind(window.history);
+    const originalReplaceState = window.history.replaceState.bind(window.history);
+
+    window.history.pushState = ((state, unused, url) => {
+      const nextIndex = historyIndexRef.current + 1;
+      historyIndexRef.current = nextIndex;
+      originalPushState(withHistoryStateIndex(state, nextIndex), unused, url);
+    }) as History['pushState'];
+
+    window.history.replaceState = ((state, unused, url) => {
+      const nextIndex = getHistoryStateIndex(state) ?? historyIndexRef.current;
+      historyIndexRef.current = nextIndex;
+      originalReplaceState(withHistoryStateIndex(state, nextIndex), unused, url);
+    }) as History['replaceState'];
+
+    return () => {
+      window.history.pushState = originalPushState;
+      window.history.replaceState = originalReplaceState;
     };
   }, []);
 
@@ -156,9 +210,21 @@ export default function AppShell({ children }: { children: ReactNode }) {
   }, [mobileMenuOpen]);
 
   useEffect(() => {
-    void pageLoaderRef.current?.animateOut();
+    const isHistoryNavigation = isBackOrForwardNav.current;
+    const revealDelay = isHistoryNavigation && !prefersReducedMotion ? HISTORY_NAV_REVEAL_DELAY_MS : 0;
+    const timeoutId = window.setTimeout(() => {
+      void pageLoaderRef.current?.animateOut();
+      if (isHistoryNavigation) {
+        isBackOrForwardNav.current = false;
+      }
+    }, revealDelay);
+
     pendingNavigationRef.current = null;
-  }, [routeKey]);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [prefersReducedMotion, routeKey]);
 
   useEffect(() => {
     if (!shouldEnableMotionShell) {
@@ -222,7 +288,6 @@ export default function AppShell({ children }: { children: ReactNode }) {
         delete window.appLenis;
         canvasRef.current?.cleanUp();
         canvasRef.current = null;
-        pageLoaderRef.current = null;
       };
     };
 
@@ -237,7 +302,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
   useEffect(() => {
     const hideCanvasForTransition = () => {
       const canvasElement = document.querySelector<HTMLCanvasElement>('#canvas');
-      if (canvasElement && shouldEnableMotionShell) {
+      if (canvasElement && shouldEnableMotionShellRef.current) {
         canvasElement.style.visibility = 'hidden';
       }
     };
@@ -299,20 +364,53 @@ export default function AppShell({ children }: { children: ReactNode }) {
       void handleRouteChangeStart(`${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
     };
 
-    const handlePopState = () => {
-      isBackOrForwardNav.current = true;
+    const handlePopState = async (event: PopStateEvent) => {
+      setLocationSearch(window.location.search);
       hideCanvasForTransition();
-      void pageLoaderRef.current?.animateIn();
+
+      const nextIndex = getHistoryStateIndex(event.state);
+
+      if (historyRevertingRef.current) {
+        historyRevertingRef.current = false;
+        event.stopImmediatePropagation();
+        return;
+      }
+
+      if (historyReplayingRef.current) {
+        historyReplayingRef.current = false;
+        if (nextIndex !== null) {
+          historyIndexRef.current = nextIndex;
+        }
+        isBackOrForwardNav.current = true;
+        return;
+      }
+
+      if (nextIndex === null || nextIndex === historyIndexRef.current) {
+        isBackOrForwardNav.current = true;
+        return;
+      }
+
+      event.stopImmediatePropagation();
+
+      const direction: -1 | 1 = nextIndex < historyIndexRef.current ? -1 : 1;
+
+      historyRevertingRef.current = true;
+      window.history.go(-direction);
+
+      await pageLoaderRef.current?.animateIn();
+
+      historyReplayingRef.current = true;
+      window.history.go(direction);
     };
 
     document.addEventListener('click', handleDocumentClick, true);
-    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('popstate', handlePopState, true);
 
     return () => {
       document.removeEventListener('click', handleDocumentClick, true);
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('popstate', handlePopState, true);
     };
-  }, [router, shouldEnableMotionShell]);
+  }, [router]);
 
   useEffect(() => {
     if (!shouldEnableMotionShell) {
@@ -495,7 +593,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           aria-hidden="true"
           suppressHydrationWarning
         >
-          <svg className="cursor" width="140" height="140" viewBox="0 0 140 140">
+          <svg className="cursor" width="140" height="140" viewBox="0 0 140 140" suppressHydrationWarning>
             <defs>
               <filter id="filter-1" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
                 <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="10" result="warp" />
@@ -511,6 +609,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           className="fixed-line"
           aria-hidden="true"
           style={pathname.startsWith('/writing/') ? { background: 'none' } : {}}
+          suppressHydrationWarning
         />
         {shouldEnableMotionShell && <canvas id="canvas" aria-hidden="true" />}
         <div className="noise-bg" aria-hidden="true"></div>

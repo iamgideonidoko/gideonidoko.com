@@ -54,6 +54,16 @@ export default class PageLoader {
     await this.wait(this.prefersReducedMotion ? 0 : PAGE_LOADER_ENTER_DURATION_MS);
   }
 
+  public showImmediately() {
+    if (!this.overlay) {
+      return;
+    }
+
+    this.clearSettleTimeout();
+    this.animatedIn = true;
+    this.overlay.setAttribute('data-state', 'covering');
+  }
+
   public async animateOut() {
     if (!this.overlay) {
       return;
