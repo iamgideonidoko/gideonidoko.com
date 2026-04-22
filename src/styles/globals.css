@@ -1527,8 +1527,8 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   --button-stroke-width: 1px;
   --button-text: var(--font-color);
   --button-bg-hover: transparent;
-  --button-stroke-hover-1: #31a290;
-  --button-stroke-hover-2: #31a290;
+  --button-stroke-hover-1: #00d4cf;
+  --button-stroke-hover-2: #8832ff;
   --button-stroke-width-hover: 1px;
   --button-text-hover: var(--font-color);
   cursor: pointer;
