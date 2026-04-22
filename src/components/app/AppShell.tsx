@@ -72,6 +72,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const lastFocusedElementRef = useRef<HTMLElement | null>(null);
 
   const mobileMenuOpen = !isNavOpen;
+  const shouldEnableSmoothScroll = !prefersReducedMotion;
   const shouldEnableMotionShell = supportsMotionShell && !prefersReducedMotion && !isWritingRoute;
 
   useEffect(() => {
@@ -227,11 +228,12 @@ export default function AppShell({ children }: { children: ReactNode }) {
   }, [prefersReducedMotion, routeKey]);
 
   useEffect(() => {
-    if (!shouldEnableMotionShell) {
+    if (!shouldEnableSmoothScroll) {
       cursorRef.current?.destroy();
       cursorRef.current = null;
       canvasRef.current?.cleanUp();
       canvasRef.current = null;
+      window.appLenis?.destroy();
       delete window.appLenis;
       return;
     }
@@ -241,44 +243,59 @@ export default function AppShell({ children }: { children: ReactNode }) {
     let lenisCleanup: (() => void) | null = null;
 
     const initMotionShell = async () => {
-      const [lenisModule, gsapModule, scrollTriggerModule, cursorModule] = await Promise.all([
-        import('lenis'),
-        import('gsap'),
-        import('gsap/dist/ScrollTrigger'),
-        import('../../classes/Cursor'),
-      ]);
+      const lenisModulePromise = import('lenis');
+      const desktopModulesPromise = shouldEnableMotionShell
+        ? Promise.all([import('gsap'), import('gsap/dist/ScrollTrigger'), import('../../classes/Cursor')])
+        : Promise.resolve(null);
+      const [lenisModule, desktopModules] = await Promise.all([lenisModulePromise, desktopModulesPromise]);
 
       if (cancelled) {
         return;
       }
 
       const Lenis = lenisModule.default;
-      const gsap = gsapModule.default;
-      const ScrollTrigger = scrollTriggerModule.default;
-      const Cursor = cursorModule.default;
+      const isMobileScrollMode = !supportsMotionShell;
+      let scrollTrigger: (typeof import('gsap/dist/ScrollTrigger'))['default'] | null = null;
 
-      gsap.registerPlugin(ScrollTrigger);
+      if (desktopModules) {
+        const [gsapModule, scrollTriggerModule, cursorModule] = desktopModules;
+        const gsap = gsapModule.default;
+        const Cursor = cursorModule.default;
+
+        scrollTrigger = scrollTriggerModule.default;
+        gsap.registerPlugin(scrollTrigger);
+
+        const cursorElement = document.querySelector<SVGElement>('.cursor');
+        if (cursorElement) {
+          cursorRef.current = new Cursor(cursorElement);
+        }
+      } else {
+        cursorRef.current?.destroy();
+        cursorRef.current = null;
+      }
 
       const lenis = new Lenis({
-        lerp: 0.04,
+        lerp: isMobileScrollMode ? 0.085 : 0.04,
         smoothWheel: true,
-        syncTouch: false,
+        syncTouch: isMobileScrollMode,
+        syncTouchLerp: isMobileScrollMode ? 0.12 : 0.075,
+        touchMultiplier: 1,
+        touchInertiaExponent: isMobileScrollMode ? 1.4 : 1.7,
+        allowNestedScroll: true,
+        overscroll: true,
       });
 
       window.appLenis = lenis;
-      lenis.on('scroll', ScrollTrigger.update);
+      if (scrollTrigger) {
+        lenis.on('scroll', scrollTrigger.update);
+      }
 
       const scrollFn = (time: number) => {
         lenis.raf(time);
-        ScrollTrigger.update();
+        scrollTrigger?.update();
         animationFrameId = window.requestAnimationFrame(scrollFn);
       };
       animationFrameId = window.requestAnimationFrame(scrollFn);
-
-      const cursorElement = document.querySelector<SVGElement>('.cursor');
-      if (cursorElement) {
-        cursorRef.current = new Cursor(cursorElement);
-      }
 
       lenisCleanup = () => {
         window.cancelAnimationFrame(animationFrameId);
@@ -297,7 +314,20 @@ export default function AppShell({ children }: { children: ReactNode }) {
       cancelled = true;
       lenisCleanup?.();
     };
-  }, [shouldEnableMotionShell]);
+  }, [shouldEnableMotionShell, shouldEnableSmoothScroll, supportsMotionShell]);
+
+  useEffect(() => {
+    if (!window.appLenis) {
+      return;
+    }
+
+    if (mobileMenuOpen) {
+      window.appLenis.stop();
+      return;
+    }
+
+    window.appLenis.start();
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     const hideCanvasForTransition = () => {

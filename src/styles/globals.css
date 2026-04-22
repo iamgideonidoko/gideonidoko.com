@@ -225,7 +225,8 @@ body {
   /* background-image: var(--code-bg) !important; */
 }
 
-html.lenis {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -237,8 +238,8 @@ html.lenis {
   overscroll-behavior: contain;
 }
 
-.lenis.lenis-stopped {
-  overflow: hidden;
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
 }
 
 .lenis.lenis-scrolling .lenis-scroll-fix,
@@ -323,6 +324,8 @@ body::-webkit-scrollbar-track {
   transition: all 0.2s ease-in-out;
   background: var(--bg-color);
   position: relative;
+  min-height: 100%;
+  -webkit-overflow-scrolling: touch;
   /* background-image: var(--code-bg); */
 }
 
