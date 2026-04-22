@@ -1,3 +1,4 @@
 .github/
 public/
 node_modules/
+next-env.d.ts
