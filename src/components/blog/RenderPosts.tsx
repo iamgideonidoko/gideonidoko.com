@@ -4,7 +4,7 @@ import { IPost } from '../../interfaces/post.interface';
 
 const RenderPosts = ({ posts }: { posts: Array<IPost> }) => {
   if (posts.length === 0) {
-    return <b>No writing yet.</b>;
+    return <b>No writing found.</b>;
   } else {
     return (
       <div className={styles.blogPostsList} suppressHydrationWarning>
