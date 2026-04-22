@@ -3,7 +3,7 @@ title: 'Quickly Set Up Linting & Pre-commit Check in React Using Eslint, Prettie
 date: 2022-04-25
 cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/Quickly%20set%20up%20Linting%20%26%20Pre-commit%20Checks_gideonidoko.com_25da3627a8.jpg?alt=media&token=9c4e928e-8cf4-4e5f-b722-ece0a68e957f
 description: In this article, you'll learn how to quickly set up linting in a react project using the linter, eslint. You'll also learn how to configure prettier to format your code and how to check your code for linting issues before any commit is made.
-tags: [lint, react]
+tags: [react]
 ---
 
 Writing clean and quality code is important in every engineering team for clear communication among team members. We can enforce the good practice of writing clean code through linting.

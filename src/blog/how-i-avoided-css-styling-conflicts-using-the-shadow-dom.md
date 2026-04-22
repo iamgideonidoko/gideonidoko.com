@@ -3,7 +3,7 @@ title: How I avoided CSS Styling conflicts using the Shadow DOM
 date: 2022-04-11
 cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/How%20I%20avoided%20CSS%20Styling%20conflicts%20using%20the%20Shadow%20DOM_gideonidoko.com_500b9aa3c9.jpg?alt=media&token=970f73f7-ebd0-435f-8b18-7506b64b0532
 description: I worked on this project (an embeddable widget) where I had to ensure that the styling of the webpage doesn't conflict with the styling of the widget component. Knowing fully well that overriding CSS wasn't an efficient solution, I sought a better technique.
-tags: [javascript, shadowdom, dom]
+tags: [javascript, dom]
 ---
 
 I worked on this project (an embeddable widget) where I had to ensure that the styling of the webpage doesn't conflict with the styling of the widget component. Knowing fully well that overriding CSS wasn't an efficient solution, I sought a better technique. Alas, I came across the Shadow DOM API with its few advantages such as data hiding and encapsulation.

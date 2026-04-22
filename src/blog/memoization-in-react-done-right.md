@@ -3,7 +3,7 @@ title: Memoization in React Done Right
 date: 2022-03-20
 cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/Memoization%20in%20React%20Done%20Right_gideonidoko.com_aeae9bb7a8.jpg?alt=media&token=c02558c7-e647-4815-8b39-56c561ae8c62
 description: Performance is a vital quality every software product ought to possess. It is a measure of how efficiently your software meets the response time requirements when a user interacts with it. There are a couple of ways in which React applications can be optimized for performance.
-tags: [react, javascript, memoization]
+tags: [react]
 ---
 
 Performance is a vital quality every software product ought to possess. It is a measure of how efficiently your software meets the response time requirements when a user interacts with it. There are a couple of ways in which React applications can be optimized for performance. In this article, we'll learn how to increase the performance of React applications using a technique called **memoization** and how to do it the right way.

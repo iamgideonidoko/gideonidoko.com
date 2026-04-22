@@ -3,7 +3,7 @@ title: 'JavaScript: The Strange Yet Tricky Parts'
 date: 2021-03-13
 cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/JavaScript_The-strange-yet-tricky-parts_gideonidoko.com_2fc2c4bd83.jpg?alt=media&token=8626a0e6-bc21-40b6-af21-7ccdc9952733
 description: JavaScript is one of the most widely used technologies in the engineering world as it is very efficient, and great for building fast, high-performing applications. Despite the awesomeness of JavaScript, the language has some tricky parts, one of which you might have come across.
-tags: [javascript, trick]
+tags: [javascript]
 ---
 
 JavaScript is one of the most widely used technologies in the engineering world as it is very efficient, and great for building fast, high-performing applications. Despite the awesomeness of JavaScript, the language has some tricky parts, one of which you might have come across.

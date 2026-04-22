@@ -3,7 +3,7 @@ title: A Deep Dive into Utility Types in TypeScript
 date: 2022-05-22
 cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/A%20Deep%20Dive%20into%20Utility%20Types%20in%20TypeScript%20Cover%20Image_gideonidoko.com_43aca7d21a.jpg?alt=media&token=3d682571-7ebd-4329-ae25-5e26c6c11543
 description: Utility types are helper generic types that can be used to create new types. Basically, utility types take other types as parameters and transform them into new types. TypeScript has some built-in utility types which we are going to discuss in this article.
-tags: [typescript, utility]
+tags: [typescript]
 ---
 
 Typescript is a typed superset of JavaScript that offers optional static typing — a powerful feature that ensures a variable doesn't change its type once declared. Utility types are helper generic types that can be used to create new types. Basically, utility types take other types as parameters and transform them into new types.

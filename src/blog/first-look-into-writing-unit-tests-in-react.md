@@ -3,7 +3,7 @@ title: First Look Into Writing Unit Tests in React
 date: 2022-09-21
 cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/First%20Look%20Into%20Writing%20Unit%20Tests%20in%20React_gideonidoko.com_f93748a71a.png?alt=media&token=6eb99234-2d23-446b-996e-f4931a2f744c
 description: Unit and integration testing are the most basic and popular types of software testing. While unit testing asserts that the functionality of a small part or individual components of an application is working fine, integration testing ensures that the unique pieces still work fine when integrated together.
-tags: [test, react, typescript]
+tags: [react]
 ---
 
 Software testing is a concept that is almost as old as software itself. The term "software testing” refers to the process of verifying that a software program functions as it is intended to. Software testing helps us identify bugs in software. Identified bugs are then removed or corrected via the process of debugging.

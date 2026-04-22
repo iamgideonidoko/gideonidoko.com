@@ -3,7 +3,7 @@ title: Building a Customizable Scroll Progress WordPress Plugin
 date: 2022-05-08
 cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/Building%20a%20Customizable%20Scroll%20Progress%20WordPress%20Plugin_gideonidoko.com_46a84a0499.jpg?alt=media&token=3ee3188a-a8b6-4c59-86ec-259f062834dd
 description: This article will take you through the steps of building a simple but highly customizable scroll progress WordPress plugin right on your local machine.
-tags: [wordpress, plugin, oop, php]
+tags: [wordpress, php]
 ---
 
 Plugins are used to extend the functionality of WordPress -- a popular Content Management System -- by adding new features or modifying the existing behavior. Building a WordPress plugin is most helpful in situations where you need a feature that cannot be provided by an existing plugin on your website.

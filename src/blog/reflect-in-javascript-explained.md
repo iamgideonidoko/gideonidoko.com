@@ -3,7 +3,7 @@ title: 'Reflect in JavaScript Explained!'
 date: 2021-05-12
 cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/Reflect%20in%20JavaScript%20Explained_gideonidoko.com_a8e13b3e77.png?alt=media&token=e20118dc-2023-43c9-8b5e-f237a23fa0de
 description: Reflect is a built-in global object that was introduced in ES6 and dedicated to allow for effective reflection - the ability of a program to manipulate properties and methods of objects at runtime.
-tags: [javascript, reflect]
+tags: [javascript]
 ---
 
 Reflect is a built-in global object that was introduced in ES6 and dedicated to allow for effective **reflection** - the ability of a program to manipulate properties and methods of objects at runtime. The `Reflect` object provides methods that have the ability to inspect, interact with, and manipulate object properties.

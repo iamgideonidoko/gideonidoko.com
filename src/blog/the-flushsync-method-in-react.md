@@ -3,7 +3,7 @@ title: The flushSync Method in React
 date: 2022-08-03
 cover: https://firebasestorage.googleapis.com/v0/b/gideonidoko-website-assets.appspot.com/o/The%20flushSync%20Method%20in%20React_gideonidoko.com_84383afe42.jpg?alt=media&token=91871eaa-c219-4d17-b91b-f56612436274
 description: React batches multiple state updates made within hooks or callbacks to improve the performance of applications. flushSync is a method made available by the react-dom package that helps to bypass the default state update batching.
-tags: [react, javascript]
+tags: [react]
 ---
 
 React batches multiple state updates made within hooks or callbacks to improve the performance of applications. Components will be rerendered immediately after every synchronous state update is made if state updates are not batched. This can lead to performance issues.
