@@ -132,34 +132,25 @@ export default function AboutPage() {
               {`>CLICK & DRAG<`}
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
-              SCSS
+              Rust
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
-              JavaScript
-            </li>
-            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
-              TypeScript
+              JS/TS
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               GraphQL
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
-              React
+              React/Next
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               React Native
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
-              RTK
+              Go
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
-              NextJS
-            </li>
-            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
-              NodeJS
-            </li>
-            <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
-              ExpressJS
+              Node.js
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               NoSQL
@@ -168,10 +159,10 @@ export default function AboutPage() {
               Redis
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
-              Firebase
+              Three.js
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
-              Supabase
+              GLSL
             </li>
             <li className={`physics--box__item ${isTouchDevice ? 'pointer-events-all' : ''}`} data-lenis-prevent>
               PHP
