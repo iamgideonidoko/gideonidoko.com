@@ -17,7 +17,7 @@ const SectionTwo = () => {
           name: 'Useri',
           about:
             'Agro-exclusive market and logistics mobile platform that helps tackle food waste and optimize food supply chain.',
-          cover: '/assets/img/useri-cover-color.jpg',
+          cover: '/assets/img/useri-cover.jpg',
           alt: 'Useri cover',
           role: 'Mobile/Backend Engineer',
           link1: 'https://play.google.com/store/apps/details?id=com.useriapp.useri',
@@ -30,7 +30,7 @@ const SectionTwo = () => {
           name: 'Kanta',
           about:
             'Web platform that manages local football teams, players, fixture and live scores with real-time updates.',
-          cover: '/assets/img/kanta-cover-color.png',
+          cover: '/assets/img/kanta-cover.png',
           alt: 'Kanta cover',
           role: 'Full-stack Engineer',
           link1: 'https://kantaball.com',
@@ -40,7 +40,7 @@ const SectionTwo = () => {
         {
           name: 'Dentbud',
           about: 'AI/mobile-based student smart personal assistant for tracking activities, task, courses and more.',
-          cover: '/assets/img/dentbud-cover-color.png',
+          cover: '/assets/img/dentbud-cover.png',
           alt: 'Dentbud cover',
           role: 'Full-stack/AI Engineer',
           link1: 'https://dentbud.surge.sh',
@@ -50,7 +50,7 @@ const SectionTwo = () => {
         {
           name: 'BAS',
           about: 'Biometric attendance system that tracks student attendance using fingerprint biometrics.',
-          cover: '/assets/img/bas-cover-color.png',
+          cover: '/assets/img/bas-cover.png',
           alt: 'BAS cover',
           role: 'Full-stack/CV Engineer',
           link1: 'https://github.com/IamGideonIdoko/bio-attendance-sys#screenshots',
@@ -60,7 +60,7 @@ const SectionTwo = () => {
         {
           name: 'LinAssess',
           about: 'Functional clone of LinkedIn assessment to help you ace your assessments.',
-          cover: '/assets/img/linassess-cover-color.jpg',
+          cover: '/assets/img/linassess-cover.jpg',
           alt: 'LinAssess cover',
           role: 'Full-stack Developer',
           link1: 'https://linassess.netlify.app',
