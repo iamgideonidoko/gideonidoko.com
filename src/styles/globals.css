@@ -1776,7 +1776,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   --marquee-width: 100vw;
   --offset: 1vw;
   --move-initial: calc(-5vw);
-  --move-final: calc(-117.5vw);
+  --move-final: calc(-5vw - 100% / 3);
   --item-font-size: 15vw;
   --animation-duration: 35s;
   position: relative;
@@ -1788,7 +1788,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 }
 
 .marquee__inner {
-  width: fit-content;
+  width: max-content;
   display: flex;
   position: relative;
   transform: translate3d(var(--move-initial), 0, 0);
@@ -1806,6 +1806,7 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
 
 .marquee span {
   white-space: nowrap;
+  flex-shrink: 0;
   font-size: var(--item-font-size);
   padding: 0;
   font-weight: 500;
