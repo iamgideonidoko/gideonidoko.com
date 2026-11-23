@@ -19,7 +19,6 @@ export default function UsesPage() {
             <div className="gooey__image">
               <Image
                 src="/assets/img/workspace.jpeg"
-                data-hover="/assets/img/workspace-hover.jpeg"
                 alt="Workspace"
                 width={960}
                 height={1280}

@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 
 const SectionTwo = () => {
   const projects = useMemo<
-    (Record<'name' | 'about' | 'cover1' | 'cover2' | 'alt' | 'link1' | 'role', string> &
+    (Record<'name' | 'about' | 'cover' | 'alt' | 'link1' | 'role', string> &
       Partial<Record<'link2' | 'link1Text' | 'link2Text', string>> & { stack: string[]; id: number })[]
   >(
     () =>
@@ -17,8 +17,7 @@ const SectionTwo = () => {
           name: 'Useri',
           about:
             'Agro-exclusive market and logistics mobile platform that helps tackle food waste and optimize food supply chain.',
-          cover1: '/assets/img/useri-cover.jpg',
-          cover2: '/assets/img/useri-cover-hover.jpg',
+          cover: '/assets/img/useri-cover-color.jpg',
           alt: 'Useri cover',
           role: 'Mobile/Backend Engineer',
           link1: 'https://play.google.com/store/apps/details?id=com.useriapp.useri',
@@ -31,8 +30,7 @@ const SectionTwo = () => {
           name: 'Kanta',
           about:
             'Web platform that manages local football teams, players, fixture and live scores with real-time updates.',
-          cover1: '/assets/img/kanta-cover.png',
-          cover2: '/assets/img/kanta-cover-hover.png',
+          cover: '/assets/img/kanta-cover-color.png',
           alt: 'Kanta cover',
           role: 'Full-stack Engineer',
           link1: 'https://kantaball.com',
@@ -42,8 +40,7 @@ const SectionTwo = () => {
         {
           name: 'Dentbud',
           about: 'AI/mobile-based student smart personal assistant for tracking activities, task, courses and more.',
-          cover1: '/assets/img/dentbud-cover.png',
-          cover2: '/assets/img/dentbud-cover-hover.png',
+          cover: '/assets/img/dentbud-cover-color.png',
           alt: 'Dentbud cover',
           role: 'Full-stack/AI Engineer',
           link1: 'https://dentbud.surge.sh',
@@ -53,8 +50,7 @@ const SectionTwo = () => {
         {
           name: 'BAS',
           about: 'Biometric attendance system that tracks student attendance using fingerprint biometrics.',
-          cover1: '/assets/img/bas-cover.png',
-          cover2: '/assets/img/bas-cover-hover.png',
+          cover: '/assets/img/bas-cover-color.png',
           alt: 'BAS cover',
           role: 'Full-stack/CV Engineer',
           link1: 'https://github.com/IamGideonIdoko/bio-attendance-sys#screenshots',
@@ -64,8 +60,7 @@ const SectionTwo = () => {
         {
           name: 'LinAssess',
           about: 'Functional clone of LinkedIn assessment to help you ace your assessments.',
-          cover1: '/assets/img/linassess-cover.jpg',
-          cover2: '/assets/img/linassess-cover-hover.jpg',
+          cover: '/assets/img/linassess-cover-color.jpg',
           alt: 'LinAssess cover',
           role: 'Full-stack Developer',
           link1: 'https://linassess.netlify.app',
@@ -237,8 +232,8 @@ const SectionTwo = () => {
                   <div className={styles.projectImgWrapper}>
                     <div className="gooey__image">
                       <Image
-                        src={project.cover2}
-                        data-hover={project.cover1}
+                        src={project.cover}
+                        data-grayscale-hover="true"
                         alt={project.alt}
                         width={1920}
                         height={1080}

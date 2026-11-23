@@ -29,11 +29,9 @@ export default class GooeyImage {
   private isHovering?: boolean;
   private uniforms?: {
     u_alpha: THREE.IUniform<number>;
+    u_grayscaleHover: THREE.IUniform<number>;
     u_map: THREE.IUniform<THREE.Texture> & { type: UniformType };
     u_ratio: THREE.IUniform<THREE.Vector2>;
-    u_hovermap: THREE.IUniform<THREE.Texture> & { type: UniformType };
-    u_hoverratio: THREE.IUniform<THREE.Vector2>;
-    u_shape: THREE.IUniform<THREE.Texture>;
     u_mouse: { value: THREE.Vector2 };
     u_progressHover: THREE.IUniform<number>;
     u_progressClick: THREE.IUniform<number>;
@@ -95,8 +93,8 @@ export default class GooeyImage {
       this.onPointerLeave();
     };
 
-    if (this.img.src && this.img.dataset.hover) {
-      this.preload([this.img.src, this.img.dataset.hover], () => {
+    if (this.img.src) {
+      this.preload([this.img.src], () => {
         this.initImage();
       });
     }
@@ -201,19 +199,13 @@ export default class GooeyImage {
     }
 
     const texture = this.images[0];
-    const hoverTexture = this.images[1];
     const textureImage = texture.image;
-    const hoverTextureImage = hoverTexture.image;
 
     if (
       !textureImage ||
-      !hoverTextureImage ||
       typeof textureImage !== 'object' ||
-      typeof hoverTextureImage !== 'object' ||
       !('width' in textureImage) ||
-      !('height' in textureImage) ||
-      !('width' in hoverTextureImage) ||
-      !('height' in hoverTextureImage)
+      !('height' in textureImage)
     ) {
       return;
     }
@@ -222,20 +214,14 @@ export default class GooeyImage {
       width: Number(textureImage.width),
       height: Number(textureImage.height),
     };
-    const hoverTextureDimensions = {
-      width: Number(hoverTextureImage.width),
-      height: Number(hoverTextureImage.height),
-    };
 
     this.getBounds();
 
     this.uniforms = {
       u_alpha: { value: 1 },
+      u_grayscaleHover: { value: this.img.dataset.grayscaleHover === 'true' ? 1 : 0 },
       u_map: { type: 't', value: texture },
       u_ratio: { value: getRatio(this.sizes, textureDimensions) },
-      u_hovermap: { type: 't', value: hoverTexture },
-      u_hoverratio: { value: getRatio(this.sizes, hoverTextureDimensions) },
-      u_shape: { value: this.images[2] },
       u_mouse: { value: this.mouse },
       u_progressHover: { value: 0 },
       u_progressClick: { value: 0 },
