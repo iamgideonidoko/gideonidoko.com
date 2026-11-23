@@ -1855,6 +1855,10 @@ pre:has(> code.code-highlight):hover .codeCopyBtn {
   border-radius: 0.8rem;
 }
 
+.gooey__image img:not([data-grayscale-hover='true']) {
+  filter: grayscale(1);
+}
+
 .gooey__image img.is-loaded {
   opacity: 0;
 }
