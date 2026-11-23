@@ -80,8 +80,8 @@ export default function AboutPage() {
                 <Image
                   src="/assets/img/gideon.jpg"
                   alt="Gideon Idoko"
-                  width={1242}
-                  height={1652}
+                  width={1086}
+                  height={1448}
                   priority
                   sizes="(max-width: 768px) 92vw, 42vw"
                   style={{ maxWidth: '100%', width: '100%', height: 'auto' }}
