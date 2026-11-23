@@ -34,16 +34,15 @@ export default function UsesPage() {
             <ul>
               <li>Mi Curved Gaming Monitor 34&quot;</li>
               <li>13&quot; MBP</li>
-              <li>Dell Latitude 7480 + Omarchy</li>
+              <li>HP ProBook + Omarchy</li>
               <li>Logitech MX Master 3s</li>
               <li>Logitech Mx Keys</li>
               <li>ASUS ANC Headphone</li>
               <li>Logitech Brio 101</li>
               <li>ZealSound USB Microphone</li>
-              <li>Wowssyo RGB Mouse Pad</li>
+              <li>iPad 10th Gen + Pencil</li>
               <li>Sit-stand Desk SSDE-06</li>
               <li>Furgle Gaming Chair</li>
-              <li>Desk Clock/Lamp</li>
               <li>9&quot; Square Fill Light</li>
             </ul>
           </div>
@@ -60,6 +59,7 @@ export default function UsesPage() {
               <li>Yazi (File Manager)</li>
               <li>Fastfetch (System Info)</li>
               <li>Btop (System Monitor)</li>
+              <li>ffmpeg (Media tool)</li>
               <li>
                 eza (modern list <code>`ls`</code>)
               </li>
@@ -69,18 +69,14 @@ export default function UsesPage() {
             <h2>Utility Software</h2>
             <ul>
               <li>Karabiner-Elements (Keyboard Customizer)</li>
-              <li>Hammerspoon (Automation)</li>
               <li>Homebrew (OS Package Manager)</li>
               <li>Vimium (Browser Vim Control)</li>
               <li>SketchyVim (Vim-like Text Inputs)</li>
-              <li>SketchyBar (Status Bar Replacement)</li>
-              <li>Scoot (Cursor Actuator)</li>
-              <li>JankyBorders (Window Borders)</li>
-              <li>Aerospace (Window Manager)</li>
+              <li>Kact (Cursor Actuator)</li>
+              <li>OmniWM (Window Manager)</li>
               <li>Lulu (Firewall)</li>
               <li>TunnelBear (VPN)</li>
               <li>Maccy (Clipboard Manager)</li>
-              <li>HandBrake (Video Transcoder)</li>
               <li>KeyCastr (Keystroke Visualizer)</li>
               <li>FDM (Download Manager)</li>
             </ul>
@@ -105,7 +101,6 @@ export default function UsesPage() {
             <ul>
               <li>Chrome</li>
               <li>OrbStack</li>
-              <li>ChatGPT</li>
               <li>Spotify</li>
               <li>DBeaver</li>
               <li>Figma</li>
@@ -113,17 +108,15 @@ export default function UsesPage() {
               <li>Android Studio</li>
               <li>Xcode</li>
               <li>Expo Orbit</li>
-              <li>MAMP</li>
               <li>Slack</li>
               <li>Discord</li>
               <li>Postman</li>
               <li>Zoom</li>
-              <li>Notion</li>
               <li>WhatsApp</li>
-              <li>CapCut</li>
               <li>OBS</li>
               <li>VLC</li>
               <li>Logi Options+</li>
+              <li>etc..</li>
             </ul>
           </div>
         </div>
