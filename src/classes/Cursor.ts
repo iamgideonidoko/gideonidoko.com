@@ -1,13 +1,7 @@
 import { gsap } from 'gsap';
 import { EventEmitter } from 'events';
-import { lerp, getMousePos } from '../helper';
-
-let mouse = { x: 0, y: 0 };
-if (typeof window !== 'undefined') {
-  window.addEventListener('mousemove', (event) => {
-    mouse = getMousePos(event);
-  });
-}
+import { lerp } from '../helper';
+import { pointer } from '../pointer';
 
 export default class Cursor extends EventEmitter {
   private filterId: string;
@@ -49,17 +43,24 @@ export default class Cursor extends EventEmitter {
     this.handleEnter = () => this.enter();
     this.handleLeave = () => this.leave();
     this.onMouseMoveEv = () => {
-      this.renderedStyles.tx.previous = this.renderedStyles.tx.current = mouse.x - this.bounds.width / 2;
-      this.renderedStyles.ty.previous = this.renderedStyles.ty.current = mouse.y - this.bounds.height / 2;
+      if (!pointer.known) {
+        return;
+      }
+      this.renderedStyles.tx.previous = this.renderedStyles.tx.current = pointer.x - this.bounds.width / 2;
+      this.renderedStyles.ty.previous = this.renderedStyles.ty.current = pointer.y - this.bounds.height / 2;
       gsap.to(this.DOM.el, { duration: 0.9, ease: 'Power3.easeOut', opacity: 1 });
-      this.frameId = requestAnimationFrame(() => this.render());
-      window.removeEventListener('mousemove', this.onMouseMoveEv);
+      this.render();
+      window.removeEventListener('pointermove', this.onMouseMoveEv);
     };
 
     this.createTimeline();
     this.listen();
 
-    window.addEventListener('mousemove', this.onMouseMoveEv);
+    if (pointer.known) {
+      this.onMouseMoveEv();
+    } else {
+      window.addEventListener('pointermove', this.onMouseMoveEv);
+    }
   }
 
   private render() {
@@ -67,8 +68,8 @@ export default class Cursor extends EventEmitter {
       return;
     }
 
-    this.renderedStyles.tx.current = mouse.x - this.bounds.width / 2;
-    this.renderedStyles.ty.current = mouse.y - this.bounds.height / 2;
+    this.renderedStyles.tx.current = pointer.x - this.bounds.width / 2;
+    this.renderedStyles.ty.current = pointer.y - this.bounds.height / 2;
 
     for (const key in this.renderedStyles) {
       const newKey = key as keyof typeof this.renderedStyles;
@@ -128,7 +129,7 @@ export default class Cursor extends EventEmitter {
   public destroy() {
     this.destroyed = true;
     cancelAnimationFrame(this.frameId);
-    window.removeEventListener('mousemove', this.onMouseMoveEv);
+    window.removeEventListener('pointermove', this.onMouseMoveEv);
     this.off('enter', this.handleEnter);
     this.off('leave', this.handleLeave);
     this.tl?.kill();
