@@ -18,6 +18,7 @@ export default class GooeyImage {
   private img: HTMLImageElement;
   private images: THREE.Texture[];
   private sizes: THREE.Vector2;
+  private textureDimensions?: { width: number; height: number };
   private offset: THREE.Vector2;
   private vertexShader: string;
   private fragmentShader: string;
@@ -214,6 +215,7 @@ export default class GooeyImage {
       width: Number(textureImage.width),
       height: Number(textureImage.height),
     };
+    this.textureDimensions = textureDimensions;
 
     this.getBounds();
 
@@ -262,12 +264,7 @@ export default class GooeyImage {
       y: this.offset.y,
     });
 
-    gsap.to(this.mesh.scale, {
-      duration: 0.3,
-      x: this.sizes.x,
-      y: this.sizes.y,
-      z: 1,
-    });
+    this.mesh.scale.set(this.sizes.x, this.sizes.y, 1);
   }
 
   public update() {
@@ -293,6 +290,9 @@ export default class GooeyImage {
 
     if (!this.sizes.equals(new THREE.Vector2(width, height))) {
       this.sizes.set(width, height);
+      if (this.uniforms && this.textureDimensions && width > 0 && height > 0) {
+        this.uniforms.u_ratio.value.copy(getRatio(this.sizes, this.textureDimensions));
+      }
     }
 
     const nextOffset = new THREE.Vector2(
