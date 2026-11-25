@@ -4,6 +4,7 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import vertexShader from '../glsl/vertex.glsl';
 import gooeyFragmentShader from '../glsl/gooey-fragment.glsl';
 import { getRatio } from '../helper';
+import { pointer } from '../pointer';
 
 type UniformType = 'f' | 'i' | 'v2' | 'v3' | 'v4' | 'm3' | 'm4' | 't' | 'sampler2D' | 'sampleCube';
 
@@ -24,10 +25,12 @@ export default class GooeyImage {
   private fragmentShader: string;
   private timer: THREE.Timer;
   private mouse: THREE.Vector2;
+  private hasPointerPosition = false;
   private hasClicked: boolean;
   private loader: THREE.TextureLoader;
   private isMobile: boolean;
   private isHovering?: boolean;
+  private pointerInside = false;
   private uniforms?: {
     u_alpha: THREE.IUniform<number>;
     u_grayscaleHover: THREE.IUniform<number>;
@@ -48,7 +51,7 @@ export default class GooeyImage {
   private delta = 0;
   private resizeHandler: () => void;
   private mouseMoveHandler: (event: MouseEvent) => void;
-  private pointerEnterHandler: () => void;
+  private pointerEnterHandler: (event: MouseEvent) => void;
   private pointerLeaveHandler: () => void;
   private scrollHandler?: (event: LenisScrollEvent) => void;
   private destroyed = false;
@@ -87,7 +90,8 @@ export default class GooeyImage {
     this.mouseMoveHandler = (event) => {
       this.onMouseMove(event);
     };
-    this.pointerEnterHandler = () => {
+    this.pointerEnterHandler = (event: MouseEvent) => {
+      this.onMouseMove(event);
       this.onPointerEnter();
     };
     this.pointerLeaveHandler = () => {
@@ -138,13 +142,20 @@ export default class GooeyImage {
   }
 
   private onPointerEnter() {
+    this.pointerInside = true;
     this.isHovering = true;
 
     if (this.hasClicked || this.isMobile || !this.mesh || !this.uniforms) {
       return;
     }
 
+    if (!this.hasPointerPosition) {
+      const { left, top, width, height } = this.img.getBoundingClientRect();
+      this.mouse.set(left + width / 2, top + height / 2);
+    }
+
     gsap.to(this.uniforms.u_progressHover, {
+      overwrite: true,
       duration: this.duration,
       value: 0.7,
       ease: Power2.easeInOut,
@@ -152,11 +163,14 @@ export default class GooeyImage {
   }
 
   private onPointerLeave() {
+    this.pointerInside = false;
     if (!this.mesh || this.hasClicked || this.isMobile || !this.uniforms) {
+      this.isHovering = false;
       return;
     }
 
     gsap.to(this.uniforms.u_progressHover, {
+      overwrite: true,
       duration: this.duration,
       value: 0,
       ease: Power2.easeInOut,
@@ -184,6 +198,12 @@ export default class GooeyImage {
 
   private onMouseMove(event: MouseEvent) {
     if (this.hasClicked || this.isMobile) {
+      return;
+    }
+
+    if (!this.hasPointerPosition || !this.mesh) {
+      this.mouse.set(event.clientX, event.clientY);
+      this.hasPointerPosition = true;
       return;
     }
 
@@ -250,6 +270,13 @@ export default class GooeyImage {
 
     this.img.classList.add('is-loaded');
     this.onInitImageSuccess?.(this.mesh);
+
+    if (this.isPointerOverImage()) {
+      this.onPointerEnter();
+    } else {
+      this.pointerInside = false;
+      this.isHovering = false;
+    }
   }
 
   private move() {
@@ -267,6 +294,20 @@ export default class GooeyImage {
     this.mesh.scale.set(this.sizes.x, this.sizes.y, 1);
   }
 
+  private isPointerOverImage() {
+    if (!pointer.known) {
+      return this.img.matches(':hover');
+    }
+
+    if (!this.hasPointerPosition) {
+      this.mouse.set(pointer.x, pointer.y);
+      this.hasPointerPosition = true;
+    }
+
+    const target = document.elementFromPoint(pointer.x, pointer.y);
+    return target === this.img;
+  }
+
   public update() {
     this.timer.update();
 
@@ -277,6 +318,15 @@ export default class GooeyImage {
     this.delta = Math.abs((this.scroll - this.prevScroll) * 2000);
     this.move();
     this.prevScroll = this.scroll;
+
+    const hovered = this.isPointerOverImage();
+    if (hovered !== this.pointerInside) {
+      if (hovered) {
+        this.onPointerEnter();
+      } else {
+        this.onPointerLeave();
+      }
+    }
 
     if (!this.isHovering || !this.uniforms) {
       return;

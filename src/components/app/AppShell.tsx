@@ -8,6 +8,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import ThemeSwitch from '../ThemeSwitch';
 import PageLoader from '../../classes/PageLoader';
+import '../../pointer';
 
 const pageWithoutHeader: string[] = ['/p/test'];
 const pageWithoutFooter: string[] = ['/p/test'];
